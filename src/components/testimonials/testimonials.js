@@ -1,5 +1,3 @@
-import React from "react";
-import Carousel from 'react-bootstrap/Carousel';
 import Steve from "../resume/resume/headshot/Steve.jpeg";
 import Jason from "../resume/resume/headshot/Jason.jpeg";
 import Inti from "../resume/resume/headshot/Inti.jpeg";

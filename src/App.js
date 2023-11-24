@@ -5,7 +5,7 @@ import education from "./components/education/education"
 import HeadShot from "./components/resume/resume/headshot/HeadShot";
 import about from "./components/about/About";
 import Resume from "./components/resume/Resume";
-import testimonials from "./components/testimonials/testimonials";
+import testimonials from "./components/testimonials/testimonials/Testimonials";
 import Email from "./components/Email";
 import Charity from "./components/resume/resume/headshot/Charity";
 import "./App.css";
@@ -48,6 +48,5 @@ function App(){
     
 
 export default App;
-
 
 

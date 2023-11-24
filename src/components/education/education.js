@@ -1,7 +1,7 @@
 import React from "react";
 import  "../testimonials/testimonials.css";
 import { Card } from 'semantic-ui-react';
-import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider, createTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Carousel from 'react-bootstrap/Carousel';
 import UCC from "../resume/resume/headshot/UCC.jpeg";
@@ -24,7 +24,7 @@ degree: "B.A. Mathematical Studies and Sociology - 1995/1998"
 },
 ]
 
-const theme = createMuiTheme({
+const theme = createTheme({
   typography: {
     fontSize: "10px",
     fontFamily: [

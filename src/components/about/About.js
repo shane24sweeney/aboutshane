@@ -1,6 +1,6 @@
 import React from "react";
 import  "../testimonials/testimonials.css";
-import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider, createTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Carousel from 'react-bootstrap/Carousel';
 import Workout1 from "../resume/resume/headshot/Workout1.png";
@@ -9,7 +9,7 @@ import Workout3 from "../resume/resume/headshot/Workout3.png";
 import { Card,  Image } from 'semantic-ui-react';
 
 
-const theme = createMuiTheme({
+const theme = createTheme({
   typography: {
     fontSize: "10px",
     fontFamily: [

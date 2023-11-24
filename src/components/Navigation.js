@@ -5,9 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {  faHome,   faAddressCard,  faChess, faMars, faUniversity, faMedal, faHeart } from '@fortawesome/free-solid-svg-icons';
 
 
-
-
-
 function Navigation() {
 
   return (
@@ -33,7 +30,7 @@ function Navigation() {
                 </NavLink>
               </NavbarBrand>
               <NavbarBrand>
-                <NavLink to="/Resume" className="nav-link">
+                <NavLink to="/resume" className="nav-link">
                 <FontAwesomeIcon icon={faMars} 
             vertical color={'black'} /> Resume 
                 </NavLink>

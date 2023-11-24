@@ -1,6 +1,6 @@
 import React from "react";
 import { Accordion, AccordionSummary, AccordionDetails } from '@material-ui/core';
-import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider, createTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import  "../testimonials/testimonials.css";
 import resume from "./resume/resume";
@@ -9,7 +9,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import { HeaderContent } from "semantic-ui-react";
 
-const theme = createMuiTheme({
+const theme = createTheme({
   typography: {
     fontSize: "10px",
     fontFamily: [

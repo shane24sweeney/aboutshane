@@ -1,13 +1,13 @@
 import React from "react";
 import Carousel from 'react-bootstrap/Carousel';
-import  "./testimonials.css";
+import  "../testimonials.css";
 import { Card } from 'semantic-ui-react';
-import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider, createTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import testimonials from "../testimonials";
 
 
-const theme = createMuiTheme({
+const theme = createTheme({
     typography: {
       fontSize: "10px",
       fontFamily: [
