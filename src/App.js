@@ -1,25 +1,53 @@
-import logo from './logo.svg';
 import './App.css';
+import React from "react";
+import "./App.css";
+import education from "./components/education/education"
+import HeadShot from "./components/resume/resume/headshot/HeadShot";
+import about from "./components/about/About";
+import Resume from "./components/resume/Resume";
+import testimonials from "./components/testimonials/testimonials";
+import Email from "./components/Email";
+import Charity from "./components/resume/resume/headshot/Charity";
+import "./App.css";
+import Navigation from './components/Navigation';
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
-function App() {
+function App(){
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+          <div className="App">
+           
+          <BrowserRouter>
+          <Navigation />
+          <Switch>
+             <Route path="/home" component={HeadShot} exact/>
+             <Route exact path="/"><Redirect to="/home" /></Route>
+             <Route path="/about" component={about}/>
+             <Route path="/contact" component={Email}/>
+             <Route path="/resume" component={Resume}/>
+             <Route path="/testimonials" component={testimonials}/>
+             <Route path="/education" component={education}/>
+             <Route path="/Charity" component={Charity}/>
+            
+            
+             
+           </Switch>
+          </BrowserRouter>
+
+          
+          
+              </div>
+
+              
+            );
+
+          
+          } 
+          
+        
+    
 
 export default App;
+
+
+
