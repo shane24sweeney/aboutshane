@@ -93,11 +93,11 @@ const Charity = () => {
          <Carousel.Item interval={4000} 
          >
             <Typography variant="h1" gutterBottom>
-          <h1>Run in Dalton Ten Miler Yearly for Charity</h1> 
+          <h1>Yearly Dalton Ten Miler Race for Charity</h1> 
          </Typography>
          <img
              
-   src={Habitat}
+   src={Dalton}
              alt=""
            />
          
@@ -106,11 +106,11 @@ const Charity = () => {
          <Carousel.Item interval={4000} 
          >
             <Typography variant="h1" gutterBottom>
-          <h1>Ran in Habitat for Humanity Race in Helen for Charity</h1> 
+          <h1>Yearly 18K Habitat for Humanity Helen Race for Charity</h1> 
          </Typography>
          <img
              
-   src={Dalton}
+   src={Habitat}
              alt=""
            />
          
