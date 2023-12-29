@@ -15,7 +15,8 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 function App(){
 
   return (
-          <div className="App">
+          <div className="responsive">
+            <div className="box">
            
           <BrowserRouter>
           <Navigation />
@@ -34,7 +35,7 @@ function App(){
            </Switch>
           </BrowserRouter>
 
-          
+          </div>
           
               </div>
 

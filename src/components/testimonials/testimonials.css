@@ -1,6 +1,6 @@
 .flex-container {
     /* We first create a flex layout context */
-    display: flex;
+
     
     /* Then we define the flow direction 
        and if we allow the items to wrap 
@@ -18,7 +18,7 @@
     list-style: none;
   }
   
-  .flex-item {
+  .testimonialStyle {
     padding: 5px;
     width: 200px;
     height: 150px;
@@ -26,5 +26,6 @@
     line-height: 40px;
     font-weight: bold;
     text-align: center;
-    color: black
+    color: black;
+    content: middle;
   }

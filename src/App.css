@@ -7,6 +7,12 @@
   pointer-events: none;
 }
 
+.responsive {width: 100vw;
+  height: 100vh;}
+
+  .box {margin: 5px;width: 60%;height: 60%;background-color: black;color: lightgray;border: 1px black solid;}
+  
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
