@@ -41,15 +41,15 @@ function education () {
     <ThemeProvider theme={theme}>
       <Card
      centered    className="flex-container"
-    style={{
-        height: '100%',
-        padding: '15px', 
-        borderRadius: '40px',
-        boxShadow: '15px 15px 15px 15px rgb(20 20 20 / 60%)',
-        width: '500px'
-    }}
+     style={{
+      height: '100%',
+      padding: '1px', 
+      backgroundColor: 'black',
+      color:'white',
+      display: 'flex'
+  }}
 >
-    <Carousel>
+    <Carousel controls={false} indicators={false}>
     <Carousel.Item interval={4000} 
   >
     <img

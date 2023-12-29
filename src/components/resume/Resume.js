@@ -30,15 +30,17 @@ function Resume() {
 
  return (
   <div class="container">
-    <li className="resume"  style={{
-      backgroundColor: 'black'
-  
-  }} >
+    <li className="resume"    style={{
+          height: '100%',
+          padding: '60px', 
+          borderRadius: '10px',
+          backgroundColor: 'black'
+      }} >
     
 
 <ThemeProvider theme={theme} >
 
-      <Accordion expanded={expand} style={{  display: 'flex' }}>
+      <Accordion expanded={expand} >
       <AccordionSummary
       expandIcon={<ExpandMoreIcon fontSize="large" />}
       aria-controls="panel1a-content"
@@ -63,7 +65,7 @@ function Resume() {
      
       <p></p>
 
-      <Accordion expanded={expand} style={{  display: 'flex' }}>
+      <Accordion expanded={expand} >
       <AccordionSummary
       expandIcon={<ExpandMoreIcon fontSize="large" />}
       aria-controls="panel1a-content"
@@ -88,7 +90,7 @@ function Resume() {
      
       <p></p>
 
-      <Accordion expanded={expand} style={{  display: 'flex' }}>
+      <Accordion expanded={expand}>
       <AccordionSummary
       expandIcon={<ExpandMoreIcon fontSize="large" />}
       aria-controls="panel1a-content"
@@ -113,7 +115,7 @@ function Resume() {
      
 <p></p>
 
-<Accordion expanded={expand} style={{  display: 'flex' }}>
+<Accordion expanded={expand}>
       <AccordionSummary
       expandIcon={<ExpandMoreIcon fontSize="large" />}
       aria-controls="panel1a-content"
@@ -138,7 +140,7 @@ function Resume() {
 
 <p></p>
 
-<Accordion expanded={expand} style={{  display: 'flex' }}>
+<Accordion expanded={expand}>
       <AccordionSummary
       expandIcon={<ExpandMoreIcon fontSize="large" />}
       aria-controls="panel1a-content"
@@ -163,7 +165,7 @@ function Resume() {
 
 <p></p>
 
-<Accordion expanded={expand} style={{  display: 'flex' }}>
+<Accordion expanded={expand}>
       <AccordionSummary
       expandIcon={<ExpandMoreIcon fontSize="large" />}
       aria-controls="panel1a-content"
@@ -188,7 +190,7 @@ function Resume() {
 
 <p></p>
 
-<Accordion expanded={expand} style={{  display: 'flex' }}>
+<Accordion expanded={expand}>
       <AccordionSummary
       expandIcon={<ExpandMoreIcon fontSize="large" />}
       aria-controls="panel1a-content"
@@ -213,7 +215,7 @@ function Resume() {
 
 <p></p>
 
-<Accordion expanded={expand} style={{  display: 'flex' }}>
+<Accordion expanded={expand}>
       <AccordionSummary
       expandIcon={<ExpandMoreIcon fontSize="large" />}
       aria-controls="panel1a-content"
@@ -238,7 +240,7 @@ function Resume() {
 
 <p></p>
 
-<Accordion expanded={expand} style={{  display: 'flex' }}>
+<Accordion expanded={expand}>
       <AccordionSummary
       expandIcon={<ExpandMoreIcon fontSize="large" />}
       aria-controls="panel1a-content"

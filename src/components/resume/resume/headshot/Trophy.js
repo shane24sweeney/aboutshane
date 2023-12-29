@@ -13,7 +13,7 @@ import styled from "styled-components";
 function Trophy () {
   return (
   
-  <div className="flexslider">
+  <div className="justify-content-center" centered style={{backgroundColor: 'black'}}>
     
         <p>
 Your mind is clear. Your heart rate is racing with anticipation and

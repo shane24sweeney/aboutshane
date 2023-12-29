@@ -22,21 +22,22 @@ function about () {
   
 
   return (
-    <ThemeProvider theme={theme}>
-    <section id="about">
-    <Card centered    className="flex-container flex-item"
+    <ThemeProvider theme={theme} className="justify-content-center" >
+    <section id="about" >
+    <Card centered  
     style={{
-        height: '100%',
-        padding: '15px', 
-        borderRadius: '40px',
-        boxShadow: '15px 15px 15px 15px rgb(20 20 20 / 60%)',
-        width: '500px'
+      height: '100%',
+      padding: '60px', 
+      borderRadius: '10px',
+      backgroundColor: 'black',
+      color:'white',
+      display: 'flex'
     }}
     >
-   <Carousel>
+   <Carousel  controls={false} indicators={false}>
       <Carousel.Item interval={4000} 
     >
-         <Typography variant="h1" gutterBottom>
+         <Typography variant="h1" gutterBottom >
       
          <p>
          Your mind is clear. Your heart rate is racing with anticipation and
