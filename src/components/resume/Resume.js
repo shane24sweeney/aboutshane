@@ -5,9 +5,8 @@ import Typography from '@material-ui/core/Typography';
 import  "../testimonials/testimonials.css";
 import resume from "./resume/resume";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
-
 import { HeaderContent } from "semantic-ui-react";
+
 
 const theme = createTheme({
   typography: {
@@ -30,13 +29,18 @@ function Resume() {
   
 
  return (
-    <li className="resume" >
+  <div class="container">
+    <li className="resume"  style={{
+      backgroundColor: 'black'
+  
+  }} >
     
-<ThemeProvider theme={theme}>
 
-      <Accordion expanded={expand} style={{ width: 400 }}>
+<ThemeProvider theme={theme} >
+
+      <Accordion expanded={expand} style={{  display: 'flex' }}>
       <AccordionSummary
-      expandIcon={<ExpandMoreIcon />}
+      expandIcon={<ExpandMoreIcon fontSize="large" />}
       aria-controls="panel1a-content"
       IconButtonProps={{
         onClick: toggleAcordion
@@ -59,9 +63,9 @@ function Resume() {
      
       <p></p>
 
-      <Accordion expanded={expand} style={{ width: 400 }}>
+      <Accordion expanded={expand} style={{  display: 'flex' }}>
       <AccordionSummary
-      expandIcon={<ExpandMoreIcon />}
+      expandIcon={<ExpandMoreIcon fontSize="large" />}
       aria-controls="panel1a-content"
       IconButtonProps={{
         onClick: toggleAcordion
@@ -84,9 +88,9 @@ function Resume() {
      
       <p></p>
 
-      <Accordion expanded={expand} style={{ width: 400 }}>
+      <Accordion expanded={expand} style={{  display: 'flex' }}>
       <AccordionSummary
-      expandIcon={<ExpandMoreIcon />}
+      expandIcon={<ExpandMoreIcon fontSize="large" />}
       aria-controls="panel1a-content"
       IconButtonProps={{
         onClick: toggleAcordion
@@ -109,9 +113,9 @@ function Resume() {
      
 <p></p>
 
-<Accordion expanded={expand} style={{ width: 400 }}>
+<Accordion expanded={expand} style={{  display: 'flex' }}>
       <AccordionSummary
-      expandIcon={<ExpandMoreIcon />}
+      expandIcon={<ExpandMoreIcon fontSize="large" />}
       aria-controls="panel1a-content"
       IconButtonProps={{
         onClick: toggleAcordion
@@ -134,9 +138,9 @@ function Resume() {
 
 <p></p>
 
-<Accordion expanded={expand} style={{ width: 400 }}>
+<Accordion expanded={expand} style={{  display: 'flex' }}>
       <AccordionSummary
-      expandIcon={<ExpandMoreIcon />}
+      expandIcon={<ExpandMoreIcon fontSize="large" />}
       aria-controls="panel1a-content"
       IconButtonProps={{
         onClick: toggleAcordion
@@ -159,9 +163,9 @@ function Resume() {
 
 <p></p>
 
-<Accordion expanded={expand} style={{ width: 400 }}>
+<Accordion expanded={expand} style={{  display: 'flex' }}>
       <AccordionSummary
-      expandIcon={<ExpandMoreIcon />}
+      expandIcon={<ExpandMoreIcon fontSize="large" />}
       aria-controls="panel1a-content"
       IconButtonProps={{
         onClick: toggleAcordion
@@ -184,9 +188,9 @@ function Resume() {
 
 <p></p>
 
-<Accordion expanded={expand} style={{ width: 400 }}>
+<Accordion expanded={expand} style={{  display: 'flex' }}>
       <AccordionSummary
-      expandIcon={<ExpandMoreIcon />}
+      expandIcon={<ExpandMoreIcon fontSize="large" />}
       aria-controls="panel1a-content"
       IconButtonProps={{
         onClick: toggleAcordion
@@ -209,9 +213,9 @@ function Resume() {
 
 <p></p>
 
-<Accordion expanded={expand} style={{ width: 400 }}>
+<Accordion expanded={expand} style={{  display: 'flex' }}>
       <AccordionSummary
-      expandIcon={<ExpandMoreIcon />}
+      expandIcon={<ExpandMoreIcon fontSize="large" />}
       aria-controls="panel1a-content"
       IconButtonProps={{
         onClick: toggleAcordion
@@ -234,9 +238,9 @@ function Resume() {
 
 <p></p>
 
-<Accordion expanded={expand} style={{ width: 400 }}>
+<Accordion expanded={expand} style={{  display: 'flex' }}>
       <AccordionSummary
-      expandIcon={<ExpandMoreIcon />}
+      expandIcon={<ExpandMoreIcon fontSize="large" />}
       aria-controls="panel1a-content"
       IconButtonProps={{
         onClick: toggleAcordion
@@ -259,6 +263,7 @@ function Resume() {
 
 </ThemeProvider>
   </li>
+  </div>
   );
 };
 export default Resume

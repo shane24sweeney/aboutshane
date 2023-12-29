@@ -8,9 +8,9 @@ import {  faHome,   faAddressCard,  faChess, faMars, faUniversity, faMedal, faHe
 function Navigation() {
 
   return (
-    <div style={{color:'white'}}>
-        <div className="container-fluid">
-            <Nav className="ml-auto">
+    <div  >
+        <div className="container-fluid"  >
+            <Nav className="justify-content-center" >
             <NavbarBrand>
             <NavLink to="/home" className="nav-link">
             <FontAwesomeIcon icon={faHome} 

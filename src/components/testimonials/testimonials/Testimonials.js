@@ -27,15 +27,11 @@ const theme = createTheme({
       <Card    
       style={{
           height: '100%',
-          padding: '15px', 
-          borderRadius: '40px',
-          boxShadow: '15px 15px 15px 15px rgb(20 20 20 / 60%)',
-          width: '500px',
+          padding: '60px', 
+          borderRadius: '10px',
           backgroundColor: 'black',
           color:'white',
-          display: 'flex',
-          centered: true,
-          justifyContent: 'center'
+          display: 'flex'
       }}
   >
       
@@ -66,12 +62,12 @@ const theme = createTheme({
         <testimonials image={testimonials[1].image} centered title={testimonials[1].title} description = {testimonials[0].description}/>
 
 <img src ={testimonials[1].image} alt={testimonials[1].title}/>
-       <Typography variant="p">
+       <Typography>
        {testimonials[1].title}
            </Typography>
         
           <div >
-        <span>   <Typography variant="p">
+        <span>   <Typography>
         {testimonials[1].recommendation}
            </Typography> </span>
        
