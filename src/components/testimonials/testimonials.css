@@ -1,6 +1,6 @@
 .flex-container {
     /* We first create a flex layout context */
-
+    display: flex;
     
     /* Then we define the flow direction 
        and if we allow the items to wrap 
