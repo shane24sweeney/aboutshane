@@ -28,7 +28,7 @@ const resume =
         +" Developed both Behavioral Driven Development (BDD) and "
           +"Test Driven Development (TDD) automation frameworks."
           +" Created automation frameworks for deployments in Azure cloud utilizing design patterns"
-          +"and best practices",
+          +" and best practices",
         image: Eliassen,
     },
 
