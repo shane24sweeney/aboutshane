@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import  "../testimonials.css";
 import { Card } from 'semantic-ui-react';
 import { ThemeProvider, createTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import testimonials from "../testimonials";
+
 
 
 const theme = createTheme({
@@ -18,11 +19,11 @@ const theme = createTheme({
   
    
   
-  function Testimonials ()  {
+  function Testimonials()  {
   
-    
+     
    
-    return (
+return (
       <ThemeProvider theme={theme}  >
       <Card    
       style={{
@@ -35,7 +36,9 @@ const theme = createTheme({
       }}
   >
       
-         
+          
+             
+      
       <Carousel controls={false} indicators={false}>
         <Carousel.Item interval={4000} 
       >
@@ -49,7 +52,7 @@ const theme = createTheme({
         
           <div >
         <span>   <Typography>
-        {testimonials[0].recommendation}
+       {testimonials[0].recommendation}
            </Typography> </span>
        
           
@@ -64,11 +67,16 @@ const theme = createTheme({
 <img src ={testimonials[1].image} alt={testimonials[1].title}/>
        <Typography>
        {testimonials[1].title}
+                     
            </Typography>
         
           <div >
         <span>   <Typography>
+      
+                    
         {testimonials[1].recommendation}
+                     
+                 
            </Typography> </span>
        
           

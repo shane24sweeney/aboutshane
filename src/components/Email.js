@@ -33,11 +33,23 @@ function Email () {
   };
 return (
 
-  <div className="Header">
+  <div className="Header"
+  style={{
+    height: '100%',
+    padding: '60px', 
+    borderRadius: '10px',
+    borderColor: 'blue',
+    color:'white',
+    display: 'flex'
+}}
+  >
     
       
   
-    <div className="Email">
+    <div className="Email"
+  
+    
+    >
       <Form onSubmit={handleOnSubmit}>
         <Form.Field
           id="form-input-control-email"
@@ -66,6 +78,9 @@ return (
           name="user_message"
           placeholder="Message"
           required
+          icon="user circle"
+          iconPosition="left"
+         
         />
         <Button type="submit" color="green">Submit</Button>
       </Form>
