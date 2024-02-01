@@ -19,15 +19,15 @@ const resume =
     {
         title: "SENIOR AUTOMATION CONTRACT ENGINEER",
         description: "Responsible for API and UI automation in GEB Groovy Spock. Utilizing the latest Page Object Design patterns."
-        +"Developed over 4000 automated test cases in CI/CD in Jenkins.",
+        +" Developed over 4000 automated test cases in CI/CD in Jenkins.",
         image: Tek,
     },
     {
         title: "SENIOR AUTOMATION CONTRACT ENGINEER",
         description: "Responsible for API and UI automation in C# framework."
-        +"Developed both Behavioral Driven Development (BDD) and"
+        +" Developed both Behavioral Driven Development (BDD) and "
           +"Test Driven Development (TDD) automation frameworks."
-          +"Created automation frameworks for deployments in Azure cloud utilizing design patterns"
+          +" Created automation frameworks for deployments in Azure cloud utilizing design patterns"
           +"and best practices",
         image: Eliassen,
     },
@@ -35,23 +35,23 @@ const resume =
     {
         title: "SOFTWARE DEVELOPER",
         description: "Responsible for developing GPS TRACKIT product line in React, Redux"
-        +"and Saga."
-        +"Developed the first TDD automation framework from the ground up"
-        +"at GPS TRACKIT."
-        +"Created BDD Rest-Assured API calls in the automation framework"
+        +" and Saga."
+        +" Developed the first TDD automation framework from the ground up"
+        +" at GPS TRACKIT."
+        +" Created BDD Rest-Assured API calls in the automation framework"
         +"to validate API calls utilized in Postman.",
         image: GPSTrackit,
 },
 
 {
     title: "SENIOR AUTOMATION ENGINEER",
-    description: " Architected and utilized design patterns to create a new"
-    +"automation framework for DELUXE banking product lines. Programmed"
+    description: "Architected and utilized design patterns to create a new "
+    +"automation framework for DELUXE banking product lines. Programmed "
     +"in Java/C# and Python Robot frameworks. Performed both API and UI"
-    +"automation on Business Mobile utilizing Python Robot and Java."
+    +" automation on Business Mobile utilizing Python Robot and Java."
 
-    +"Implemented Fluent and Dependency Injection design patterns in"
-    +"multiple automation frameworks for both iOS and Android"
+    +" Implemented Fluent and Dependency Injection design patterns in"
+    +" multiple automation frameworks for both iOS and Android "
     +"applications.",
     image: Deluxe,
 },
@@ -59,8 +59,8 @@ const resume =
 {
     title: "SENIOR AUTOMATION CONSULTANT",
     description: "Responsible for automating Aaron's department store in C#." 
-    +"Developed multiple TDD projects for new CTE clients in Java and"
-    +"Selenium. "
+    +" Developed multiple TDD projects for new CTE clients in Java and"
+    +" Selenium. "
     +"Integrated automated testing into CI/CD pipeline in E-commerce.  ",
     image: Celtic,
 },
@@ -68,12 +68,12 @@ const resume =
 {
     title: "SENIOR AUTOMATION ENGINEER",
     description: "Senior Test Automation Engineer for all BottomLine Healthcare product"
-    +"lines."
-    +"Architected the first Java Selenium WebDriver Test Driven Development"
+    +" lines."
+    +" Architected the first Java Selenium WebDriver Test Driven Development"
     +"(TDD) automation framework, utilizing design patterns, best practices."
   
-    +"Developed Windows automation using Java Selenium to automate the .NET"
-    +"Windows LogicalInk Designer application in C#. Developed"
+    +" Developed Windows automation using Java Selenium to automate the .NET"
+    +"Windows LogicalInk Designer application in C#. Developed "
     +"automation scripts with JMeter for scalability testing of the REST API"
     +"interface within Logical Ink Web." ,
     image: BottomLine,
@@ -82,8 +82,8 @@ const resume =
 {
     title: "AUTOMATION ENGINEER",
     description: "Lead Java Automation Engineer for all PeopleNet product lines."
-    +"Architected and designed the first Java Selenium automation framework"
-    +"in PeopleNet "
+    +" Architected and designed the first Java Selenium automation framework"
+    +" in PeopleNet. "
     +"Developed the first innovative automation framework for PeopleNet Time"
     +"entry." ,
     image: Bullhorn,
@@ -91,10 +91,10 @@ const resume =
 {
     title: "LEAD ENGINEER/TECHNOLOGIST",
     description: "Lead Engineer for all AMI meter products in both IEC and ANSI meter"
-    +"products. Responsible for managing and mentoring other employees"
-    +"within Digital meters. Developed the first automation framework"
-    +"for meters. Developed and executed software test plans, test designs,"
-    +"test objectives, and test cases. " ,
+    +" products. Responsible for managing and mentoring other employees"
+    +" with in Digital meters. Developed the first automation framework"
+    +" for meters. Developed and executed software test plans, test designs,"
+    +" test objectives, and test cases. " ,
     image: GE,
 }
 ]
