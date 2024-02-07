@@ -89,7 +89,7 @@ const resume =
     image: Bullhorn,
 },
 {
-    title: "LEAD ENGINEER/TECHNOLOGIST",
+    title: "LEAD ENGINEER TECHNOLOGIST",
     description: "Lead Engineer for all AMI meter products in both IEC and ANSI meter"
     +" products. Responsible for managing and mentoring other employees"
     +" with in Digital meters. Developed the first automation framework"

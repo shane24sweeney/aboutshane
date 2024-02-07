@@ -9,9 +9,11 @@ import { HeaderContent } from "semantic-ui-react";
 
 
 
+
 const theme = createTheme({
   typography: {
     fontSize: "10px",
+    colors: {background: 'black'},
     fontFamily: [
       'Raleway', 'sans-serif',
       
@@ -53,12 +55,13 @@ function Resume() {
   const [expand, setExpand] = useState(false);
   const toggleAcordion = () => {
     setExpand((prev) => !prev);
+   
   };
 
   
 
  return (
-  <div class="container">
+  <div class="container" >
     <li className="resume"      style={{
           height: '100%',
           padding: '60px', 
@@ -69,11 +72,15 @@ function Resume() {
       }} >
     
 
-<ThemeProvider theme={theme} >
-
-      <Accordion expanded={expand} >
+<ThemeProvider theme={theme}   
+>
+<div id="accordion" class="panel-group"  sx={{
+    backgroundColor: "black"
+  }}  >
+         <Accordion expanded={expand}
+         slotProps={{ transition: { unmountOnExit: true } }}>
       <AccordionSummary
-      expandIcon={<ExpandMoreIcon fontSize="large" />}
+      expandIcon={<ExpandMoreIcon fontSize="large"/>}
       aria-controls="panel1a-content"
       IconButtonProps onClick = {() => setExpand(!expand)}>
               
@@ -101,7 +108,8 @@ function Resume() {
      
       <p></p>
 
-      <Accordion expanded={expand} >
+      <Accordion expanded={expand}
+      slotProps={{ transition: { unmountOnExit: true } }} >
       <AccordionSummary
       expandIcon={<ExpandMoreIcon fontSize="large" />}
       aria-controls="panel1a-content"
@@ -126,7 +134,8 @@ function Resume() {
      
       <p></p>
 
-      <Accordion expanded={expand}>
+      <Accordion expanded={expand}
+      slotProps={{ transition: { unmountOnExit: true } }}>
       <AccordionSummary
       expandIcon={<ExpandMoreIcon fontSize="large" />}
       aria-controls="panel1a-content"
@@ -151,7 +160,8 @@ function Resume() {
      
 <p></p>
 
-<Accordion expanded={expand}>
+<Accordion expanded={expand}
+slotProps={{ transition: { unmountOnExit: true } }}>
       <AccordionSummary
       expandIcon={<ExpandMoreIcon fontSize="large" />}
       aria-controls="panel1a-content"
@@ -176,7 +186,8 @@ function Resume() {
 
 <p></p>
 
-<Accordion expanded={expand}>
+<Accordion expanded={expand}
+slotProps={{ transition: { unmountOnExit: true } }}>
       <AccordionSummary
       expandIcon={<ExpandMoreIcon fontSize="large" />}
       aria-controls="panel1a-content"
@@ -201,7 +212,8 @@ function Resume() {
 
 <p></p>
 
-<Accordion expanded={expand}>
+<Accordion expanded={expand}
+slotProps={{ transition: { unmountOnExit: true } }}>
       <AccordionSummary
       expandIcon={<ExpandMoreIcon fontSize="large" />}
       aria-controls="panel1a-content"
@@ -226,7 +238,8 @@ function Resume() {
 
 <p></p>
 
-<Accordion expanded={expand}>
+<Accordion expanded={expand}
+slotProps={{ transition: { unmountOnExit: true } }}>
       <AccordionSummary
       expandIcon={<ExpandMoreIcon fontSize="large" />}
       aria-controls="panel1a-content"
@@ -251,7 +264,8 @@ function Resume() {
 
 <p></p>
 
-<Accordion expanded={expand}>
+<Accordion expanded={expand}
+slotProps={{ transition: { unmountOnExit: true } }}>
       <AccordionSummary
       expandIcon={<ExpandMoreIcon fontSize="large" />}
       aria-controls="panel1a-content"
@@ -276,7 +290,8 @@ function Resume() {
 
 <p></p>
 
-<Accordion expanded={expand}>
+<Accordion expanded={expand}
+slotProps={{ transition: { unmountOnExit: true } }}>
       <AccordionSummary
       expandIcon={<ExpandMoreIcon fontSize="large" />}
       aria-controls="panel1a-content"
@@ -299,7 +314,10 @@ function Resume() {
   </AccordionDetails>
 </Accordion>
 
+
+</div>
 </ThemeProvider>
+
   </li>
   </div>
   );
