@@ -81,7 +81,7 @@ return (
 <img src ={testimonials[1].image} alt={testimonials[1].title}/>
 <p>
                </p>
-               <div className="myCarousel">
+               <div>
                <h3>
                {testimonials[1].name}
                   </h3>
@@ -111,7 +111,7 @@ return (
         <img src ={testimonials[2].image} alt={testimonials[2].title}/>
         <p>
                </p>
-               <div className="myCarousel">
+               <div>
                <h3>
                {testimonials[2].name}
                   </h3>
@@ -141,7 +141,7 @@ return (
 <img src ={testimonials[3].image} alt={testimonials[3].title}/>
 <p>
                </p>
-               <div className="myCarousel">
+               <div>
                <h3>
                {testimonials[3].name}
                   </h3>
@@ -171,7 +171,7 @@ return (
 <img src ={testimonials[4].image} alt={testimonials[4].title}/>
 <p>
                </p>
-               <div className="myCarousel">
+               <div>
                <h3>
                {testimonials[4].name}
                   </h3>
@@ -201,7 +201,7 @@ return (
 <img src ={testimonials[5].image} alt={testimonials[5].title}/>
 <p>
                </p>
-               <div className="myCarousel">
+               <div>
                <h3>
                {testimonials[5].name}
                   </h3>
@@ -230,7 +230,7 @@ return (
           
         <p>
                </p>
-               <div className="myCarousel">
+               <div>
                <h3>
                {testimonials[6].name}
                   </h3>
@@ -260,7 +260,7 @@ return (
 <img src ={testimonials[7].image} alt={testimonials[7].title}/>
 <p>
                </p>
-               <div className="myCarousel">
+               <div>
                <h3>
                {testimonials[7].name}
                   </h3>
@@ -290,7 +290,7 @@ return (
 <img src ={testimonials[8].image} alt={testimonials[8].title}/>
 <p>
                </p>
-               <div className="myCarousel">
+               <div>
                <h3>
                {testimonials[8].name}
                   </h3>
@@ -320,7 +320,7 @@ return (
 <img src ={testimonials[9].image} alt={testimonials[9].title}/>
 <p>
                </p>
-               <div className="myCarousel">
+               <div>
                <h3>
                {testimonials[9].name}
                   </h3>
