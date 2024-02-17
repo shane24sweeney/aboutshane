@@ -1,12 +1,25 @@
 import React from "react";
 import Shane from "./Shane.jpg";
-import { Card, Icon, Image } from 'semantic-ui-react'
+import { Card, Image } from 'semantic-ui-react'
+import { ThemeProvider, createTheme } from '@material-ui/core/styles';
 
+const theme = createTheme({
+  typography: {
+    fontSize: "1px",
+    fontFamily: [
+      'Raleway', 'sans-serif',
+      
+    ].join(','),
+  },});
 
 
 function HeadShot ()  {
   return (
-
+<ThemeProvider theme={theme} style={{
+         height: '100%',
+         backgroundColor: 'black',
+         color:'white',
+         textAlign: 'center'}} >
   <Card centered style={{backgroundColor: 'black'}}>
     <Image src={Shane} wrapped ui={false} />
     <Card.Content >
@@ -17,22 +30,21 @@ function HeadShot ()  {
         </Card.Header>
       <Card.Meta >
     
-        <h1 className='date' style={{color:'white'}}>It started with a Commodore 64 in Cork, Ireland</h1>
+        <h3 className='date' style={{color:'white'}}>It started with a Commodore 64 in Cork, Ireland</h3>
   
       </Card.Meta>
       <Card.Description style={{color:'white'}}>
-       <h1>
+       <h3>
        Shane loves family, friends, charity work, software, dogs and running 
-       </h1>
+       </h3>
         
       </Card.Description>
     </Card.Content>
-    <Card.Content extra>
-      <Icon name='user' />
-        Software Guru
+    <Card.Content extra style={{color:'white'}}>
+        <h3>Software Guru</h3>
       </Card.Content>
   </Card>
-
+</ThemeProvider>
   )
   
 

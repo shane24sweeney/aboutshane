@@ -12,44 +12,44 @@ function Navigation() {
         <div className="container-fluid"  >
             <Nav className="justify-content-center" >
             <NavbarBrand>
-            <NavLink to="/home" className="nav-link">
-            <FontAwesomeIcon icon={faHome} 
+            <NavLink to="/home" className="nav-link" style={{color:'white'}}>
+            <FontAwesomeIcon icon={faHome} style={{color:'white'}}
             vertical color={'black'} />Home </NavLink> 
               
               </NavbarBrand>
               <NavbarBrand>
-                <NavLink to="/contact" className="nav-link">
-                <FontAwesomeIcon icon={faAddressCard} 
+                <NavLink to="/contact" className="nav-link" style={{color:'white'}}>
+                <FontAwesomeIcon icon={faAddressCard} style={{color:'white'}}
             vertical color={'black'} /> Contact 
                 </NavLink>
               </NavbarBrand>
               <NavbarBrand>
-                <NavLink to="/about" className="nav-link">
-                <FontAwesomeIcon icon={faChess} 
+                <NavLink to="/about" className="nav-link" style={{color:'white'}}>
+                <FontAwesomeIcon icon={faChess} style={{color:'white'}}
             vertical color={'black'} />  About 
                 </NavLink>
               </NavbarBrand>
               <NavbarBrand>
-                <NavLink to="/resume" className="nav-link">
-                <FontAwesomeIcon icon={faMars} 
+                <NavLink to="/resume" className="nav-link" style={{color:'white'}}>
+                <FontAwesomeIcon icon={faMars} style={{color:'white'}}
             vertical color={'black'} /> Resume 
                 </NavLink>
               </NavbarBrand>
               <NavbarBrand>
-                <NavLink to="/testimonials" className="nav-link">
-                <FontAwesomeIcon icon={faMedal} 
+                <NavLink to="/testimonials" className="nav-link" style={{color:'white'}}>
+                <FontAwesomeIcon icon={faMedal} style={{color:'white'}}
             vertical color={'black'} /> Testimonials 
                   </NavLink>
               </NavbarBrand>
               <NavbarBrand>
-                <NavLink to="/education" className="nav-link">
-                <FontAwesomeIcon icon={faUniversity} 
+                <NavLink to="/education" className="nav-link" style={{color:'white'}}>
+                <FontAwesomeIcon icon={faUniversity} style={{color:'white'}}
             vertical color={'black'} />Education 
                 </NavLink>
               </NavbarBrand>
               <NavbarBrand>
-                <NavLink to="/charity" className="nav-link">
-                <FontAwesomeIcon icon={faHeart} 
+                <NavLink to="/charity" className="nav-link" style={{color:'white'}}>
+                <FontAwesomeIcon icon={faHeart} style={{color:'white'}}
             vertical color={'black'} /> Charity Work 
                   </NavLink>
               </NavbarBrand>
