@@ -29,3 +29,38 @@
     color: black;
     content: middle;
   }
+
+  
+  .carousel-root {
+    width: 64% !important;
+    margin: auto !important;
+    margin-top: 3% !important;
+  }
+  
+  .carousel .slide {
+    background: #fff !important;
+    color: black;
+    height: 100%;
+  }
+  
+  .carousel .slide img {
+    width: 139px !important;
+    border-radius: 50%;
+  }
+
+  
+
+  .myCarousel {
+    background: black;
+    margin-top: -6%;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 6%;
+    padding-bottom: 8%;
+    padding-left: 5%;
+    padding-right: 5%;
+    border: 10px solid #ddd;
+  }
+ 
+

@@ -12,8 +12,7 @@ import { HeaderContent } from "semantic-ui-react";
 
 const theme = createTheme({
   typography: {
-    fontSize: "10px",
-    colors: {background: 'black'},
+    fontSize: "1px",
     fontFamily: [
       'Raleway', 'sans-serif',
       
