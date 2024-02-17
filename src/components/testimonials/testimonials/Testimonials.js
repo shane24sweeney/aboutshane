@@ -51,7 +51,7 @@ return (
            
             <p>
                </p>
-               <div className="myCarousel">
+               <div>
                <h3>
                {testimonials[0].name}
                   </h3>
