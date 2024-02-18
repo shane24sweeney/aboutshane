@@ -58,7 +58,7 @@ function about () {
     }}
     >
    <Carousel  controls={false} indicators={false}>
-      <Carousel.Item interval={1000} 
+      <Carousel.Item interval={5000} 
     >
          <Typography variant="h1" gutterBottom >
       
