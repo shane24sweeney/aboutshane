@@ -42,7 +42,7 @@ function education () {
       <Card
      centered    className="flex-container"
      style={{
-      height: '100%',
+      height: '100vh',
       padding: '1px', 
       backgroundColor: 'black',
       color:'white',

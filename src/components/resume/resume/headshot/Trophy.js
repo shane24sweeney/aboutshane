@@ -13,7 +13,14 @@ import styled from "styled-components";
 function Trophy () {
   return (
   
-  <div className="justify-content-center" centered style={{backgroundColor: 'black'}}>
+  <div className="justify-content-center" centered 
+  style={{
+    height: '100vh',
+    padding: '1px', 
+    backgroundColor: 'black',
+    color:'white',
+    display: 'flex'
+}}>
     
         <p>
 Your mind is clear. Your heart rate is racing with anticipation and

@@ -15,12 +15,22 @@ const theme = createTheme({
 
 function HeadShot ()  {
   return (
-<ThemeProvider theme={theme} style={{
-         height: '100%',
-         backgroundColor: 'black',
-         color:'white',
-         textAlign: 'center'}} >
-  <Card centered style={{backgroundColor: 'black'}}>
+<ThemeProvider theme={theme}  style={{
+      height: '100vh',
+      width: '100%',
+      padding: '1px', 
+      backgroundColor: 'black',
+      color:'white',
+      display: 'flex'
+  }} >
+  <Card centered style={{
+      height: '100vh',
+      width: '100%',
+      padding: '1px', 
+      backgroundColor: 'black',
+      color:'white',
+      display: 'flex'
+  }}>
     <Image src={Shane} wrapped ui={false} />
     <Card.Content >
       <Card.Header style={{color:'white'}}>

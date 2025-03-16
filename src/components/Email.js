@@ -35,7 +35,7 @@ return (
 
   <div className="Header"
   style={{
-    height: '100%',
+    height: '100vh',
     padding: '60px', 
     borderRadius: '10px',
     borderColor: 'blue',

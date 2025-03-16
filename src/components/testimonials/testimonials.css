@@ -20,10 +20,7 @@
   
   .testimonialStyle {
     padding: 5px;
-    width: 200px;
-    height: 150px;
-    margin-top: 10px;
-    line-height: 40px;
+    width: '100px';
     font-weight: bold;
     text-align: center;
     color: black;
@@ -32,7 +29,7 @@
 
   
   .carousel-root {
-    width: 64% !important;
+    width: '100%' !important;
     margin: auto !important;
     margin-top: 3% !important;
   }
@@ -40,7 +37,13 @@
   .carousel .slide {
     background: #fff !important;
     color: black;
-    height: 100%;
+  }
+
+  .container {
+      height: '100vh';
+      padding: '1px';
+      color:'white';
+      display: 'flex';
   }
   
   .carousel .slide img {
@@ -53,7 +56,7 @@
   .myCarousel {
     background: black;
     margin-top: -6%;
-    width: 80%;
+    width: '100%';
     margin-left: auto;
     margin-right: auto;
     padding-top: 6%;

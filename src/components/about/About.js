@@ -49,8 +49,7 @@ function about () {
     <section id="about" >
     <Card centered  
     style={{
-      height: '100%',
-      padding: '60px', 
+      height: '100vh',
       borderRadius: '10px',
       backgroundColor: 'black',
       color:'white',
@@ -86,157 +85,363 @@ function about () {
    <Carousel.Item interval={1000} 
     >
     <Typography variant="h1" gutterBottom>
-    <Image src={Challenge1} wrapped ui={true} />
+    <Image src={Challenge1} 
+       style={{
+        height: '100vh',
+        borderRadius: '10px',
+        backgroundColor: 'black',
+        color:'white',
+        display: 'flex'
+      }}
+    wrapped ui={true} />
     </Typography>
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
     <Typography variant="h1" gutterBottom>
-    <Image src={Challenge2} wrapped ui={true} />
+    <Image src={Challenge2} 
+     style={{
+      height: '100vh',
+      borderRadius: '10px',
+      backgroundColor: 'black',
+      color:'white',
+      display: 'flex'
+    }}wrapped ui={true} />
     </Typography>
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
     <Typography variant="h1" gutterBottom>
-    <Image src={Challenge3} wrapped ui={true} />
+    <Image src={Challenge3} 
+     style={{
+      height: '100vh',
+      borderRadius: '10px',
+      backgroundColor: 'black',
+      color:'white',
+      display: 'flex'
+    }}wrapped ui={true} />
     </Typography>
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
     <Typography variant="h1" gutterBottom>
-    <Image src={Challenge4} wrapped ui={true} />
+    <Image src={Challenge4} 
+     style={{
+      height: '100vh',
+      borderRadius: '10px',
+      backgroundColor: 'black',
+      color:'white',
+      display: 'flex'
+    }}
+    wrapped ui={true} />
     </Typography>
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
     <Typography variant="h1" gutterBottom>
-    <Image src={Challenge5} wrapped ui={true} />
+    <Image src={Challenge5} 
+     style={{
+      height: '100vh',
+      borderRadius: '10px',
+      backgroundColor: 'black',
+      color:'white',
+      display: 'flex'
+    }}
+    wrapped ui={true} />
     </Typography>
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
     <Typography variant="h1" gutterBottom>
-    <Image src={Challenge6} wrapped ui={true} />
+    <Image src={Challenge6} 
+     style={{
+      height: '100vh',
+      borderRadius: '10px',
+      backgroundColor: 'black',
+      color:'white',
+      display: 'flex'
+    }}
+    wrapped ui={true} />
     </Typography>
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
     <Typography variant="h1" gutterBottom>
-    <Image src={Challenge7} wrapped ui={true} />
+    <Image src={Challenge7} 
+     style={{
+      height: '100vh',
+      borderRadius: '10px',
+      backgroundColor: 'black',
+      color:'white',
+      display: 'flex'
+    }}
+    wrapped ui={true} />
     </Typography>
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
     <Typography variant="h1" gutterBottom>
-    <Image src={Challenge8} wrapped ui={true} />
+    <Image src={Challenge8} 
+     style={{
+      height: '100vh',
+      borderRadius: '10px',
+      backgroundColor: 'black',
+      color:'white',
+      display: 'flex'
+    }}
+    wrapped ui={true} />
     </Typography>
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
     <Typography variant="h1" gutterBottom>
-    <Image src={Challenge9} wrapped ui={true} />
+    <Image src={Challenge9} 
+     style={{
+      height: '100vh',
+      borderRadius: '10px',
+      backgroundColor: 'black',
+      color:'white',
+      display: 'flex'
+    }}
+    wrapped ui={true} />
     </Typography>
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
     <Typography variant="h1" gutterBottom>
-    <Image src={Challenge10} wrapped ui={true} />
+    <Image src={Challenge10} 
+     style={{
+      height: '100vh',
+      borderRadius: '10px',
+      backgroundColor: 'black',
+      color:'white',
+      display: 'flex'
+    }}
+    wrapped ui={true} />
     </Typography>
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
     <Typography variant="h1" gutterBottom>
-    <Image src={Challenge11} wrapped ui={true} />
+    <Image src={Challenge11} 
+     style={{
+      height: '100vh',
+      borderRadius: '10px',
+      backgroundColor: 'black',
+      color:'white',
+      display: 'flex'
+    }}
+    wrapped ui={true} />
     </Typography>
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
     <Typography variant="h1" gutterBottom>
-    <Image src={Challenge12} wrapped ui={true} />
+    <Image src={Challenge12} 
+     style={{
+      height: '100vh',
+      borderRadius: '10px',
+      backgroundColor: 'black',
+      color:'white',
+      display: 'flex'
+    }}
+    wrapped ui={true} />
     </Typography>
     </Carousel.Item>
    <Carousel.Item interval={1000} 
     >
     <Typography variant="h1" gutterBottom>
-    <Image src={Workout1} wrapped ui={true} />
+    <Image src={Workout1} 
+     style={{
+      height: '100vh',
+      borderRadius: '10px',
+      backgroundColor: 'black',
+      color:'white',
+      display: 'flex'
+    }}
+    wrapped ui={true} />
     </Typography>
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
     <Typography variant="h1" gutterBottom>
-    <Image src={Workout2} wrapped ui={true} />
+    <Image src={Workout2} 
+     style={{
+      height: '100vh',
+      borderRadius: '10px',
+      backgroundColor: 'black',
+      color:'white',
+      display: 'flex'
+    }}
+    wrapped ui={true} />
     </Typography>
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
     <Typography variant="h1" gutterBottom>
-    <Image src={Workout3} wrapped ui={true} />
+    <Image src={Workout3} 
+     style={{
+      height: '100vh',
+      borderRadius: '10px',
+      backgroundColor: 'black',
+      color:'white',
+      display: 'flex'
+    }}
+    wrapped ui={true} />
     </Typography>
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
     <Typography variant="h1" gutterBottom>
-    <Image src={Workout4} wrapped ui={true} />
+    <Image src={Workout4} 
+     style={{
+      height: '100vh',
+      borderRadius: '10px',
+      backgroundColor: 'black',
+      color:'white',
+      display: 'flex'
+    }}
+    wrapped ui={true} />
     </Typography>
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
     <Typography variant="h1" gutterBottom>
-    <Image src={Workout5} wrapped ui={true} />
+    <Image src={Workout5} 
+     style={{
+      height: '100vh',
+      borderRadius: '10px',
+      backgroundColor: 'black',
+      color:'white',
+      display: 'flex'
+    }}
+    wrapped ui={true} />
     </Typography>
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
     <Typography variant="h1" gutterBottom>
-    <Image src={Workout6} wrapped ui={true} />
+    <Image src={Workout6} 
+     style={{
+      height: '100vh',
+      borderRadius: '10px',
+      backgroundColor: 'black',
+      color:'white',
+      display: 'flex'
+    }}
+    wrapped ui={true} />
     </Typography>
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
     <Typography variant="h1" gutterBottom>
-    <Image src={Workout7} wrapped ui={true} />
+    <Image src={Workout7} 
+     style={{
+      height: '100vh',
+      borderRadius: '10px',
+      backgroundColor: 'black',
+      color:'white',
+      display: 'flex'
+    }}
+    wrapped ui={true} />
     </Typography>
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
     <Typography variant="h1" gutterBottom>
-    <Image src={Workout8} wrapped ui={true} />
+    <Image src={Workout8} 
+     style={{
+      height: '100vh',
+      borderRadius: '10px',
+      backgroundColor: 'black',
+      color:'white',
+      display: 'flex'
+    }}
+    wrapped ui={true} />
     </Typography>
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
     <Typography variant="h1" gutterBottom>
-    <Image src={Workout9} wrapped ui={true} />
+    <Image src={Workout9} 
+     style={{
+      height: '100vh',
+      borderRadius: '10px',
+      backgroundColor: 'black',
+      color:'white',
+      display: 'flex'
+    }}
+    wrapped ui={true} />
     </Typography>
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
     <Typography variant="h1" gutterBottom>
-    <Image src={Workout10} wrapped ui={true} />
+    <Image src={Workout10} 
+     style={{
+      height: '100vh',
+      borderRadius: '10px',
+      backgroundColor: 'black',
+      color:'white',
+      display: 'flex'
+    }}
+    wrapped ui={true} />
     </Typography>
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
     <Typography variant="h1" gutterBottom>
-    <Image src={Workout11} wrapped ui={true} />
+    <Image src={Workout11} 
+     style={{
+      height: '100vh',
+      borderRadius: '10px',
+      backgroundColor: 'black',
+      color:'white',
+      display: 'flex'
+    }}
+    wrapped ui={true} />
     </Typography>
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
     <Typography variant="h1" gutterBottom>
-    <Image src={Workout12} wrapped ui={true} />
+    <Image src={Workout12} 
+     style={{
+      height: '100vh',
+      borderRadius: '10px',
+      backgroundColor: 'black',
+      color:'white',
+      display: 'flex'
+    }}
+    wrapped ui={true} />
     </Typography>
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
     <Typography variant="h1" gutterBottom>
-    <Image src={Workout13} wrapped ui={true} />
+    <Image src={Workout13} 
+     style={{
+      height: '100vh',
+      borderRadius: '10px',
+      backgroundColor: 'black',
+      color:'white',
+      display: 'flex'
+    }}
+    wrapped ui={true} />
     </Typography>
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
     <Typography variant="h1" gutterBottom>
-    <Image src={Workout14} wrapped ui={true} />
+    <Image src={Workout14} 
+     style={{
+      height: '100vh',
+      borderRadius: '10px',
+      backgroundColor: 'black',
+      color:'white',
+      display: 'flex'
+    }}
+    wrapped ui={true} />
     </Typography>
     </Carousel.Item>
    </Carousel>

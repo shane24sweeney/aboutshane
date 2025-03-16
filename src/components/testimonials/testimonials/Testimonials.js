@@ -5,9 +5,6 @@ import { Card } from 'semantic-ui-react';
 import { ThemeProvider, createTheme } from '@material-ui/core/styles';
 import testimonials from "../testimonials";
 
-
-
-
 const theme = createTheme({
     typography: {
       fontSize: "1px",
@@ -24,17 +21,22 @@ const theme = createTheme({
      
    
 return (
-      <ThemeProvider theme={theme} style={{
-         height: '100%',
-         backgroundColor: 'black',
-         color:'white',
-         textAlign: 'center'}} >
+   <div className="container">
+      <ThemeProvider theme={theme}  style={{
+      height: '100vh',
+      padding: '1px', 
+      backgroundColor: 'black',
+      color:'white',
+      display: 'flex'
+  }} >
       <Card    
       style={{
-          backgroundColor: 'black',
-          color:'white',
-          display: 'flex'
-      }}
+         height: '100vh',
+         padding: '1px', 
+         backgroundColor: 'black',
+         color:'white',
+         display: 'flex'
+     }}
   >
       
           
@@ -348,7 +350,9 @@ return (
   
     </Card>
     </ThemeProvider>
+      </div>
   );
+ 
   }
         
    
