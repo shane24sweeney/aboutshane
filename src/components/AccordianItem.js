@@ -5,7 +5,8 @@ const AccordionItem = ({ image, title, description, isOpen, onClick }) => {
   return(
     <div className="wrapper" >
     <button className={`question-container ${isOpen ? 'active' : ''}`} onClick={onClick} >
-    <img src ={image} alt={title}/>
+    <img src ={image} alt={title} width = {50} height =  {50}
+    />
      <p className='question-content'>{title}</p>
      <RiArrowDropDownLine className={`arrow ${isOpen ? 'active' : ''}`} /> 
     </button>

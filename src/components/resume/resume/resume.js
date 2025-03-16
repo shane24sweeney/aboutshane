@@ -13,7 +13,7 @@ const resume =
 [
     {
         title: "TECH QA MANAGER - PRESENT",
-        description: " Responsible for technical leadership in UI and API automation in GEB Groovy Spock.",
+        description: "Responsible for technical leadership in UI and API automation in GEB Groovy Spock.",
         image: Ameritas ,
     },
     {
@@ -83,9 +83,9 @@ const resume =
     title: "AUTOMATION ENGINEER",
     description: "Lead Java Automation Engineer for all PeopleNet product lines."
     +" Architected and designed the first Java Selenium automation framework"
-    +" in PeopleNet. "
+    +" in Bullhorn. "
     +"Developed the first innovative automation framework for PeopleNet Time"
-    +"entry." ,
+    +" entry." ,
     image: Bullhorn,
 },
 {
