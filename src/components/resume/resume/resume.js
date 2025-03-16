@@ -14,7 +14,7 @@ const resume =
     {
         title: "TECH QA MANAGER - PRESENT",
         description: "Responsible for technical leadership in UI and API automation in GEB Groovy Spock.",
-        image: Ameritas ,
+        image: Ameritas,
     },
     {
         title: "SENIOR AUTOMATION CONTRACT ENGINEER",
