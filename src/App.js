@@ -4,7 +4,7 @@ import "./App.css";
 import education from "./components/education/education"
 import HeadShot from "./components/resume/resume/headshot/HeadShot";
 import about from "./components/about/About";
-import Resume from "./components/resume/Resume";
+import Accoridan from "./components/Accordian";
 import testimonials from "./components/testimonials/testimonials/Testimonials";
 import Email from "./components/Email";
 import Charity from "./components/resume/resume/headshot/Charity";
@@ -25,7 +25,7 @@ function App(){
              <Route exact path="/"><Redirect to="/home" /></Route>
              <Route path="/about" component={about}/>
              <Route path="/contact" component={Email}/>
-             <Route path="/resume" component={Resume}/>
+             <Route path="/resume" component={Accoridan}/>
              <Route path="/testimonials" component={testimonials}/>
              <Route path="/education" component={education}/>
              <Route path="/Charity" component={Charity}/>
