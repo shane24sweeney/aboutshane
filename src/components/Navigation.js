@@ -2,7 +2,7 @@ import React from 'react';
 import {  Nav, NavbarBrand} from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {  faHome,   faAddressCard,  faChess, faMars, faUniversity, faMedal, faHeart } from '@fortawesome/free-solid-svg-icons';
+import {  faHome,   faAddressCard,  faChess, faAddressBook, faUniversity, faMedal, faHeart } from '@fortawesome/free-solid-svg-icons';
 
 
 function Navigation() {
@@ -31,7 +31,7 @@ function Navigation() {
               </NavbarBrand>
               <NavbarBrand>
                 <NavLink to="/resume" className="nav-link" style={{color:'white'}}>
-                <FontAwesomeIcon icon={faMars} size='2x' style={{color:'white'}}
+                <FontAwesomeIcon icon={faAddressBook} size='2x' style={{color:'white'}}
             vertical color={'black'} /> Resume 
                 </NavLink>
               </NavbarBrand>
