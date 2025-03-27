@@ -1,93 +1,59 @@
 import React from "react";
-import { Form, Input, TextArea, Button } from "semantic-ui-react";
 import "./email.css";
-import Swal from "sweetalert2";
 import emailjs from "emailjs-com";
+
 
 
 const SERVICE_ID = "service_p5dpxp5";
 const TEMPLATE_ID = "template_ye4bn4a";
+const PUBLIC_KEY = "user_dheSXAbJ2Qf4yl2w7Fj62";
 
-const USER_ID = "user_dheSXAbJ2Qf4yl2w7Fj62";
 
-
-function Email () {
+const Email = () => {
   const handleOnSubmit = (e) => {
-    e.preventDefault();
-    emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, e.target, USER_ID)
-      .then((result) => {
-        console.log(result.text);
-        Swal.fire({
-          icon: "success",
-          title: "Message Sent Successfully"
-        })
-      }, (error) => {
-        console.log(error.text);
-        Swal.fire({
-          icon: "error",
-          title: "Ooops, something went wrong",
-          text: error.text,
-        })
-      });
-    e.target.reset()
-  };
-return (
+      e.preventDefault();
+      emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, e.target, PUBLIC_KEY)
+        .then((result) => {
+          console.log(result.text);
+          alert('Message Sent Successfully')
+        }, (error) => {
+          console.log(error.text);
+          alert('Something went wrong!')
+        });
+      e.target.reset()
+    };
+  return (
+      <div style={{width:'100vw', 
+      height: '100vh', 
+      display:'flex',
+      margin: '20px',
+      justifyContent:'center',
+      alignItems:'center',
+      border: '1px',
+      padding: '20px',
+      borderRadius: '10px',
+      boxShadow: '0 0 10px 0 rgba(0,0,0,0.1)',
+      backgroundColor: 'black' 
+      }}>
+          <form class="formContainer" onSubmit={handleOnSubmit}>
+              <h2>Send me a message. Let's have a chat!</h2>
+              <div class="formElement">
+                  <label for="from_name">Name</label>
+                  <input type="text" id="from_name" name="from_name" placeholder="Your name.." required />
+              </div>
 
-  <div className="Header"
-  style={{
-    height: '100vh',
-    padding: '60px', 
-    borderRadius: '10px',
-    borderColor: 'blue',
-    color:'white',
-    display: 'flex'
-}}
-  >
-    
-      
-  
-    <div className="Email"
-  
-    
-    >
-      <Form onSubmit={handleOnSubmit}>
-        <Form.Field
-          id="form-input-control-email"
-          control={Input}
-          label="Email"
-          name="user_email"
-          placeholder="Email"
-          required
-          icon="mail"
-          iconPosition="left"
-        />
-        <Form.Field
-          id="form-input-control-last-name"
-          control={Input}
-          label="Name"
-          name="user_name"
-          placeholder="Name"
-          required
-          icon="user circle"
-          iconPosition="left"
-        />
-        <Form.Field
-          id="form-textarea-control-opinion"
-          control={TextArea}
-          label="Message"
-          name="user_message"
-          placeholder="Message"
-          required
-          icon="user circle"
-          iconPosition="left"
-         
-        />
-        <Button type="submit" color="green">Submit</Button>
-      </Form>
+              <div class="formElement">
+                  <label>E-mail</label>
+                  <input type="email" id="from_email" name="from_email" placeholder="Your email.." required />
+              </div>
+
+              <div class="formElement">
+                  <label for="message">Message</label>
+                  <textarea name="message" rows="8" cols="30" placeholder="Your message.." required />
+              </div>
+              <button type='submit' className='formButton'>Submit</button>
+          </form>
       </div>
-    </div>
-  
-  );
+  )
 }
-
 export default Email
