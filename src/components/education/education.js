@@ -1,6 +1,6 @@
 import React from "react";
 import  "../testimonials/testimonials.css";
-import { Card } from 'semantic-ui-react';
+import { Card } from 'react-bootstrap';
 import { ThemeProvider, createTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Carousel from 'react-bootstrap/Carousel';
@@ -29,7 +29,7 @@ const theme = createTheme({
     fontSize: "10px",
     fontFamily: [
       'Raleway', 'sans-serif',
-      
+
     ].join(','),
   },});
 
@@ -60,7 +60,7 @@ src={NCState}
        <Typography variant="h1" gutterBottom>
        {educationdescript[0].degree}
        </Typography>
-    
+
       <div >
 </div>
 </Carousel.Item>
@@ -77,7 +77,7 @@ src={UCC}
        <Typography variant="h1" gutterBottom>
        {educationdescript[1].degree}
        </Typography>
-    
+
       <div >
 </div>
 </Carousel.Item>
@@ -90,11 +90,11 @@ src={UCC}
 src={UCC}
         alt=""
       />
-     
+
     <div >
        <Typography variant="h2" gutterBottom>
        {educationdescript[2].degree}
-   
+
 </Typography>
 
 </div>

@@ -4,11 +4,10 @@ import Dalton from "../headshot/Dalton.jpg";
 import Habitat from "../headshot/Habitat.jpg";
 import DogDays from "../headshot/DogDays.png";
 import RaceCure from "../headshot/SusanKomen.jpeg";
-import { Card } from 'semantic-ui-react';
+import { Card, Button } from 'react-bootstrap';
 import Carousel from 'react-bootstrap/Carousel';
 import { ThemeProvider, createTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { Button } from "semantic-ui-react";
 
 const portfoliaopt =
 [
@@ -22,14 +21,14 @@ const theme = createTheme({
     fontSize: "16px",
     fontFamily: [
       'Raleway', 'sans-serif',
-      
+
     ].join(','),
   },});
 
   const ButtonDogDaysPositive = () => (
     <div>
        <Typography variant="h1" gutterBottom>
-      <Button circular color='green' href= {portfoliaopt[0].title} class="ui toggle button"
+      <Button variant="success" href={portfoliaopt[0].title} className="rounded-pill"
       >{portfoliaopt[0].websitelink}</Button>
       </Typography>
     </div>
@@ -38,15 +37,17 @@ const theme = createTheme({
 const Charity = () => {
   return (
     <ThemeProvider theme={theme}>
-    <Card centered   
+    <Card 
+    className="mx-auto d-flex"
     style={{
       height: '100vh',
       padding: '1px', 
       backgroundColor: 'black',
-      color:'white',
-      display: 'flex'
+      color:'white'
   }}
->
+    bg="dark"
+    text="white"
+    >
     <Carousel controls={false} indicators={false}>
       <Carousel.Item interval={4000} 
          >
@@ -60,8 +61,8 @@ const Charity = () => {
    src={CharityWork}
              alt=""
            />
-        
-         
+
+
          </Carousel.Item>
 
 <Carousel.Item interval={4000} 
@@ -71,11 +72,11 @@ const Charity = () => {
            <ButtonDogDaysPositive/>
            </Typography>
          <img
-             
+
    src={DogDays}
              alt=""
            />
-         
+
          </Carousel.Item>
          <Carousel.Item interval={4000} 
          >
@@ -83,11 +84,11 @@ const Charity = () => {
           <h1>Raised money and ran in the Susan G Komen Race For The Cure</h1> 
          </Typography>
          <img
-             
+
    src={RaceCure}
              alt=""
            />
-         
+
          </Carousel.Item>
 
          <Carousel.Item interval={4000} 
@@ -96,11 +97,11 @@ const Charity = () => {
           <h1>Yearly Dalton Ten Miler Race for Charity</h1> 
          </Typography>
          <img
-             
+
    src={Dalton}
              alt=""
            />
-         
+
          </Carousel.Item>
 
          <Carousel.Item interval={4000} 
@@ -109,18 +110,18 @@ const Charity = () => {
           <h1>Yearly 18K Habitat for Humanity Helen Race for Charity</h1> 
          </Typography>
          <img
-             
+
    src={Habitat}
              alt=""
            />
-         
+
          </Carousel.Item>
  </Carousel>
 
- 
+
  </Card>
  </ThemeProvider>
- 
+
   )
 };
 

@@ -30,7 +30,6 @@
     "react-scripts": "^5.0.1",
     "react-stacked-center-carousel": "^1.0.13",
     "reactstrap": "^9.2.1",
-    "semantic-ui-react": "^2.1.4",
     "sweetalert2": "^11.10.1",
     "web-vitals": "^2.1.4"
   },

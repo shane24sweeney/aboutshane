@@ -3,6 +3,7 @@ import  "../testimonials/testimonials.css";
 import { ThemeProvider, createTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Carousel from 'react-bootstrap/Carousel';
+import { Card, Image } from 'react-bootstrap';
 import Workout1 from "../resume/resume/headshot/Workout1.png";
 import Workout2 from "../resume/resume/headshot/Workout2.png";
 import Workout3 from "../resume/resume/headshot/Workout3.png";
@@ -29,7 +30,6 @@ import Challenge9 from "../resume/resume/headshot/Challenge9.png";
 import Challenge10 from "../resume/resume/headshot/Challenge10.png";
 import Challenge11 from "../resume/resume/headshot/Challenge11.png";
 import Challenge12 from "../resume/resume/headshot/Challenge12.png";
-import { Card,  Image } from 'semantic-ui-react';
 
 
 const theme = createTheme({
@@ -37,30 +37,32 @@ const theme = createTheme({
     fontSize: "10px",
     fontFamily: [
       'Raleway', 'sans-serif',
-      
+
     ].join(','),
   },});
 
 function about () {
-  
+
 
   return (
     <ThemeProvider theme={theme} className="justify-content-center" >
     <section id="about" >
-    <Card centered  
+    <Card 
+    className="mx-auto d-flex"
     style={{
       height: '100vh',
       borderRadius: '10px',
       backgroundColor: 'black',
-      color:'white',
-      display: 'flex'
+      color:'white'
     }}
+    bg="dark"
+    text="white"
     >
    <Carousel  controls={false} indicators={false}>
       <Carousel.Item interval={5000} 
     >
          <Typography variant="h1" gutterBottom >
-      
+
          <p>
          Your mind is clear. Your heart rate is racing with anticipation and
         excitement. The world's surroundings suddenly disappear and it's just
@@ -85,55 +87,65 @@ function about () {
    <Carousel.Item interval={1000} 
     >
     <Typography variant="h1" gutterBottom>
-    <Image src={Challenge1} 
-       style={{
+    <Image 
+      src={Challenge1} 
+      fluid
+      className="d-block mx-auto"
+      style={{
         height: '100vh',
         borderRadius: '10px',
         backgroundColor: 'black',
-        color:'white',
-        display: 'flex'
+        color:'white'
       }}
-    wrapped ui={true} />
+    />
     </Typography>
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
     <Typography variant="h1" gutterBottom>
-    <Image src={Challenge2} 
-     style={{
-      height: '100vh',
-      borderRadius: '10px',
-      backgroundColor: 'black',
-      color:'white',
-      display: 'flex'
-    }}wrapped ui={true} />
+    <Image 
+      src={Challenge2} 
+      fluid
+      className="d-block mx-auto"
+      style={{
+        height: '100vh',
+        borderRadius: '10px',
+        backgroundColor: 'black',
+        color:'white'
+      }}
+    />
     </Typography>
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
     <Typography variant="h1" gutterBottom>
-    <Image src={Challenge3} 
-     style={{
-      height: '100vh',
-      borderRadius: '10px',
-      backgroundColor: 'black',
-      color:'white',
-      display: 'flex'
-    }}wrapped ui={true} />
+    <Image 
+      src={Challenge3} 
+      fluid
+      className="d-block mx-auto"
+      style={{
+        height: '100vh',
+        borderRadius: '10px',
+        backgroundColor: 'black',
+        color:'white'
+      }}
+    />
     </Typography>
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
     <Typography variant="h1" gutterBottom>
-    <Image src={Challenge4} 
-     style={{
-      height: '100vh',
-      borderRadius: '10px',
-      backgroundColor: 'black',
-      color:'white',
-      display: 'flex'
-    }}
-    wrapped ui={true} />
+    <Image 
+      src={Challenge4} 
+      fluid
+      className="d-block mx-auto"
+      style={{
+        height: '100vh',
+        borderRadius: '10px',
+        backgroundColor: 'black',
+        color:'white'
+      }}
+    />
     </Typography>
     </Carousel.Item>
     <Carousel.Item interval={1000} 

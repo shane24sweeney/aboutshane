@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import AccordionItem from '../components/AccordianItem';
-import resume from './resume/resume/resume';
+import AccordionItem from './AccordianItem';
+import resume from '../resume/resume/resume';
 import './Accordian.css';
 const Accordion = () => {
-   
+
     const [activeIndex, setActiveIndex] = useState(null);
-   
+
     const handleItemClick = (index) => {
      setActiveIndex((prevIndex) => (prevIndex === index ? null : index));
     };
-   
+
     return (
      <div className='container'>
        {resume.map((item, index) => (
@@ -29,5 +29,5 @@ const Accordion = () => {
      </div>
     )
    };
-   
+
    export default Accordion;
