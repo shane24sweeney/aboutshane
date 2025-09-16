@@ -7,7 +7,7 @@ import Jim from "../resume/resume/headshot/Jim.jpeg";
 import Meanakshi from "../resume/resume/headshot/Meanashi.jpeg";
 import Geoffrey from "../resume/resume/headshot/Geoffrey.jpeg";
 import Gary from "../resume/resume/headshot/Gary.jpeg";
-
+import Dan from "../resume/resume/headshot/Dan.jpeg";
 
  
 
@@ -71,6 +71,12 @@ image: Steve
   title: "Embedded Software Engineer Staff at Lockheed Martin",
   recommendation: "Shane is a very knowledgeable Engineer with outstanding communication skills who has a genuine drive to solve any issue or task. Shane never gives up and always find solutions to the toughest of problems. He willingly goes the distance working extra hours and applying methodical effort to achieve milestones on time and ahead of time. He is very easy to work with and gets along with everyone, a true team player. Shane is a valuable asset to any team in the Engineering world. Shane's skillset and strengths in Software and Automation are rock solid and he practices all of the modern standards to ensure the corporation he is working for remains compliant on all ethical and legal levels. I would love to have Shane on my team at Lockheed Martin.", 
   image: Gary
+},
+
+{ name: "Dan Anderson",
+  title: "Manager, Development and Integration at Ameritas",
+  recommendation: "Shane does an excellent job at quality assurance. He is passionate and enthusiastic about his job and strives for the best quality. He is able to automate his testing in a variety of ways and tools including front end, mobile, and API testing. He led our testing team and helped ensure consistent, quality releases.",
+  image: Dan
 }
   ];
 
