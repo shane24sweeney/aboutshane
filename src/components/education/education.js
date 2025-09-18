@@ -53,7 +53,7 @@ function education () {
     <Carousel.Item interval={4000} 
   >
     <img
-        className="testimonial"
+        className="testimonial uniform-img"
 src={NCState}
         alt=""
       />
@@ -70,7 +70,7 @@ src={NCState}
     <Carousel.Item interval={4000} 
   >
     <img
-        className="testimonial"
+        className="testimonial uniform-img"
 src={UCC}
         alt=""
       />
@@ -86,7 +86,7 @@ src={UCC}
     <Carousel.Item interval={4000} 
   >
     <img
-        className="testimonial"
+        className="testimonial uniform-img"
 src={UCC}
         alt=""
       />

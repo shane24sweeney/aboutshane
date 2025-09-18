@@ -4,22 +4,6 @@ import styles from "./header.css";
 
 export default class header extends Component {
   render() {
-    const StyledDiv = styled.div`
-    height: '100vh';
-    width: '100%';
-    margin: 16px auto;
-    border: 1px solid #eee;
-    box-shadow: 0 2px 3px #ccc;
-    padding: 16px;
-    text-align: center;
-  }
-  
-  @media (min-width: 500px) {
-    .header {
-      width: 450px;
-    }
-  `;
-
     return (
       <header id="home">
         <button>

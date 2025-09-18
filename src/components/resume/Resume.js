@@ -90,7 +90,7 @@ function Resume() {
                  description={resume[0].description}
           
                 />
-        <img src ={resume[0].image} alt={resume[0].title}/>
+        <img className="uniform-img" src ={resume[0].image} alt={resume[0].title}/>
         <HeaderContent style = {{textAlign: 'center'}} > 
         <h1>{resume[0].title}</h1> </HeaderContent> 
         </Typography>
@@ -118,7 +118,7 @@ function Resume() {
     >
         <Typography variant="h2" gutterBottom>
         <resume image={resume[1].image} title={userTitleSecond} description = {resume[1].description}/>
-        <img src ={resume[1].image} alt={resume[1].title}/>
+        <img className="uniform-img" src ={resume[1].image} alt={resume[1].title}/>
         <HeaderContent style = {{textAlign: 'center'}} >  <h1>{resume[1].title}</h1></HeaderContent> 
         </Typography>
         </AccordionSummary>
@@ -144,7 +144,7 @@ function Resume() {
     >
   <Typography variant="h2" gutterBottom>
   <resume image={resume[2].image} title={userTitleThird} description = {resume[2].description}/>
-  <img src ={resume[2].image} alt={resume[2].title}/>
+  <img className="uniform-img" src ={resume[2].image} alt={resume[2].title}/>
   <HeaderContent style = {{textAlign: 'center'}} >  <h1>{resume[2].title}</h1></HeaderContent> 
   </Typography>
   </AccordionSummary>
@@ -170,7 +170,7 @@ slotProps={{ transition: { unmountOnExit: true } }}>
     >
   <Typography variant="h2" gutterBottom>
   <resume image={resume[3].image} title={userTitleForth} description = {resume[3].description}/>
-  <img src ={resume[3].image} alt={resume[3].title}/>
+  <img className="uniform-img" src ={resume[3].image} alt={resume[3].title}/>
   <HeaderContent style = {{textAlign: 'center'}} >  <h1>{resume[3].title}</h1></HeaderContent> 
   </Typography>
   </AccordionSummary>
@@ -196,7 +196,7 @@ slotProps={{ transition: { unmountOnExit: true } }}>
     >
   <Typography variant="h2" gutterBottom>
   <resume image={resume[4].image} title={userTitleFifth} description = {resume[4].description}/>
-  <img src ={resume[4].image} alt={resume[4].title}/>
+  <img className="uniform-img" src ={resume[4].image} alt={resume[4].title}/>
   <HeaderContent style = {{textAlign: 'center'}} >  <h1>{resume[4].title}</h1></HeaderContent> 
   </Typography>
   </AccordionSummary>
@@ -222,7 +222,7 @@ slotProps={{ transition: { unmountOnExit: true } }}>
     >
   <Typography variant="h2" gutterBottom>
   <resume image={resume[5].image} title={userTitleSixth} description = {resume[5].description}/>
-  <img src ={resume[5].image} alt={resume[5].title}/>
+  <img className="uniform-img" src ={resume[5].image} alt={resume[5].title}/>
   <HeaderContent style = {{textAlign: 'center'}} >  <h1>{resume[5].title}</h1></HeaderContent> 
   </Typography>
   </AccordionSummary>
@@ -248,7 +248,7 @@ slotProps={{ transition: { unmountOnExit: true } }}>
     >
   <Typography variant="h2" gutterBottom>
   <resume image={resume[6].image} title={userTitleSeventh} description = {resume[6].description}/>
-  <img src ={resume[6].image} alt={resume[6].title}/>
+  <img className="uniform-img" src ={resume[6].image} alt={resume[6].title}/>
   <HeaderContent style = {{textAlign: 'center'}} >  <h1>{resume[6].title}</h1></HeaderContent> 
   </Typography>
   </AccordionSummary>
@@ -274,7 +274,7 @@ slotProps={{ transition: { unmountOnExit: true } }}>
     >
   <Typography variant="h2" gutterBottom>
   <resume image={resume[7].image} title={userTitleEight} description = {resume[7].description}/>
-  <img src ={resume[7].image} alt={resume[7].title}/>
+  <img className="uniform-img" src ={resume[7].image} alt={resume[7].title}/>
   <HeaderContent style = {{textAlign: 'center'}} >  <h1>{resume[7].title}</h1></HeaderContent> 
   </Typography>
   </AccordionSummary>
@@ -300,7 +300,7 @@ slotProps={{ transition: { unmountOnExit: true } }}>
     >
   <Typography variant="h2" gutterBottom>
   <resume image={resume[8].image} title={userTitleNinth} description = {resume[8].description}/>
-  <img src ={resume[8].image} alt={resume[8].title}/>
+  <img className="uniform-img" src ={resume[8].image} alt={resume[8].title}/>
   <HeaderContent style = {{textAlign: 'center'}} >  <h1>{resume[8].title}</h1></HeaderContent> 
   </Typography>
   </AccordionSummary>

@@ -36,8 +36,9 @@ const theme = createTheme({
 
 const Charity = () => {
   return (
-    <ThemeProvider theme={theme}>
-    <Card 
+    <section id="charity">
+      <ThemeProvider theme={theme}>
+      <Card 
     className="mx-auto d-flex"
     style={{
       height: '100vh',
@@ -57,7 +58,7 @@ const Charity = () => {
             </h1>
             </Typography>
          <img
-             className="testimonial"
+             className="testimonial uniform-img"
    src={CharityWork}
              alt=""
            />
@@ -72,7 +73,7 @@ const Charity = () => {
            <ButtonDogDaysPositive/>
            </Typography>
          <img
-
+             className="uniform-img"
    src={DogDays}
              alt=""
            />
@@ -84,7 +85,7 @@ const Charity = () => {
           <h1>Raised money and ran in the Susan G Komen Race For The Cure</h1> 
          </Typography>
          <img
-
+             className="uniform-img"
    src={RaceCure}
              alt=""
            />
@@ -97,7 +98,7 @@ const Charity = () => {
           <h1>Yearly Dalton Ten Miler Race for Charity</h1> 
          </Typography>
          <img
-
+             className="uniform-img"
    src={Dalton}
              alt=""
            />
@@ -110,7 +111,7 @@ const Charity = () => {
           <h1>Yearly 18K Habitat for Humanity Helen Race for Charity</h1> 
          </Typography>
          <img
-
+             className="uniform-img"
    src={Habitat}
              alt=""
            />
@@ -119,8 +120,9 @@ const Charity = () => {
  </Carousel>
 
 
- </Card>
- </ThemeProvider>
+      </Card>
+    </ThemeProvider>
+  </section>
 
   )
 };

@@ -49,7 +49,7 @@ function Testimonials() {
                      <testimonials image={testimonials[0].image} title={testimonials[0].title} description={testimonials[0].description} />
 
 
-                     <img src={testimonials[0].image} alt={testimonials[0].title} />
+                     <img className="uniform-img" src={testimonials[0].image} alt={testimonials[0].title} />
 
 
                      <p>
@@ -81,7 +81,7 @@ function Testimonials() {
                   <Carousel.Item interval={4000}>
                      <testimonials image={testimonials[1].image} centered title={testimonials[1].title} description={testimonials[0].description} />
 
-                     <img src={testimonials[1].image} alt={testimonials[1].title} />
+                     <img className="uniform-img" src={testimonials[1].image} alt={testimonials[1].title} />
                      <p>
                      </p>
                      <div>
@@ -111,7 +111,7 @@ function Testimonials() {
                   <Carousel.Item interval={4000}>
                      <testimonials image={testimonials[2].image} title={testimonials[2].title} description={testimonials[2].description} />
 
-                     <img src={testimonials[2].image} alt={testimonials[2].title} />
+                     <img className="uniform-img" src={testimonials[2].image} alt={testimonials[2].title} />
                      <p>
                      </p>
                      <div>
@@ -141,7 +141,7 @@ function Testimonials() {
                   <Carousel.Item interval={4000}>
                      <testimonials image={testimonials[3].image} title={testimonials[3].title} description={testimonials[3].description} />
 
-                     <img src={testimonials[3].image} alt={testimonials[3].title} />
+                     <img className="uniform-img" src={testimonials[3].image} alt={testimonials[3].title} />
                      <p>
                      </p>
                      <div>
@@ -171,7 +171,7 @@ function Testimonials() {
                   <Carousel.Item interval={4000}>
                      <testimonials image={testimonials[4].image} title={testimonials[4].title} description={testimonials[4].description} />
 
-                     <img src={testimonials[4].image} alt={testimonials[4].title} />
+                     <img className="uniform-img" src={testimonials[4].image} alt={testimonials[4].title} />
                      <p>
                      </p>
                      <div>
@@ -201,7 +201,7 @@ function Testimonials() {
                   <Carousel.Item interval={4000}>
                      <testimonials image={testimonials[5].image} title={testimonials[5].title} description={testimonials[5].description} />
 
-                     <img src={testimonials[5].image} alt={testimonials[5].title} />
+                     <img className="uniform-img" src={testimonials[5].image} alt={testimonials[5].title} />
                      <p>
                      </p>
                      <div>
@@ -260,7 +260,7 @@ function Testimonials() {
                   <Carousel.Item interval={4000}>
                      <testimonials image={testimonials[7].image} title={testimonials[7].title} description={testimonials[7].description} />
 
-                     <img src={testimonials[7].image} alt={testimonials[7].title} />
+                     <img className="uniform-img" src={testimonials[7].image} alt={testimonials[7].title} />
                      <p>
                      </p>
                      <div>
@@ -290,7 +290,7 @@ function Testimonials() {
                   <Carousel.Item interval={4000}>
                      <testimonials image={testimonials[8].image} title={testimonials[8].title} description={testimonials[8].description} />
 
-                     <img src={testimonials[8].image} alt={testimonials[8].title} />
+                     <img className="uniform-img" src={testimonials[8].image} alt={testimonials[8].title} />
                      <p>
                      </p>
                      <div>
@@ -320,7 +320,7 @@ function Testimonials() {
                   <Carousel.Item interval={4000}>
                      <testimonials image={testimonials[9].image} title={testimonials[9].title} description={testimonials[9].description} />
 
-                     <img src={testimonials[9].image} alt={testimonials[9].title} />
+                     <img className="uniform-img" src={testimonials[9].image} alt={testimonials[9].title} />
                      <p>
                      </p>
                      <div>
@@ -352,7 +352,7 @@ function Testimonials() {
                   <Carousel.Item interval={4000}>
                      <testimonials image={testimonials[10].image} title={testimonials[10].title} description={testimonials[10].description} />
 
-                     <img src={testimonials[10].image} alt={testimonials[10].title} />
+                     <img className="uniform-img" src={testimonials[10].image} alt={testimonials[10].title} />
                      <p>
                      </p>
                      <div>

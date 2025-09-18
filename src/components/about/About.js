@@ -50,10 +50,11 @@ function about () {
     <Card 
     className="mx-auto d-flex"
     style={{
-      height: '100vh',
       borderRadius: '10px',
       backgroundColor: 'black',
-      color:'white'
+      color:'white',
+      padding: '16px',
+      marginBottom: '24px'
     }}
     bg="dark"
     text="white"

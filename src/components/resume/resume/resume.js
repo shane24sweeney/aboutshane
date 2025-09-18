@@ -7,39 +7,32 @@ import Ameritas from "../resume/headshot/Ameritas.png";
 import Bullhorn from "../resume/headshot/bullhorn.jpeg";
 import GE from "../resume/headshot/GE.png";
 import Tek from "../resume/headshot/TekSystems.jpeg";
-
+import ItronImage from "./headshot/ItronImage.png";
+import XM from "../resume/headshot/XM.png";
+import MOT from "../resume/headshot/MOT.png";
+import ALCTATEL from "../resume/headshot/Alcatel.png";
 
 const resume = 
 [
     {
         title: "TECH QA MANAGER - PRESENT",
-        description: "Responsible for technical leadership in UI and API automation in GEB Groovy Spock.",
+        description: "Designed automation frameworks in Java, Groovy (GEB/Spock), and Playwright, embedding BDD practices to enhance test reliability and long-term maintainability.\nDelivered advanced training sessions for senior engineers on new UI and API automation, improving technical expertise and overall efficiency within the automation team.\nDirected quality assurance strategies for UI, API, and Scale roadmap initiatives, ensuring comprehensive coverage and alignment with critical business and project objectives.\nExecuted automation test runs through Jenkins and GitHub workflows, accelerating regression cycles while supporting streamlined continuous integration and delivery pipelines.\nReviewed automated and manual test cases using IntelliJ, GitHub, Jira, and Xray, enforcing coding standards and improving collaboration across distributed teams.\nReported automation outcomes during sprint demos to business stakeholders and utilized GitHub Copilot, reducing review effort and increasing delivery productivity.",
         image: Ameritas,
     },
     {
-        title: "SENIOR AUTOMATION CONTRACT ENGINEER",
-        description: "Responsible for API and UI automation in GEB Groovy Spock. Utilizing the latest Page Object Design patterns."
-        +" Developed over 4000 automated test cases in CI/CD in Jenkins.",
+        title: "SENIOR AUTOMATION CONTRACT ENGINEER - AMERITAS",
+        description: "Engineered automation approaches for API, mobile, and web tesDng using Selenium, GEB, Groovy, and Spock,\nimproving overall framework resilience and maintainability.\n• Partnered with analysts and development teams to refine automation requirements, translating business needs\ninto well-defined test stories and executable test cases.\nPerformed scalability and reliability assessments with Postman, BlazeMeter, and Apache JMeter, ensuring\napplication performance met organizational expectations under varying workloads.\nStrengthened test architecture by adding hard and soft assertions, DIAPER framework, and Entity framework, while\nestablishing practices in both BDD and TDD.\n Mentored junior engineers with one-on-one guidance and knowledge sharing, while delivering QA\ndemonstrations and reporting out automation outcomes to senior stakeholders.\n• Spearheaded automation initiatives across all counties in all 50 U.S. states, including automated PDF validations,\nsignificantly improving nationwide regression reliability.",
         image: Tek,
     },
     {
-        title: "SENIOR AUTOMATION CONTRACT ENGINEER",
-        description: "Responsible for API and UI automation in C# framework."
-        +" Developed both Behavioral Driven Development (BDD) and "
-          +"Test Driven Development (TDD) automation frameworks."
-          +" Created automation frameworks for deployments in Azure cloud utilizing design patterns"
-          +" and best practices",
+        title: "SENIOR AUTOMATION CONTRACT ENGINEER -FIS",
+        description: "Built reusable automation frameworks in C# to support both API and UI testing, delivering consistent and reusable test architecture across projects.\nConducted load and scalability evaluations using Postman and Apache JMeter, ensuring applications sustained performance benchmarks under high-demand conditions.\nCoached junior QA engineers through structured mentoring (one-on-one sessions) and documentation, promoting professional development and advancing team-wide automation capabilities.\nOrganized automation backlogs, defining priorities and creating structured plans to align automation initiatives with sprint and release objectives.\nBlended API and UI automation suites into end-to-end testing processes, expanding regression coverage and improving overall system validation.\nShowcased automation progress and results in scrum ceremonies and QA demos, strengthening transparency and engagement with senior leadership.",
         image: Eliassen,
     },
 
     {
         title: "SOFTWARE DEVELOPER",
-        description: "Responsible for developing GPS TRACKIT product line in React, Redux"
-        +" and Saga."
-        +" Developed the first TDD automation framework from the ground up"
-        +" at GPS TRACKIT."
-        +" Created BDD Rest-Assured API calls in the automation framework"
-        +"to validate API calls utilized in Postman.",
+        description: "Enhanced the GPS Trackit product line by developing and maintaining features with Redux and Saga, leveraging VS Code and Chrome DevTools.\nIntegrated RESTful APIs into core product modules, expanding functionality and improving system interoperability across applications.\nChampioned the design and implementation of a company-wide TDD automation framework, strengthening test reliability and maintainability.\nApplied Page Object and Page Factory design patterns to automation architecture, improving reusability and reducing maintenance overhead.\nUtilized Java, IntelliJ, and diverse development tools to deliver scalable solutions and ensure consistent performance across the product suite.",
         image: GPSTrackit,
 },
 
@@ -96,7 +89,29 @@ const resume =
     +" for meters. Developed and executed software test plans, test designs,"
     +" test objectives, and test cases. " ,
     image: GE,
-}
+},
+    {
+        title: "SQA Engineer II",
+        description: "SQA Engineer II, Itron, Raleigh, NC (2008-2009)\n" ,
+        image: ItronImage,
+    },
+    {
+        title: "Member of Technical Staﬀ",
+        description: "Member of Technical Staﬀ, XM Satellite Radio, Deerfield Beach, FL (2004-2008)" ,
+        image: XM,
+    },
+
+    {
+        title: "Senior Software Engineer",
+        description: "Senior SoMware Engineer, Motorola, Boynton Beach, FL (2001-2004)",
+        image: MOT,
+    },
+
+    {
+        title: "Network SubSystem Test",
+        description: "Network SubSystem Test, Alcatel, Cork, Ireland (1999-2000)" ,
+        image: ALCTATEL,
+    }
 ]
 
 export default resume

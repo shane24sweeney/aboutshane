@@ -1,6 +1,4 @@
 import './App.css';
-import React from "react";
-import "./App.css";
 import education from "./components/education/education"
 import HeadShot from "./components/resume/resume/headshot/HeadShot";
 import about from "./components/about/About";
@@ -8,8 +6,8 @@ import AccordionComponent from "./components/accordian/index.js";
 import testimonials from "./components/testimonials/testimonials/Testimonials";
 import Email from "./components/email/index.js";
 import Charity from "./components/resume/resume/headshot/Charity";
-import "./App.css";
 import Navigation from './components/navigation/index.js';
+import Footer from './components/footer/index.js';
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 function App(){
@@ -34,6 +32,7 @@ function App(){
 
            </Switch>
           </BrowserRouter>
+          <Footer />
 
           </div>
 
