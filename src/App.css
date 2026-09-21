@@ -24,14 +24,14 @@
   background-color: black;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
 }
 .body {
   min-height: 100vh;
   width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
   color: white;
   background-color: black; /* or any other color you prefer */
 }
@@ -120,6 +120,22 @@ html, body, #root {
 .site-nav-links .nav-link.active {
   background: #19333a;
   color: #79d2c0 !important;
+}
+
+.home-profile .card-content,
+.home-profile .extra.card-content {
+  padding: 8px 0;
+}
+
+.home-profile .ui.cards {
+  margin: 0;
+}
+
+.home-profile .ui.cards > .card {
+  width: calc(50% - 16px);
+  margin: 8px;
+  background: #101923 !important;
+  border: 1px solid #293746 !important;
 }
 
 .home-profile {
@@ -226,6 +242,8 @@ html, body, #root {
 
   .site-nav .navbar-collapse {
     padding-top: 8px;
+    background: #0d151e;
+    border-top: 1px solid #263746;
   }
 
   .site-nav-links {
@@ -237,6 +255,16 @@ html, body, #root {
     min-width: 0;
     width: 100%;
     padding: 10px 12px !important;
+  }
+
+  .home-profile .ui.cards > .card {
+    width: 100%;
+    margin: 6px 0;
+  }
+
+  .home-profile .card-content,
+  .home-profile .extra.card-content {
+    padding: 4px 0;
   }
 
   .home-profile {
