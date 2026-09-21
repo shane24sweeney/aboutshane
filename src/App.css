@@ -23,6 +23,7 @@
   color:white;
   background-color: black;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: stretch;
 }
@@ -38,12 +39,19 @@
   .box {
     width: 100%;
     display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
     justify-content: center;
     align-items: center;
     color: white;
     background-color: black;
     min-height: 100vh;
   }
+
+.box > * {
+  width: 100%;
+  min-width: 0;
+}
   
 
 @media (prefers-reduced-motion: no-preference) {
