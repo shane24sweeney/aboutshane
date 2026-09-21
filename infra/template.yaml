@@ -10,6 +10,15 @@ Parameters:
   CorsAllowedOrigins:
     Type: CommaDelimitedList
     Default: http://localhost:3000
+  FrontendCertificateArn:
+    Type: String
+    Default: arn:aws:acm:us-east-1:647276285325:certificate/6688db3c-3e6f-450c-873c-1800cc539cc9
+  FrontendDomainName:
+    Type: String
+    Default: selenium-automation.com
+  FrontendWwwDomainName:
+    Type: String
+    Default: www.selenium-automation.com
 
 Resources:
   FrontendBucket:
@@ -46,6 +55,9 @@ Resources:
         DefaultRootObject: index.html
         HttpVersion: http2and3
         PriceClass: PriceClass_100
+        Aliases:
+          - !Ref FrontendDomainName
+          - !Ref FrontendWwwDomainName
         Origins:
           - Id: FrontendS3Origin
             DomainName: !GetAtt FrontendBucket.RegionalDomainName
@@ -75,7 +87,9 @@ Resources:
             ResponsePagePath: /index.html
             ErrorCachingMinTTL: 0
         ViewerCertificate:
-          CloudFrontDefaultCertificate: true
+          AcmCertificateArn: !Ref FrontendCertificateArn
+          SslSupportMethod: sni-only
+          MinimumProtocolVersion: TLSv1.2_2021
 
   FrontendBucketPolicy:
     Type: AWS::S3::BucketPolicy
