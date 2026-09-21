@@ -1,6 +1,24 @@
-# Getting Started with Create React App
+# AboutShane
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is a React portfolio app with a Spring Boot contact API. The frontend includes routing, a shared app context, and EmailJS-based contact form configuration.
+
+## Environment setup
+
+Create a local `.env` file in the project root using the included example:
+
+```bash
+cp .env.example .env
+```
+
+Add your EmailJS values to `.env`:
+
+```env
+REACT_APP_EMAILJS_SERVICE_ID=your_service_id
+REACT_APP_EMAILJS_TEMPLATE_ID=your_template_id
+REACT_APP_EMAILJS_PUBLIC_KEY=your_public_key
+```
+
+The app reads these values through the shared context provider so secrets and service identifiers are not hardcoded in the source.
 
 ## Available Scripts
 

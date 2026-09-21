@@ -1,27 +1,26 @@
-import React from "react";
+import React from 'react';
 import { Form, Button, Container, Row, Col, Card } from 'react-bootstrap';
-import emailjs from "emailjs-com";
-
-
-
-const SERVICE_ID = "service_p5dpxp5";
-const TEMPLATE_ID = "template_ye4bn4a";
-const PUBLIC_KEY = "user_dheSXAbJ2Qf4yl2w7Fj62";
-
+import emailjs from 'emailjs-com';
+import { useSiteContext } from '../../context/SiteContext';
 
 const Email = () => {
+  const { emailjs: { serviceId, templateId, publicKey } } = useSiteContext();
+
   const handleOnSubmit = (e) => {
-      e.preventDefault();
-      emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, e.target, PUBLIC_KEY)
-        .then((result) => {
-          console.log(result.text);
-          alert('Message Sent Successfully')
-        }, (error) => {
-          console.log(error.text);
-          alert('Something went wrong!')
-        });
-      e.target.reset()
-    };
+    e.preventDefault();
+    const form = e.currentTarget;
+
+    emailjs.sendForm(serviceId, templateId, form, publicKey)
+      .then((result) => {
+        console.log(result.text);
+        alert('Message Sent Successfully');
+      }, (error) => {
+        console.log(error.text);
+        alert('Something went wrong!');
+      });
+    form.reset();
+  };
+
   return (
     <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: '100vh' }}>
       <Row className="justify-content-center">
@@ -31,7 +30,7 @@ const Email = () => {
               <h2 className="text-center mb-4">Send me a message. Let's have a chat!</h2>
               <Form onSubmit={handleOnSubmit}>
                 <Form.Group className="mb-3">
-                  <Form.Label>Name</Form.Label>
+                  <Form.Label htmlFor="from_name">Name</Form.Label>
                   <Form.Control
                     type="text"
                     id="from_name"
@@ -41,7 +40,7 @@ const Email = () => {
                   />
                 </Form.Group>
                 <Form.Group className="mb-3">
-                  <Form.Label>E-mail</Form.Label>
+                  <Form.Label htmlFor="from_email">E-mail</Form.Label>
                   <Form.Control
                     type="email"
                     id="from_email"
@@ -51,9 +50,10 @@ const Email = () => {
                   />
                 </Form.Group>
                 <Form.Group className="mb-3">
-                  <Form.Label>Message</Form.Label>
+                  <Form.Label htmlFor="message">Message</Form.Label>
                   <Form.Control
                     as="textarea"
+                    id="message"
                     name="message"
                     placeholder="Your message..."
                     rows={8}
@@ -67,6 +67,7 @@ const Email = () => {
         </Col>
       </Row>
     </Container>
-  )
-}
-export default Email
+  );
+};
+
+export default Email;
