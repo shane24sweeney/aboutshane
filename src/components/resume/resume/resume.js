@@ -1,4 +1,3 @@
-import Eliassen from "../resume/headshot/Eliassen.png";
 import GPSTrackit from "../resume/headshot/GPSTrackit.png";
 import Deluxe from "../resume/headshot/Deluxe.png";
 import Celtic from "../resume/headshot/CelticTesting.png";
@@ -27,22 +26,23 @@ const resume =
     {
         title: "SENIOR AUTOMATION CONTRACT ENGINEER - AMERITAS",
         description: "Engineered automation approaches for API, mobile, and web tesDng using Selenium, GEB, Groovy, and Spock,\nimproving overall framework resilience and maintainability.\n• Partnered with analysts and development teams to refine automation requirements, translating business needs\ninto well-defined test stories and executable test cases.\nPerformed scalability and reliability assessments with Postman, BlazeMeter, and Apache JMeter, ensuring\napplication performance met organizational expectations under varying workloads.\nStrengthened test architecture by adding hard and soft assertions, DIAPER framework, and Entity framework, while\nestablishing practices in both BDD and TDD.\n Mentored junior engineers with one-on-one guidance and knowledge sharing, while delivering QA\ndemonstrations and reporting out automation outcomes to senior stakeholders.\n• Spearheaded automation initiatives across all counties in all 50 U.S. states, including automated PDF validations,\nsignificantly improving nationwide regression reliability.",
-        image: Tek,
+        image: Ameritas,
     },
     {
         title: "SENIOR AUTOMATION CONTRACT ENGINEER - FIS",
         description: "Built reusable automation frameworks in C# to support both API and UI testing, delivering consistent and reusable test architecture across projects.\nConducted load and scalability evaluations using Postman and Apache JMeter, ensuring applications sustained performance benchmarks under high-demand conditions.\nCoached junior QA engineers through structured mentoring (one-on-one sessions) and documentation, promoting professional development and advancing team-wide automation capabilities.\nOrganized automation backlogs, defining priorities and creating structured plans to align automation initiatives with sprint and release objectives.\nBlended API and UI automation suites into end-to-end testing processes, expanding regression coverage and improving overall system validation.\nShowcased automation progress and results in scrum ceremonies and QA demos, strengthening transparency and engagement with senior leadership.",
-        image: Eliassen,
+        image: null,
+        company: "FIS",
     },
 
     {
-        title: "SOFTWARE DEVELOPER",
+        title: "SOFTWARE DEVELOPER - GPS TRACKIT",
         description: "Enhanced the GPS Trackit product line by developing and maintaining features with Redux and Saga, leveraging VS Code and Chrome DevTools.\nIntegrated RESTful APIs into core product modules, expanding functionality and improving system interoperability across applications.\nChampioned the design and implementation of a company-wide TDD automation framework, strengthening test reliability and maintainability.\nApplied Page Object and Page Factory design patterns to automation architecture, improving reusability and reducing maintenance overhead.\nUtilized Java, IntelliJ, and diverse development tools to deliver scalable solutions and ensure consistent performance across the product suite.",
         image: GPSTrackit,
 },
 
 {
-    title: "SENIOR AUTOMATION ENGINEER",
+    title: "SENIOR AUTOMATION ENGINEER - DELUXE",
     description: "Architected and utilized design patterns to create a new "
     +"automation framework for DELUXE banking product lines. Programmed "
     +"in Java/C# and Python Robot frameworks. Performed both API and UI"
@@ -55,7 +55,7 @@ const resume =
 },
 
 {
-    title: "SENIOR AUTOMATION CONSULTANT",
+    title: "SENIOR AUTOMATION CONSULTANT - CELTIC TESTING",
     description: "Responsible for automating Aaron's department store in C#." 
     +" Developed multiple TDD projects for new CTE clients in Java and"
     +" Selenium. "
@@ -64,7 +64,7 @@ const resume =
 },
 
 {
-    title: "SENIOR AUTOMATION ENGINEER",
+    title: "SENIOR AUTOMATION ENGINEER - BOTTOMLINE",
     description: "Senior Test Automation Engineer for all BottomLine Healthcare product"
     +" lines."
     +" Architected the first Java Selenium WebDriver Test Driven Development"
@@ -78,7 +78,7 @@ const resume =
 },
 
 {
-    title: "AUTOMATION ENGINEER",
+    title: "AUTOMATION ENGINEER - BULLHORN / PEOPLENET",
     description: "Lead Java Automation Engineer for all PeopleNet product lines."
     +" Architected and designed the first Java Selenium automation framework"
     +" in Bullhorn. "
@@ -87,7 +87,7 @@ const resume =
     image: Bullhorn,
 },
 {
-    title: "LEAD ENGINEER TECHNOLOGIST",
+    title: "LEAD ENGINEER TECHNOLOGIST - GE",
     description: "Lead Engineer for all AMI meter products in both IEC and ANSI meter"
     +" products. Responsible for managing and mentoring other employees"
     +" with in Digital meters. Developed the first automation framework"
@@ -96,24 +96,24 @@ const resume =
     image: GE,
 },
     {
-        title: "SQA ENGINEER II",
+        title: "SQA ENGINEER II - ITRON",
         description: "SQA Engineer II, Itron, Raleigh, NC (2008-2009)\n" ,
         image: ItronImage,
     },
     {
-        title: "MEMBER OF TECHNICAL STAFF",
+        title: "MEMBER OF TECHNICAL STAFF - XM SATELLITE RADIO",
         description: "Member of Technical Staﬀ, XM Satellite Radio, Deerfield Beach, FL (2004-2008)" ,
         image: XM,
     },
 
     {
-        title: "SENIOR SOFTWARE ENGINEER",
+        title: "SENIOR SOFTWARE ENGINEER - MOTOROLA",
         description: "Senior SoMware Engineer, Motorola, Boynton Beach, FL (2001-2004)",
         image: MOT,
     },
 
     {
-        title: "NETWORK SUBSYSTEM TEST",
+        title: "NETWORK SUBSYSTEM TEST - ALCATEL",
         description: "Network SubSystem Test, Alcatel, Cork, Ireland (1999-2000)" ,
         image: ALCTATEL,
     }

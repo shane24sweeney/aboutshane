@@ -49,7 +49,13 @@ function Resume() {
                     id={`resume-panel-${index}-header`}
                   >
                     <Typography variant="h2" gutterBottom>
-                      <img className="uniform-img" src={role.image} alt={role.title} />
+                      {role.image ? (
+                        <img className="uniform-img" src={role.image} alt={role.title} />
+                      ) : (
+                        <div className="resume-logo-fallback" aria-label={`${role.company} logo`}>
+                          {role.company}
+                        </div>
+                      )}
                       <HeaderContent style={{ textAlign: 'center' }}>
                         <h1>{role.title}</h1>
                       </HeaderContent>

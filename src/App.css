@@ -262,6 +262,19 @@ html, body, #root {
   margin: 0 auto 10px;
 }
 
+.resume-logo-fallback {
+  width: 180px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 10px;
+  color: #f7fbff;
+  font-size: 1.7rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
 .resume-shell h1 {
   margin: 0;
   color: #f7fbff;
@@ -354,6 +367,12 @@ html, body, #root {
   .resume-shell .uniform-img {
     width: 140px;
     height: 56px;
+  }
+
+  .resume-logo-fallback {
+    width: 140px;
+    height: 56px;
+    font-size: 1.35rem;
   }
 }
 
