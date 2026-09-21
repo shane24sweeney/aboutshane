@@ -8,7 +8,7 @@ Parameters:
     Default: aboutshane
     AllowedPattern: '[a-z0-9-]+'
   CorsAllowedOrigins:
-    Type: String
+    Type: CommaDelimitedList
     Default: http://localhost:3000
 
 Resources:
@@ -111,7 +111,7 @@ Resources:
       AutoPublishAlias: live
       Environment:
         Variables:
-          CORS_ALLOWED_ORIGINS: !Ref CorsAllowedOrigins
+          CORS_ALLOWED_ORIGINS: !Join [',', !Ref CorsAllowedOrigins]
       Events:
         Api:
           Type: HttpApi
@@ -126,7 +126,7 @@ Resources:
       StageName: $default
       CorsConfiguration:
         AllowOrigins:
-          - !Ref CorsAllowedOrigins
+          !Ref CorsAllowedOrigins
         AllowHeaders:
           - content-type
         AllowMethods:
