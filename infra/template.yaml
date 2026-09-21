@@ -67,6 +67,7 @@ Resources:
           TargetOriginId: FrontendS3Origin
           ViewerProtocolPolicy: redirect-to-https
           Compress: true
+          ResponseHeadersPolicyId: 67f7725c-6f97-4210-82d7-5512b31e9d03
           AllowedMethods:
             - GET
             - HEAD
