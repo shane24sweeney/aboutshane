@@ -25,7 +25,7 @@ const resume =
         image: Ameritas,
     },
     {
-        title: "SENIOR AUTOMATION CONTRACT ENGINEER - AMERITAS (ENDED NOVEMBER 2025)",
+        title: "SENIOR AUTOMATION CONTRACT ENGINEER - AMERITAS",
         description: "Engineered automation approaches for API, mobile, and web tesDng using Selenium, GEB, Groovy, and Spock,\nimproving overall framework resilience and maintainability.\n• Partnered with analysts and development teams to refine automation requirements, translating business needs\ninto well-defined test stories and executable test cases.\nPerformed scalability and reliability assessments with Postman, BlazeMeter, and Apache JMeter, ensuring\napplication performance met organizational expectations under varying workloads.\nStrengthened test architecture by adding hard and soft assertions, DIAPER framework, and Entity framework, while\nestablishing practices in both BDD and TDD.\n Mentored junior engineers with one-on-one guidance and knowledge sharing, while delivering QA\ndemonstrations and reporting out automation outcomes to senior stakeholders.\n• Spearheaded automation initiatives across all counties in all 50 U.S. states, including automated PDF validations,\nsignificantly improving nationwide regression reliability.",
         image: Tek,
     },
