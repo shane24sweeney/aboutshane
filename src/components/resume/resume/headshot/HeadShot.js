@@ -93,7 +93,7 @@ function HeadShot() {
             <Card.Content extra style={{ color: 'white', backgroundColor: 'black', textAlign: 'center' }}>
                 <Card.Header style={{ color: 'white', backgroundColor: 'black' }}>
                     <h1 style={{ fontSize: '2rem', margin: '0 0 8px 0' }}>
-                        Core Strengths - Technical QA Manager
+                        Core Strengths - Quality Engineering & Automation
                     </h1>
                 </Card.Header>
               <Card.Group itemsPerRow={2} stackable>
@@ -112,7 +112,7 @@ function HeadShot() {
             <Image src={Shane} fluid rounded style={{ display: 'block', margin: '0 auto 16px' }} />
             <Card.Content extra style={{ color: 'white', backgroundColor: 'black', textAlign: 'center' }}>
               <h1 style={{ fontSize: '2rem', margin: '0 0 8px 0' }}>
-                Career Highlights - Technical QA Manager
+                Career Highlights - 27-Year Quality Engineering Career
               </h1>
               <p style={{ fontSize: '1.05rem', lineHeight: 1.7 }}>
                 Designed and implemented automation frameworks in Java, Groovy (GEB/Spock), Playwright, C#, and Selenium, incorporating BDD and TDD practices to enhance test reliability and maintainability.
