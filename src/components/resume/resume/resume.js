@@ -20,7 +20,7 @@ const resume =
         image: Tek,
     },
     {
-        title: "TECH QA MANAGER - PRESENT",
+        title: "TECH QA MANAGER - AMERITAS",
         description: "Designed automation frameworks in Java, Groovy (GEB/Spock), and Playwright, embedding BDD practices to enhance test reliability and long-term maintainability.\nDelivered advanced training sessions for senior engineers on new UI and API automation, improving technical expertise and overall efficiency within the automation team.\nDirected quality assurance strategies for UI, API, and Scale roadmap initiatives, ensuring comprehensive coverage and alignment with critical business and project objectives.\nExecuted automation test runs through Jenkins and GitHub workflows, accelerating regression cycles while supporting streamlined continuous integration and delivery pipelines.\nReviewed automated and manual test cases using IntelliJ, GitHub, Jira, and Xray, enforcing coding standards and improving collaboration across distributed teams.\nReported automation outcomes during sprint demos to business stakeholders and utilized GitHub Copilot, reducing review effort and increasing delivery productivity.",
         image: Ameritas,
     },
@@ -30,7 +30,7 @@ const resume =
         image: Tek,
     },
     {
-        title: "SENIOR AUTOMATION CONTRACT ENGINEER -FIS",
+        title: "SENIOR AUTOMATION CONTRACT ENGINEER - FIS",
         description: "Built reusable automation frameworks in C# to support both API and UI testing, delivering consistent and reusable test architecture across projects.\nConducted load and scalability evaluations using Postman and Apache JMeter, ensuring applications sustained performance benchmarks under high-demand conditions.\nCoached junior QA engineers through structured mentoring (one-on-one sessions) and documentation, promoting professional development and advancing team-wide automation capabilities.\nOrganized automation backlogs, defining priorities and creating structured plans to align automation initiatives with sprint and release objectives.\nBlended API and UI automation suites into end-to-end testing processes, expanding regression coverage and improving overall system validation.\nShowcased automation progress and results in scrum ceremonies and QA demos, strengthening transparency and engagement with senior leadership.",
         image: Eliassen,
     },
@@ -96,24 +96,24 @@ const resume =
     image: GE,
 },
     {
-        title: "SQA Engineer II",
+        title: "SQA ENGINEER II",
         description: "SQA Engineer II, Itron, Raleigh, NC (2008-2009)\n" ,
         image: ItronImage,
     },
     {
-        title: "Member of Technical Staﬀ",
+        title: "MEMBER OF TECHNICAL STAFF",
         description: "Member of Technical Staﬀ, XM Satellite Radio, Deerfield Beach, FL (2004-2008)" ,
         image: XM,
     },
 
     {
-        title: "Senior Software Engineer",
+        title: "SENIOR SOFTWARE ENGINEER",
         description: "Senior SoMware Engineer, Motorola, Boynton Beach, FL (2001-2004)",
         image: MOT,
     },
 
     {
-        title: "Network SubSystem Test",
+        title: "NETWORK SUBSYSTEM TEST",
         description: "Network SubSystem Test, Alcatel, Cork, Ireland (1999-2000)" ,
         image: ALCTATEL,
     }
