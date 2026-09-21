@@ -9,4 +9,4 @@ npm run build
 aws s3 sync build "s3://${FRONTEND_BUCKET}" --delete
 aws cloudfront create-invalidation \
   --distribution-id "${CLOUDFRONT_DISTRIBUTION_ID}" \
-  --paths '/*'
+  --paths '/index.html'
