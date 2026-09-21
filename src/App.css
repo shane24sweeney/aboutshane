@@ -124,6 +124,11 @@ html, body, #root {
   line-height: 1.2;
 }
 
+.nav-label {
+  display: block;
+  margin-top: 5px;
+}
+
 .site-nav-links .nav-link:hover,
 .site-nav-links .nav-link.active {
   background: #19333a;
@@ -248,21 +253,27 @@ html, body, #root {
     padding: 8px 10px;
   }
 
-  .site-nav .navbar-collapse {
-    padding-top: 8px;
-    background: #0d151e;
-    border-top: 1px solid #263746;
-  }
-
   .site-nav-links {
-    align-items: stretch;
+    flex-wrap: nowrap;
+    justify-content: space-between;
     gap: 2px;
   }
 
   .site-nav-links .nav-link {
+    flex: 1 1 0;
     min-width: 0;
-    width: 100%;
-    padding: 10px 12px !important;
+    padding: 8px 2px !important;
+    font-size: 0.68rem;
+  }
+
+  .site-nav-links .nav-link svg {
+    display: block;
+    margin: 0 auto;
+    font-size: 1.35em;
+  }
+
+  .nav-label {
+    display: none;
   }
 
   .home-profile .ui.cards > .card {
