@@ -25,8 +25,8 @@ function Resume() {
   const [expandedIndex, setExpandedIndex] = useState(null);
 
   return (
-    <div className="container">
-      <li className="resume" style={{
+    <div className="container resume-page">
+      <li className="resume resume-shell" style={{
         height: '100%',
         padding: '60px',
         borderRadius: '10px',

@@ -42,6 +42,7 @@ function HeadShot() {
     <ThemeProvider theme={theme}>
       <Card
         centered
+        className="home-profile"
         style={{
           maxWidth: '900px',
           width: '100%',
@@ -53,33 +54,33 @@ function HeadShot() {
           textAlign: 'center',
         }}
       >
-        <Carousel controls={false} indicators={false} interval={4000}>
-          <Carousel.Item>
-            <Image src={Shane} fluid rounded style={{ display: 'block', margin: '0 auto 16px' }} />
+        <Carousel className="home-carousel" controls={false} indicators={false} interval={4000}>
+          <Carousel.Item className="home-slide">
+            <Image className="home-photo" src={Shane} fluid rounded />
             <Card.Content style={{ color: 'white', backgroundColor: 'black', textAlign: 'center' }}>
               <Card.Header style={{ color: 'white', backgroundColor: 'black' }}>
-                <h1 style={{ fontSize: '2rem', margin: '0 0 8px 0' }}>
+                <h1 className="home-slide-title">
                   Professional Summary - 27 Years in Quality Engineering
                 </h1>
               </Card.Header>
 
               <Card.Description style={{ color: 'white', backgroundColor: 'black' }}>
-                <p style={{ fontSize: '1.1rem', lineHeight: 1.7, marginTop: 16 }}>
+                <p className="home-slide-copy home-slide-copy-lead">
                   Quality engineering professional with <b>27+ years of experience</b>
                   spanning software engineering, SQA, test automation, performance
                   engineering, and enterprise quality leadership.
                 </p>
-                <p style={{ fontSize: '1.1rem', lineHeight: 1.7 }}>
+                <p className="home-slide-copy">
                   Proven expertise in <b>architecting scalable automation frameworks</b>
                   for web, mobile, API, and backend systems across banking, healthcare,
                   enterprise software, telecommunications, and utility products.
                 </p>
-                <p style={{ fontSize: '1.1rem', lineHeight: 1.7 }}>
+                <p className="home-slide-copy">
                   Experienced in Agile delivery, application modernization, performance
                   testing, CI/CD enablement, technical mentoring, and
                   <b> cross-functional stakeholder leadership</b>.
                 </p>
-                <p style={{ fontSize: '1.1rem', lineHeight: 1.7 }}>
+                <p className="home-slide-copy">
                   Combines hands-on engineering depth with strategic quality leadership
                   to improve reliability, delivery speed, and organizational capability.
                 </p>
@@ -88,11 +89,11 @@ function HeadShot() {
             </Card.Content>
           </Carousel.Item>
 
-          <Carousel.Item>
-            <Image src={Shane} fluid rounded style={{ display: 'block', margin: '0 auto 16px' }} />
+          <Carousel.Item className="home-slide">
+            <Image className="home-photo" src={Shane} fluid rounded />
             <Card.Content extra style={{ color: 'white', backgroundColor: 'black', textAlign: 'center' }}>
                 <Card.Header style={{ color: 'white', backgroundColor: 'black' }}>
-                    <h1 style={{ fontSize: '2rem', margin: '0 0 8px 0' }}>
+                    <h1 className="home-slide-title">
                         Core Strengths - Quality Engineering & Automation
                     </h1>
                 </Card.Header>
@@ -108,13 +109,13 @@ function HeadShot() {
             </Card.Content>
           </Carousel.Item>
 
-          <Carousel.Item>
-            <Image src={Shane} fluid rounded style={{ display: 'block', margin: '0 auto 16px' }} />
+          <Carousel.Item className="home-slide">
+            <Image className="home-photo" src={Shane} fluid rounded />
             <Card.Content extra style={{ color: 'white', backgroundColor: 'black', textAlign: 'center' }}>
-              <h1 style={{ fontSize: '2rem', margin: '0 0 8px 0' }}>
+              <h1 className="home-slide-title">
                 Career Highlights - 27-Year Quality Engineering Career
               </h1>
-              <p style={{ fontSize: '1.05rem', lineHeight: 1.7 }}>
+              <p className="home-slide-copy">
                 Designed and implemented automation frameworks in Java, Groovy (GEB/Spock), Playwright, C#, and Selenium, incorporating BDD and TDD practices to enhance test reliability and maintainability.
               </p>
               <Card.Group itemsPerRow={1} stackable>
