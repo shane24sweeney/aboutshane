@@ -1,7 +1,7 @@
 .App {
   text-align: center;
   width: 100%;
-  display: 'flex';
+  display: flex;
   color: white;
   background-color: black;
   justify-content: center;
@@ -9,8 +9,8 @@
 }
 
 .App-logo {
-  width: '100';
-  display: 'flex';
+  width: 100%;
+  display: flex;
   color: white;
   background-color: black;
   justify-content: center;
@@ -23,8 +23,8 @@
   color:white;
   background-color: black;
   display: flex;
-  justify-content: 'center';
-  align-items: 'center';
+  justify-content: center;
+  align-items: center;
 }
 .body {
   min-height: 100vh;
@@ -84,6 +84,42 @@ html, body, #root {
   height: 100%;
   background-color: black;
   color: white;
+}
+
+.site-nav {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px clamp(12px, 3vw, 32px);
+  background: #070b12 !important;
+  border-bottom: 1px solid #263746;
+}
+
+.site-nav .navbar-toggler {
+  margin-left: auto;
+  border-color: #79d2c0;
+}
+
+.site-nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 4px 10px;
+  width: 100%;
+}
+
+.site-nav-links .nav-link {
+  min-width: 76px;
+  padding: 8px 10px !important;
+  border-radius: 8px;
+  color: #f7fbff !important;
+  line-height: 1.2;
+}
+
+.site-nav-links .nav-link:hover,
+.site-nav-links .nav-link.active {
+  background: #19333a;
+  color: #79d2c0 !important;
 }
 
 .home-profile {
@@ -182,6 +218,25 @@ html, body, #root {
 @media (max-width: 600px) {
   .responsive {
     padding: 8px;
+  }
+
+  .site-nav {
+    padding: 8px 10px;
+  }
+
+  .site-nav .navbar-collapse {
+    padding-top: 8px;
+  }
+
+  .site-nav-links {
+    align-items: stretch;
+    gap: 2px;
+  }
+
+  .site-nav-links .nav-link {
+    min-width: 0;
+    width: 100%;
+    padding: 10px 12px !important;
   }
 
   .home-profile {

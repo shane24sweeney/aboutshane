@@ -9,10 +9,10 @@ function Navigation() {
 
   return (
     <div>
-      <Navbar bg="dark" variant="dark" expand={true}>
+      <Navbar className="site-nav" bg="dark" variant="dark" expand="md">
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mx-auto flex-row">
+          <Nav className="site-nav-links mx-auto">
             <Nav.Link as={NavLink} to="/home" className="text-center mx-2">
               <FontAwesomeIcon icon={faHome} size='2x' style={{ color: 'white' }} />
               <div style={{ marginTop: '5px', color: 'white' }}>Home</div>
