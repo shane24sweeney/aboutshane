@@ -125,8 +125,13 @@ html, body, #root {
 }
 
 .site-nav-links .nav-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: 1px solid transparent;
   background: rgba(255, 255, 255, 0.035);
+  cursor: pointer;
+  touch-action: manipulation;
   transition: background-color 160ms ease, border-color 160ms ease, transform 160ms ease;
 }
 
@@ -282,10 +287,12 @@ html, body, #root {
   .site-nav-links .nav-link {
     flex: 1 1 0;
     min-width: 0;
+    min-height: 48px;
     padding: 8px 2px !important;
     font-size: 0.68rem;
     background: transparent;
     border-radius: 9px;
+    -webkit-tap-highlight-color: rgba(121, 210, 192, 0.24);
   }
 
   .site-nav-links .nav-link svg {
