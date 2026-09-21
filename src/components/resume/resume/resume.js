@@ -15,6 +15,11 @@ import ALCTATEL from "../resume/headshot/Alcatel.png";
 const resume = 
 [
     {
+        title: "SENIOR QE CONSULTANT - TEKSYSTEMS (FEBRUARY 2026 - PRESENT)",
+        description: "Supported application modernization for a commercial banking client following the Comerica Bank acquisition, partnering with Agile squads across mobile and backend servicing domains. Remote.\n\n- Built integration, regression, and end-to-end testing frameworks, increasing automated test coverage from 45% to 80% across mobile and backend services.\n\n- Automated identity management flows, backend APIs, and service integrations, reducing authentication-related defects by 30%.\n\n- Used qTest, Perfecto, and Postman to manage test execution and cross-device validation across more than 300 test cases per release.\n\n- Built TypeScript automation with WebdriverIO and the Page Object pattern, achieving 100% automated login-scenario coverage on iOS and Android smoke tests and reducing manual mobile regression time from 2 days to 4 hours.\n\n- Used GitHub Copilot, Claude, and SonarQube to accelerate test script development by 40% and improve code quality.",
+        image: Tek,
+    },
+    {
         title: "TECH QA MANAGER - PRESENT",
         description: "Designed automation frameworks in Java, Groovy (GEB/Spock), and Playwright, embedding BDD practices to enhance test reliability and long-term maintainability.\nDelivered advanced training sessions for senior engineers on new UI and API automation, improving technical expertise and overall efficiency within the automation team.\nDirected quality assurance strategies for UI, API, and Scale roadmap initiatives, ensuring comprehensive coverage and alignment with critical business and project objectives.\nExecuted automation test runs through Jenkins and GitHub workflows, accelerating regression cycles while supporting streamlined continuous integration and delivery pipelines.\nReviewed automated and manual test cases using IntelliJ, GitHub, Jira, and Xray, enforcing coding standards and improving collaboration across distributed teams.\nReported automation outcomes during sprint demos to business stakeholders and utilized GitHub Copilot, reducing review effort and increasing delivery productivity.",
         image: Ameritas,
