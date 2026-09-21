@@ -35,6 +35,7 @@ function HeadShot() {
     'Led QA initiatives for UI, API, and scale roadmap testing, including automated regression and PDF validations across all counties in the U.S.',
     'Mentored junior and senior QA team members through one-on-one coaching sessions and wiki documentation, improving team automation capabilities and adherence to best practices.',
     'Executed automation runs and performance tests using Jenkins, GitHub workflows, Postman, Apache JMeter, and BlazeMeter, while presenting QA results in sprint demos to stakeholders.',
+    'Used GitHub Copilot and Claude to accelerate test script development by 40%, while applying SonarQube to improve automation code quality.',
   ];
 
   return (
@@ -64,7 +65,7 @@ function HeadShot() {
 
               <Card.Description style={{ color: 'white', backgroundColor: 'black' }}>
                 <p style={{ fontSize: '1.1rem', lineHeight: 1.7, marginTop: 16 }}>
-                  Seasoned QA leader with <b>26+ years of experience</b> driving
+                  Seasoned QA leader with <b>27+ years of experience</b> driving
                   <b> enterprise-wide quality engineering</b> initiatives,
                   <b> automation transformation,</b> and
                   <b> digital testing strategies</b>.
