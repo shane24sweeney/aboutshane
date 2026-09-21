@@ -118,11 +118,31 @@ html, body, #root {
 
 .site-nav-links .nav-link {
   min-width: 76px;
-  padding: 8px 10px !important;
+  padding: 9px 11px !important;
   border-radius: 8px;
   color: #f7fbff !important;
   line-height: 1.2;
 }
+
+.site-nav-links .nav-button {
+  border: 1px solid transparent;
+  background: rgba(255, 255, 255, 0.035);
+  transition: background-color 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+
+.site-nav-links .nav-button:hover,
+.site-nav-links .nav-button:focus-visible {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.site-nav-links .nav-button:nth-child(1) .nav-icon { color: #79d2c0; }
+.site-nav-links .nav-button:nth-child(2) .nav-icon { color: #ff9f80; }
+.site-nav-links .nav-button:nth-child(3) .nav-icon { color: #f5c86b; }
+.site-nav-links .nav-button:nth-child(4) .nav-icon { color: #83b9ff; }
+.site-nav-links .nav-button:nth-child(5) .nav-icon { color: #f2a7d5; }
+.site-nav-links .nav-button:nth-child(6) .nav-icon { color: #b6a1ff; }
+.site-nav-links .nav-button:nth-child(7) .nav-icon { color: #ff8fa3; }
 
 .nav-label {
   display: block;
@@ -264,6 +284,8 @@ html, body, #root {
     min-width: 0;
     padding: 8px 2px !important;
     font-size: 0.68rem;
+    background: transparent;
+    border-radius: 9px;
   }
 
   .site-nav-links .nav-link svg {
