@@ -59,33 +59,29 @@ function HeadShot() {
             <Card.Content style={{ color: 'white', backgroundColor: 'black', textAlign: 'center' }}>
               <Card.Header style={{ color: 'white', backgroundColor: 'black' }}>
                 <h1 style={{ fontSize: '2rem', margin: '0 0 8px 0' }}>
-                  Summary - Technical QA Manager
+                  Professional Summary - 27 Years in Quality Engineering
                 </h1>
               </Card.Header>
 
               <Card.Description style={{ color: 'white', backgroundColor: 'black' }}>
                 <p style={{ fontSize: '1.1rem', lineHeight: 1.7, marginTop: 16 }}>
-                  Seasoned QA leader with <b>27+ years of experience</b> driving
-                  <b> enterprise-wide quality engineering</b> initiatives,
-                  <b> automation transformation,</b> and
-                  <b> digital testing strategies</b>.
+                  Quality engineering professional with <b>27+ years of experience</b>
+                  spanning software engineering, SQA, test automation, performance
+                  engineering, and enterprise quality leadership.
                 </p>
                 <p style={{ fontSize: '1.1rem', lineHeight: 1.7 }}>
-                  Proven expertise in <b>architecting scalable automation frameworks</b>,
-                  enhancing software reliability, and
-                  <b> implementing process improvements</b> that align technology with
-                  business outcomes.
+                  Proven expertise in <b>architecting scalable automation frameworks</b>
+                  for web, mobile, API, and backend systems across banking, healthcare,
+                  enterprise software, telecommunications, and utility products.
                 </p>
                 <p style={{ fontSize: '1.1rem', lineHeight: 1.7 }}>
-                  Adept at mentoring teams, fostering cross-functional collaboration,
-                  and <b>influencing executive stakeholders</b> to deliver measurable
-                  value. Recognized for combining technical depth with strategic
-                  vision to <b>advance organizational</b> goals and innovation.
+                  Experienced in Agile delivery, application modernization, performance
+                  testing, CI/CD enablement, technical mentoring, and
+                  <b> cross-functional stakeholder leadership</b>.
                 </p>
                 <p style={{ fontSize: '1.1rem', lineHeight: 1.7 }}>
-                  Currently seeking opportunities to
-                  <b> lead transformational quality initiatives</b> in
-                  growth-oriented environments.
+                  Combines hands-on engineering depth with strategic quality leadership
+                  to improve reliability, delivery speed, and organizational capability.
                 </p>
 
               </Card.Description>
