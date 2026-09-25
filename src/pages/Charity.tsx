@@ -1,5 +1,6 @@
 import Button from 'react-bootstrap/Button';
 import Carousel from 'react-bootstrap/Carousel';
+import SiteCarousel from '../components/SiteCarousel';
 import PageLoading from '../components/PageLoading';
 import { charityImages } from '../content/images';
 import { usePageContent } from '../hooks/usePageContent';
@@ -15,7 +16,7 @@ function Charity() {
         <PageLoading />
       ) : (
         <div className="carousel-card">
-          <Carousel className="page-carousel charity-carousel" controls={false} indicators={false}>
+          <SiteCarousel label="Charity work" className="page-carousel charity-carousel">
             {content.data.map(({ title, image, alt, link }) => (
               <Carousel.Item key={title} interval={4000}>
                 <h2>{title}</h2>
@@ -27,7 +28,7 @@ function Charity() {
                 <img className="page-carousel-logo" src={charityImages[image]} alt={alt} />
               </Carousel.Item>
             ))}
-          </Carousel>
+          </SiteCarousel>
         </div>
       )}
     </section>

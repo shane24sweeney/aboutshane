@@ -1,4 +1,5 @@
 import Carousel from 'react-bootstrap/Carousel';
+import SiteCarousel from '../components/SiteCarousel';
 import PageLoading from '../components/PageLoading';
 import { usePageContent } from '../hooks/usePageContent';
 import './About.css';
@@ -27,7 +28,7 @@ function About() {
         <PageLoading />
       ) : (
         <div className="carousel-card about-card">
-          <Carousel className="about-carousel" controls={false} indicators={false}>
+          <SiteCarousel label="About Shane" className="about-carousel">
             <Carousel.Item interval={5000}>
               <p>{content.data.essay}</p>
               <cite>{content.data.signature}</cite>
@@ -37,7 +38,7 @@ function About() {
                 <img className="d-block mx-auto" src={src} alt={alt} loading="lazy" />
               </Carousel.Item>
             ))}
-          </Carousel>
+          </SiteCarousel>
         </div>
       )}
     </section>

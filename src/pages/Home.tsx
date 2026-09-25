@@ -1,4 +1,5 @@
 import Carousel from 'react-bootstrap/Carousel';
+import SiteCarousel from '../components/SiteCarousel';
 import { FaEnvelope, FaGithub, FaLinkedin } from 'react-icons/fa';
 import { Link } from 'react-router';
 import shane from '../assets/Shane.jpg';
@@ -43,7 +44,7 @@ function Home() {
         </div>
       </header>
 
-      <Carousel className="home-carousel" controls={false} indicators={false} interval={10000} pause="hover">
+      <SiteCarousel label="Career overview" className="home-carousel" interval={10000}>
         <Carousel.Item className="home-slide">
           <Photo />
           <div className="home-slide-body">
@@ -87,7 +88,7 @@ function Home() {
             </ul>
           </div>
         </Carousel.Item>
-      </Carousel>
+      </SiteCarousel>
     </section>
   );
 }
