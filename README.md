@@ -37,7 +37,7 @@ Browser ──► CloudFront (selenium-automation.com, TLS, security headers)
 | End-to-end | Playwright (desktop, Pixel 7, iPhone 15) | Navigation, deep links, console errors, resume accordion, contact form with mocked API |
 | Mobile | Playwright emulation; real devices via BrowserStack (manual workflow) | One-row nav with 44px tap targets, tapping every nav button, no sideways scroll, contact keyboards and no zoom-on-focus, resume taps |
 | Accessibility | axe-core via Playwright | WCAG 2.1 A/AA, no serious or critical violations on any page |
-| Production smoke | Playwright, Postman | Live pages, security headers, API health, validation and 404 handling (read-only) |
+| Production smoke | Playwright (desktop, Pixel 7, iPhone 15), Postman | Live pages, phone layouts, security headers, API health, validation and 404 handling (read-only) |
 | Load | JMeter | The request behind every button: page load, each nav link's content API, contact Send (invalid, sends nothing) |
 | Infrastructure | cfn-lint | SAM/CloudFormation template |
 
@@ -58,7 +58,7 @@ npm run build
 npm run test:e2e     # Playwright desktop + Android + iPhone against the production build
 npm run test:mobile  # just the emulated Pixel 7 and iPhone 15 projects
 npm run test:browserstack  # real devices from browserstack.yml; needs BROWSERSTACK_USERNAME/ACCESS_KEY
-npm run test:smoke   # read-only checks against selenium-automation.com
+npm run test:smoke   # read-only checks against selenium-automation.com, desktop + phones
 npm run test:load    # JMeter button-click load test (brew install jmeter); report in jmeter/results/report
 
 cd backend && mvn verify
