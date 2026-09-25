@@ -3,6 +3,8 @@ import { FaEnvelope, FaGithub, FaLinkedin } from 'react-icons/fa';
 import { Link } from 'react-router';
 import shane from '../assets/Shane.jpg';
 import PageLoading from '../components/PageLoading';
+import SiteCarousel from '../components/SiteCarousel';
+import { useMediaQuery } from '../hooks/useMediaQuery';
 import { usePageContent } from '../hooks/usePageContent';
 import './Home.css';
 
@@ -21,8 +23,61 @@ function Photo() {
 
 function Home() {
   const content = usePageContent('profile');
+  // Each section is longer than a phone screen, so phones get them stacked instead of rotating.
+  const isPhone = useMediaQuery('(max-width: 600px)');
   if (content.status === 'loading') return <PageLoading />;
   const profile = content.data;
+
+  const sections = [
+    {
+      key: 'summary',
+      body: (
+        <div className="home-slide-body">
+          <h2 className="home-slide-title">{profile.summaryTitle}</h2>
+          {profile.summary.map((paragraph, index) => (
+            <p key={paragraph} className={index === 0 ? 'home-slide-copy home-slide-copy-lead' : 'home-slide-copy'}>
+              <RichText text={paragraph} />
+            </p>
+          ))}
+        </div>
+      ),
+    },
+    {
+      key: 'strengths',
+      body: (
+        <div className="home-slide-body">
+          <h2 className="home-slide-title">{profile.strengthsTitle}</h2>
+          <ul className="home-card-grid home-card-grid-strengths">
+            {profile.strengths.map((strength) => (
+              <li key={strength} className="home-card">
+                <span className="home-card-text">{strength}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ),
+    },
+    {
+      key: 'highlights',
+      interval: 15000,
+      body: (
+        <div className="home-slide-body">
+          <h2 className="home-slide-title">{profile.highlightsTitle}</h2>
+          <p className="home-slide-copy home-framework-copy">{profile.frameworks}</p>
+          <ul className="home-card-grid home-card-grid-highlights">
+            {profile.highlights.map(({ label, text }) => (
+              <li key={label} className="home-card">
+                <span className="home-card-text">
+                  <span className="career-highlight-label">{label}</span>
+                  <span className="career-highlight-text">{text}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ),
+    },
+  ];
 
   return (
     <section className="home-profile">
@@ -43,51 +98,25 @@ function Home() {
         </div>
       </header>
 
-      <Carousel className="home-carousel" controls={false} indicators={false} interval={10000} pause="hover">
-        <Carousel.Item className="home-slide">
+      {isPhone ? (
+        <div className="home-sections">
           <Photo />
-          <div className="home-slide-body">
-            <h2 className="home-slide-title">{profile.summaryTitle}</h2>
-            {profile.summary.map((paragraph, index) => (
-              <p key={paragraph} className={index === 0 ? 'home-slide-copy home-slide-copy-lead' : 'home-slide-copy'}>
-                <RichText text={paragraph} />
-              </p>
-            ))}
-          </div>
-        </Carousel.Item>
-
-        <Carousel.Item className="home-slide">
-          <Photo />
-          <div className="home-slide-body">
-            <h2 className="home-slide-title">{profile.strengthsTitle}</h2>
-            <ul className="home-card-grid home-card-grid-strengths">
-              {profile.strengths.map((strength) => (
-                <li key={strength} className="home-card">
-                  <span className="home-card-text">{strength}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </Carousel.Item>
-
-        <Carousel.Item className="home-slide" interval={15000}>
-          <Photo />
-          <div className="home-slide-body">
-            <h2 className="home-slide-title">{profile.highlightsTitle}</h2>
-            <p className="home-slide-copy home-framework-copy">{profile.frameworks}</p>
-            <ul className="home-card-grid home-card-grid-highlights">
-              {profile.highlights.map(({ label, text }) => (
-                <li key={label} className="home-card">
-                  <span className="home-card-text">
-                    <span className="career-highlight-label">{label}</span>
-                    <span className="career-highlight-text">{text}</span>
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </Carousel.Item>
-      </Carousel>
+          {sections.map(({ key, body }) => (
+            <section key={key} className="home-section">
+              {body}
+            </section>
+          ))}
+        </div>
+      ) : (
+        <SiteCarousel label="Career overview" className="home-carousel" interval={10000}>
+          {sections.map(({ key, interval, body }) => (
+            <Carousel.Item key={key} className="home-slide" interval={interval}>
+              <Photo />
+              {body}
+            </Carousel.Item>
+          ))}
+        </SiteCarousel>
+      )}
     </section>
   );
 }

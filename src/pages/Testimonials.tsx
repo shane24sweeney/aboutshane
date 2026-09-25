@@ -1,4 +1,5 @@
 import Carousel from 'react-bootstrap/Carousel';
+import SiteCarousel from '../components/SiteCarousel';
 import PageLoading from '../components/PageLoading';
 import { people } from '../content/images';
 import { usePageContent } from '../hooks/usePageContent';
@@ -14,7 +15,7 @@ function Testimonials() {
         <PageLoading />
       ) : (
         <div className="testimonials-card">
-          <Carousel className="testimonials-carousel" controls={false} indicators={false}>
+          <SiteCarousel label="Testimonials" className="testimonials-carousel">
             {content.data.map(({ name, title, photo, recommendation }) => (
               <Carousel.Item key={name} interval={4000}>
                 {photo && people[photo] && <img className="testimonial-photo" src={people[photo]} alt={name} />}
@@ -25,7 +26,7 @@ function Testimonials() {
                 </blockquote>
               </Carousel.Item>
             ))}
-          </Carousel>
+          </SiteCarousel>
         </div>
       )}
     </div>

@@ -96,6 +96,27 @@
   background: var(--site-accent);
 }
 
+/* Phones: the three carousel sections stacked, with the photo once at the top. */
+.home-sections {
+  padding: 24px 16px 8px;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #20262d 0%, #171a1f 100%);
+}
+
+.home-section {
+  padding: 8px 0 24px;
+}
+
+.home-section::before {
+  content: '';
+  display: block;
+  width: 72px;
+  height: 4px;
+  margin: 0 auto 22px;
+  border-radius: 999px;
+  background: var(--site-accent);
+}
+
 .home-slide {
   min-height: 540px;
   padding: 4px 24px 24px;
