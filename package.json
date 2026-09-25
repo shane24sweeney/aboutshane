@@ -15,7 +15,7 @@
     "test:smoke": "playwright test --project=production --project=production-mobile --project=production-mobile-safari",
     "test:mobile": "playwright test --project=mobile --project=mobile-safari",
     "test:browserstack": "browserstack-node-sdk playwright test --config=playwright.browserstack.config.ts",
-    "test:load": "rm -rf jmeter/results && jmeter -n -t jmeter/button-clicks.jmx -l jmeter/results/results.jtl -e -o jmeter/results/report && python3 jmeter/check-results.py"
+    "test:load": "rm -rf jmeter/results && mkdir -p jmeter/results && jmeter -n -t jmeter/button-clicks.jmx -l jmeter/results/results.jtl -e -o jmeter/results/report && python3 jmeter/check-results.py"
   },
   "dependencies": {
     "bootstrap": "^5.3.3",
