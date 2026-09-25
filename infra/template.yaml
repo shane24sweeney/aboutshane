@@ -119,6 +119,21 @@ Resources:
             - EventType: viewer-request
               FunctionARN: !GetAtt SpaRoutingFunction.FunctionMetadata.FunctionARN
         CacheBehaviors:
+          # Page content: cached at the edge per the API's Cache-Control (5 minutes), so most
+          # navigation clicks never reach Lambda.
+          - PathPattern: /api/content/*
+            TargetOriginId: BackendApiOrigin
+            ViewerProtocolPolicy: https-only
+            Compress: true
+            ResponseHeadersPolicyId: 67f7725c-6f97-4210-82d7-5512b31e9d03 # Managed-SecurityHeadersPolicy
+            CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6 # Managed-CachingOptimized
+            AllowedMethods:
+              - GET
+              - HEAD
+              - OPTIONS
+            CachedMethods:
+              - GET
+              - HEAD
           - PathPattern: /api/*
             TargetOriginId: BackendApiOrigin
             ViewerProtocolPolicy: https-only

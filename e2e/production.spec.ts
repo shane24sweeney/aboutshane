@@ -36,6 +36,28 @@ test.describe('production smoke', () => {
     expect(Object.keys(body.fields).sort()).toEqual(['email', 'message', 'name']);
   });
 
+  for (const [api, minimumEntries] of [['resume', 14], ['testimonials', 11], ['education', 3], ['charity', 5]] as const) {
+    test(`content API serves ${api} with edge caching`, async ({ request }) => {
+      const response = await request.get(`/api/content/${api}`);
+      expect(response.status()).toBe(200);
+      expect(response.headers()['cache-control']).toBe('max-age=300, public');
+      expect((await response.json()).length).toBeGreaterThanOrEqual(minimumEntries);
+    });
+  }
+
+  test('content API serves the home profile', async ({ request }) => {
+    const response = await request.get('/api/content/profile');
+    expect(response.status()).toBe(200);
+    expect((await response.json()).name).toBe('Shane James Sweeney');
+  });
+
+  test('the resume page renders content from the live API', async ({ page }) => {
+    const response = page.waitForResponse('**/api/content/resume');
+    await page.goto('/resume');
+    expect((await response).status()).toBe(200);
+    await expect(page.getByRole('button', { name: /FIFTH THIRD BANK/ })).toBeVisible();
+  });
+
   test('unknown API paths return 404 instead of the web page', async ({ request }) => {
     const response = await request.get('/api/does-not-exist');
     expect(response.status()).toBe(404);

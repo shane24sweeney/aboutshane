@@ -127,3 +127,15 @@ select:focus {
     padding: 8px;
   }
 }
+
+.page-loading {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 60vh;
+  padding-top: 96px;
+}
+
+.page-loading-spinner {
+  color: var(--site-accent);
+}

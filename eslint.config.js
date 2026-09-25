@@ -13,6 +13,10 @@ export default tseslint.config(
       ecmaVersion: 2022,
       globals: globals.browser,
     },
+  },
+  {
+    // React rules for app code only; Playwright fixtures use a `use` callback that isn't a hook.
+    files: ['src/**/*.{ts,tsx}'],
     plugins: {
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,

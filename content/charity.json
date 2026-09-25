@@ -1,0 +1,20 @@
+[
+  {
+    "title": "Raised money and took part in the polar plunge for the Special Olympics",
+    "image": "PolarPlunge",
+    "alt": "Polar plunge for the Special Olympics"
+  },
+  {
+    "title": "Support Website for Dog Days Rescue",
+    "image": "DogDays",
+    "alt": "Dog Days Rescue",
+    "link": { "href": "https://www.dogdaysrescue.org/", "label": "Dog Days Rescue Charity" }
+  },
+  {
+    "title": "Raised money and ran in the Susan G Komen Race For The Cure",
+    "image": "SusanKomen",
+    "alt": "Susan G. Komen Race for the Cure"
+  },
+  { "title": "Yearly Dalton Ten Miler Race for Charity", "image": "Dalton", "alt": "Dalton Ten Miler race" },
+  { "title": "Yearly 18K Habitat for Humanity Helen Race for Charity", "image": "Habitat", "alt": "Habitat for Humanity Helen 18K race" }
+]

@@ -90,6 +90,16 @@
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+            <!-- Page content shared with the frontend, served by ContentController. -->
+            <resource>
+                <directory>${project.basedir}/../content</directory>
+                <targetPath>content</targetPath>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
