@@ -31,6 +31,7 @@ public final class SiteContent {
             String role,
             String company,
             String contractVia,
+            String dates,
             String logo,
             String meta,
             String summary,

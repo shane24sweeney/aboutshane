@@ -44,6 +44,7 @@ class ContentControllerTest {
                 .andExpect(jsonPath("$", hasSize(14)))
                 .andExpect(jsonPath("$[0].company").value("Fifth Third Bank"))
                 .andExpect(jsonPath("$[0].contractVia").value("TEKsystems"))
+                .andExpect(jsonPath("$[0].dates").value("2026 – Present"))
                 .andExpect(jsonPath("$[0].highlights", hasSize(5)))
                 .andExpect(jsonPath("$[1].contractVia").doesNotExist());
     }

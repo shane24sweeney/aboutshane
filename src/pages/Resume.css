@@ -40,9 +40,21 @@
   background: white;
 }
 
+.resume-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
 .resume-title {
   color: var(--site-title-accent);
   font-weight: 700;
+}
+
+.resume-dates {
+  color: var(--site-text-muted);
+  font-size: 0.9em;
+  font-variant-numeric: tabular-nums;
 }
 
 .resume-card .accordion-body {
