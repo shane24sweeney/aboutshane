@@ -23,8 +23,15 @@ sam deploy \
   --capabilities CAPABILITY_IAM
 ```
 
-Parameters default to the production values (domain, certificate, Route 53 zone, and the
-address that receives contact messages); override them with `--parameter-overrides`.
+Parameters default to the production values (domain, certificate and Route 53 zone); override
+them with `--parameter-overrides`. `ContactRecipientEmail`, the address that receives contact
+messages, has no default so it stays out of this public repo. Pass it on the stack's first deploy:
+
+```bash
+sam deploy ... --parameter-overrides ContactRecipientEmail=you@example.com
+```
+
+Later deploys keep the stack's current value, so the command above works unchanged.
 
 ### Email (SES)
 

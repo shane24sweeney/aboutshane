@@ -20,9 +20,12 @@ Parameters:
     Type: AWS::Route53::HostedZone::Id
     Default: Z17MA9T0X7H7PX
     Description: Route 53 zone for FrontendDomainName; SES DKIM records are added here.
+  # No default, so the address stays out of this public repo. Pass it on the first deploy with
+  # --parameter-overrides ContactRecipientEmail=...; later deploys reuse the stack's current value.
   ContactRecipientEmail:
     Type: String
-    Default: shane24sweeney@yahoo.com
+    AllowedPattern: '^[^@\s]+@[^@\s]+\.[^@\s]+$'
+    ConstraintDescription: must be an email address.
     Description: Where contact-form notifications are sent.
 
 Globals:
