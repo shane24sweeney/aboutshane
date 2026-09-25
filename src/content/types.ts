@@ -25,8 +25,10 @@ export interface ResumeEntry {
   company: string;
   /** Staffing firm for contract roles. */
   contractVia?: string;
+  /** Years in the role, e.g. "2020 – 2022" or "2026 – Present". */
+  dates: string;
   logo: string;
-  /** Location and dates for older roles that have no detailed write-up. */
+  /** Location for older roles that have no detailed write-up. */
   meta?: string;
   summary?: string;
   highlights: string[];
