@@ -3,6 +3,8 @@ import { defineConfig, devices } from '@playwright/test';
 const isCI = Boolean(process.env.CI);
 const localURL = 'http://localhost:4173';
 const productionURL = process.env.PRODUCTION_URL ?? 'https://selenium-automation.com';
+/** Specs that only run against the live site: production.spec.ts, production-buttons.spec.ts. */
+export const productionSpecs = /production(-[a-z]+)?\.spec\.ts/;
 
 export default defineConfig({
   testDir: './e2e',
@@ -19,23 +21,23 @@ export default defineConfig({
     // Local production build; the contact API is mocked so these never send email.
     {
       name: 'desktop',
-      testIgnore: [/production\.spec\.ts/, /mobile\.spec\.ts/],
+      testIgnore: [productionSpecs, /mobile\.spec\.ts/],
       use: { ...devices['Desktop Chrome'], baseURL: localURL },
     },
     {
       name: 'mobile',
-      testIgnore: /production\.spec\.ts/,
+      testIgnore: productionSpecs,
       use: { ...devices['Pixel 7'], baseURL: localURL },
     },
     {
       name: 'mobile-safari',
-      testIgnore: /production\.spec\.ts/,
+      testIgnore: productionSpecs,
       use: { ...devices['iPhone 15'], baseURL: localURL },
     },
     // Read-only smoke checks against the live site and API.
     {
       name: 'production',
-      testMatch: /production\.spec\.ts/,
+      testMatch: productionSpecs,
       use: { ...devices['Desktop Chrome'], baseURL: productionURL },
     },
     // The live site on phones: the page checks from the smoke suite plus the phone-layout checks.
@@ -48,7 +50,7 @@ export default defineConfig({
       ] as const
     ).map(([name, device]) => ({
       name,
-      testMatch: [/production\.spec\.ts/, /mobile\.spec\.ts/],
+      testMatch: [productionSpecs, /mobile\.spec\.ts/],
       grep: /is up|renders content from the live API|phone layout/,
       use: { ...devices[device], baseURL: productionURL },
     })),

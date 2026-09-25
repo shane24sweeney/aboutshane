@@ -38,7 +38,7 @@ Browser ──► CloudFront (selenium-automation.com, TLS, security headers)
 | Mobile | Playwright emulation; real devices via BrowserStack (manual workflow) | One-row nav with 44px tap targets, tapping every nav button, no sideways scroll, contact keyboards and no zoom-on-focus, resume taps |
 | Accessibility | axe-core via Playwright | WCAG 2.1 A/AA, no serious or critical violations on any page |
 | Production smoke | Playwright (desktop, Pixel 7, iPhone 15), Postman | Live pages, phone layouts, security headers, API health, validation and 404 handling (read-only) |
-| Load | JMeter | The request behind every button: page load, each nav link's content API, contact Send (invalid, sends nothing) |
+| Load | JMeter | The request behind every button: page load, each nav link's content API, contact Send (invalid, sends nothing). `e2e/production-buttons.spec.ts` is the Playwright twin: real clicks on the live site, same checks |
 | Infrastructure | cfn-lint | SAM/CloudFormation template |
 
 CI (`.github/workflows/ci.yml`) runs all of it on every push and pull request and publishes the
