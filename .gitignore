@@ -33,3 +33,7 @@ yarn-error.log*
 /test-results
 /blob-report
 /playwright/.cache
+
+# JMeter
+/jmeter/results
+jmeter.log

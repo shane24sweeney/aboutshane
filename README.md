@@ -37,10 +37,12 @@ Browser ──► CloudFront (selenium-automation.com, TLS, security headers)
 | End-to-end | Playwright (desktop + mobile) | Navigation, deep links, console errors, resume accordion, contact form with mocked API |
 | Accessibility | axe-core via Playwright | WCAG 2.1 A/AA, no serious or critical violations on any page |
 | Production smoke | Playwright, Postman | Live pages, security headers, API health, validation and 404 handling (read-only) |
+| Load | JMeter | The request behind every button: page load, each nav link's content API, contact Send (invalid, sends nothing) |
 | Infrastructure | cfn-lint | SAM/CloudFormation template |
 
 CI (`.github/workflows/ci.yml`) runs all of it on every push and pull request and publishes the
-Playwright HTML report as a build artifact. A daily workflow runs the smoke suite against production.
+Playwright HTML report as a build artifact. A daily workflow runs the smoke suite against production,
+then the JMeter button-click load test, and publishes its HTML report.
 
 ## Running locally
 
@@ -54,6 +56,7 @@ npm run lint && npm run typecheck && npm test
 npm run build
 npm run test:e2e     # Playwright desktop + mobile against the production build
 npm run test:smoke   # read-only checks against selenium-automation.com
+npm run test:load    # JMeter button-click load test (brew install jmeter); report in jmeter/results/report
 
 cd backend && mvn verify
 ```

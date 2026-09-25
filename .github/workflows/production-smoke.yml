@@ -29,3 +29,37 @@ jobs:
           name: production-smoke-report
           path: playwright-report
           retention-days: 14
+
+  # The request behind every button, under light load. Defaults stay under the API's 2 req/s throttle.
+  load:
+    name: Load (JMeter button clicks)
+    needs: smoke
+    runs-on: ubuntu-latest
+    env:
+      JMETER_VERSION: 5.6.3
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: actions/cache@v5
+        id: jmeter-cache
+        with:
+          path: apache-jmeter-${{ env.JMETER_VERSION }}
+          key: jmeter-${{ env.JMETER_VERSION }}
+      - if: steps.jmeter-cache.outputs.cache-hit != 'true'
+        run: |
+          base=https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-$JMETER_VERSION.tgz
+          curl -fsSLO "$base"
+          curl -fsSLO "$base.sha512"
+          sha512sum -c "apache-jmeter-$JMETER_VERSION.tgz.sha512"
+          tar -xzf "apache-jmeter-$JMETER_VERSION.tgz"
+      - run: echo "$PWD/apache-jmeter-$JMETER_VERSION/bin" >> "$GITHUB_PATH"
+      - run: npm run test:load
+      - uses: actions/upload-artifact@v7
+        if: ${{ !cancelled() }}
+        with:
+          name: jmeter-report
+          path: jmeter/results
+          retention-days: 14

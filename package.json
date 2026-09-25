@@ -12,7 +12,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
-    "test:smoke": "playwright test --project=production"
+    "test:smoke": "playwright test --project=production",
+    "test:load": "rm -rf jmeter/results && jmeter -n -t jmeter/button-clicks.jmx -l jmeter/results/results.jtl -e -o jmeter/results/report && python3 jmeter/check-results.py"
   },
   "dependencies": {
     "bootstrap": "^5.3.3",
