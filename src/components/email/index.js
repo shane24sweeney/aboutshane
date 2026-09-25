@@ -2,6 +2,7 @@ import React from 'react';
 import { Form, Button, Container, Row, Col, Card } from 'react-bootstrap';
 import emailjs from 'emailjs-com';
 import { useSiteContext } from '../../context/SiteContext';
+import '../email.css';
 
 const Email = () => {
   const { emailjs: { serviceId, templateId, publicKey } } = useSiteContext();
@@ -23,12 +24,12 @@ const Email = () => {
 
   return (
     <Container className="contact-page d-flex align-items-center justify-content-center">
-      <Row className="justify-content-center">
+      <Row className="w-100 justify-content-center">
         <Col xs={12} md={8} lg={6}>
           <Card bg="dark" text="white" className="contact-card p-4">
             <Card.Body>
               <div className="contact-accent" aria-hidden="true" />
-              <h2 className="contact-title text-center">Send me a message.</h2>
+              <h1 className="contact-title text-center">Send me a message.</h1>
               <p className="contact-intro text-center">Let&apos;s talk about quality engineering, automation, or your next project.</p>
               <Form onSubmit={handleOnSubmit}>
                 <Form.Group className="mb-3">

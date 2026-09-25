@@ -3,6 +3,8 @@ import Shane from "./Shane.jpg";
 import { Card, Image } from 'semantic-ui-react'
 import { ThemeProvider, createTheme } from '@material-ui/core/styles';
 import Carousel from 'react-bootstrap/Carousel';
+import { Link } from 'react-router-dom';
+import { FaEnvelope, FaGithub, FaLinkedin } from 'react-icons/fa';
 
 const theme = createTheme({
   typography: {
@@ -44,14 +46,30 @@ function HeadShot() {
         centered
         className="home-profile"
       >
+        <header className="home-hero">
+          <h1 className="home-hero-name">Shane James Sweeney</h1>
+          <p className="home-hero-role">Senior QE Lead &amp; Test Automation Architect</p>
+          <p className="home-hero-meta">27+ years in quality engineering · Kennesaw, GA</p>
+          <div className="home-hero-actions">
+            <Link className="home-hero-button home-hero-button-primary" to="/contact">
+              <FaEnvelope aria-hidden="true" /> Contact me
+            </Link>
+            <a className="home-hero-button" href="https://linkedin.com/in/shane-sweeney-37a934135" target="_blank" rel="noreferrer">
+              <FaLinkedin aria-hidden="true" /> LinkedIn
+            </a>
+            <a className="home-hero-button" href="https://github.com/shane24sweeney" target="_blank" rel="noreferrer">
+              <FaGithub aria-hidden="true" /> GitHub
+            </a>
+          </div>
+        </header>
         <Carousel className="home-carousel" controls={false} indicators={false} interval={10000} pause="hover">
           <Carousel.Item className="home-slide">
-            <Image className="home-photo" src={Shane} fluid rounded />
+            <Image className="home-photo" src={Shane} alt="Shane James Sweeney" fluid rounded />
             <Card.Content>
               <Card.Header>
-                <h1 className="home-slide-title">
+                <h2 className="home-slide-title">
                   Professional Summary - 27 Years in Quality Engineering
-                </h1>
+                </h2>
               </Card.Header>
 
               <Card.Description>
@@ -79,12 +97,12 @@ function HeadShot() {
           </Carousel.Item>
 
           <Carousel.Item className="home-slide">
-            <Image className="home-photo" src={Shane} fluid rounded />
+            <Image className="home-photo" src={Shane} alt="Shane James Sweeney" fluid rounded />
             <Card.Content extra>
               <Card.Header>
-                    <h1 className="home-slide-title">
+                    <h2 className="home-slide-title">
                         Core Strengths - Quality Engineering & Automation
-                    </h1>
+                    </h2>
                 </Card.Header>
               <Card.Group itemsPerRow={2} stackable>
                 {coreStrengths.map((item, idx) => (
@@ -99,11 +117,11 @@ function HeadShot() {
           </Carousel.Item>
 
           <Carousel.Item className="home-slide" interval={15000}>
-            <Image className="home-photo" src={Shane} fluid rounded />
+            <Image className="home-photo" src={Shane} alt="Shane James Sweeney" fluid rounded />
             <Card.Content extra>
-              <h1 className="home-slide-title">
+              <h2 className="home-slide-title">
                 Career Highlights - 27-Year Quality Engineering Career
-              </h1>
+              </h2>
               <p className="home-slide-copy home-framework-copy">
                 Designed and implemented automation frameworks in Java, Groovy (GEB/Spock), Playwright, JavaScript, TypeScript, C#, and Selenium, incorporating BDD and TDD practices to enhance test reliability and maintainability.
               </p>

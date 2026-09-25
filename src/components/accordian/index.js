@@ -11,6 +11,7 @@ const AccordionComponent = () => {
 
     return (
       <Container className="resume-route py-4">
+        <h1 className="visually-hidden">Professional Experience</h1>
         <Card bg="dark" text="white">
           <Card.Body>
             <Accordion activeKey={activeKey} onSelect={handleSelect}>
@@ -20,6 +21,7 @@ const AccordionComponent = () => {
                     <div className="d-flex align-items-center w-100">
                       <Image 
                         src={item.image} 
+                        alt={`${item.title.split(' - ')[1]?.split(' (')[0] ?? item.title} logo`}
                         width={50} 
                         height={50} 
                         className="me-3" 

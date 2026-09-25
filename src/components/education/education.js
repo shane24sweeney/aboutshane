@@ -38,6 +38,7 @@ function education () {
 
   return (
     <section id="education" className="education-page">
+    <h1 className="visually-hidden">Education</h1>
     <ThemeProvider theme={theme}>
       <Card
     centered    className="education-card"
@@ -55,9 +56,9 @@ function education () {
     <img
         className="testimonial uniform-img"
 src={NCState}
-        alt=""
+        alt="North Carolina State University"
       />
-       <Typography variant="h1" gutterBottom>
+       <Typography variant="h1" component="h2" gutterBottom>
        {educationdescript[0].degree}
        </Typography>
 
@@ -72,9 +73,9 @@ src={NCState}
     <img
         className="testimonial uniform-img"
 src={UCC}
-        alt=""
+        alt="University College Cork"
       />
-       <Typography variant="h1" gutterBottom>
+       <Typography variant="h1" component="h2" gutterBottom>
        {educationdescript[1].degree}
        </Typography>
 
@@ -88,7 +89,7 @@ src={UCC}
     <img
         className="testimonial uniform-img"
 src={UCC}
-        alt=""
+        alt="University College Cork"
       />
 
     <div >

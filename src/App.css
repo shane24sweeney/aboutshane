@@ -171,6 +171,73 @@ html, body, #root {
   box-shadow: 0 18px 50px rgba(0, 0, 0, 0.32);
 }
 
+.home-hero {
+  padding: 8px 8px 24px;
+  text-align: center;
+}
+
+.home-hero-name {
+  margin: 0;
+  color: var(--site-text);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: 0;
+}
+
+.home-hero-role {
+  margin: 10px 0 0;
+  color: var(--site-title-accent);
+  font-size: clamp(1.15rem, 2.6vw, 1.5rem);
+  font-weight: 700;
+}
+
+.home-hero-meta {
+  margin: 6px 0 0;
+  color: var(--site-text-muted);
+  font-size: 1rem;
+}
+
+.home-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.home-hero-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1px solid var(--site-border);
+  border-radius: 999px;
+  background: var(--site-surface-raised);
+  color: var(--site-text) !important;
+  font-weight: 600;
+  text-decoration: none;
+  transition: border-color 160ms ease, background-color 160ms ease;
+}
+
+.home-hero-button:hover,
+.home-hero-button:focus-visible {
+  border-color: var(--site-accent);
+  background: #2f3a45;
+}
+
+.home-hero-button-primary {
+  border-color: var(--site-accent);
+  background: var(--site-accent);
+  color: #0b1016 !important;
+}
+
+.home-hero-button-primary:hover,
+.home-hero-button-primary:focus-visible {
+  background: var(--site-accent-strong);
+}
+
 .home-profile .home-carousel {
   overflow: hidden;
   border-radius: 10px;
@@ -639,7 +706,7 @@ body {
 
 #education .education-carousel h1,
 #education .education-carousel h2,
-#charity .charity-carousel h1 {
+#charity .charity-carousel h2 {
   max-width: 700px;
   margin: 0 auto 28px;
   color: var(--site-title-accent);
@@ -661,7 +728,7 @@ body {
   box-shadow: 0 14px 36px rgba(0, 0, 0, 0.28);
 }
 
-#charity .charity-carousel h1 {
+#charity .charity-carousel h2 {
   color: var(--site-text);
 }
 
@@ -708,7 +775,7 @@ body {
   height: 200px;
 }
 
-#education h1, #charity h1 {
+#education h2, #charity h2 {
   font-size: 1.25rem;
   line-height: 1.3;
   margin: 8px 0 0 0;

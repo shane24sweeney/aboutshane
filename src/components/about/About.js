@@ -47,6 +47,7 @@ function about () {
   return (
     <ThemeProvider theme={theme} className="justify-content-center" >
     <section id="about" className="about-page">
+    <h1 className="visually-hidden">About Shane</h1>
     <Card 
     className="about-card mx-auto d-flex"
     style={{
@@ -62,7 +63,7 @@ function about () {
   <Carousel className="about-carousel" controls={false} indicators={false}>
       <Carousel.Item interval={5000} 
     >
-         <Typography variant="h1" gutterBottom >
+         <Typography variant="h1" component="div" gutterBottom >
 
          <p>
          Your mind is clear. Your heart rate is racing with anticipation and
@@ -87,9 +88,10 @@ function about () {
    </Carousel.Item>
    <Carousel.Item interval={1000} 
     >
-    <Typography variant="h1" gutterBottom>
+    <Typography variant="h1" component="div" gutterBottom>
     <Image 
-      src={Challenge1} 
+      src={Challenge1}
+      alt="Fitness challenge result 1" 
       fluid
       className="d-block mx-auto"
       style={{
@@ -103,9 +105,10 @@ function about () {
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
-    <Typography variant="h1" gutterBottom>
+    <Typography variant="h1" component="div" gutterBottom>
     <Image 
-      src={Challenge2} 
+      src={Challenge2}
+      alt="Fitness challenge result 2" 
       fluid
       className="d-block mx-auto"
       style={{
@@ -119,9 +122,10 @@ function about () {
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
-    <Typography variant="h1" gutterBottom>
+    <Typography variant="h1" component="div" gutterBottom>
     <Image 
-      src={Challenge3} 
+      src={Challenge3}
+      alt="Fitness challenge result 3" 
       fluid
       className="d-block mx-auto"
       style={{
@@ -135,9 +139,10 @@ function about () {
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
-    <Typography variant="h1" gutterBottom>
+    <Typography variant="h1" component="div" gutterBottom>
     <Image 
-      src={Challenge4} 
+      src={Challenge4}
+      alt="Fitness challenge result 4" 
       fluid
       className="d-block mx-auto"
       style={{
@@ -151,8 +156,9 @@ function about () {
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
-    <Typography variant="h1" gutterBottom>
-    <Image src={Challenge5} 
+    <Typography variant="h1" component="div" gutterBottom>
+    <Image src={Challenge5}
+      alt="Fitness challenge result 5" 
      style={{
       height: '100vh',
       borderRadius: '10px',
@@ -165,8 +171,9 @@ function about () {
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
-    <Typography variant="h1" gutterBottom>
-    <Image src={Challenge6} 
+    <Typography variant="h1" component="div" gutterBottom>
+    <Image src={Challenge6}
+      alt="Fitness challenge result 6" 
      style={{
       height: '100vh',
       borderRadius: '10px',
@@ -179,8 +186,9 @@ function about () {
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
-    <Typography variant="h1" gutterBottom>
-    <Image src={Challenge7} 
+    <Typography variant="h1" component="div" gutterBottom>
+    <Image src={Challenge7}
+      alt="Fitness challenge result 7" 
      style={{
       height: '100vh',
       borderRadius: '10px',
@@ -193,8 +201,9 @@ function about () {
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
-    <Typography variant="h1" gutterBottom>
-    <Image src={Challenge8} 
+    <Typography variant="h1" component="div" gutterBottom>
+    <Image src={Challenge8}
+      alt="Fitness challenge result 8" 
      style={{
       height: '100vh',
       borderRadius: '10px',
@@ -207,8 +216,9 @@ function about () {
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
-    <Typography variant="h1" gutterBottom>
-    <Image src={Challenge9} 
+    <Typography variant="h1" component="div" gutterBottom>
+    <Image src={Challenge9}
+      alt="Fitness challenge result 9" 
      style={{
       height: '100vh',
       borderRadius: '10px',
@@ -221,8 +231,9 @@ function about () {
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
-    <Typography variant="h1" gutterBottom>
-    <Image src={Challenge10} 
+    <Typography variant="h1" component="div" gutterBottom>
+    <Image src={Challenge10}
+      alt="Fitness challenge result 10" 
      style={{
       height: '100vh',
       borderRadius: '10px',
@@ -235,8 +246,9 @@ function about () {
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
-    <Typography variant="h1" gutterBottom>
-    <Image src={Challenge11} 
+    <Typography variant="h1" component="div" gutterBottom>
+    <Image src={Challenge11}
+      alt="Fitness challenge result 11" 
      style={{
       height: '100vh',
       borderRadius: '10px',
@@ -249,8 +261,9 @@ function about () {
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
-    <Typography variant="h1" gutterBottom>
-    <Image src={Challenge12} 
+    <Typography variant="h1" component="div" gutterBottom>
+    <Image src={Challenge12}
+      alt="Fitness challenge result 12" 
      style={{
       height: '100vh',
       borderRadius: '10px',
@@ -263,8 +276,9 @@ function about () {
     </Carousel.Item>
    <Carousel.Item interval={1000} 
     >
-    <Typography variant="h1" gutterBottom>
-    <Image src={Workout1} 
+    <Typography variant="h1" component="div" gutterBottom>
+    <Image src={Workout1}
+      alt="Workout log 1" 
      style={{
       height: '100vh',
       borderRadius: '10px',
@@ -277,8 +291,9 @@ function about () {
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
-    <Typography variant="h1" gutterBottom>
-    <Image src={Workout2} 
+    <Typography variant="h1" component="div" gutterBottom>
+    <Image src={Workout2}
+      alt="Workout log 2" 
      style={{
       height: '100vh',
       borderRadius: '10px',
@@ -291,8 +306,9 @@ function about () {
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
-    <Typography variant="h1" gutterBottom>
-    <Image src={Workout3} 
+    <Typography variant="h1" component="div" gutterBottom>
+    <Image src={Workout3}
+      alt="Workout log 3" 
      style={{
       height: '100vh',
       borderRadius: '10px',
@@ -305,8 +321,9 @@ function about () {
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
-    <Typography variant="h1" gutterBottom>
-    <Image src={Workout4} 
+    <Typography variant="h1" component="div" gutterBottom>
+    <Image src={Workout4}
+      alt="Workout log 4" 
      style={{
       height: '100vh',
       borderRadius: '10px',
@@ -319,8 +336,9 @@ function about () {
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
-    <Typography variant="h1" gutterBottom>
-    <Image src={Workout5} 
+    <Typography variant="h1" component="div" gutterBottom>
+    <Image src={Workout5}
+      alt="Workout log 5" 
      style={{
       height: '100vh',
       borderRadius: '10px',
@@ -333,8 +351,9 @@ function about () {
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
-    <Typography variant="h1" gutterBottom>
-    <Image src={Workout6} 
+    <Typography variant="h1" component="div" gutterBottom>
+    <Image src={Workout6}
+      alt="Workout log 6" 
      style={{
       height: '100vh',
       borderRadius: '10px',
@@ -347,8 +366,9 @@ function about () {
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
-    <Typography variant="h1" gutterBottom>
-    <Image src={Workout7} 
+    <Typography variant="h1" component="div" gutterBottom>
+    <Image src={Workout7}
+      alt="Workout log 7" 
      style={{
       height: '100vh',
       borderRadius: '10px',
@@ -361,8 +381,9 @@ function about () {
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
-    <Typography variant="h1" gutterBottom>
-    <Image src={Workout8} 
+    <Typography variant="h1" component="div" gutterBottom>
+    <Image src={Workout8}
+      alt="Workout log 8" 
      style={{
       height: '100vh',
       borderRadius: '10px',
@@ -375,8 +396,9 @@ function about () {
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
-    <Typography variant="h1" gutterBottom>
-    <Image src={Workout9} 
+    <Typography variant="h1" component="div" gutterBottom>
+    <Image src={Workout9}
+      alt="Workout log 9" 
      style={{
       height: '100vh',
       borderRadius: '10px',
@@ -389,8 +411,9 @@ function about () {
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
-    <Typography variant="h1" gutterBottom>
-    <Image src={Workout10} 
+    <Typography variant="h1" component="div" gutterBottom>
+    <Image src={Workout10}
+      alt="Workout log 10" 
      style={{
       height: '100vh',
       borderRadius: '10px',
@@ -403,8 +426,9 @@ function about () {
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
-    <Typography variant="h1" gutterBottom>
-    <Image src={Workout11} 
+    <Typography variant="h1" component="div" gutterBottom>
+    <Image src={Workout11}
+      alt="Workout log 11" 
      style={{
       height: '100vh',
       borderRadius: '10px',
@@ -417,8 +441,9 @@ function about () {
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
-    <Typography variant="h1" gutterBottom>
-    <Image src={Workout12} 
+    <Typography variant="h1" component="div" gutterBottom>
+    <Image src={Workout12}
+      alt="Workout log 12" 
      style={{
       height: '100vh',
       borderRadius: '10px',
@@ -431,8 +456,9 @@ function about () {
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
-    <Typography variant="h1" gutterBottom>
-    <Image src={Workout13} 
+    <Typography variant="h1" component="div" gutterBottom>
+    <Image src={Workout13}
+      alt="Workout log 13" 
      style={{
       height: '100vh',
       borderRadius: '10px',
@@ -445,8 +471,9 @@ function about () {
     </Carousel.Item>
     <Carousel.Item interval={1000} 
     >
-    <Typography variant="h1" gutterBottom>
-    <Image src={Workout14} 
+    <Typography variant="h1" component="div" gutterBottom>
+    <Image src={Workout14}
+      alt="Workout log 14" 
      style={{
       height: '100vh',
       borderRadius: '10px',

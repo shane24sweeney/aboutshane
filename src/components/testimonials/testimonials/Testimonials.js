@@ -23,6 +23,7 @@ function Testimonials() {
 
    return (
       <div className="testimonials-page">
+         <h1 className="visually-hidden">Testimonials</h1>
          <ThemeProvider theme={theme} style={{
             height: '100vh',
             padding: '1px',

@@ -26,7 +26,7 @@ const resume =
     },
     {
         title: "SENIOR AUTOMATION CONSULTANT - AMERITAS (Contract via TEKsystems)",
-        description: "Contract via TEKsystems\n\nEngineered automation approaches for API, mobile, and web tesDng using Selenium, GEB, Groovy, and Spock,\nimproving overall framework resilience and maintainability.\n• Partnered with analysts and development teams to refine automation requirements, translating business needs\ninto well-defined test stories and executable test cases.\nPerformed scalability and reliability assessments with Postman, BlazeMeter, and Apache JMeter, ensuring\napplication performance met organizational expectations under varying workloads.\nStrengthened test architecture by adding hard and soft assertions, DIAPER framework, and Entity framework, while\nestablishing practices in both BDD and TDD.\n Mentored junior engineers with one-on-one guidance and knowledge sharing, while delivering QA\ndemonstrations and reporting out automation outcomes to senior stakeholders.\n• Spearheaded automation initiatives across all counties in all 50 U.S. states, including automated PDF validations,\nsignificantly improving nationwide regression reliability.",
+        description: "Engineered automation approaches for API, mobile, and web testing using Selenium, GEB, Groovy, and Spock,\nimproving overall framework resilience and maintainability.\n• Partnered with analysts and development teams to refine automation requirements, translating business needs\ninto well-defined test stories and executable test cases.\nPerformed scalability and reliability assessments with Postman, BlazeMeter, and Apache JMeter, ensuring\napplication performance met organizational expectations under varying workloads.\nStrengthened test architecture by adding hard and soft assertions, DIAPER framework, and Entity framework, while\nestablishing practices in both BDD and TDD.\n Mentored junior engineers with one-on-one guidance and knowledge sharing, while delivering QA\ndemonstrations and reporting out automation outcomes to senior stakeholders.\n• Spearheaded automation initiatives across all counties in all 50 U.S. states, including automated PDF validations,\nsignificantly improving nationwide regression reliability.",
         image: Ameritas,
     },
     {
@@ -66,7 +66,7 @@ const resume =
 
 {
     title: "SENIOR AUTOMATION ENGINEER - BOTTOMLINE",
-    description: "Senior Test Automation Engineer for all BottomLine Healthcare product"
+    description: "Senior Test Automation Engineer for all Bottomline Healthcare product"
     +" lines."
     +" Architected the first Java Selenium WebDriver Test Driven Development"
     +"(TDD) automation framework, utilizing design patterns, best practices."
@@ -103,13 +103,13 @@ const resume =
     },
     {
         title: "MEMBER OF TECHNICAL STAFF - XM SATELLITE RADIO",
-        description: "Member of Technical Staﬀ, XM Satellite Radio, Deerfield Beach, FL (2004-2008)" ,
+        description: "Member of Technical Staff, XM Satellite Radio, Deerfield Beach, FL (2004-2008)" ,
         image: XM,
     },
 
     {
         title: "SENIOR SOFTWARE ENGINEER - MOTOROLA",
-        description: "Senior SoMware Engineer, Motorola, Boynton Beach, FL (2001-2004)",
+        description: "Senior Software Engineer, Motorola, Boynton Beach, FL (2001-2004)",
         image: MOT,
     },
 
