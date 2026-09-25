@@ -1,17 +1,67 @@
 .site-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
   margin-top: 24px;
-  padding: 12px 8px;
-  border-top: 1px solid #222;
-  background-color: black;
-  color: white;
-  text-align: center;
+  padding: 14px 16px;
+  border-top: 1px solid var(--site-border);
+  color: var(--site-text-muted);
+  font-size: 0.875rem;
 }
 
-.site-footer-line {
-  margin-bottom: 4px;
+/* Two groups (who and where, then links) so a narrow screen breaks between them, not mid-line. */
+.site-footer-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Visual separators only; the empty alt text keeps screen readers from announcing them. */
+.site-footer-group li + li::before,
+.site-footer-group + .site-footer-group::before {
+  content: '·';
+  content: '·' / '';
+  margin: 0 10px;
+}
+
+@media (max-width: 600px) {
+  .site-footer {
+    flex-direction: column;
+  }
+
+  .site-footer-group + .site-footer-group::before {
+    content: none;
+  }
+}
+
+/* The smallest phones can't fit name and location on one line, so give each its own. */
+@media (max-width: 380px) {
+  .site-footer-group:first-child {
+    flex-direction: column;
+  }
+
+  .site-footer-group:first-child li + li::before {
+    content: none;
+  }
+}
+
+.site-footer-group li {
+  white-space: nowrap;
 }
 
 .site-footer a {
-  color: white;
+  display: inline-block;
+  padding: 6px 2px;
+  color: var(--site-accent);
+  text-decoration: none;
+}
+
+.site-footer a:hover,
+.site-footer a:focus-visible {
+  color: var(--site-accent-strong);
   text-decoration: underline;
 }

@@ -5,12 +5,13 @@ test.describe('home page', () => {
     await page.goto('/home');
     await expect(page.getByText('Senior QE & Automation Consultant')).toBeVisible();
 
-    const linkedIn = page.getByRole('link', { name: 'LinkedIn', exact: true });
+    const main = page.getByRole('main');
+    const linkedIn = main.getByRole('link', { name: 'LinkedIn', exact: true });
     await expect(linkedIn).toHaveAttribute('href', 'https://linkedin.com/in/shane-sweeney-37a934135');
     await expect(linkedIn).toHaveAttribute('target', '_blank');
-    await expect(page.getByRole('link', { name: 'GitHub', exact: true })).toHaveAttribute('href', 'https://github.com/shane24sweeney');
+    await expect(main.getByRole('link', { name: 'GitHub', exact: true })).toHaveAttribute('href', 'https://github.com/shane24sweeney');
 
-    await page.getByRole('link', { name: 'Contact me' }).click();
+    await main.getByRole('link', { name: 'Contact me' }).click();
     await expect(page).toHaveURL('/contact');
   });
 
@@ -24,6 +25,21 @@ test.describe('home page', () => {
     const image = await request.get(new URL(ogImage ?? '').pathname);
     expect(image.ok()).toBe(true);
     expect(image.headers()['content-type']).toBe('image/png');
+  });
+});
+
+test.describe('footer', () => {
+  test('links to LinkedIn, GitHub and the contact form without publishing the email address', async ({ page }) => {
+    await page.goto('/resume');
+    const footer = page.getByRole('contentinfo');
+    await expect(footer).toContainText('Shane James Sweeney');
+    await expect(footer).toContainText('Kennesaw, GA');
+    await expect(footer.getByRole('link', { name: 'LinkedIn', exact: true })).toHaveAttribute('href', 'https://linkedin.com/in/shane-sweeney-37a934135');
+    await expect(footer.getByRole('link', { name: 'GitHub', exact: true })).toHaveAttribute('href', 'https://github.com/shane24sweeney');
+    await expect(footer.locator('a[href^="mailto:"]')).toHaveCount(0);
+
+    await footer.getByRole('link', { name: 'Contact', exact: true }).click();
+    await expect(page).toHaveURL('/contact');
   });
 });
 
