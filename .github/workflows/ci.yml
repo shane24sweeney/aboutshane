@@ -58,7 +58,7 @@ jobs:
       - run: cfn-lint infra/template.yaml
 
   e2e:
-    name: End-to-end (Playwright, desktop + mobile)
+    name: End-to-end (Playwright, desktop + Android + iPhone)
     needs: frontend
     runs-on: ubuntu-latest
     steps:
@@ -72,8 +72,8 @@ jobs:
         with:
           name: frontend-build
           path: build
-      - run: npx playwright install --with-deps chromium
-      - run: npx playwright test --project=desktop --project=mobile
+      - run: npx playwright install --with-deps chromium webkit
+      - run: npx playwright test --project=desktop --project=mobile --project=mobile-safari
       - uses: actions/upload-artifact@v7
         if: ${{ !cancelled() }}
         with:

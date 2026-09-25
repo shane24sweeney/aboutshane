@@ -19,13 +19,18 @@ export default defineConfig({
     // Local production build; the contact API is mocked so these never send email.
     {
       name: 'desktop',
-      testIgnore: /production\.spec\.ts/,
+      testIgnore: [/production\.spec\.ts/, /mobile\.spec\.ts/],
       use: { ...devices['Desktop Chrome'], baseURL: localURL },
     },
     {
       name: 'mobile',
       testIgnore: /production\.spec\.ts/,
       use: { ...devices['Pixel 7'], baseURL: localURL },
+    },
+    {
+      name: 'mobile-safari',
+      testIgnore: /production\.spec\.ts/,
+      use: { ...devices['iPhone 15'], baseURL: localURL },
     },
     // Read-only smoke checks against the live site and API.
     {

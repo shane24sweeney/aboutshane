@@ -14,6 +14,10 @@ export default defineConfig({
       '/api': 'http://localhost:8080',
     },
   },
+  preview: {
+    // BrowserStack devices reach the preview server through BrowserStack Local as bs-local.com.
+    allowedHosts: ['bs-local.com'],
+  },
   test: {
     environment: 'jsdom',
     globals: true,

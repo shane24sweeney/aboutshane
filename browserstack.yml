@@ -1,0 +1,33 @@
+# BrowserStack Automate settings for `npm run test:browserstack`.
+# Credentials come from the BROWSERSTACK_USERNAME and BROWSERSTACK_ACCESS_KEY environment
+# variables (GitHub secrets in CI); never commit them here.
+
+projectName: AboutShane
+buildName: aboutshane-mobile
+framework: playwright
+
+# Real devices. Pick from https://www.browserstack.com/list-of-browsers-and-platforms/playwright
+# and confirm each one is available on your plan before enabling it.
+platforms:
+  - deviceName: Samsung Galaxy S23
+    osVersion: 13.0
+    browserName: chrome
+    deviceOrientation: portrait
+  - deviceName: Google Pixel 8
+    osVersion: 14.0
+    browserName: chrome
+    deviceOrientation: portrait
+  # - deviceName: iPhone 15
+  #   osVersion: 17
+  #   browserName: safari
+  #   deviceOrientation: portrait
+
+parallelsPerPlatform: 1
+
+# Tunnels the local preview server (http://bs-local.com:4173) to the devices.
+browserstackLocal: true
+
+debug: false
+networkLogs: true
+consoleLogs: errors
+testObservability: true
