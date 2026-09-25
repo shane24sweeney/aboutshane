@@ -63,7 +63,7 @@ test.describe('phone layout', () => {
 
   test('home page buttons are large enough to tap', async ({ page }) => {
     for (const name of ['Contact me', 'LinkedIn', 'GitHub']) {
-      await expectTappable(page.getByRole('link', { name, exact: true }));
+      await expectTappable(page.getByRole('main').getByRole('link', { name, exact: true }));
     }
   });
 
