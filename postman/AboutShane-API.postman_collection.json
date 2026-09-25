@@ -2,17 +2,12 @@
   "info": {
     "_postman_id": "f0d7c7b1-6fd8-4e8c-8d98-2e5b1df34c1b",
     "name": "AboutShane API",
-    "description": "Smoke and CORS checks for the AboutShane Spring Boot API running locally or behind AWS API Gateway and Lambda.",
+    "description": "Read-only checks for the contact API behind CloudFront. None of these requests sends an email.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
     {
       "key": "baseUrl",
-      "value": "https://7nofvoyvke.execute-api.us-east-1.amazonaws.com",
-      "type": "string"
-    },
-    {
-      "key": "frontendOrigin",
       "value": "https://selenium-automation.com",
       "type": "string"
     }
@@ -20,108 +15,145 @@
   "item": [
     {
       "name": "Health",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('returns 200', () => pm.response.to.have.status(200));",
+              "pm.test('reports ok', () => pm.expect(pm.response.json()).to.eql({ status: 'ok' }));",
+              "pm.test('responds quickly once warm', () => pm.expect(pm.response.responseTime).to.be.below(3000));"
+            ]
+          }
+        }
+      ],
       "request": {
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{baseUrl}}/health",
-          "host": ["{{baseUrl}}"],
-          "path": ["health"]
+          "raw": "{{baseUrl}}/api/health",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "health"
+          ]
         }
-      },
+      }
+    },
+    {
+      "name": "Contact - rejects invalid input (sends nothing)",
       "event": [
         {
           "listen": "test",
           "script": {
             "type": "text/javascript",
             "exec": [
-              "pm.test('Status is 200', function () {",
-              "    pm.response.to.have.status(200);",
-              "});",
-              "pm.test('Health status is ok', function () {",
-              "    pm.expect(pm.response.json().status).to.eql('ok');",
-              "});"
+              "pm.test('returns 400', () => pm.response.to.have.status(400));",
+              "const body = pm.response.json();",
+              "pm.test('reports validation failure', () => pm.expect(body.error).to.eql('validation_failed'));",
+              "pm.test('names each invalid field', () => pm.expect(Object.keys(body.fields).sort()).to.eql(['email', 'message', 'name']));"
             ]
           }
         }
-      ]
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/contact",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "contact"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"\",\n  \"email\": \"not-an-email\",\n  \"message\": \"\",\n  \"website\": \"\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
     },
     {
-      "name": "Health with website CORS",
+      "name": "Contact - rejects malformed JSON",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('returns 400', () => pm.response.to.have.status(400));",
+              "pm.test('reports malformed request', () => pm.expect(pm.response.json().error).to.eql('malformed_request'));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/contact",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "contact"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{not json"
+        }
+      }
+    },
+    {
+      "name": "Unknown API path returns 404",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('returns 404, not the web page', () => pm.response.to.have.status(404));",
+              "pm.test('responds with JSON', () => pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json'));"
+            ]
+          }
+        }
+      ],
       "request": {
         "method": "GET",
-        "header": [
-          {
-            "key": "Origin",
-            "value": "{{frontendOrigin}}"
-          }
-        ],
+        "header": [],
         "url": {
-          "raw": "{{baseUrl}}/health",
-          "host": ["{{baseUrl}}"],
-          "path": ["health"]
+          "raw": "{{baseUrl}}/api/does-not-exist",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "does-not-exist"
+          ]
         }
-      },
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "exec": [
-              "pm.test('Status is 200', function () {",
-              "    pm.response.to.have.status(200);",
-              "});",
-              "pm.test('Website origin is allowed', function () {",
-              "    pm.expect(pm.response.headers.get('Access-Control-Allow-Origin')).to.eql(pm.variables.get('frontendOrigin'));",
-              "});"
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "name": "Health CORS preflight",
-      "request": {
-        "method": "OPTIONS",
-        "header": [
-          {
-            "key": "Origin",
-            "value": "{{frontendOrigin}}"
-          },
-          {
-            "key": "Access-Control-Request-Method",
-            "value": "GET"
-          },
-          {
-            "key": "Access-Control-Request-Headers",
-            "value": "content-type"
-          }
-        ],
-        "url": {
-          "raw": "{{baseUrl}}/health",
-          "host": ["{{baseUrl}}"],
-          "path": ["health"]
-        }
-      },
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "exec": [
-              "pm.test('Preflight status is 200', function () {",
-              "    pm.response.to.have.status(200);",
-              "});",
-              "pm.test('GET is allowed', function () {",
-              "    pm.expect(pm.response.headers.get('Access-Control-Allow-Methods')).to.include('GET');",
-              "});",
-              "pm.test('Website origin is allowed', function () {",
-              "    pm.expect(pm.response.headers.get('Access-Control-Allow-Origin')).to.eql(pm.variables.get('frontendOrigin'));",
-              "});"
-            ]
-          }
-        }
-      ]
+      }
     }
   ]
 }

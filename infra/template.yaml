@@ -1,15 +1,12 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: AWS infrastructure for the AboutShane React frontend and Spring Boot backend.
+Description: AWS infrastructure for the AboutShane React frontend and Spring Boot contact API.
 
 Parameters:
   ProjectName:
     Type: String
     Default: aboutshane
     AllowedPattern: '[a-z0-9-]+'
-  CorsAllowedOrigins:
-    Type: CommaDelimitedList
-    Default: http://localhost:3000
   FrontendCertificateArn:
     Type: String
     Default: arn:aws:acm:us-east-1:647276285325:certificate/6688db3c-3e6f-450c-873c-1800cc539cc9
@@ -19,8 +16,24 @@ Parameters:
   FrontendWwwDomainName:
     Type: String
     Default: www.selenium-automation.com
+  HostedZoneId:
+    Type: AWS::Route53::HostedZone::Id
+    Default: Z17MA9T0X7H7PX
+    Description: Route 53 zone for FrontendDomainName; SES DKIM records are added here.
+  ContactRecipientEmail:
+    Type: String
+    Default: shane24sweeney@yahoo.com
+    Description: Where contact-form notifications are sent.
+
+Globals:
+  Function:
+    Runtime: java21
+    MemorySize: 1024
+    Timeout: 30
 
 Resources:
+  # ---------- Frontend: S3 + CloudFront ----------
+
   FrontendBucket:
     Type: AWS::S3::Bucket
     DeletionPolicy: Retain
@@ -45,9 +58,27 @@ Resources:
         SigningBehavior: always
         SigningProtocol: sigv4
 
+  # Serves index.html for client-side routes such as /resume. Unlike custom error responses,
+  # this leaves real 403/404 responses (including API errors) untouched.
+  SpaRoutingFunction:
+    Type: AWS::CloudFront::Function
+    Properties:
+      Name: !Sub '${ProjectName}-spa-routing'
+      AutoPublish: true
+      FunctionConfig:
+        Comment: Rewrite extensionless paths to /index.html
+        Runtime: cloudfront-js-2.0
+      FunctionCode: |
+        function handler(event) {
+          var request = event.request;
+          if (request.uri.indexOf('.') === -1) {
+            request.uri = '/index.html';
+          }
+          return request;
+        }
+
   FrontendDistribution:
     Type: AWS::CloudFront::Distribution
-    DependsOn: FrontendOriginAccessControl
     Properties:
       DistributionConfig:
         Enabled: true
@@ -63,11 +94,17 @@ Resources:
             DomainName: !GetAtt FrontendBucket.RegionalDomainName
             OriginAccessControlId: !GetAtt FrontendOriginAccessControl.Id
             S3OriginConfig: {}
+          - Id: BackendApiOrigin
+            DomainName: !Sub '${BackendApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}'
+            CustomOriginConfig:
+              OriginProtocolPolicy: https-only
+              OriginSSLProtocols:
+                - TLSv1.2
         DefaultCacheBehavior:
           TargetOriginId: FrontendS3Origin
           ViewerProtocolPolicy: redirect-to-https
           Compress: true
-          ResponseHeadersPolicyId: 67f7725c-6f97-4210-82d7-5512b31e9d03
+          ResponseHeadersPolicyId: 67f7725c-6f97-4210-82d7-5512b31e9d03 # Managed-SecurityHeadersPolicy
           AllowedMethods:
             - GET
             - HEAD
@@ -78,15 +115,28 @@ Resources:
             QueryString: false
             Cookies:
               Forward: none
-        CustomErrorResponses:
-          - ErrorCode: 403
-            ResponseCode: 200
-            ResponsePagePath: /index.html
-            ErrorCachingMinTTL: 0
-          - ErrorCode: 404
-            ResponseCode: 200
-            ResponsePagePath: /index.html
-            ErrorCachingMinTTL: 0
+          FunctionAssociations:
+            - EventType: viewer-request
+              FunctionARN: !GetAtt SpaRoutingFunction.FunctionMetadata.FunctionARN
+        CacheBehaviors:
+          - PathPattern: /api/*
+            TargetOriginId: BackendApiOrigin
+            ViewerProtocolPolicy: https-only
+            Compress: true
+            ResponseHeadersPolicyId: 67f7725c-6f97-4210-82d7-5512b31e9d03 # Managed-SecurityHeadersPolicy
+            CachePolicyId: 4135ea2d-6df8-44a3-9df3-4b5a84be39ad # Managed-CachingDisabled
+            OriginRequestPolicyId: b689b0a8-53d0-40ab-baf2-68738e2966ac # Managed-AllViewerExceptHostHeader
+            AllowedMethods:
+              - GET
+              - HEAD
+              - OPTIONS
+              - PUT
+              - POST
+              - PATCH
+              - DELETE
+            CachedMethods:
+              - GET
+              - HEAD
         ViewerCertificate:
           AcmCertificateArn: !Ref FrontendCertificateArn
           SslSupportMethod: sni-only
@@ -108,6 +158,71 @@ Resources:
             Condition:
               StringEquals:
                 AWS:SourceArn: !Sub 'arn:${AWS::Partition}:cloudfront::${AWS::AccountId}:distribution/${FrontendDistribution}'
+          - Sid: DenyInsecureTransport
+            Effect: Deny
+            Principal: '*'
+            Action: s3:*
+            Resource:
+              - !GetAtt FrontendBucket.Arn
+              - !Sub '${FrontendBucket.Arn}/*'
+            Condition:
+              Bool:
+                aws:SecureTransport: false
+
+  # ---------- Contact API: Lambda + HTTP API + DynamoDB + SES ----------
+
+  ContactMessagesTable:
+    Type: AWS::DynamoDB::Table
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      TableName: !Sub '${ProjectName}-contact-messages'
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      TimeToLiveSpecification:
+        AttributeName: expiresAt
+        Enabled: true
+      SSESpecification:
+        SSEEnabled: true
+
+  # Sending domain, verified through Easy DKIM records in Route 53.
+  SesDomainIdentity:
+    Type: AWS::SES::EmailIdentity
+    Properties:
+      EmailIdentity: !Ref FrontendDomainName
+
+  SesDkimRecords:
+    Type: AWS::Route53::RecordSetGroup
+    Properties:
+      HostedZoneId: !Ref HostedZoneId
+      RecordSets:
+        - Name: !GetAtt SesDomainIdentity.DkimDNSTokenName1
+          Type: CNAME
+          TTL: '1800'
+          ResourceRecords:
+            - !GetAtt SesDomainIdentity.DkimDNSTokenValue1
+        - Name: !GetAtt SesDomainIdentity.DkimDNSTokenName2
+          Type: CNAME
+          TTL: '1800'
+          ResourceRecords:
+            - !GetAtt SesDomainIdentity.DkimDNSTokenValue2
+        - Name: !GetAtt SesDomainIdentity.DkimDNSTokenName3
+          Type: CNAME
+          TTL: '1800'
+          ResourceRecords:
+            - !GetAtt SesDomainIdentity.DkimDNSTokenValue3
+
+  # While the account is in the SES sandbox, the recipient must be verified too.
+  # Creating this sends a verification link to the address.
+  SesRecipientIdentity:
+    Type: AWS::SES::EmailIdentity
+    Properties:
+      EmailIdentity: !Ref ContactRecipientEmail
 
   BackendLogGroup:
     Type: AWS::Logs::LogGroup
@@ -118,15 +233,28 @@ Resources:
   BackendFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub '${ProjectName}-backend'
       CodeUri: ../backend
       Handler: com.aboutshane.contactapi.StreamLambdaHandler::handleRequest
-      Runtime: java21
-      MemorySize: 1024
-      Timeout: 30
       AutoPublishAlias: live
+      SnapStart:
+        ApplyOn: PublishedVersions
+      LoggingConfig:
+        LogGroup: !Ref BackendLogGroup
       Environment:
         Variables:
-          CORS_ALLOWED_ORIGINS: !Join [',', !Ref CorsAllowedOrigins]
+          CONTACT_TABLE_NAME: !Ref ContactMessagesTable
+          CONTACT_SENDER: !Sub 'noreply@${FrontendDomainName}'
+          CONTACT_RECIPIENT: !Ref ContactRecipientEmail
+      Policies:
+        - DynamoDBWritePolicy:
+            TableName: !Ref ContactMessagesTable
+        - Statement:
+            - Effect: Allow
+              Action: ses:SendEmail
+              Resource:
+                - !Sub 'arn:${AWS::Partition}:ses:${AWS::Region}:${AWS::AccountId}:identity/${FrontendDomainName}'
+                - !Sub 'arn:${AWS::Partition}:ses:${AWS::Region}:${AWS::AccountId}:identity/${ContactRecipientEmail}'
       Events:
         Api:
           Type: HttpApi
@@ -139,15 +267,10 @@ Resources:
     Type: AWS::Serverless::HttpApi
     Properties:
       StageName: $default
-      CorsConfiguration:
-        AllowOrigins:
-          !Ref CorsAllowedOrigins
-        AllowHeaders:
-          - content-type
-        AllowMethods:
-          - GET
-          - POST
-          - OPTIONS
+      # Account-wide guard against form spam and runaway costs; excess requests get 429.
+      DefaultRouteSettings:
+        ThrottlingBurstLimit: 10
+        ThrottlingRateLimit: 2
 
 Outputs:
   FrontendBucketName:
@@ -163,5 +286,8 @@ Outputs:
     Description: Lambda function name for the backend
     Value: !Ref BackendFunction
   BackendUrl:
-    Description: HTTP API URL for the backend
+    Description: HTTP API URL for the backend (the site reaches it through CloudFront at /api/*)
     Value: !Sub 'https://${BackendApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}'
+  ContactMessagesTableName:
+    Description: DynamoDB table holding contact-form messages
+    Value: !Ref ContactMessagesTable
