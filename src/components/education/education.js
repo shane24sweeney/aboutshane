@@ -37,10 +37,10 @@ function education () {
 
 
   return (
-    <section id="education" >
+    <section id="education" className="education-page">
     <ThemeProvider theme={theme}>
       <Card
-     centered    className="flex-container"
+    centered    className="education-card"
      style={{
       height: '100vh',
       padding: '1px', 
@@ -49,7 +49,7 @@ function education () {
       display: 'flex'
   }}
 >
-    <Carousel controls={false} indicators={false}>
+    <Carousel className="education-carousel" controls={false} indicators={false}>
     <Carousel.Item interval={4000} 
   >
     <img

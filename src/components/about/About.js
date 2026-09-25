@@ -46,9 +46,9 @@ function about () {
 
   return (
     <ThemeProvider theme={theme} className="justify-content-center" >
-    <section id="about" >
+    <section id="about" className="about-page">
     <Card 
-    className="mx-auto d-flex"
+    className="about-card mx-auto d-flex"
     style={{
       borderRadius: '10px',
       backgroundColor: 'black',
@@ -59,7 +59,7 @@ function about () {
     bg="dark"
     text="white"
     >
-   <Carousel  controls={false} indicators={false}>
+  <Carousel className="about-carousel" controls={false} indicators={false}>
       <Carousel.Item interval={5000} 
     >
          <Typography variant="h1" gutterBottom >

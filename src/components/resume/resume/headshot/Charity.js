@@ -36,10 +36,10 @@ const theme = createTheme({
 
 const Charity = () => {
   return (
-    <section id="charity">
+    <section id="charity" className="charity-page">
       <ThemeProvider theme={theme}>
       <Card 
-    className="mx-auto d-flex"
+    className="charity-card mx-auto d-flex"
     style={{
       height: '100vh',
       padding: '1px', 
@@ -49,7 +49,7 @@ const Charity = () => {
     bg="dark"
     text="white"
     >
-    <Carousel controls={false} indicators={false}>
+    <Carousel className="charity-carousel" controls={false} indicators={false}>
       <Carousel.Item interval={4000} 
          >
                <Typography variant="h1" gutterBottom>

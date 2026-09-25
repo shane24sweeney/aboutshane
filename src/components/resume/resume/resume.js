@@ -5,18 +5,19 @@ import BottomLine from "../resume/headshot/BottomLineTech.png";
 import Ameritas from "../resume/headshot/Ameritas.png";
 import Bullhorn from "../resume/headshot/bullhorn.jpeg";
 import GE from "../resume/headshot/GE.png";
-import Tek from "../resume/headshot/TekSystems.jpeg";
+import FifthThirdBankImage from "../resume/headshot/FifthThirdBank.png";
 import ItronImage from "./headshot/ItronImage.png";
 import XM from "../resume/headshot/XM.png";
+import FISImage from "../resume/headshot/FIS.png";
 import MOT from "../resume/headshot/MOT.png";
 import ALCTATEL from "../resume/headshot/Alcatel.png";
 
 const resume = 
 [
     {
-        title: "SENIOR QE CONSULTANT - FIFTH THIRD BANK",
-        description: "February 2026 - Present | Remote | Contract via TEKSYSTEMS\n\nSupported application modernization for a commercial banking client following the Comerica Bank acquisition, partnering with Agile squads across mobile and backend servicing domains.\n\n- Built integration, regression, and end-to-end testing frameworks, increasing automated test coverage from 45% to 80% across mobile and backend services.\n\n- Automated identity management flows, backend APIs, and service integrations, reducing authentication-related defects by 30%.\n\n- Used qTest, Perfecto, and Postman to manage test execution and cross-device validation across more than 300 test cases per release.\n\n- Built TypeScript automation with WebdriverIO and the Page Object pattern, achieving 100% automated login-scenario coverage on iOS and Android smoke tests and reducing manual mobile regression time from 2 days to 4 hours.\n\n- Used GitHub Copilot, Claude, and SonarQube to accelerate test script development by 40% and improve code quality.",
-        image: Tek,
+        title: "SENIOR QE CONSULTANT - FIFTH THIRD BANK (Contract via TEKsystems)",
+        description: "Supported application modernization for a commercial banking client following the Comerica Bank acquisition, partnering with Agile squads across mobile and backend servicing domains.\n\n- Built integration, regression, and end-to-end testing frameworks, increasing automated test coverage from 45% to 80% across mobile and backend services.\n\n- Automated identity management flows, backend APIs, and service integrations, reducing authentication-related defects by 30%.\n\n- Used qTest, Perfecto, and Postman to manage test execution and cross-device validation across more than 300 test cases per release.\n\n- Built TypeScript automation with WebdriverIO and the Page Object pattern, achieving 100% automated login-scenario coverage on iOS and Android smoke tests and reducing manual mobile regression time from 2 days to 4 hours.\n\n- Used GitHub Copilot, Claude, and SonarQube to accelerate test script development by 40% and improve code quality.",
+        image: FifthThirdBankImage,
     },
     {
         title: "TECH QA MANAGER - AMERITAS",
@@ -24,14 +25,14 @@ const resume =
         image: Ameritas,
     },
     {
-        title: "SENIOR AUTOMATION CONTRACT ENGINEER - AMERITAS",
-        description: "Contract via TEKSYSTEMS\n\nEngineered automation approaches for API, mobile, and web tesDng using Selenium, GEB, Groovy, and Spock,\nimproving overall framework resilience and maintainability.\n• Partnered with analysts and development teams to refine automation requirements, translating business needs\ninto well-defined test stories and executable test cases.\nPerformed scalability and reliability assessments with Postman, BlazeMeter, and Apache JMeter, ensuring\napplication performance met organizational expectations under varying workloads.\nStrengthened test architecture by adding hard and soft assertions, DIAPER framework, and Entity framework, while\nestablishing practices in both BDD and TDD.\n Mentored junior engineers with one-on-one guidance and knowledge sharing, while delivering QA\ndemonstrations and reporting out automation outcomes to senior stakeholders.\n• Spearheaded automation initiatives across all counties in all 50 U.S. states, including automated PDF validations,\nsignificantly improving nationwide regression reliability.",
+        title: "SENIOR AUTOMATION CONSULTANT - AMERITAS (Contract via TEKsystems)",
+        description: "Contract via TEKsystems\n\nEngineered automation approaches for API, mobile, and web tesDng using Selenium, GEB, Groovy, and Spock,\nimproving overall framework resilience and maintainability.\n• Partnered with analysts and development teams to refine automation requirements, translating business needs\ninto well-defined test stories and executable test cases.\nPerformed scalability and reliability assessments with Postman, BlazeMeter, and Apache JMeter, ensuring\napplication performance met organizational expectations under varying workloads.\nStrengthened test architecture by adding hard and soft assertions, DIAPER framework, and Entity framework, while\nestablishing practices in both BDD and TDD.\n Mentored junior engineers with one-on-one guidance and knowledge sharing, while delivering QA\ndemonstrations and reporting out automation outcomes to senior stakeholders.\n• Spearheaded automation initiatives across all counties in all 50 U.S. states, including automated PDF validations,\nsignificantly improving nationwide regression reliability.",
         image: Ameritas,
     },
     {
-        title: "SENIOR AUTOMATION CONTRACT ENGINEER - FIS",
+        title: "SENIOR AUTOMATION CONSULTANT - FIS (Contract via Eliassen Group)",
         description: "Built reusable automation frameworks in C# to support both API and UI testing, delivering consistent and reusable test architecture across projects.\nConducted load and scalability evaluations using Postman and Apache JMeter, ensuring applications sustained performance benchmarks under high-demand conditions.\nCoached junior QA engineers through structured mentoring (one-on-one sessions) and documentation, promoting professional development and advancing team-wide automation capabilities.\nOrganized automation backlogs, defining priorities and creating structured plans to align automation initiatives with sprint and release objectives.\nBlended API and UI automation suites into end-to-end testing processes, expanding regression coverage and improving overall system validation.\nShowcased automation progress and results in scrum ceremonies and QA demos, strengthening transparency and engagement with senior leadership.",
-        image: null,
+        image: FISImage,
         company: "FIS",
     },
 

@@ -31,11 +31,11 @@ function HeadShot() {
   ];
 
   const careerHighlights = [
-    'Reduced regression testing time  by 60 percent by automating 1000s of test cases',
-    'Led QA initiatives for UI, API, and scale roadmap testing, including automated regression and PDF validations across all counties in the U.S.',
-    'Mentored junior and senior QA team members through one-on-one coaching sessions and wiki documentation, improving team automation capabilities and adherence to best practices.',
-    'Executed automation runs and performance tests using Jenkins, GitHub workflows, Postman, Apache JMeter, and BlazeMeter, while presenting QA results in sprint demos to stakeholders.',
-    'Used GitHub Copilot and Claude to accelerate test script development by 40%, while applying SonarQube to improve automation code quality.',
+    { label: 'Automation Impact', text: 'Reduced regression testing time by 60% by automating thousands of test cases.' },
+    { label: 'Quality Strategy', text: 'Led UI, API, scale, regression, and PDF validation initiatives across all U.S. counties.' },
+    { label: 'Team Leadership', text: 'Mentored junior and senior QA engineers through coaching and documentation, strengthening automation practices.' },
+    { label: 'Delivery & Performance', text: 'Ran automation and performance tests with Jenkins, GitHub Workflows, Postman, Apache JMeter, and BlazeMeter, then presented QA results in sprint demos to stakeholders.' },
+    { label: 'Quality Engineering', text: 'Used GitHub Copilot and Claude to accelerate test script development by 40%, while applying SonarQube to improve automation code quality.' },
   ];
 
   return (
@@ -43,35 +43,24 @@ function HeadShot() {
       <Card
         centered
         className="home-profile"
-        style={{
-          maxWidth: '900px',
-          width: '100%',
-          margin: '24px auto',
-          padding: '16px 24px',
-          backgroundColor: 'black',
-          color: 'white',
-          border: '1px solid #222',
-          textAlign: 'center',
-        }}
       >
-        <Carousel className="home-carousel" controls={false} indicators={false} interval={4000}>
+        <Carousel className="home-carousel" controls={false} indicators={false} interval={10000} pause="hover">
           <Carousel.Item className="home-slide">
             <Image className="home-photo" src={Shane} fluid rounded />
-            <Card.Content style={{ color: 'white', backgroundColor: 'black', textAlign: 'center' }}>
-              <Card.Header style={{ color: 'white', backgroundColor: 'black' }}>
+            <Card.Content>
+              <Card.Header>
                 <h1 className="home-slide-title">
                   Professional Summary - 27 Years in Quality Engineering
                 </h1>
               </Card.Header>
 
-              <Card.Description style={{ color: 'white', backgroundColor: 'black' }}>
+              <Card.Description>
                 <p className="home-slide-copy home-slide-copy-lead">
-                  Quality engineering professional with <b>27+ years of experience</b>
-                  spanning software engineering, SQA, test automation, performance
+                  Quality engineering professional with <b>27+ years of experience</b> spanning software engineering, SQA, test automation, performance
                   engineering, and enterprise quality leadership.
                 </p>
                 <p className="home-slide-copy">
-                  Proven expertise in <b>architecting scalable automation frameworks</b>
+                  Proven expertise in <b>architecting scalable automation frameworks</b>{' '}
                   for web, mobile, API, and backend systems across banking, healthcare,
                   enterprise software, telecommunications, and utility products.
                 </p>
@@ -91,17 +80,17 @@ function HeadShot() {
 
           <Carousel.Item className="home-slide">
             <Image className="home-photo" src={Shane} fluid rounded />
-            <Card.Content extra style={{ color: 'white', backgroundColor: 'black', textAlign: 'center' }}>
-                <Card.Header style={{ color: 'white', backgroundColor: 'black' }}>
+            <Card.Content extra>
+              <Card.Header>
                     <h1 className="home-slide-title">
                         Core Strengths - Quality Engineering & Automation
                     </h1>
                 </Card.Header>
               <Card.Group itemsPerRow={2} stackable>
                 {coreStrengths.map((item, idx) => (
-                  <Card key={idx} style={{ backgroundColor: 'black', color: 'white', border: '1px solid #222', margin: '8px' }}>
+                  <Card key={idx}>
                     <Card.Content>
-                      <Card.Description style={{ color: 'white', fontSize: '1.05rem', lineHeight: 1.6, textAlign: 'center' }}>{item}</Card.Description>
+                      <Card.Description>{item}</Card.Description>
                     </Card.Content>
                   </Card>
                 ))}
@@ -109,20 +98,23 @@ function HeadShot() {
             </Card.Content>
           </Carousel.Item>
 
-          <Carousel.Item className="home-slide">
+          <Carousel.Item className="home-slide" interval={15000}>
             <Image className="home-photo" src={Shane} fluid rounded />
-            <Card.Content extra style={{ color: 'white', backgroundColor: 'black', textAlign: 'center' }}>
+            <Card.Content extra>
               <h1 className="home-slide-title">
                 Career Highlights - 27-Year Quality Engineering Career
               </h1>
-              <p className="home-slide-copy">
-                Designed and implemented automation frameworks in Java, Groovy (GEB/Spock), Playwright, C#, and Selenium, incorporating BDD and TDD practices to enhance test reliability and maintainability.
+              <p className="home-slide-copy home-framework-copy">
+                Designed and implemented automation frameworks in Java, Groovy (GEB/Spock), Playwright, JavaScript, TypeScript, C#, and Selenium, incorporating BDD and TDD practices to enhance test reliability and maintainability.
               </p>
               <Card.Group itemsPerRow={1} stackable>
                 {careerHighlights.map((item, idx) => (
-                  <Card key={idx} style={{ backgroundColor: 'black', color: 'white', border: '1px solid #222', margin: '8px' }}>
+                  <Card key={idx}>
                     <Card.Content>
-                      <Card.Description style={{ color: 'white', fontSize: '1.05rem', lineHeight: 1.6, textAlign: 'center' }}>{item}</Card.Description>
+                      <Card.Description>
+                        <span className="career-highlight-label">{item.label}</span>
+                        <span className="career-highlight-text">{item.text}</span>
+                      </Card.Description>
                     </Card.Content>
                   </Card>
                 ))}

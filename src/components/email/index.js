@@ -22,12 +22,14 @@ const Email = () => {
   };
 
   return (
-    <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: '100vh' }}>
+    <Container className="contact-page d-flex align-items-center justify-content-center">
       <Row className="justify-content-center">
         <Col xs={12} md={8} lg={6}>
-          <Card bg="dark" text="white" className="p-4">
+          <Card bg="dark" text="white" className="contact-card p-4">
             <Card.Body>
-              <h2 className="text-center mb-4">Send me a message. Let's have a chat!</h2>
+              <div className="contact-accent" aria-hidden="true" />
+              <h2 className="contact-title text-center">Send me a message.</h2>
+              <p className="contact-intro text-center">Let&apos;s talk about quality engineering, automation, or your next project.</p>
               <Form onSubmit={handleOnSubmit}>
                 <Form.Group className="mb-3">
                   <Form.Label htmlFor="from_name">Name</Form.Label>
@@ -60,7 +62,7 @@ const Email = () => {
                     required
                   />
                 </Form.Group>
-                <Button variant="primary" type="submit" className="w-100">Submit</Button>
+                <Button variant="primary" type="submit" className="contact-submit w-100">Submit</Button>
               </Form>
             </Card.Body>
           </Card>

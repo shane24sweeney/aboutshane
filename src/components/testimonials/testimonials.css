@@ -1,69 +1,79 @@
-.flex-container {
-    /* We first create a flex layout context */
-    display: flex;
-    
-    /* Then we define the flow direction 
-       and if we allow the items to wrap 
-     * Remember this is the same as:
-     * flex-direction: row;
-     * flex-wrap: wrap;
-     */
-    flex-flow: row wrap;
-    
-    /* Then we define how is distributed the remaining space */
-    justify-content: space-around;
-    
-    padding: 0;
-    margin: 0;
-    list-style: none;
-  }
-  
-  .testimonialStyle {
-    padding: 5px;
-    width: '100px';
-    font-weight: bold;
-    text-align: center;
-    color: black;
-    content: middle;
-  }
+.testimonials-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 28px 14px 48px;
+  background: var(--site-background);
+  color: var(--site-text);
+}
 
-  
-  .carousel-root {
-    width: '100%' !important;
-    margin: auto !important;
-    margin-top: 3% !important;
-  }
-  
-  .carousel .slide {
-    background: #fff !important;
-    color: black;
-  }
+.testimonials-page .MuiCard-root,
+.testimonials-card {
+  width: min(100%, 920px);
+  height: auto !important;
+  align-self: flex-start;
+  padding: 0 !important;
+  overflow: hidden;
+  background: var(--site-surface) !important;
+  border: 1px solid var(--site-border);
+  border-radius: 14px;
+  color: var(--site-text) !important;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
+}
 
-  .container {
-      height: '100vh';
-      padding: '1px';
-      color:'white';
-      display: 'flex';
-  }
-  
-  .carousel .slide img {
-    width: 139px !important;
-    border-radius: 50%;
-  }
+.testimonials-carousel .carousel-item {
+  min-height: 520px;
+  padding: 52px clamp(22px, 7vw, 92px) 64px;
+  text-align: center;
+}
 
-  
+.testimonials-carousel .uniform-img {
+  width: 132px;
+  height: 132px;
+  margin: 0 auto 24px;
+  object-fit: cover;
+  border: 3px solid var(--site-accent);
+  border-radius: 50%;
+  box-shadow: 0 0 0 8px rgba(121, 210, 192, 0.1);
+}
 
-  .myCarousel {
-    background: black;
-    margin-top: -6%;
-    width: '100%';
-    margin-left: auto;
-    margin-right: auto;
-    padding-top: 6%;
-    padding-bottom: 8%;
-    padding-left: 5%;
-    padding-right: 5%;
-    border: 10px solid #ddd;
-  }
- 
+.testimonials-carousel h3 {
+  margin: 0 0 6px;
+  color: var(--site-text);
+  font-size: clamp(1.35rem, 3vw, 1.8rem);
+  font-weight: 700;
+}
+
+.testimonials-carousel h4 {
+  margin: 0 0 28px;
+  color: var(--site-text-muted);
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+}
+
+.testimonials-carousel h4 + div {
+  position: relative;
+  max-width: 690px;
+  margin: 0 auto;
+}
+
+.testimonials-carousel h4 + div::before {
+  content: '\201C';
+  display: block;
+  height: 28px;
+  color: var(--site-accent);
+  font-size: 4rem;
+  font-family: Georgia, serif;
+  line-height: 0.8;
+}
+
+.testimonials-carousel h4 + div p {
+  margin: 0;
+  color: var(--site-title-accent);
+  font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+  font-style: italic;
+  line-height: 1.7;
+}
+
 

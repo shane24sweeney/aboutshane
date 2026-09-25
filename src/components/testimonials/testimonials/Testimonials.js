@@ -22,7 +22,7 @@ function Testimonials() {
 
 
    return (
-      <div className="container">
+      <div className="testimonials-page">
          <ThemeProvider theme={theme} style={{
             height: '100vh',
             padding: '1px',
@@ -31,6 +31,7 @@ function Testimonials() {
             display: 'flex'
          }} >
             <Card
+               className="testimonials-card"
                style={{
                   height: '100vh',
                   padding: '1px',
@@ -43,7 +44,7 @@ function Testimonials() {
 
 
 
-               <Carousel controls={false} indicators={false}>
+               <Carousel className="testimonials-carousel" controls={false} indicators={false}>
                   <Carousel.Item interval={4000}
                   >
                      <testimonials image={testimonials[0].image} title={testimonials[0].title} description={testimonials[0].description} />
