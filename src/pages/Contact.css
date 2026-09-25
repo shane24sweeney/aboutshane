@@ -1,0 +1,124 @@
+.contact-page {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 28px 12px 48px;
+  background: var(--site-background);
+}
+
+.contact-card {
+  box-sizing: border-box;
+  width: min(100%, 560px);
+  padding: clamp(24px, 5vw, 64px);
+  border: 1px solid var(--site-border);
+  border-radius: 14px;
+  background: linear-gradient(145deg, #20262d 0%, #171a1f 100%);
+  color: var(--site-text);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.3);
+}
+
+.contact-accent {
+  width: 72px;
+  height: 4px;
+  margin: 0 auto 24px;
+  border-radius: 999px;
+  background: var(--site-accent);
+}
+
+.contact-title {
+  margin: 0 0 8px;
+  text-align: center;
+  color: var(--site-title-accent);
+  font-size: clamp(1.6rem, 4vw, 2.25rem);
+  font-weight: 700;
+}
+
+.contact-intro {
+  margin: 0 auto 28px;
+  text-align: center;
+  color: var(--site-text-muted);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.contact-card form {
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.contact-card .form-label {
+  color: var(--site-text);
+  font-weight: 700;
+}
+
+.contact-card .form-control {
+  min-height: 46px;
+  background: var(--site-surface);
+  border-color: var(--site-border);
+  color: var(--site-text);
+}
+
+.contact-card .form-control::placeholder {
+  color: var(--site-text-muted);
+  opacity: 1;
+}
+
+.contact-card textarea.form-control {
+  min-height: 150px;
+}
+
+.contact-card .form-control:focus {
+  background: var(--site-surface-raised);
+  border-color: var(--site-accent);
+  box-shadow: 0 0 0 0.2rem rgba(121, 210, 192, 0.18);
+  color: var(--site-text);
+}
+
+.contact-submit {
+  margin-top: 8px;
+  padding: 11px 18px;
+  border: 1px solid var(--site-accent) !important;
+  background: var(--site-accent) !important;
+  color: #14221f !important;
+  font-weight: 700;
+  transition: background-color 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+
+.contact-submit:hover,
+.contact-submit:focus-visible {
+  border-color: var(--site-accent-strong) !important;
+  background: var(--site-accent-strong) !important;
+  transform: translateY(-1px);
+}
+.contact-honeypot {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.contact-submit:disabled {
+  opacity: 0.7;
+}
+
+.contact-status p {
+  margin: 16px 0 0;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.contact-status-success {
+  border: 1px solid var(--site-accent);
+  background: rgba(121, 210, 192, 0.12);
+  color: var(--site-accent-strong);
+}
+
+.contact-status-error {
+  border: 1px solid #ff8fa3;
+  background: rgba(255, 143, 163, 0.12);
+  color: #ffc2cd;
+}

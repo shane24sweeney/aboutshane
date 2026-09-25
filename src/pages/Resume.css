@@ -1,0 +1,97 @@
+.resume-page {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1140px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 24px 12px;
+}
+
+.resume-card {
+  padding: 16px;
+  border-radius: 6px;
+  background: var(--bs-dark);
+}
+
+.resume-card .accordion {
+  --bs-accordion-bg: var(--site-surface);
+  --bs-accordion-color: var(--site-text);
+  --bs-accordion-border-color: var(--bs-secondary);
+  --bs-accordion-btn-padding-y: 16px;
+  --bs-accordion-btn-padding-x: 20px;
+  --bs-accordion-btn-focus-box-shadow: 0 0 0 0.2rem rgba(121, 210, 192, 0.3);
+  --bs-accordion-active-bg: var(--site-surface);
+  --bs-accordion-active-color: var(--site-text);
+}
+
+.resume-card .accordion-button {
+  gap: 16px;
+  box-shadow: none;
+}
+
+.resume-card .accordion-button::after {
+  filter: invert(86%) sepia(28%) saturate(724%) hue-rotate(5deg) brightness(102%);
+}
+
+.resume-logo {
+  flex: none;
+  border-radius: 50%;
+  object-fit: contain;
+  background: white;
+}
+
+.resume-title {
+  color: var(--site-title-accent);
+  font-weight: 700;
+}
+
+.resume-card .accordion-body {
+  padding: 8px 24px 24px;
+  color: var(--site-text);
+  line-height: 1.6;
+}
+
+.resume-summary,
+.resume-meta {
+  margin: 0 0 12px;
+}
+
+.resume-meta {
+  color: var(--site-text-muted);
+}
+
+.resume-highlights {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.resume-highlights li + li {
+  margin-top: 8px;
+}
+
+.resume-highlights li::marker {
+  color: var(--site-accent);
+}
+
+@media (max-width: 600px) {
+  .resume-page {
+    padding: 12px 0;
+  }
+
+  .resume-card {
+    padding: 8px;
+  }
+
+  .resume-card .accordion {
+    --bs-accordion-btn-padding-x: 12px;
+  }
+
+  .resume-card .accordion-button {
+    gap: 12px;
+    font-size: 0.9rem;
+  }
+
+  .resume-card .accordion-body {
+    padding: 8px 16px 20px;
+  }
+}
