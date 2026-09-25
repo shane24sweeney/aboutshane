@@ -23,10 +23,12 @@ test.describe('production buttons', () => {
     test(`clicking ${label} loads /api/content/${contentApi[path]}`, async ({ page }) => {
       // Start on Contact, which loads no content, so the click triggers a fresh request.
       await page.goto('/contact');
-      const response = page.waitForResponse(`**/api/content/${contentApi[path]}`);
+      const response = page.waitForResponse(`**/api/content/${contentApi[path]}`, { timeout: 10_000 }).catch(() => null);
       await page.getByRole('navigation', { name: 'Primary navigation' }).getByRole('link', { name: label, exact: true }).click();
 
       const content = await response;
+      expect(content, `clicking ${label} never requested /api/content/${contentApi[path]}`).not.toBeNull();
+      if (!content) return;
       expect(content.status()).toBe(200);
       expect(content.headers()['content-type']).toContain('application/json');
       const { responseEnd } = content.request().timing();

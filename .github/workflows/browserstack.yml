@@ -37,5 +37,8 @@ jobs:
         if: ${{ !cancelled() }}
         with:
           name: browserstack-report
-          path: playwright-report
+          path: |
+            playwright-report
+            test-results
+            log
           retention-days: 14

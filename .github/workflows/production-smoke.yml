@@ -27,7 +27,9 @@ jobs:
         if: ${{ !cancelled() }}
         with:
           name: production-smoke-report
-          path: playwright-report
+          path: |
+            playwright-report
+            test-results
           retention-days: 14
 
   # The request behind every button, under light load. Defaults stay under the API's 2 req/s throttle.
@@ -61,5 +63,7 @@ jobs:
         if: ${{ !cancelled() }}
         with:
           name: jmeter-report
-          path: jmeter/results
+          path: |
+            jmeter/results
+            jmeter.log
           retention-days: 14

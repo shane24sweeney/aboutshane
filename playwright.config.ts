@@ -12,7 +12,17 @@ export default defineConfig({
   forbidOnly: isCI,
   retries: isCI ? 2 : 0,
   workers: isCI ? 2 : undefined,
-  reporter: isCI ? [['html', { open: 'never' }], ['github'], ['list']] : [['html', { open: 'never' }], ['list']],
+  // In CI, failures show in the job log (list), as annotations (github), in the job summary
+  // (github-summary), and in junit.xml and the HTML report, which the workflows upload.
+  reporter: isCI
+    ? [
+        ['html', { open: 'never' }],
+        ['github'],
+        ['list'],
+        ['junit', { outputFile: 'test-results/junit.xml' }],
+        ['./e2e/reporters/github-summary.ts'],
+      ]
+    : [['html', { open: 'never' }], ['list']],
   use: {
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
