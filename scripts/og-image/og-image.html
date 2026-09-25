@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<!-- Source for public/og-image.png, the 1200x630 link-preview card. Render with `npm run og-image`. -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      * { box-sizing: border-box; margin: 0; }
+      html, body { width: 1200px; height: 630px; }
+      body {
+        display: flex;
+        align-items: center;
+        gap: 64px;
+        padding: 0 90px;
+        background: linear-gradient(135deg, #14171c 0%, #1b2027 60%, #20262d 100%);
+        color: #f4f6f8;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      }
+      .photo {
+        flex: none;
+        width: 308px;
+        height: 308px;
+        border: 5px solid #79d2c0;
+        border-radius: 16px;
+        object-fit: cover;
+      }
+      .accent { width: 88px; height: 5px; margin-bottom: 26px; border-radius: 3px; background: #79d2c0; }
+      h1 { font-size: 64px; line-height: 1.08; font-weight: 700; letter-spacing: -0.5px; }
+      .headline { margin-top: 22px; color: #f5c86b; font-size: 36px; line-height: 1.25; font-weight: 700; }
+      .tagline { margin-top: 22px; color: #aab2bc; font-size: 25px; line-height: 1.55; }
+      .domain { margin-top: 26px; color: #79d2c0; font-size: 23px; }
+    </style>
+  </head>
+  <body>
+    <img class="photo" src="../../src/assets/Shane.jpg" alt="" />
+    <div>
+      <div class="accent"></div>
+      <h1>Shane James<br />Sweeney</h1>
+      <p class="headline">Senior QE &amp; Automation Consultant</p>
+      <p class="tagline">27+ years in quality engineering · Selenium · Playwright · API &amp; performance testing · CI/CD</p>
+      <p class="domain">selenium-automation.com</p>
+    </div>
+  </body>
+</html>

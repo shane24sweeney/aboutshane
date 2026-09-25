@@ -33,7 +33,7 @@ class ContentControllerTest {
     void profileHasTheHeadlineAndStrengths() throws Exception {
         mvc.perform(get("/api/content/profile"))
                 .andExpect(jsonPath("$.name").value("Shane James Sweeney"))
-                .andExpect(jsonPath("$.headline").value("Senior QE Lead & Test Automation Architect"))
+                .andExpect(jsonPath("$.headline").value("Senior QE & Automation Consultant"))
                 .andExpect(jsonPath("$.strengths", hasSize(15)))
                 .andExpect(jsonPath("$.highlights", hasSize(5)));
     }
