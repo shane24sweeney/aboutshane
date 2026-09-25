@@ -36,6 +36,7 @@ test.describe('carousels', () => {
 
     for (const { path, label } of carousels) {
       test(`${path} keeps its height and the scroll position on every slide`, async ({ page }) => {
+        test.skip(path === '/home' && page.viewportSize()!.width <= 600, 'Home stacks its sections on phones');
         await page.goto(path);
         const carousel = page.getByRole('region', { name: label });
         await expect(carousel).toBeVisible();
@@ -57,10 +58,19 @@ test.describe('carousels', () => {
 
   test('autoplay advances a carousel nobody has touched', async ({ page }) => {
     await page.clock.install();
-    await page.goto('/home');
+    await page.goto('/education');
     await expect(page.locator('.site-carousel-position')).toHaveText('1 of 3');
-    await page.clock.runFor(10_500);
+    await page.clock.runFor(4_500);
     await expect(page.locator('.site-carousel-position')).toHaveText('2 of 3');
+  });
+
+  test('home shows its sections stacked on phones and as a carousel on wider screens', async ({ page }) => {
+    await page.goto('/home');
+    const isPhone = page.viewportSize()!.width <= 600;
+    await expect(page.getByRole('region', { name: 'Career overview' })).toHaveCount(isPhone ? 0 : 1);
+    // Stacked, all three section headings are readable without waiting or tapping.
+    const visibleHeadings = page.getByRole('heading', { level: 2 });
+    await expect(visibleHeadings).toHaveCount(isPhone ? 3 : 1);
   });
 
   test('autoplay stops for good once the visitor touches the carousel', async ({ page }) => {
