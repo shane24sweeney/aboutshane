@@ -1,88 +1,63 @@
-# AboutShane
+# selenium-automation.com
 
-This project is a React portfolio app with a Spring Boot contact API. The frontend includes routing, a shared app context, and EmailJS-based contact form configuration.
+[![CI](https://github.com/shane24sweeney/aboutshane/actions/workflows/ci.yml/badge.svg)](https://github.com/shane24sweeney/aboutshane/actions/workflows/ci.yml)
+[![Production smoke](https://github.com/shane24sweeney/aboutshane/actions/workflows/production-smoke.yml/badge.svg)](https://github.com/shane24sweeney/aboutshane/actions/workflows/production-smoke.yml)
 
-## Environment setup
+Portfolio site for Shane James Sweeney, Senior QE Lead and Test Automation Architect.
+Live at **[selenium-automation.com](https://selenium-automation.com)**.
 
-Create a local `.env` file in the project root using the included example:
+The site is small, but it is built and tested the way I build production systems: typed code,
+infrastructure as code, automated tests at every layer, and a CI pipeline that gates every change.
+
+## Architecture
+
+```
+Browser ──► CloudFront (selenium-automation.com, TLS, security headers)
+              ├── /*      ──► S3 (React build)   CloudFront Function rewrites SPA routes to /index.html
+              └── /api/*  ──► API Gateway HTTP API (rate limited) ──► Lambda (Spring Boot, SnapStart)
+                                                                        ├── DynamoDB  (stores messages, 1-year TTL)
+                                                                        └── SES       (emails a notification, DKIM-signed)
+```
+
+- **Frontend** (`src/`): React 18, TypeScript (strict), Vite, React Router 7, React Bootstrap.
+  Pages are lazy-loaded; content lives in typed data files under `src/data/`.
+- **Backend** (`backend/`): Spring Boot 3.5 on Java 21, run on Lambda through
+  `aws-serverless-java-container`. `POST /api/contact` validates input, drops honeypot spam,
+  stores the message, then emails it. A failed email never loses a message.
+- **Infrastructure** (`infra/template.yaml`): one AWS SAM stack for everything above, including
+  the SES identities and their DKIM DNS records. The site and API share one origin, so there is
+  no CORS configuration.
+
+## Testing
+
+| Layer | Tooling | What it covers |
+|---|---|---|
+| Unit / component | Vitest, Testing Library | Routing, one `h1` per page, alt text, nav labels, contact form states, resume rendering |
+| API | JUnit 5, MockMvc, Mockito | Validation, error mapping, honeypot, storage and notification order, full Spring context wiring |
+| End-to-end | Playwright (desktop + mobile) | Navigation, deep links, console errors, resume accordion, contact form with mocked API |
+| Accessibility | axe-core via Playwright | WCAG 2.1 A/AA, no serious or critical violations on any page |
+| Production smoke | Playwright, Postman | Live pages, security headers, API health, validation and 404 handling (read-only) |
+| Infrastructure | cfn-lint | SAM/CloudFormation template |
+
+CI (`.github/workflows/ci.yml`) runs all of it on every push and pull request and publishes the
+Playwright HTML report as a build artifact. A daily workflow runs the smoke suite against production.
+
+## Running locally
+
+Requirements: Node 20+, Java 21, Maven, and the AWS SAM CLI for deployment.
 
 ```bash
-cp .env.example .env
+npm ci
+npm run dev          # http://localhost:3000; /api is proxied to localhost:8080
+npm run lint && npm run typecheck && npm test
+
+npm run build
+npm run test:e2e     # Playwright desktop + mobile against the production build
+npm run test:smoke   # read-only checks against selenium-automation.com
+
+cd backend && mvn verify
 ```
 
-Add your EmailJS values to `.env`:
+## Deploying
 
-```env
-REACT_APP_EMAILJS_SERVICE_ID=your_service_id
-REACT_APP_EMAILJS_TEMPLATE_ID=your_template_id
-REACT_APP_EMAILJS_PUBLIC_KEY=your_public_key
-```
-
-The app reads these values through the shared context provider so secrets and service identifiers are not hardcoded in the source.
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+See [infra/README.md](infra/README.md).
