@@ -1,0 +1,39 @@
+{
+  "name": "Shane James Sweeney",
+  "headline": "Senior QE Lead & Test Automation Architect",
+  "meta": "27+ years in quality engineering · Kennesaw, GA",
+  "summaryTitle": "Professional Summary - 27 Years in Quality Engineering",
+  "summary": [
+    "Quality engineering professional with **27+ years of experience** spanning software engineering, SQA, test automation, performance engineering, and enterprise quality leadership.",
+    "Proven expertise in **architecting scalable automation frameworks** for web, mobile, API, and backend systems across banking, healthcare, enterprise software, telecommunications, and utility products.",
+    "Experienced in Agile delivery, application modernization, performance testing, CI/CD enablement, technical mentoring, and **cross-functional stakeholder leadership**.",
+    "Combines hands-on engineering depth with strategic quality leadership to improve reliability, delivery speed, and organizational capability."
+  ],
+  "strengthsTitle": "Core Strengths - Quality Engineering & Automation",
+  "strengths": [
+    "Enterprise Quality Strategy",
+    "Automation Architecture",
+    "Test Strategy Development",
+    "Process Optimization & Improvement",
+    "Performance Engineering",
+    "Risk Governance Frameworks",
+    "Program Management Expertise",
+    "Scalability Planning",
+    "Continuous Delivery Enablement",
+    "Stakeholder Alignment",
+    "Regulatory Compliance Oversight",
+    "Change Management",
+    "Organizational Coaching",
+    "Talent Development Coaching",
+    "Strategic Roadmap Execution"
+  ],
+  "highlightsTitle": "Career Highlights - 27-Year Quality Engineering Career",
+  "frameworks": "Designed and implemented automation frameworks in Java, Groovy (GEB/Spock), Playwright, JavaScript, TypeScript, C#, and Selenium, incorporating BDD and TDD practices to enhance test reliability and maintainability.",
+  "highlights": [
+    { "label": "Automation Impact", "text": "Reduced regression testing time by 60% by automating thousands of test cases." },
+    { "label": "Quality Strategy", "text": "Led UI, API, scale, regression, and PDF validation initiatives across all U.S. counties." },
+    { "label": "Team Leadership", "text": "Mentored junior and senior QA engineers through coaching and documentation, strengthening automation practices." },
+    { "label": "Delivery & Performance", "text": "Ran automation and performance tests with Jenkins, GitHub Workflows, Postman, Apache JMeter, and BlazeMeter, then presented QA results in sprint demos to stakeholders." },
+    { "label": "Quality Engineering", "text": "Used GitHub Copilot and Claude to accelerate test script development by 40%, while applying SonarQube to improve automation code quality." }
+  ]
+}

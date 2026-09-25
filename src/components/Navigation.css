@@ -1,0 +1,96 @@
+.site-nav {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px clamp(12px, 3vw, 32px);
+  border-bottom: 1px solid var(--site-border);
+}
+
+.site-nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 4px 10px;
+  width: 100%;
+}
+
+.site-nav-links .nav-link {
+  min-width: 76px;
+  padding: 9px 11px !important;
+  border-radius: 8px;
+  color: var(--site-text) !important;
+  line-height: 1.2;
+}
+
+.site-nav-links .nav-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  background: rgba(255, 255, 255, 0.035);
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: background-color 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+
+.site-nav-links .nav-button:hover,
+.site-nav-links .nav-button:focus-visible {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.site-nav-links .nav-link:hover,
+.site-nav-links .nav-link.active {
+  background: rgba(121, 210, 192, 0.14);
+  color: var(--site-accent-strong) !important;
+}
+
+.nav-icon {
+  font-size: 2em;
+}
+
+.site-nav-links .nav-button:nth-child(1) .nav-icon { color: #79d2c0; }
+.site-nav-links .nav-button:nth-child(2) .nav-icon { color: #ff9f80; }
+.site-nav-links .nav-button:nth-child(3) .nav-icon { color: #f5c86b; }
+.site-nav-links .nav-button:nth-child(4) .nav-icon { color: #83b9ff; }
+.site-nav-links .nav-button:nth-child(5) .nav-icon { color: #f2a7d5; }
+.site-nav-links .nav-button:nth-child(6) .nav-icon { color: #b6a1ff; }
+.site-nav-links .nav-button:nth-child(7) .nav-icon { color: #ff8fa3; }
+
+.nav-label {
+  display: block;
+  margin-top: 5px;
+}
+
+@media (max-width: 600px) {
+  .site-nav {
+    padding: 8px 10px;
+  }
+
+  .site-nav-links {
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    gap: 2px;
+  }
+
+  .site-nav-links .nav-link {
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: 48px;
+    padding: 8px 2px !important;
+    font-size: 0.68rem;
+    background: transparent;
+    border-radius: 9px;
+    -webkit-tap-highlight-color: rgba(121, 210, 192, 0.24);
+  }
+
+  .site-nav-links .nav-link svg {
+    display: block;
+    margin: 0 auto;
+    font-size: 1.35em;
+  }
+
+  .nav-label {
+    display: none;
+  }
+}

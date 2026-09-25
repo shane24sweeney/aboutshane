@@ -1,0 +1,75 @@
+.testimonials-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 28px 14px 48px;
+  background: var(--site-background);
+  color: var(--site-text);
+}
+
+.testimonials-card {
+  width: min(100%, 920px);
+  align-self: flex-start;
+  overflow: hidden;
+  border: 1px solid var(--site-border);
+  border-radius: 14px;
+  background: var(--site-surface);
+  color: var(--site-text);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
+}
+
+.testimonials-carousel .carousel-item {
+  min-height: 520px;
+  padding: 52px clamp(22px, 7vw, 92px) 64px;
+  text-align: center;
+}
+
+.testimonial-photo {
+  display: block;
+  width: 132px;
+  height: 132px;
+  margin: 0 auto 40px;
+  object-fit: cover;
+  border: 3px solid var(--site-accent);
+  border-radius: 50%;
+  box-shadow: 0 0 0 8px rgba(121, 210, 192, 0.1);
+}
+
+.testimonial-name {
+  margin: 0 0 6px;
+  color: var(--site-text);
+  font-size: clamp(1.35rem, 3vw, 1.8rem);
+  font-weight: 700;
+}
+
+.testimonial-title {
+  margin: 0 0 28px;
+  color: var(--site-text-muted);
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+}
+
+.testimonial-quote {
+  position: relative;
+  max-width: 690px;
+  margin: 0 auto;
+}
+
+.testimonial-quote::before {
+  content: '\201C';
+  display: block;
+  height: 28px;
+  color: var(--site-accent);
+  font-size: 4rem;
+  font-family: Georgia, serif;
+  line-height: 0.8;
+}
+
+.testimonial-quote p {
+  margin: 0;
+  color: var(--site-title-accent);
+  font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+  font-style: italic;
+  line-height: 1.7;
+}

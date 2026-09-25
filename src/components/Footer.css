@@ -1,0 +1,17 @@
+.site-footer {
+  margin-top: 24px;
+  padding: 12px 8px;
+  border-top: 1px solid #222;
+  background-color: black;
+  color: white;
+  text-align: center;
+}
+
+.site-footer-line {
+  margin-bottom: 4px;
+}
+
+.site-footer a {
+  color: white;
+  text-decoration: underline;
+}
