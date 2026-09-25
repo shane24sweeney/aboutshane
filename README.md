@@ -3,7 +3,7 @@
 [![CI](https://github.com/shane24sweeney/aboutshane/actions/workflows/ci.yml/badge.svg)](https://github.com/shane24sweeney/aboutshane/actions/workflows/ci.yml)
 [![Production smoke](https://github.com/shane24sweeney/aboutshane/actions/workflows/production-smoke.yml/badge.svg)](https://github.com/shane24sweeney/aboutshane/actions/workflows/production-smoke.yml)
 
-Portfolio site for Shane James Sweeney, Senior QE Lead and Test Automation Architect.
+Portfolio site for Shane James Sweeney, Senior QE and Automation Consultant.
 Live at **[selenium-automation.com](https://selenium-automation.com)**.
 
 The site is small, but it is built and tested the way I build production systems: typed code,

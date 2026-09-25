@@ -3,7 +3,7 @@ import { expect, test } from './fixtures';
 test.describe('home page', () => {
   test('shows the headline and outbound profile links', async ({ page }) => {
     await page.goto('/home');
-    await expect(page.getByText('Senior QE Lead & Test Automation Architect')).toBeVisible();
+    await expect(page.getByText('Senior QE & Automation Consultant')).toBeVisible();
 
     const linkedIn = page.getByRole('link', { name: 'LinkedIn', exact: true });
     await expect(linkedIn).toHaveAttribute('href', 'https://linkedin.com/in/shane-sweeney-37a934135');
@@ -16,8 +16,8 @@ test.describe('home page', () => {
 
   test('has search and social preview metadata', async ({ page, request }) => {
     await page.goto('/home');
-    await expect(page).toHaveTitle('Shane James Sweeney | Senior QE Lead & Test Automation Architect');
-    await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /Senior QE Lead/);
+    await expect(page).toHaveTitle('Shane James Sweeney | Senior QE & Automation Consultant');
+    await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /Senior QE and Automation Consultant/);
 
     const ogImage = await page.locator('meta[property="og:image"]').getAttribute('content');
     expect(ogImage).toMatch(/\/og-image\.png$/);
