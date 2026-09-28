@@ -2,7 +2,7 @@
 
 **Status: prepared, not in use.** Everything below is set up in the repo but switched off. No
 BrowserStack account is connected, and nothing here runs in CI. Every push is already tested on
-emulated phones (see [Mobile testing](../README.md#mobile-testing-android-and-ios)). This guide is
+emulated phones (see [Mobile testing](testing.md#4-mobile-tests-android-and-ios)). This guide is
 for adding real phones later.
 
 ## The off switch
