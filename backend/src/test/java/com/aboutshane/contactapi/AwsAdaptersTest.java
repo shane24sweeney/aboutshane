@@ -19,9 +19,14 @@ class AwsAdaptersTest {
 
     @Test
     void repositoryWritesTheMessageWithAnExpiry() {
+        // given a repository backed by DynamoDB
         DynamoDbClient dynamoDb = mock(DynamoDbClient.class);
-        new DynamoDbContactRepository(dynamoDb, "contact-table").save(MESSAGE);
+        DynamoDbContactRepository repository = new DynamoDbContactRepository(dynamoDb, "contact-table");
 
+        // when a message is saved
+        repository.save(MESSAGE);
+
+        // then it is written once, with every field and an expiry date
         ArgumentCaptor<PutItemRequest> request = ArgumentCaptor.forClass(PutItemRequest.class);
         verify(dynamoDb).putItem(request.capture());
         assertThat(request.getValue().tableName()).isEqualTo("contact-table");
@@ -36,9 +41,14 @@ class AwsAdaptersTest {
 
     @Test
     void notifierEmailsTheOwnerWithReplyToTheVisitor() {
+        // given a notifier that sends email through SES
         SesV2Client ses = mock(SesV2Client.class);
-        new SesContactNotifier(ses, "noreply@selenium-automation.com", "owner@example.com").notify(MESSAGE);
+        SesContactNotifier notifier = new SesContactNotifier(ses, "noreply@selenium-automation.com", "owner@example.com");
 
+        // when it is told about a message
+        notifier.notify(MESSAGE);
+
+        // then the owner gets an email they can reply to, straight to the visitor
         ArgumentCaptor<SendEmailRequest> request = ArgumentCaptor.forClass(SendEmailRequest.class);
         verify(ses).sendEmail(request.capture());
         SendEmailRequest email = request.getValue();

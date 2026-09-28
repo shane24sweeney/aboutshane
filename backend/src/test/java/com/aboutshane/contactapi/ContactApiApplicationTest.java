@@ -39,17 +39,22 @@ class ContactApiApplicationTest {
 
     @Test
     void aSubmittedMessageIsStoredAndEmailed() throws Exception {
+        // given the whole application, with DynamoDB and SES replaced by mocks
+        // when a valid message is posted
         mvc.perform(post("/api/contact")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {"name": "Jane Doe", "email": "jane@example.com", "message": "Hello", "website": ""}
                                 """))
+                // then it is accepted
                 .andExpect(status().isAccepted());
 
+        // and stored in the configured table
         ArgumentCaptor<PutItemRequest> put = ArgumentCaptor.forClass(PutItemRequest.class);
         verify(dynamoDb).putItem(put.capture());
         assertThat(put.getValue().tableName()).isEqualTo("test-table");
 
+        // and emailed from the configured sender to the configured owner
         ArgumentCaptor<SendEmailRequest> email = ArgumentCaptor.forClass(SendEmailRequest.class);
         verify(ses).sendEmail(email.capture());
         assertThat(email.getValue().fromEmailAddress()).isEqualTo("noreply@test.example");
@@ -59,13 +64,17 @@ class ContactApiApplicationTest {
     @Tag("negative")
     @Test
     void theHoneypotKeepsBotsOutOfStorage() throws Exception {
+        // given the whole application, with DynamoDB and SES replaced by mocks
+        // when a submission with the hidden honeypot field filled in is posted
         mvc.perform(post("/api/contact")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {"name": "Bot", "email": "bot@example.com", "message": "Spam", "website": "x"}
                                 """))
+                // then the bot is told it was accepted
                 .andExpect(status().isAccepted());
 
+        // but nothing is stored and nobody is emailed
         verifyNoInteractions(dynamoDb, ses);
     }
 }

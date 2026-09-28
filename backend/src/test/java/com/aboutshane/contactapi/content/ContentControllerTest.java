@@ -26,7 +26,10 @@ class ContentControllerTest {
     @ParameterizedTest
     @ValueSource(strings = {"profile", "about", "resume", "testimonials", "education", "charity"})
     void everyPageIsServedAsCacheableJson(String page) throws Exception {
+        // given the content API
+        // when a page is requested
         mvc.perform(get("/api/content/" + page))
+                // then it is served as JSON that CloudFront may cache for 5 minutes
                 .andExpect(status().isOk())
                 .andExpect(header().string("Content-Type", "application/json"))
                 .andExpect(header().string("Cache-Control", "max-age=300, public"));
@@ -34,7 +37,10 @@ class ContentControllerTest {
 
     @Test
     void profileHasTheHeadlineAndStrengths() throws Exception {
+        // given the content API
+        // when the profile is requested
         mvc.perform(get("/api/content/profile"))
+                // then it has the name, headline, strengths and highlights
                 .andExpect(jsonPath("$.name").value("Shane James Sweeney"))
                 .andExpect(jsonPath("$.headline").value("Senior QE & Automation Consultant"))
                 .andExpect(jsonPath("$.strengths", hasSize(15)))
@@ -43,7 +49,10 @@ class ContentControllerTest {
 
     @Test
     void resumeListsEveryRoleNewestFirst() throws Exception {
+        // given the content API
+        // when the resume is requested
         mvc.perform(get("/api/content/resume"))
+                // then it lists all 14 roles, the current one first
                 .andExpect(jsonPath("$", hasSize(14)))
                 .andExpect(jsonPath("$[0].company").value("Fifth Third Bank"))
                 .andExpect(jsonPath("$[0].contractVia").value("TEKsystems"))
@@ -54,6 +63,8 @@ class ContentControllerTest {
 
     @Test
     void otherPagesHaveTheirEntries() throws Exception {
+        // given the content API
+        // when each list page is requested, then it has all its entries
         mvc.perform(get("/api/content/testimonials")).andExpect(jsonPath("$", hasSize(11)));
         mvc.perform(get("/api/content/education")).andExpect(jsonPath("$", hasSize(3)));
         mvc.perform(get("/api/content/charity"))
@@ -65,7 +76,10 @@ class ContentControllerTest {
     @ParameterizedTest(name = "{0} is not found")
     @ValueSource(strings = {"/api/content/secrets", "/api/content/PROFILE", "/api/content/profile/extra", "/api/content/", "/api/content"})
     void unknownPagesAreNotFound(String path) throws Exception {
+        // given the content API
+        // when a page that does not exist is requested
         mvc.perform(get(path))
+                // then it answers 404 with a JSON error
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.error").value("request_rejected"));
     }
@@ -73,6 +87,8 @@ class ContentControllerTest {
     @Tag("negative")
     @Test
     void contentIsReadOnly() throws Exception {
+        // given the content API
+        // when a page is posted to or deleted, then the method is not allowed
         mvc.perform(post("/api/content/profile").content("{}")).andExpect(status().isMethodNotAllowed());
         mvc.perform(delete("/api/content/resume")).andExpect(status().isMethodNotAllowed());
     }
