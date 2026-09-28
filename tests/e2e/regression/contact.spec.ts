@@ -1,3 +1,4 @@
+import AxeBuilder from '@axe-core/playwright';
 import type { Page } from '@playwright/test';
 import { expect, test } from '../support/fixtures';
 
@@ -77,6 +78,30 @@ test.describe('contact form', () => {
       await expect(page.getByLabel('Message')).toHaveValue('Hello from Playwright');
     });
   }
+
+  test('says which fields are blank when they hold only spaces, and sends nothing', { tag: '@negative' }, async ({ page }) => {
+    let calls = 0;
+    await page.route('**/api/contact', (route) => {
+      calls += 1;
+      return route.fulfill({ status: 202, json: { status: 'received' } });
+    });
+    await page.getByLabel('Name').fill('   ');
+    await page.getByLabel('E-mail').fill('jane@example.com');
+    await page.getByLabel('Message').fill('   ');
+    await page.getByRole('button', { name: 'Submit' }).click();
+
+    await expect(page.getByText('Please enter your name.')).toBeVisible();
+    await expect(page.getByText('Please enter a message.')).toBeVisible();
+    await expect(page.getByLabel('Name')).toBeFocused();
+    await expect(page.getByLabel('Name')).toHaveAttribute('aria-invalid', 'true');
+    expect(calls).toBe(0);
+
+    const { violations } = await new AxeBuilder({ page }).include('form').withTags(['wcag2a', 'wcag2aa']).analyze();
+    expect(violations.map(({ id }) => id)).toEqual([]);
+
+    await page.getByLabel('Name').fill('Jane Doe');
+    await expect(page.getByText('Please enter your name.')).toBeHidden();
+  });
 
   test('stops each field at its length limit', { tag: '@negative' }, async ({ page }) => {
     await page.getByLabel('Name').fill('n'.repeat(150));

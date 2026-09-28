@@ -77,8 +77,8 @@ describe('Contact page', () => {
       expect(screen.getByLabelText('Message')).toHaveValue('Hello from a test');
     });
 
-    it('sends whitespace-only fields as empty, so the API rejects them instead of reporting success', async () => {
-      const fetchMock = vi.fn().mockResolvedValue(new Response(null, { status: 400 }));
+    it('does not send a name or message that is only spaces, and says which is blank', async () => {
+      const fetchMock = vi.fn();
       vi.stubGlobal('fetch', fetchMock);
       const user = userEvent.setup();
       render(<Contact />);
@@ -87,9 +87,30 @@ describe('Contact page', () => {
       await user.type(screen.getByLabelText('Message'), '   ');
       await user.click(screen.getByRole('button', { name: 'Submit' }));
 
-      expect(await screen.findByRole('alert')).toHaveTextContent('could not be sent');
-      const [, init] = fetchMock.mock.calls[0] as [string, RequestInit];
-      expect(JSON.parse(init.body as string)).toMatchObject({ name: '', message: '' });
+      expect(fetchMock).not.toHaveBeenCalled();
+      expect(screen.getByLabelText('Name')).toHaveAttribute('aria-invalid', 'true');
+      expect(screen.getByLabelText('Name')).toHaveAccessibleDescription('Please enter your name.');
+      expect(screen.getByLabelText('Message')).toHaveAttribute('aria-invalid', 'true');
+      expect(screen.getByLabelText('Message')).toHaveAccessibleDescription('Please enter a message.');
+      expect(screen.getByLabelText('Name')).toHaveFocus();
+      expect(screen.queryByRole('alert')).toBeNull();
+    });
+
+    it('clears a blank-field error once the visitor types in that field', async () => {
+      vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(null, { status: 202 })));
+      const user = userEvent.setup();
+      render(<Contact />);
+      await user.type(screen.getByLabelText('Name'), 'Jane');
+      await user.type(screen.getByLabelText('E-mail'), 'jane@example.com');
+      await user.type(screen.getByLabelText('Message'), '  ');
+      await user.click(screen.getByRole('button', { name: 'Submit' }));
+      expect(screen.getByLabelText('Message')).toHaveAttribute('aria-invalid', 'true');
+      expect(screen.getByLabelText('Name')).not.toHaveAttribute('aria-invalid');
+
+      await user.type(screen.getByLabelText('Message'), 'Hello');
+      expect(screen.getByLabelText('Message')).not.toHaveAttribute('aria-invalid');
+      await user.click(screen.getByRole('button', { name: 'Submit' }));
+      expect(await screen.findByRole('status')).toHaveTextContent('Your message was sent');
     });
 
     it('lets the visitor try again after an error', async () => {
