@@ -118,7 +118,7 @@ How to run them:
 npm run build && npm run test:mobile                    # all five emulated phones
 npx playwright test --project='mobile-safari*'          # iPhones only
 npm run test:smoke                                      # live site on desktop and both phones
-BROWSERSTACK_USERNAME=... BROWSERSTACK_ACCESS_KEY=... npm run test:browserstack   # real devices (not in use yet)
+BROWSERSTACK_USERNAME=... BROWSERSTACK_ACCESS_KEY=... npm run test:browserstack   # real devices: switched off, see docs/browserstack.md
 ```
 
 Real-device testing is prepared but switched off. There are two routes: the Playwright suite on

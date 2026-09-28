@@ -14,7 +14,7 @@
     "test:e2e": "playwright test",
     "test:smoke": "playwright test --project=production --project=production-mobile --project=production-mobile-safari",
     "test:mobile": "playwright test --project=mobile --project=mobile-small --project=mobile-safari --project=mobile-safari-small --project=mobile-safari-large",
-    "test:browserstack": "browserstack-node-sdk playwright test --config=playwright.browserstack.config.ts",
+    "test:browserstack": "node scripts/require-real-devices.mjs && browserstack-node-sdk playwright test --config=playwright.browserstack.config.ts",
     "og-image": "node scripts/og-image/render.mjs",
     "test:load": "rm -rf jmeter/results && mkdir -p jmeter/results && jmeter -n -t jmeter/button-clicks.jmx -l jmeter/results/results.jtl -e -o jmeter/results/report && python3 jmeter/check-results.py"
   },

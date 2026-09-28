@@ -5,6 +5,20 @@ BrowserStack account is connected, and nothing here runs in CI. Every push is al
 emulated phones (see [Mobile testing](../README.md#mobile-testing-android-and-ios)). This guide is
 for adding real phones later.
 
+## The off switch
+
+Until real-device testing is set up, it is blocked in three places, so it can't start by accident:
+
+| Way in | What stops it |
+|---|---|
+| `npm run test:browserstack` | `scripts/require-real-devices.mjs` exits before BrowserStack is contacted |
+| Calling `playwright.browserstack.config.ts` or `appium/wdio.conf.ts` directly | Each config throws as soon as it loads |
+| **BrowserStack mobile** GitHub workflow | Its job is skipped unless the repository variable `REAL_DEVICE_TESTS` is `on` |
+
+All three check `REAL_DEVICE_TESTS=on`. To switch on, set it in your shell for local runs and as
+a repository variable (**Settings → Secrets and variables → Actions → Variables**) for GitHub
+Actions. Normal CI, `npm test` and `npm run test:e2e` never use BrowserStack or Appium.
+
 ## Why real devices
 
 The emulated phones run in desktop Chromium and WebKit with a phone's screen size, touch input and
@@ -49,13 +63,14 @@ together.
 3. Run it once locally:
 
    ```bash
-   export BROWSERSTACK_USERNAME=... BROWSERSTACK_ACCESS_KEY=...
+   export BROWSERSTACK_USERNAME=... BROWSERSTACK_ACCESS_KEY=... REAL_DEVICE_TESTS=on
    npm run build
    npm run test:browserstack
    ```
 
    Results appear on the BrowserStack Automate dashboard under the build `aboutshane-mobile`.
-4. Run it in GitHub Actions: **Actions → BrowserStack mobile → Run workflow**. It uploads the
+4. Add the repository variable `REAL_DEVICE_TESTS` with the value `on`, then run it in GitHub
+   Actions: **Actions → BrowserStack mobile → Run workflow**. It uploads the
    Playwright report as the `browserstack-report` artifact.
 5. To run it automatically, add a `push` or `schedule` trigger to
    `.github/workflows/browserstack.yml`. Leave it out of the required checks on `master` until it
@@ -82,7 +97,7 @@ npx appium driver install xcuitest       # iOS (macOS only)
 Then add a script to `package.json`:
 
 ```json
-"test:appium": "wdio run appium/wdio.conf.ts"
+"test:appium": "node scripts/require-real-devices.mjs && wdio run appium/wdio.conf.ts"
 ```
 
 ### 2. Run locally on an emulator and a simulator
@@ -93,7 +108,7 @@ Then add a script to `package.json`:
   match it (defaults `iPhone 15` and `17.5`).
 
 ```bash
-npm run test:appium
+REAL_DEVICE_TESTS=on npm run test:appium
 ```
 
 The Appium service starts the Appium server itself, so there's nothing else to launch.
@@ -101,7 +116,7 @@ The Appium service starts the Appium server itself, so there's nothing else to l
 ### 3. Run on BrowserStack real devices
 
 ```bash
-export BROWSERSTACK_USERNAME=... BROWSERSTACK_ACCESS_KEY=...
+export BROWSERSTACK_USERNAME=... BROWSERSTACK_ACCESS_KEY=... REAL_DEVICE_TESTS=on
 APPIUM_TARGET=browserstack npm run test:appium
 ```
 
