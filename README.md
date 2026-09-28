@@ -118,14 +118,13 @@ How to run them:
 npm run build && npm run test:mobile                    # all five emulated phones
 npx playwright test --project='mobile-safari*'          # iPhones only
 npm run test:smoke                                      # live site on desktop and both phones
-BROWSERSTACK_USERNAME=... BROWSERSTACK_ACCESS_KEY=... npm run test:browserstack   # real devices
+BROWSERSTACK_USERNAME=... BROWSERSTACK_ACCESS_KEY=... npm run test:browserstack   # real devices (not in use yet)
 ```
 
-When BrowserStack is in use, run the real-device suite in GitHub Actions from the **BrowserStack mobile** workflow
-(`.github/workflows/browserstack.yml`). It needs the `BROWSERSTACK_USERNAME` and
-`BROWSERSTACK_ACCESS_KEY` repository secrets. BrowserStack Local tunnels the preview build to the
-devices at `bs-local.com`, because iOS can't reach `localhost` through the tunnel, and the contact
-API is mocked, so no email is sent.
+Real-device testing is prepared but switched off. There are two routes: the Playwright suite on
+BrowserStack, and an Appium config (`appium/`) that drives the phone's own Chrome or Safari,
+locally or on BrowserStack. [docs/browserstack.md](docs/browserstack.md) explains both and how to
+switch them on.
 
 CI (`.github/workflows/ci.yml`) runs all of it on every push and pull request and publishes the
 Playwright HTML report as a build artifact. A daily workflow runs the smoke suite against production,

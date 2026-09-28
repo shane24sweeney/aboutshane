@@ -2,7 +2,7 @@ import type { Locator } from '@playwright/test';
 import { expect, test } from './fixtures';
 import { pages } from './pages';
 
-// Phone-layout checks: emulated Pixel and iPhone locally and in CI, real devices on BrowserStack.
+// Phone-layout checks: emulated phones locally and in CI, and real devices on BrowserStack once in use.
 // Each test skips itself on wider screens, so the file is safe on any platform.
 
 /** Matches the phone breakpoint in Navigation.css. */
