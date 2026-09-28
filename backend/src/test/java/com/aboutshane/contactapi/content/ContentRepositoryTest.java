@@ -14,6 +14,7 @@ class ContentRepositoryTest {
         assertThat(content.resume()).allSatisfy(entry -> {
             assertThat(entry.role()).isNotBlank();
             assertThat(entry.company()).isNotBlank();
+            assertThat(entry.dates()).matches("(19|20)\\d{2}( – ((19|20)\\d{2}|Present))?");
             assertThat(entry.logo()).isNotBlank();
             assertThat(entry.highlights()).isNotNull().allSatisfy(line -> assertThat(line).isNotBlank());
         });

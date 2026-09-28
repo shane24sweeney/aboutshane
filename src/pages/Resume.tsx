@@ -20,12 +20,16 @@ function Resume() {
         <PageLoading />
       ) : (
         <div className="resume-card">
-          <Accordion>
+          {/* The current role starts open, so recruiters see recent work without clicking. */}
+          <Accordion defaultActiveKey="0">
             {content.data.map((entry, index) => (
               <Accordion.Item key={`${entry.company}-${entry.role}`} eventKey={String(index)}>
                 <Accordion.Header>
                   <img className="resume-logo" src={logos[entry.logo]} alt={`${entry.company} logo`} width={50} height={50} />
-                  <span className="resume-title">{entryTitle(entry)}</span>
+                  <span className="resume-heading">
+                    <span className="resume-title">{entryTitle(entry)}</span>
+                    <span className="resume-dates">{entry.dates}</span>
+                  </span>
                 </Accordion.Header>
                 <Accordion.Body>
                   {entry.meta && <p className="resume-meta">{entry.meta}</p>}

@@ -3,6 +3,7 @@
     "role": "Senior QE Consultant",
     "company": "Fifth Third Bank",
     "contractVia": "TEKsystems",
+    "dates": "2026 – Present",
     "summary": "Supported application modernization for a commercial banking client following the Comerica Bank acquisition, partnering with Agile squads across mobile and backend servicing domains.",
     "highlights": [
       "Built integration, regression, and end-to-end testing frameworks, increasing automated test coverage from 45% to 80% across mobile and backend services.",
@@ -16,6 +17,7 @@
   {
     "role": "Tech QA Manager",
     "company": "Ameritas",
+    "dates": "2023 – 2025",
     "highlights": [
       "Designed automation frameworks in Java, Groovy (GEB/Spock), and Playwright, embedding BDD practices to enhance test reliability and long-term maintainability.",
       "Delivered advanced training sessions for senior engineers on new UI and API automation, improving technical expertise and overall efficiency within the automation team.",
@@ -30,6 +32,7 @@
     "role": "Senior Automation Consultant",
     "company": "Ameritas",
     "contractVia": "TEKsystems",
+    "dates": "2022 – 2023",
     "highlights": [
       "Engineered automation approaches for API, mobile, and web testing using Selenium, GEB, Groovy, and Spock, improving overall framework resilience and maintainability.",
       "Partnered with analysts and development teams to refine automation requirements, translating business needs into well-defined test stories and executable test cases.",
@@ -44,6 +47,7 @@
     "role": "Senior Automation Consultant",
     "company": "FIS",
     "contractVia": "Eliassen Group",
+    "dates": "2020 – 2022",
     "highlights": [
       "Built reusable automation frameworks in C# to support both API and UI testing, delivering consistent and reusable test architecture across projects.",
       "Conducted load and scalability evaluations using Postman and Apache JMeter, ensuring applications sustained performance benchmarks under high-demand conditions.",
@@ -57,6 +61,7 @@
   {
     "role": "Software Developer",
     "company": "GPS Trackit",
+    "dates": "2019 – 2020",
     "highlights": [
       "Enhanced the GPS Trackit product line by developing and maintaining features with Redux and Saga, leveraging VS Code and Chrome DevTools.",
       "Integrated RESTful APIs into core product modules, expanding functionality and improving system interoperability across applications.",
@@ -69,6 +74,7 @@
   {
     "role": "Senior Automation Engineer",
     "company": "Deluxe",
+    "dates": "2018 – 2019",
     "highlights": [
       "Architected and utilized design patterns to create a new automation framework for DELUXE banking product lines.",
       "Programmed in Java/C# and Python Robot frameworks.",
@@ -80,6 +86,7 @@
   {
     "role": "Senior Automation Consultant",
     "company": "Celtic Testing",
+    "dates": "2017",
     "highlights": [
       "Responsible for automating Aaron's department store in C#.",
       "Developed multiple TDD projects for new CTE clients in Java and Selenium.",
@@ -90,6 +97,7 @@
   {
     "role": "Senior Automation Engineer",
     "company": "Bottomline",
+    "dates": "2015 – 2016",
     "summary": "Senior Test Automation Engineer for all Bottomline Healthcare product lines.",
     "highlights": [
       "Architected the first Java Selenium WebDriver Test Driven Development (TDD) automation framework, utilizing design patterns and best practices.",
@@ -101,6 +109,7 @@
   {
     "role": "Automation Engineer",
     "company": "Bullhorn / PeopleNet",
+    "dates": "2014 – 2015",
     "summary": "Lead Java Automation Engineer for all PeopleNet product lines.",
     "highlights": [
       "Architected and designed the first Java Selenium automation framework in Bullhorn.",
@@ -111,6 +120,7 @@
   {
     "role": "Lead Engineer Technologist",
     "company": "GE",
+    "dates": "2009 – 2014",
     "summary": "Lead Engineer for all AMI meter products in both IEC and ANSI meter products.",
     "highlights": [
       "Responsible for managing and mentoring other employees within Digital meters.",
@@ -122,28 +132,32 @@
   {
     "role": "SQA Engineer II",
     "company": "Itron",
-    "meta": "Raleigh, NC (2008-2009)",
+    "dates": "2008 – 2009",
+    "meta": "Raleigh, NC",
     "highlights": [],
     "logo": "Itron"
   },
   {
     "role": "Member of Technical Staff",
     "company": "XM Satellite Radio",
-    "meta": "Deerfield Beach, FL (2004-2008)",
+    "dates": "2004 – 2008",
+    "meta": "Deerfield Beach, FL",
     "highlights": [],
     "logo": "XM"
   },
   {
     "role": "Senior Software Engineer",
     "company": "Motorola",
-    "meta": "Boynton Beach, FL (2001-2004)",
+    "dates": "2001 – 2004",
+    "meta": "Boynton Beach, FL",
     "highlights": [],
     "logo": "Motorola"
   },
   {
     "role": "Network Subsystem Test",
     "company": "Alcatel",
-    "meta": "Cork, Ireland (1999-2000)",
+    "dates": "1999 – 2000",
+    "meta": "Cork, Ireland",
     "highlights": [],
     "logo": "Alcatel"
   }

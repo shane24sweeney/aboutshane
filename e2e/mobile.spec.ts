@@ -82,7 +82,7 @@ test.describe('phone layout', () => {
 
   test('resume roles expand with a tap and stay on screen', async ({ page }) => {
     await page.goto('/resume');
-    const role = page.getByRole('button', { name: /FIFTH THIRD BANK/ });
+    const role = page.getByRole('button', { name: /TECH QA MANAGER - AMERITAS/ });
     await role.tap();
     await expect(role).toHaveAttribute('aria-expanded', 'true');
 

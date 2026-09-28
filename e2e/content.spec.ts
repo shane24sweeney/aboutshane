@@ -44,13 +44,14 @@ test.describe('footer', () => {
 });
 
 test.describe('resume page', () => {
-  test('expands one role at a time and shows its highlights as a list', async ({ page }) => {
+  test('opens the current role, then one role at a time, each with dates and highlights', async ({ page }) => {
     await page.goto('/resume');
     const fifthThird = page.getByRole('button', { name: /FIFTH THIRD BANK/ });
     const ameritas = page.getByRole('button', { name: /TECH QA MANAGER - AMERITAS/ });
 
-    await fifthThird.click();
     await expect(fifthThird).toHaveAttribute('aria-expanded', 'true');
+    await expect(fifthThird).toContainText('2026 – Present');
+    await expect(ameritas).toContainText('2023 – 2025');
     const highlights = page.locator('.accordion-collapse.show li');
     await expect(highlights).toHaveCount(5);
     await expect(highlights.first()).toContainText('from 45% to 80%');

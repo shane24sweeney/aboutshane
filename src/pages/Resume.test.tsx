@@ -1,5 +1,4 @@
 import { render, screen, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { fallbackContent } from '../content/fallback';
 import Resume from './Resume';
 
@@ -14,10 +13,16 @@ describe('Resume page', () => {
     expect(screen.getByAltText('Fifth Third Bank logo')).toHaveAttribute('src', expect.stringContaining('FifthThirdBank'));
   });
 
-  it('shows highlights as a bulleted list when a role is expanded', async () => {
+  it('shows every role with its dates', async () => {
+    render(<Resume />);
+    const buttons = await screen.findAllByRole('button');
+    buttons.forEach((button, index) => expect(button).toHaveTextContent(resume[index]?.dates ?? 'missing'));
+    expect(buttons[0]).toHaveTextContent('2026 – Present');
+  });
+
+  it('opens the current role with its highlights as a bulleted list', async () => {
     render(<Resume />);
     const button = await screen.findByRole('button', { name: /FIFTH THIRD BANK/ });
-    await userEvent.setup().click(button);
     expect(button).toHaveAttribute('aria-expanded', 'true');
     const item = button.closest<HTMLElement>('.accordion-item');
     if (!item) throw new Error('accordion item not found');
