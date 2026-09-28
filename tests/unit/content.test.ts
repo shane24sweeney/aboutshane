@@ -1,5 +1,5 @@
-import { fallbackContent } from './fallback';
-import { charityImages, logos, people, schoolLogos } from './images';
+import { fallbackContent } from '../../frontend/src/content/fallback';
+import { charityImages, logos, people, schoolLogos } from '../../frontend/src/content/images';
 
 // The content files and the bundled images must agree, or a page renders a broken image.
 describe('content files', () => {

@@ -7,15 +7,15 @@ tests cover, where they live, when they run and how to run them.
 
 | # | Type | Tool | Where it lives | Runs | Command |
 |---|---|---|---|---|---|
-| 1 | [Unit and component](#1-unit-and-component-tests) | Vitest, Testing Library | `src/**/*.test.ts(x)` | Every push and PR | `npm test` |
+| 1 | [Unit and component](#1-unit-and-component-tests) | Vitest, Testing Library | `tests/unit/` | Every push and PR | `npm test` |
 | 2 | [API](#2-api-tests) | JUnit 5, MockMvc, Mockito | `backend/src/test/` | Every push and PR | `cd backend && mvn verify` |
-| 3 | [End-to-end](#3-end-to-end-tests) | Playwright, TypeScript | `e2e/*.spec.ts` | Every push and PR | `npm run test:e2e` |
-| 4 | [Mobile](#4-mobile-tests-android-and-ios) | Playwright phone emulation | `e2e/mobile.spec.ts` + every e2e spec | Every push and PR; daily on the live site | `npm run test:mobile` |
-| 5 | [Accessibility](#5-accessibility-tests) | axe-core via Playwright | `e2e/accessibility.spec.ts` | Every push and PR | `npm run test:e2e` |
-| 6 | [Production smoke](#6-production-smoke-tests) | Playwright, Postman | `e2e/production*.spec.ts`, `postman/` | Daily | `npm run test:smoke` |
-| 7 | [Load](#7-load-tests) | JMeter | `jmeter/` | Daily, after the smoke tests | `npm run test:load` |
+| 3 | [End-to-end](#3-end-to-end-tests) | Playwright, TypeScript | `tests/e2e/*.spec.ts` | Every push and PR | `npm run test:e2e` |
+| 4 | [Mobile](#4-mobile-tests-android-and-ios) | Playwright phone emulation | `tests/e2e/mobile.spec.ts` + every e2e spec | Every push and PR; daily on the live site | `npm run test:mobile` |
+| 5 | [Accessibility](#5-accessibility-tests) | axe-core via Playwright | `tests/e2e/accessibility.spec.ts` | Every push and PR | `npm run test:e2e` |
+| 6 | [Production smoke](#6-production-smoke-tests) | Playwright, Postman | `tests/e2e/production*.spec.ts`, `tests/api/` | Daily | `npm run test:smoke` |
+| 7 | [Load](#7-load-tests) | JMeter | `tests/load/` | Daily, after the smoke tests | `npm run test:load` |
 | 8 | [Infrastructure](#8-infrastructure-checks) | cfn-lint | `infra/template.yaml` | Every push and PR | `cfn-lint infra/template.yaml` |
-| 9 | [Real devices](#9-real-devices-switched-off) | BrowserStack, Appium | `browserstack.yml`, `appium/` | **Switched off** | See [browserstack.md](browserstack.md) |
+| 9 | [Real devices](#9-real-devices-switched-off) | BrowserStack, Appium | `browserstack.yml`, `tests/appium/` | **Switched off** | See [browserstack.md](browserstack.md) |
 
 ## When tests run
 
@@ -41,7 +41,8 @@ pass. Every Playwright run uploads its HTML report as a build artifact, and fail
 job log and the job summary.
 
 Before the browser tests, run `npm ci` and, for local runs, `npm run build`. The end-to-end,
-mobile and accessibility tests run against the production build served by `npm run preview`.
+mobile and accessibility tests run against the production build in
+`frontend/build`, served by `npm run preview`.
 
 ---
 
@@ -52,7 +53,8 @@ check what a user would see.
 
 - **Covers:** routing, one `h1` per page, image alt text, nav labels, the contact form's states,
   resume rendering, the content files, and the hook that loads page content.
-- **Lives in:** `src/**/*.test.ts(x)`; shared setup in `src/test/setup.ts`.
+- **Lives in:** `tests/unit/`, testing the site's source in `frontend/src/`; shared setup in
+  `tests/unit/setup.ts`; settings in `vitest.config.ts`.
 - **Runs:** CI Frontend job, on every push and PR.
 
 ```bash
@@ -77,13 +79,13 @@ cd backend && mvn verify
 ## 3. End-to-end tests
 
 **Playwright, written in strict TypeScript.** They drive a real browser through the production
-build. The content API is answered from `content/*.json` by `e2e/fixtures.ts`, and the contact API
+build. The content API is answered from `content/*.json` by `tests/e2e/fixtures.ts`, and the contact API
 is mocked, so no email is sent.
 
 - **Covers:** navigation and active links, deep links, unknown paths redirecting home, no console
   errors, the resume accordion, carousels, content loading and fallback, and the contact form with
   a mocked API.
-- **Lives in:** `e2e/*.spec.ts`; route list in `e2e/pages.ts`; settings in `playwright.config.ts`.
+- **Lives in:** `tests/e2e/*.spec.ts`; route list in `tests/e2e/pages.ts`; settings in `playwright.config.ts`.
 - **Runs:** CI End-to-end job, on every push and PR, on desktop Chrome and all five phones.
 
 `tsc` checks the types of the site and the tests without producing output, so a type error fails
@@ -93,19 +95,19 @@ itself when it runs them.
 ```mermaid
 flowchart LR
   subgraph code["TypeScript source"]
-    app["src/**/*.tsx<br/>the website"]
-    specs["e2e/*.spec.ts<br/>the tests"]
+    app["frontend/src/**/*.tsx<br/>the website"]
+    specs["tests/e2e/*.spec.ts<br/>the tests"]
     config["playwright.config.ts<br/>projects: device + target URL"]
   end
 
   code --> tsc{{"tsc -b<br/>strict type check"}}
-  app --> vite["vite build<br/>to ./build"]
+  app --> vite["vite build<br/>to frontend/build"]
   vite --> preview["npm run preview<br/>localhost:4173"]
 
   specs & config --> runner["Playwright test runner<br/>compiles specs on the fly"]
   runner -- "starts (webServer)" --> preview
   runner --> browsers["Chromium and WebKit<br/>one run per project"]
-  fixtures["e2e/fixtures.ts<br/>answers /api/content/* from content/*.json"] -. "mocks the API" .-> browsers
+  fixtures["tests/e2e/fixtures.ts<br/>answers /api/content/* from content/*.json"] -. "mocks the API" .-> browsers
   browsers -- "load pages" --> preview
   browsers --> reports["HTML report, JUnit XML,<br/>GitHub job summary"]
 ```
@@ -120,11 +122,11 @@ npx playwright show-report           # open the last HTML report
 ## 4. Mobile tests (Android and iOS)
 
 **Playwright phone emulation.** Every end-to-end spec also runs on emulated phones, and
-`e2e/mobile.spec.ts` adds phone-only checks that skip themselves on wider screens.
+`tests/e2e/mobile.spec.ts` adds phone-only checks that skip themselves on wider screens.
 
 ```mermaid
 flowchart TD
-  specs["Every e2e spec<br/>+ e2e/mobile.spec.ts phone-layout checks"]
+  specs["Every e2e spec<br/>+ tests/e2e/mobile.spec.ts phone-layout checks"]
 
   specs --> ci["CI: every push and pull request<br/>local build, mocked API"]
   ci --> android["Android on Chromium<br/>Pixel 7 · Galaxy S24"]
@@ -148,7 +150,7 @@ They run in the desktop builds of Chromium and WebKit, so they catch layout and 
 not bugs that only appear in the phone's own browser. [Real devices](#9-real-devices-switched-off)
 would cover those.
 
-The phone-only checks (`phone layout` in `e2e/mobile.spec.ts`):
+The phone-only checks (`phone layout` in `tests/e2e/mobile.spec.ts`):
 
 - The nav fits on one row of icon buttons, each at least 44px, the minimum tap size in Apple's guidelines.
 - Tapping each nav button opens its page.
@@ -169,11 +171,11 @@ npx playwright test --project='mobile' --project='mobile-small'   # Android only
 **axe-core, run through Playwright** on every page.
 
 - **Covers:** WCAG 2.1 A and AA rules. A test fails on any serious or critical violation.
-- **Lives in:** `e2e/accessibility.spec.ts`.
+- **Lives in:** `tests/e2e/accessibility.spec.ts`.
 - **Runs:** with the end-to-end tests, on desktop and every phone.
 
 ```bash
-npx playwright test e2e/accessibility.spec.ts
+npx playwright test tests/e2e/accessibility.spec.ts
 ```
 
 ## 6. Production smoke tests
@@ -184,10 +186,10 @@ form or sends an email.
 - **Playwright covers:** every page is up; HTTPS and security headers; API health; the contact API
   rejecting invalid input; each content API responding with edge caching; the resume rendering
   from the live API; and unknown API paths returning 404.
-  `e2e/production-buttons.spec.ts` clicks every nav button and checks the request behind it.
+  `tests/e2e/production-buttons.spec.ts` clicks every nav button and checks the request behind it.
 - **Phones:** the Pixel 7 and iPhone 15 run the page and phone-layout checks only. The API-only
   checks stay on desktop, so the API's limit of 2 requests per second isn't hit three times over.
-- **Postman** (`postman/AboutShane-API.postman_collection.json`): health, invalid input, malformed
+- **Postman** (`tests/api/AboutShane-API.postman_collection.json`): health, invalid input, malformed
   JSON and unknown-path checks for the API. Run it by hand in Postman or Newman; it isn't in CI.
 - **Runs:** daily workflow, and after each deploy.
 
@@ -202,7 +204,7 @@ through it at once.
 
 - **Covers:** the home page, each nav button's content API, and the contact form's Send with an
   invalid form (rejected, nothing sent). It records median and max response time per button.
-- **Lives in:** `jmeter/button-clicks.jmx`; pass/fail in `jmeter/check-results.py`.
+- **Lives in:** `tests/load/button-clicks.jmx`; pass/fail in `tests/load/check-results.py`.
 - **Runs:** daily workflow, only if the smoke tests passed.
 
 ```mermaid
@@ -223,12 +225,12 @@ flowchart LR
 ```
 
 The defaults keep it under the API's limit of 2 requests per second. Change them with JMeter
-properties, for example `jmeter -n -t jmeter/button-clicks.jmx -Jusers=5 -Jloops=10`; more users
+properties, for example `jmeter -n -t tests/load/button-clicks.jmx -Jusers=5 -Jloops=10`; more users
 can hit that limit.
 
 ```bash
 brew install jmeter
-npm run test:load    # report in jmeter/results/report/index.html
+npm run test:load    # report in tests/load/results/report/index.html
 ```
 
 ## 8. Infrastructure checks
@@ -246,6 +248,6 @@ cfn-lint infra/template.yaml
 ## 9. Real devices (switched off)
 
 Testing on real phones is prepared but **not in use**. There are two routes: the Playwright suite
-on BrowserStack, and an Appium config (`appium/`) that drives the phone's own Chrome or Safari.
+on BrowserStack, and an Appium config (`tests/appium/`) that drives the phone's own Chrome or Safari.
 Both are blocked unless `REAL_DEVICE_TESTS=on` is set, so neither can start by accident.
 [browserstack.md](browserstack.md) explains both and how to switch them on.

@@ -4,9 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "preview": "vite preview --port 4173",
+    "dev": "vite --config frontend/vite.config.ts",
+    "build": "tsc -b && vite build --config frontend/vite.config.ts",
+    "preview": "vite preview --config frontend/vite.config.ts --port 4173",
     "typecheck": "tsc -b",
     "lint": "eslint .",
     "test": "vitest run",
@@ -16,7 +16,7 @@
     "test:mobile": "playwright test --project=mobile --project=mobile-small --project=mobile-safari --project=mobile-safari-small --project=mobile-safari-large",
     "test:browserstack": "node scripts/require-real-devices.mjs && browserstack-node-sdk playwright test --config=playwright.browserstack.config.ts",
     "og-image": "node scripts/og-image/render.mjs",
-    "test:load": "rm -rf jmeter/results && mkdir -p jmeter/results && jmeter -n -t jmeter/button-clicks.jmx -l jmeter/results/results.jtl -e -o jmeter/results/report && python3 jmeter/check-results.py"
+    "test:load": "rm -rf tests/load/results && mkdir -p tests/load/results && jmeter -n -t tests/load/button-clicks.jmx -l tests/load/results/results.jtl -e -o tests/load/results/report && python3 tests/load/check-results.py"
   },
   "dependencies": {
     "bootstrap": "^5.3.3",

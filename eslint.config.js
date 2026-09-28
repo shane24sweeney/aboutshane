@@ -5,7 +5,7 @@ import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
-  { ignores: ['build', 'backend', 'infra', '.aws-sam', 'playwright-report', 'test-results'] },
+  { ignores: ['frontend/build', 'backend', 'infra', '.aws-sam', 'playwright-report', 'test-results'] },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ['**/*.{ts,tsx}'],
@@ -16,7 +16,7 @@ export default tseslint.config(
   },
   {
     // React rules for app code only; Playwright fixtures use a `use` callback that isn't a hook.
-    files: ['src/**/*.{ts,tsx}'],
+    files: ['frontend/src/**/*.{ts,tsx}'],
     plugins: {
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,

@@ -2,8 +2,8 @@
 // through Appium. Not wired into npm scripts or CI yet, and its packages are not installed; see
 // docs/browserstack.md for how to switch it on.
 //
-//   REAL_DEVICE_TESTS=on npx wdio run appium/wdio.conf.ts                              # local emulator and simulator
-//   REAL_DEVICE_TESTS=on APPIUM_TARGET=browserstack npx wdio run appium/wdio.conf.ts   # BrowserStack real devices
+//   REAL_DEVICE_TESTS=on npx wdio run tests/appium/wdio.conf.ts                              # local emulator and simulator
+//   REAL_DEVICE_TESTS=on APPIUM_TARGET=browserstack npx wdio run tests/appium/wdio.conf.ts   # BrowserStack real devices
 
 // Switched off until Appium is installed and set up.
 if (process.env.REAL_DEVICE_TESTS !== 'on') {

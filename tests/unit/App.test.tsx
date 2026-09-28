@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
-import App from './App';
+import App from '../../frontend/src/App';
 
 function renderAt(path: string) {
   return render(

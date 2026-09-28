@@ -19,14 +19,42 @@ Browser ──► CloudFront (selenium-automation.com, TLS, security headers)
                                                                         └── SES       (emails a notification, DKIM-signed)
 ```
 
-- **Frontend** (`src/`): React 18, TypeScript (strict), Vite, React Router 7, React Bootstrap.
-  Pages are lazy-loaded; content lives in typed data files under `src/data/`.
+- **Frontend** (`frontend/`): React 18, TypeScript (strict), Vite, React Router 7, React Bootstrap.
+  Pages are lazy-loaded. Page text comes from the content API, with the same `content/*.json`
+  bundled as a fallback.
 - **Backend** (`backend/`): Spring Boot 3.5 on Java 21, run on Lambda through
   `aws-serverless-java-container`. `POST /api/contact` validates input, drops honeypot spam,
   stores the message, then emails it. A failed email never loses a message.
 - **Infrastructure** (`infra/template.yaml`): one AWS SAM stack for everything above, including
   the SES identities and their DKIM DNS records. The site and API share one origin, so there is
   no CORS configuration.
+
+## Repository layout
+
+```
+frontend/         The website: React + TypeScript
+  src/            Pages, components, hooks, styles, images
+  public/         Static files copied into the build (icons, manifest, robots.txt)
+  index.html
+  vite.config.ts  Dev server and build; output goes to frontend/build
+backend/          The API: Spring Boot on Java 21
+  src/main/       Contact and content API
+  src/test/       API tests (JUnit), kept here because Maven expects them here
+content/          Page text as JSON, shared by the frontend, backend and tests
+tests/            Every other test, one folder per type
+  unit/           Vitest + Testing Library, testing frontend/src
+  e2e/            Playwright: end-to-end, mobile, accessibility, production smoke
+  load/           JMeter load test and its pass/fail check
+  api/            Postman collection for the live API
+  appium/         Real-device tests with Appium (switched off)
+infra/            AWS SAM template and deploy script
+scripts/          One-off tools (social preview image, real-device off switch)
+docs/             Testing and BrowserStack guides
+```
+
+Tool configs stay at the root, where their tools look for them: `package.json`, `tsconfig*.json`,
+`eslint.config.js`, `vitest.config.ts`, `playwright.config.ts`, `playwright.browserstack.config.ts`
+and `browserstack.yml`.
 
 ## Testing
 

@@ -13,7 +13,7 @@ export const test = base.extend({
     await page.route(/\/api\/content\/([a-z]+)$/, (route) => {
       const name = /\/api\/content\/([a-z]+)$/.exec(route.request().url())?.[1] ?? '';
       try {
-        const body = readFileSync(new URL(`../content/${name}.json`, import.meta.url), 'utf8');
+        const body = readFileSync(new URL(`../../content/${name}.json`, import.meta.url), 'utf8');
         return route.fulfill({ contentType: 'application/json', body });
       } catch {
         return route.fulfill({ status: 404, json: { error: 'request_rejected' } });

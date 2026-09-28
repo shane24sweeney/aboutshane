@@ -9,7 +9,7 @@
 /coverage
 
 # production
-/build
+/frontend/build
 
 # misc
 .DS_Store
@@ -40,5 +40,5 @@ browserstack.err
 local.log
 
 # JMeter
-/jmeter/results
+/tests/load/results
 jmeter.log
