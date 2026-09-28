@@ -15,8 +15,11 @@
     "test:smoke": "playwright test --project=production --project=production-mobile --project=production-mobile-safari",
     "test:mobile": "playwright test --project=mobile --project=mobile-small --project=mobile-safari --project=mobile-safari-small --project=mobile-safari-large",
     "test:browserstack": "node scripts/require-real-devices.mjs && browserstack-node-sdk playwright test --config=playwright.browserstack.config.ts",
+    "debug:desktop": "playwright test --project=desktop --ui",
+    "debug:mobile": "playwright test --project=mobile --project=mobile-small --project=mobile-safari --project=mobile-safari-small --project=mobile-safari-large --ui",
+    "debug:ci": "bash tests/debugging/ci-report.sh",
     "og-image": "node scripts/og-image/render.mjs",
-    "test:load": "rm -rf tests/load/results && mkdir -p tests/load/results && jmeter -n -t tests/load/button-clicks.jmx -l tests/load/results/results.jtl -e -o tests/load/results/report && python3 tests/load/check-results.py"
+    "test:load": "rm -rf tests/jmeter/results && mkdir -p tests/jmeter/results && jmeter -n -t tests/jmeter/button-clicks.jmx -l tests/jmeter/results/results.jtl -e -o tests/jmeter/results/report && python3 tests/jmeter/check-results.py"
   },
   "dependencies": {
     "bootstrap": "^5.3.3",

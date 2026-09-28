@@ -5,7 +5,7 @@ import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
-  { ignores: ['frontend/build', 'backend', 'infra', '.aws-sam', 'playwright-report', 'test-results'] },
+  { ignores: ['frontend/build', 'tests/debugging/ci-artifacts', 'tests/jmeter/results', 'backend', 'infra', '.aws-sam', 'playwright-report', 'test-results'] },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ['**/*.{ts,tsx}'],

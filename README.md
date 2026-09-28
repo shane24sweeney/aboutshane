@@ -44,9 +44,10 @@ content/          Page text as JSON, shared by the frontend, backend and tests
 tests/            Every other test, one folder per type
   unit/           Vitest + Testing Library, testing frontend/src
   e2e/            Playwright: end-to-end, mobile, accessibility, production smoke
-  load/           JMeter load test and its pass/fail check
+  jmeter/         JMeter load tests, run from the JMeter CLI (see its README)
   api/            Postman collection for the live API
   appium/         Real-device tests with Appium (switched off)
+  debugging/      How to debug failing tests on desktop, mobile and in CI/CD
 infra/            AWS SAM template and deploy script
 scripts/          One-off tools (social preview image, real-device off switch)
 docs/             Testing and BrowserStack guides

@@ -1,7 +1,8 @@
 # Testing
 
 How selenium-automation.com is tested, one type of test per section. Each section says what the
-tests cover, where they live, when they run and how to run them.
+tests cover, where they live, when they run and how to run them. When a test fails, see
+[tests/debugging/](../tests/debugging/README.md).
 
 ## At a glance
 
@@ -13,7 +14,7 @@ tests cover, where they live, when they run and how to run them.
 | 4 | [Mobile](#4-mobile-tests-android-and-ios) | Playwright phone emulation | `tests/e2e/mobile.spec.ts` + every e2e spec | Every push and PR; daily on the live site | `npm run test:mobile` |
 | 5 | [Accessibility](#5-accessibility-tests) | axe-core via Playwright | `tests/e2e/accessibility.spec.ts` | Every push and PR | `npm run test:e2e` |
 | 6 | [Production smoke](#6-production-smoke-tests) | Playwright, Postman | `tests/e2e/production*.spec.ts`, `tests/api/` | Daily | `npm run test:smoke` |
-| 7 | [Load](#7-load-tests) | JMeter | `tests/load/` | Daily, after the smoke tests | `npm run test:load` |
+| 7 | [Load](#7-load-tests) | JMeter | `tests/jmeter/` | Daily, after the smoke tests | `npm run test:load` |
 | 8 | [Infrastructure](#8-infrastructure-checks) | cfn-lint | `infra/template.yaml` | Every push and PR | `cfn-lint infra/template.yaml` |
 | 9 | [Real devices](#9-real-devices-switched-off) | BrowserStack, Appium | `browserstack.yml`, `tests/appium/` | **Switched off** | See [browserstack.md](browserstack.md) |
 
@@ -204,7 +205,8 @@ through it at once.
 
 - **Covers:** the home page, each nav button's content API, and the contact form's Send with an
   invalid form (rejected, nothing sent). It records median and max response time per button.
-- **Lives in:** `tests/load/button-clicks.jmx`; pass/fail in `tests/load/check-results.py`.
+- **Lives in:** `tests/jmeter/button-clicks.jmx`; pass/fail in `tests/jmeter/check-results.py`.
+  [tests/jmeter/README.md](../tests/jmeter/README.md) explains running it from the JMeter CLI.
 - **Runs:** daily workflow, only if the smoke tests passed.
 
 ```mermaid
@@ -225,12 +227,12 @@ flowchart LR
 ```
 
 The defaults keep it under the API's limit of 2 requests per second. Change them with JMeter
-properties, for example `jmeter -n -t tests/load/button-clicks.jmx -Jusers=5 -Jloops=10`; more users
+properties, for example `jmeter -n -t tests/jmeter/button-clicks.jmx -Jusers=5 -Jloops=10`; more users
 can hit that limit.
 
 ```bash
 brew install jmeter
-npm run test:load    # report in tests/load/results/report/index.html
+npm run test:load    # report in tests/jmeter/results/report/index.html
 ```
 
 ## 8. Infrastructure checks
