@@ -5,7 +5,7 @@ import os
 import sys
 from collections import defaultdict
 
-results = sys.argv[1] if len(sys.argv) > 1 else 'jmeter/results/results.jtl'
+results = sys.argv[1] if len(sys.argv) > 1 else 'tests/load/results/results.jtl'
 
 totals = defaultdict(lambda: {'count': 0, 'failed': 0, 'elapsed': []})
 failures = []

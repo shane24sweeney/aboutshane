@@ -7,7 +7,7 @@ const productionURL = process.env.PRODUCTION_URL ?? 'https://selenium-automation
 export const productionSpecs = /production(-[a-z]+)?\.spec\.ts/;
 
 export default defineConfig({
-  testDir: './e2e',
+  testDir: './tests/e2e',
   fullyParallel: true,
   forbidOnly: isCI,
   retries: isCI ? 2 : 0,
@@ -20,7 +20,7 @@ export default defineConfig({
         ['github'],
         ['list'],
         ['junit', { outputFile: 'test-results/junit.xml' }],
-        ['./e2e/reporters/github-summary.ts'],
+        ['./tests/e2e/reporters/github-summary.ts'],
       ]
     : [['html', { open: 'never' }], ['list']],
   use: {
@@ -73,7 +73,7 @@ export default defineConfig({
   webServer: process.env.SKIP_WEBSERVER
     ? undefined
     : {
-        // Serves the existing ./build output; run `npm run build` first.
+        // Serves the existing frontend/build output; run `npm run build` first.
         command: 'npm run preview',
         url: localURL,
         reuseExistingServer: !isCI,

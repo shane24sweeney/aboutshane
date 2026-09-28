@@ -1,10 +1,10 @@
 import { act, render, screen } from '@testing-library/react';
 import { vi } from 'vitest';
-import { CONTENT_TIMEOUT_MS } from '../api/content';
-import { fallbackContent } from '../content/fallback';
-import type { Degree } from '../content/types';
-import Education from '../pages/Education';
-import { usePageContent } from './usePageContent';
+import { CONTENT_TIMEOUT_MS } from '../../frontend/src/api/content';
+import { fallbackContent } from '../../frontend/src/content/fallback';
+import type { Degree } from '../../frontend/src/content/types';
+import Education from '../../frontend/src/pages/Education';
+import { usePageContent } from '../../frontend/src/hooks/usePageContent';
 
 const apiDegrees: Degree[] = [{ degree: 'Degree served by the API', school: 'API University', logo: 'UCC' }];
 

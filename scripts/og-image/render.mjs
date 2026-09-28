@@ -1,8 +1,8 @@
-// Renders og-image.html to public/og-image.png at the 1200x630 size link previews expect.
+// Renders og-image.html to frontend/public/og-image.png at the 1200x630 size link previews expect.
 import { chromium } from '@playwright/test';
 
 const template = new URL('./og-image.html', import.meta.url);
-const output = new URL('../../public/og-image.png', import.meta.url);
+const output = new URL('../../frontend/public/og-image.png', import.meta.url);
 
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 1200, height: 630 } });

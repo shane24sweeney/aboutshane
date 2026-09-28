@@ -64,6 +64,6 @@ jobs:
         with:
           name: jmeter-report
           path: |
-            jmeter/results
+            tests/load/results
             jmeter.log
           retention-days: 14

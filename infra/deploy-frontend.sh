@@ -6,7 +6,7 @@ set -euo pipefail
 : "${CLOUDFRONT_DISTRIBUTION_ID:?Set CLOUDFRONT_DISTRIBUTION_ID to the CloudFormation output}"
 
 npm run build
-aws s3 sync build "s3://${FRONTEND_BUCKET}" --delete
+aws s3 sync frontend/build "s3://${FRONTEND_BUCKET}" --delete
 aws cloudfront create-invalidation \
   --distribution-id "${CLOUDFRONT_DISTRIBUTION_ID}" \
   --paths '/*'

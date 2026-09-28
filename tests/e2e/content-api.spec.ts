@@ -1,5 +1,5 @@
 import { expect, test } from './fixtures';
-import resume from '../content/resume.json' with { type: 'json' };
+import resume from '../../content/resume.json' with { type: 'json' };
 import { pages } from './pages';
 
 // Locally the content API is served by the fixture in ./fixtures.ts; tests override it with page.route.

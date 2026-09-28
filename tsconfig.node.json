@@ -16,5 +16,12 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true
   },
-  "include": ["vite.config.ts", "playwright.config.ts", "playwright.browserstack.config.ts", "e2e", "content"]
+  "include": [
+    "frontend/vite.config.ts",
+    "vitest.config.ts",
+    "playwright.config.ts",
+    "playwright.browserstack.config.ts",
+    "tests/e2e",
+    "content"
+  ]
 }

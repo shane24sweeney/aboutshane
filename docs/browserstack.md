@@ -2,7 +2,7 @@
 
 **Status: prepared, not in use.** Everything below is set up in the repo but switched off. No
 BrowserStack account is connected, and nothing here runs in CI. Every push is already tested on
-emulated phones (see [Mobile testing](../README.md#mobile-testing-android-and-ios)). This guide is
+emulated phones (see [Mobile testing](testing.md#4-mobile-tests-android-and-ios)). This guide is
 for adding real phones later.
 
 ## The off switch
@@ -12,7 +12,7 @@ Until real-device testing is set up, it is blocked in three places, so it can't 
 | Way in | What stops it |
 |---|---|
 | `npm run test:browserstack` | `scripts/require-real-devices.mjs` exits before BrowserStack is contacted |
-| Calling `playwright.browserstack.config.ts` or `appium/wdio.conf.ts` directly | Each config throws as soon as it loads |
+| Calling `playwright.browserstack.config.ts` or `tests/appium/wdio.conf.ts` directly | Each config throws as soon as it loads |
 | **BrowserStack mobile** GitHub workflow | Its job is skipped unless the repository variable `REAL_DEVICE_TESTS` is `on` |
 
 All three check `REAL_DEVICE_TESTS=on`. To switch on, set it in your shell for local runs and as
@@ -30,8 +30,8 @@ resizing the page, or real-device rendering and performance.
 
 | | Playwright on BrowserStack | Appium with WebdriverIO |
 |---|---|---|
-| Files | `browserstack.yml`, `playwright.browserstack.config.ts`, `.github/workflows/browserstack.yml` | `appium/wdio.conf.ts`, `appium/specs/` |
-| Tests | The existing Playwright suite in `e2e/`, unchanged | Separate WebdriverIO specs (starts with the phone-layout checks) |
+| Files | `browserstack.yml`, `playwright.browserstack.config.ts`, `.github/workflows/browserstack.yml` | `tests/appium/wdio.conf.ts`, `tests/appium/specs/` |
+| Tests | The existing Playwright suite in `tests/e2e/`, unchanged | Separate WebdriverIO specs (starts with the phone-layout checks) |
 | Runs on | BrowserStack real devices only | BrowserStack real devices, or a local Android emulator and iOS simulator |
 | Packages | Already installed (`browserstack-node-sdk`) | Not installed yet (see [Switching on Appium](#switching-on-appium)) |
 | Target | This commit's build, tunnelled with BrowserStack Local | The live site by default; any URL through `BASE_URL` |
@@ -51,7 +51,7 @@ Both use the same four devices:
 
 Check each one is on your plan before the first run, on
 [BrowserStack's device list](https://www.browserstack.com/list-of-browsers-and-platforms/playwright).
-To change devices, edit `browserstack.yml` and `browserStackDevices` in `appium/wdio.conf.ts`
+To change devices, edit `browserstack.yml` and `browserStackDevices` in `tests/appium/wdio.conf.ts`
 together.
 
 ## Switching on BrowserStack
@@ -97,7 +97,7 @@ npx appium driver install xcuitest       # iOS (macOS only)
 Then add a script to `package.json`:
 
 ```json
-"test:appium": "node scripts/require-real-devices.mjs && wdio run appium/wdio.conf.ts"
+"test:appium": "node scripts/require-real-devices.mjs && wdio run tests/appium/wdio.conf.ts"
 ```
 
 ### 2. Run locally on an emulator and a simulator
@@ -131,8 +131,8 @@ The checks are read-only, so by default they run against the live site,
 | iOS simulator | `http://localhost:4173` |
 | BrowserStack, with BrowserStack Local | `http://bs-local.com:4173` (the tunnel starts automatically) |
 
-`appium/specs/phone-layout.e2e.ts` repeats the most device-sensitive checks from
-`e2e/mobile.spec.ts`:
+`tests/appium/specs/phone-layout.e2e.ts` repeats the most device-sensitive checks from
+`tests/e2e/mobile.spec.ts`:
 
 - the nav fits on one row of buttons at least 44px square
 - no page scrolls sideways

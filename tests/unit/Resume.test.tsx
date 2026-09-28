@@ -1,6 +1,6 @@
 import { render, screen, within } from '@testing-library/react';
-import { fallbackContent } from '../content/fallback';
-import Resume from './Resume';
+import { fallbackContent } from '../../frontend/src/content/fallback';
+import Resume from '../../frontend/src/pages/Resume';
 
 const resume = fallbackContent.resume;
 

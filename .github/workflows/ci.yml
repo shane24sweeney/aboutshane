@@ -30,7 +30,7 @@ jobs:
       - uses: actions/upload-artifact@v7
         with:
           name: frontend-build
-          path: build
+          path: frontend/build
           retention-days: 7
 
   backend:
@@ -71,7 +71,7 @@ jobs:
       - uses: actions/download-artifact@v8
         with:
           name: frontend-build
-          path: build
+          path: frontend/build
       - run: npx playwright install --with-deps chromium webkit
       - run: npx playwright test --project=desktop --project=mobile --project=mobile-small --project=mobile-safari --project=mobile-safari-small --project=mobile-safari-large
       - uses: actions/upload-artifact@v7

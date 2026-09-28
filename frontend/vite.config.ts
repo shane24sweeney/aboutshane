@@ -1,11 +1,16 @@
 import react from '@vitejs/plugin-react';
-import { defineConfig } from 'vitest/config';
+import { fileURLToPath } from 'node:url';
+import { defineConfig } from 'vite';
 
+// The website. Commands run from the repo root (`npm run dev`, `npm run build`), so the root is
+// set to this folder explicitly. Unit tests have their own config: vitest.config.ts.
 export default defineConfig({
+  root: fileURLToPath(new URL('.', import.meta.url)),
   plugins: [react()],
   build: {
-    // infra/deploy-frontend.sh syncs this folder to S3.
+    // infra/deploy-frontend.sh syncs this folder (frontend/build) to S3.
     outDir: 'build',
+    emptyOutDir: true,
   },
   server: {
     port: 3000,
@@ -17,12 +22,5 @@ export default defineConfig({
   preview: {
     // BrowserStack devices reach the preview server through BrowserStack Local as bs-local.com.
     allowedHosts: ['bs-local.com'],
-  },
-  test: {
-    environment: 'jsdom',
-    globals: true,
-    setupFiles: './src/test/setup.ts',
-    css: false,
-    include: ['src/**/*.test.{ts,tsx}'],
   },
 });

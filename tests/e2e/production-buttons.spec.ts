@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 import { pages } from './pages';
 
-// Playwright twin of jmeter/button-clicks.jmx: clicks every button that talks to the server on the
+// Playwright twin of tests/load/button-clicks.jmx: clicks every button that talks to the server on the
 // live site and checks the request behind it. Read-only: the contact form is submitted empty, which
 // the browser blocks before anything is sent.
 
