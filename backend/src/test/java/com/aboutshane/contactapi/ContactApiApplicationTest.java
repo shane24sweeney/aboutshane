@@ -6,6 +6,7 @@ import static org.mockito.Mockito.verifyNoInteractions;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,7 @@ class ContactApiApplicationTest {
         assertThat(email.getValue().destination().toAddresses()).containsExactly("owner@test.example");
     }
 
+    @Tag("negative")
     @Test
     void theHoneypotKeepsBotsOutOfStorage() throws Exception {
         mvc.perform(post("/api/contact")

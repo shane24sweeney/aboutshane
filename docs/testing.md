@@ -1,7 +1,8 @@
 # Testing
 
 How selenium-automation.com is tested, one type of test per section. Each section says what the
-tests cover, where they live, when they run and how to run them.
+tests cover, where they live, when they run and how to run them. When a test fails, see
+[tests/debugging/](../tests/debugging/README.md).
 
 ## At a glance
 
@@ -9,13 +10,46 @@ tests cover, where they live, when they run and how to run them.
 |---|---|---|---|---|---|
 | 1 | [Unit and component](#1-unit-and-component-tests) | Vitest, Testing Library | `tests/unit/` | Every push and PR | `npm test` |
 | 2 | [API](#2-api-tests) | JUnit 5, MockMvc, Mockito | `backend/src/test/` | Every push and PR | `cd backend && mvn verify` |
-| 3 | [End-to-end](#3-end-to-end-tests) | Playwright, TypeScript | `tests/e2e/*.spec.ts` | Every push and PR | `npm run test:e2e` |
-| 4 | [Mobile](#4-mobile-tests-android-and-ios) | Playwright phone emulation | `tests/e2e/mobile.spec.ts` + every e2e spec | Every push and PR; daily on the live site | `npm run test:mobile` |
-| 5 | [Accessibility](#5-accessibility-tests) | axe-core via Playwright | `tests/e2e/accessibility.spec.ts` | Every push and PR | `npm run test:e2e` |
-| 6 | [Production smoke](#6-production-smoke-tests) | Playwright, Postman | `tests/e2e/production*.spec.ts`, `tests/api/` | Daily | `npm run test:smoke` |
-| 7 | [Load](#7-load-tests) | JMeter | `tests/load/` | Daily, after the smoke tests | `npm run test:load` |
+| 3 | [Regression (end-to-end)](#3-regression-tests-end-to-end) | Playwright, TypeScript | `tests/e2e/regression/` | Every push and PR | `npm run test:regression` |
+| 4 | [Mobile](#4-mobile-tests-android-and-ios) | Playwright phone emulation | `tests/e2e/regression/mobile.spec.ts` + every regression spec | Every push and PR; daily on the live site | `npm run test:mobile` |
+| 5 | [Accessibility](#5-accessibility-tests) | axe-core via Playwright | `tests/e2e/regression/accessibility.spec.ts` | Every push and PR | `npm run test:regression` |
+| 6 | [Smoke (live site)](#6-smoke-tests-live-site) | Playwright, Postman | `tests/e2e/smoke/`, `tests/api/` | Daily, and after each deploy | `npm run test:smoke` |
+| 7 | [Load](#7-load-tests) | JMeter | `tests/jmeter/` | Daily, after the smoke tests | `npm run test:load` |
 | 8 | [Infrastructure](#8-infrastructure-checks) | cfn-lint | `infra/template.yaml` | Every push and PR | `cfn-lint infra/template.yaml` |
 | 9 | [Real devices](#9-real-devices-switched-off) | BrowserStack, Appium | `browserstack.yml`, `tests/appium/` | **Switched off** | See [browserstack.md](browserstack.md) |
+
+## Smoke and regression
+
+The Playwright tests are split into two suites, each in its own folder:
+
+| | Regression | Smoke |
+|---|---|---|
+| Folder | `tests/e2e/regression/` | `tests/e2e/smoke/` |
+| Question it answers | Did this change break anything? | Is the live site up and working? |
+| Target | The local production build, with mocked APIs | selenium-automation.com and its real API |
+| Size | Everything: 378 tests on desktop and five phones | Quick and read-only: 65 tests on desktop and two phones |
+| Runs | Every push and pull request (required to merge) | Daily, and after each deploy |
+| Command | `npm run test:regression` | `npm run test:smoke` |
+
+Shared code for both is in `tests/e2e/support/`: the content fixtures, the list of pages and the
+GitHub job-summary reporter. Every command for running them, locally or in CI, is in
+[tests/README.md](../tests/README.md).
+
+## Negative tests
+
+Negative tests check that the site fails safely: bad input is rejected, a failing API doesn't
+break a page, and nothing is sent or stored by mistake. They're tagged `negative` in every layer,
+so they run with their own suite and can also be run on their own (commands in
+[tests/README.md](../tests/README.md#negative-tests)).
+
+| Layer | Tag | What they check |
+|---|---|---|
+| Unit (Vitest) | `tags: ['negative']` | Contact form: 400, 429 and 500 responses, network failure, whitespace-only fields, retrying after an error, the hidden spam trap. Page content: falling back to the bundled copy when the API errors, times out, returns 404, non-JSON, an empty body or the wrong shape |
+| API (JUnit) | `@Tag("negative")` | Contact API: missing, blank, invalid and over-length fields; an empty object; malformed JSON, arrays, strings and truncated bodies; non-JSON content type (415); wrong method (405); unknown paths (404); internal errors hidden as `internal_error`; spam-trap submissions dropped; a failed save reported, a failed email not losing the message. Content API: unknown, wrongly cased and nested pages (404); writes rejected (405) |
+| Regression (Playwright) | `@negative` | Contact form: required fields, invalid email, fields stopping at their length limits, 400, 429 and 500 responses, network failure, a double click sending once, the spam trap. Content: falling back when the API fails, returns 404, non-JSON or the wrong shape, or drops the connection. Navigation: unknown, nested, wrongly cased and script-like paths redirecting home |
+| Smoke (Playwright, live) | `@negative` | Invalid input (400), malformed JSON (400), non-JSON body (415), wrong method (405), unknown API path and content page (404, answered as JSON), and an empty contact form blocked in the browser |
+| Postman (live) | | Invalid input, malformed JSON, non-JSON body, wrong method, unknown path and page |
+| JMeter (live) | | Every run sends an invalid contact form and expects it rejected with 400 |
 
 ## When tests run
 
@@ -40,7 +74,7 @@ The four push-and-PR jobs are required checks on `master`: a pull request can't 
 pass. Every Playwright run uploads its HTML report as a build artifact, and failures appear in the
 job log and the job summary.
 
-Before the browser tests, run `npm ci` and, for local runs, `npm run build`. The end-to-end,
+Before the browser tests, run `npm ci` and, for local runs, `npm run build`. The regression,
 mobile and accessibility tests run against the production build in
 `frontend/build`, served by `npm run preview`.
 
@@ -76,16 +110,17 @@ npm run test:watch   # re-runs on save
 cd backend && mvn verify
 ```
 
-## 3. End-to-end tests
+## 3. Regression tests (end-to-end)
 
-**Playwright, written in strict TypeScript.** They drive a real browser through the production
-build. The content API is answered from `content/*.json` by `tests/e2e/fixtures.ts`, and the contact API
+**Playwright, written in strict TypeScript.** The full suite: it drives a real browser through
+the production build. The content API is answered from `content/*.json` by `tests/e2e/support/fixtures.ts`, and the contact API
 is mocked, so no email is sent.
 
 - **Covers:** navigation and active links, deep links, unknown paths redirecting home, no console
   errors, the resume accordion, carousels, content loading and fallback, and the contact form with
   a mocked API.
-- **Lives in:** `tests/e2e/*.spec.ts`; route list in `tests/e2e/pages.ts`; settings in `playwright.config.ts`.
+- **Lives in:** `tests/e2e/regression/`; shared helpers in `tests/e2e/support/`; settings in
+  `playwright.config.ts`.
 - **Runs:** CI End-to-end job, on every push and PR, on desktop Chrome and all five phones.
 
 `tsc` checks the types of the site and the tests without producing output, so a type error fails
@@ -96,7 +131,7 @@ itself when it runs them.
 flowchart LR
   subgraph code["TypeScript source"]
     app["frontend/src/**/*.tsx<br/>the website"]
-    specs["tests/e2e/*.spec.ts<br/>the tests"]
+    specs["tests/e2e/regression/*.spec.ts<br/>the tests"]
     config["playwright.config.ts<br/>projects: device + target URL"]
   end
 
@@ -107,26 +142,26 @@ flowchart LR
   specs & config --> runner["Playwright test runner<br/>compiles specs on the fly"]
   runner -- "starts (webServer)" --> preview
   runner --> browsers["Chromium and WebKit<br/>one run per project"]
-  fixtures["tests/e2e/fixtures.ts<br/>answers /api/content/* from content/*.json"] -. "mocks the API" .-> browsers
+  fixtures["tests/e2e/support/fixtures.ts<br/>answers /api/content/* from content/*.json"] -. "mocks the API" .-> browsers
   browsers -- "load pages" --> preview
   browsers --> reports["HTML report, JUnit XML,<br/>GitHub job summary"]
 ```
 
 ```bash
 npm run build
-npm run test:e2e                     # desktop and all phones
-npx playwright test --project=desktop
+npm run test:regression             # desktop and all phones
+npm run test:regression:desktop     # desktop only
 npx playwright show-report           # open the last HTML report
 ```
 
 ## 4. Mobile tests (Android and iOS)
 
-**Playwright phone emulation.** Every end-to-end spec also runs on emulated phones, and
-`tests/e2e/mobile.spec.ts` adds phone-only checks that skip themselves on wider screens.
+**Playwright phone emulation.** Every regression spec also runs on emulated phones, and
+`tests/e2e/regression/mobile.spec.ts` adds phone-only checks that skip themselves on wider screens.
 
 ```mermaid
 flowchart TD
-  specs["Every e2e spec<br/>+ tests/e2e/mobile.spec.ts phone-layout checks"]
+  specs["Every regression spec<br/>+ tests/e2e/regression/mobile.spec.ts phone-layout checks"]
 
   specs --> ci["CI: every push and pull request<br/>local build, mocked API"]
   ci --> android["Android on Chromium<br/>Pixel 7 · Galaxy S24"]
@@ -150,7 +185,7 @@ They run in the desktop builds of Chromium and WebKit, so they catch layout and 
 not bugs that only appear in the phone's own browser. [Real devices](#9-real-devices-switched-off)
 would cover those.
 
-The phone-only checks (`phone layout` in `tests/e2e/mobile.spec.ts`):
+The phone-only checks (`phone layout` in `tests/e2e/regression/mobile.spec.ts`):
 
 - The nav fits on one row of icon buttons, each at least 44px, the minimum tap size in Apple's guidelines.
 - Tapping each nav button opens its page.
@@ -171,26 +206,28 @@ npx playwright test --project='mobile' --project='mobile-small'   # Android only
 **axe-core, run through Playwright** on every page.
 
 - **Covers:** WCAG 2.1 A and AA rules. A test fails on any serious or critical violation.
-- **Lives in:** `tests/e2e/accessibility.spec.ts`.
-- **Runs:** with the end-to-end tests, on desktop and every phone.
+- **Lives in:** `tests/e2e/regression/accessibility.spec.ts`.
+- **Runs:** with the regression tests, on desktop and every phone.
 
 ```bash
-npx playwright test tests/e2e/accessibility.spec.ts
+npx playwright test tests/e2e/regression/accessibility.spec.ts
 ```
 
-## 6. Production smoke tests
+## 6. Smoke tests (live site)
 
-**Playwright and Postman, against the live site.** All read-only: nothing submits the contact
+**Playwright and Postman, against the live site.** Quick checks that it's up and working, in
+`tests/e2e/smoke/`. All read-only: nothing submits the contact
 form or sends an email.
 
 - **Playwright covers:** every page is up; HTTPS and security headers; API health; the contact API
   rejecting invalid input; each content API responding with edge caching; the resume rendering
   from the live API; and unknown API paths returning 404.
-  `tests/e2e/production-buttons.spec.ts` clicks every nav button and checks the request behind it.
+  `tests/e2e/smoke/production-buttons.spec.ts` clicks every nav button and checks the request behind it.
 - **Phones:** the Pixel 7 and iPhone 15 run the page and phone-layout checks only. The API-only
   checks stay on desktop, so the API's limit of 2 requests per second isn't hit three times over.
 - **Postman** (`tests/api/AboutShane-API.postman_collection.json`): health, invalid input, malformed
-  JSON and unknown-path checks for the API. Run it by hand in Postman or Newman; it isn't in CI.
+  JSON, unsupported content type, wrong method and unknown-path checks for the API. Run it with
+  `npm run test:api` (Newman) or in the Postman app; it isn't in CI.
 - **Runs:** daily workflow, and after each deploy.
 
 ```bash
@@ -204,7 +241,8 @@ through it at once.
 
 - **Covers:** the home page, each nav button's content API, and the contact form's Send with an
   invalid form (rejected, nothing sent). It records median and max response time per button.
-- **Lives in:** `tests/load/button-clicks.jmx`; pass/fail in `tests/load/check-results.py`.
+- **Lives in:** `tests/jmeter/button-clicks.jmx`; pass/fail in `tests/jmeter/check-results.py`.
+  [tests/jmeter/README.md](../tests/jmeter/README.md) explains running it from the JMeter CLI.
 - **Runs:** daily workflow, only if the smoke tests passed.
 
 ```mermaid
@@ -225,12 +263,12 @@ flowchart LR
 ```
 
 The defaults keep it under the API's limit of 2 requests per second. Change them with JMeter
-properties, for example `jmeter -n -t tests/load/button-clicks.jmx -Jusers=5 -Jloops=10`; more users
+properties, for example `jmeter -n -t tests/jmeter/button-clicks.jmx -Jusers=5 -Jloops=10`; more users
 can hit that limit.
 
 ```bash
 brew install jmeter
-npm run test:load    # report in tests/load/results/report/index.html
+npm run test:load    # report in tests/jmeter/results/report/index.html
 ```
 
 ## 8. Infrastructure checks

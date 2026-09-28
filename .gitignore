@@ -39,6 +39,9 @@ yarn-error.log*
 browserstack.err
 local.log
 
+# CI reports downloaded by npm run debug:ci
+/tests/debugging/ci-artifacts
+
 # JMeter
-/tests/load/results
+/tests/jmeter/results
 jmeter.log

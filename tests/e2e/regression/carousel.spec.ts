@@ -1,5 +1,5 @@
 import type { Page } from '@playwright/test';
-import { expect, test } from './fixtures';
+import { expect, test } from '../support/fixtures';
 
 // Every page carousel, by path and the region label SiteCarousel gives it.
 const carousels = [

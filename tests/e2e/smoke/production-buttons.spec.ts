@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
-import { pages } from './pages';
+import { pages } from '../support/pages';
 
-// Playwright twin of tests/load/button-clicks.jmx: clicks every button that talks to the server on the
+// Playwright twin of tests/jmeter/button-clicks.jmx: clicks every button that talks to the server on the
 // live site and checks the request behind it. Read-only: the contact form is submitted empty, which
 // the browser blocks before anything is sent.
 
@@ -39,7 +39,7 @@ test.describe('production buttons', () => {
     });
   }
 
-  test('Submit on an empty contact form is blocked before anything is sent', async ({ page }) => {
+  test('Submit on an empty contact form is blocked before anything is sent', { tag: '@negative' }, async ({ page }) => {
     const posts: string[] = [];
     page.on('request', (request) => request.method() === 'POST' && posts.push(request.url()));
 

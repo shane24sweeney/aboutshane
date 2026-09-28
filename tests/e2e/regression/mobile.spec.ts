@@ -1,6 +1,6 @@
 import type { Locator } from '@playwright/test';
-import { expect, test } from './fixtures';
-import { pages } from './pages';
+import { expect, test } from '../support/fixtures';
+import { pages } from '../support/pages';
 
 // Phone-layout checks: emulated phones locally and in CI, and real devices on BrowserStack once in use.
 // Each test skips itself on wider screens, so the file is safe on any platform.

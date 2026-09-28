@@ -1,4 +1,4 @@
-import { expect, test } from './fixtures';
+import { expect, test } from '../support/fixtures';
 
 test.describe('home page', () => {
   test('shows the headline and outbound profile links', async ({ page }) => {

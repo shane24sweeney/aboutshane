@@ -28,39 +28,6 @@ describe('usePageContent', () => {
     expect(fetchMock).toHaveBeenCalledWith('/api/content/education', expect.objectContaining({ signal: expect.any(AbortSignal) }));
   });
 
-  it.each([
-    ['the API returns an error status', () => Promise.resolve(jsonResponse({ error: 'internal_error' }, 500))],
-    ['the API is unreachable', () => Promise.reject(new TypeError('Failed to fetch'))],
-    ['the API returns the wrong shape', () => Promise.resolve(jsonResponse({ unexpected: true }))],
-  ])('falls back to bundled content when %s', async (_case, respond) => {
-    vi.stubGlobal('fetch', vi.fn(respond));
-    render(<Probe />);
-    expect(await screen.findByText(`fallback: ${fallbackContent.education[0]?.degree}`)).toBeInTheDocument();
-  });
-
-  it('falls back when the API is too slow, and aborts the request', async () => {
-    vi.useFakeTimers();
-    let signal: AbortSignal | undefined;
-    vi.stubGlobal(
-      'fetch',
-      vi.fn((_url: string, init: RequestInit) => {
-        signal = init.signal ?? undefined;
-        return new Promise<Response>((_resolve, reject) =>
-          signal?.addEventListener('abort', () => reject(new DOMException('Aborted', 'AbortError'))),
-        );
-      }),
-    );
-
-    render(<Probe />);
-    expect(screen.getByText('loading')).toBeInTheDocument();
-
-    await act(async () => {
-      await vi.advanceTimersByTimeAsync(CONTENT_TIMEOUT_MS);
-    });
-    expect(signal?.aborted).toBe(true);
-    expect(screen.getByText(`fallback: ${fallbackContent.education[0]?.degree}`)).toBeInTheDocument();
-  });
-
   it('shows a loading indicator only when the API is slow to answer', async () => {
     vi.useFakeTimers();
     vi.stubGlobal('fetch', vi.fn(() => new Promise<Response>(() => {})));
@@ -73,5 +40,43 @@ describe('usePageContent', () => {
       await vi.advanceTimersByTimeAsync(300);
     });
     expect(status.querySelector('.spinner-border')).not.toBeNull();
+  });
+
+  describe('when the content API fails', { tags: ['negative'] }, () => {
+    it.each([
+      ['the API returns an error status', () => Promise.resolve(jsonResponse({ error: 'internal_error' }, 500))],
+      ['the API is unreachable', () => Promise.reject(new TypeError('Failed to fetch'))],
+      ['the API returns the wrong shape', () => Promise.resolve(jsonResponse({ unexpected: true }))],
+      ['the page is not found', () => Promise.resolve(jsonResponse({ error: 'request_rejected' }, 404))],
+      ['the response is not JSON', () => Promise.resolve(new Response('<html>Bad gateway</html>', { status: 200 }))],
+      ['the response is empty', () => Promise.resolve(new Response(null, { status: 204 }))],
+    ])('falls back to bundled content when %s', async (_case, respond) => {
+      vi.stubGlobal('fetch', vi.fn(respond));
+      render(<Probe />);
+      expect(await screen.findByText(`fallback: ${fallbackContent.education[0]?.degree}`)).toBeInTheDocument();
+    });
+
+    it('falls back when the API is too slow, and aborts the request', async () => {
+      vi.useFakeTimers();
+      let signal: AbortSignal | undefined;
+      vi.stubGlobal(
+        'fetch',
+        vi.fn((_url: string, init: RequestInit) => {
+          signal = init.signal ?? undefined;
+          return new Promise<Response>((_resolve, reject) =>
+            signal?.addEventListener('abort', () => reject(new DOMException('Aborted', 'AbortError'))),
+          );
+        }),
+      );
+
+      render(<Probe />);
+      expect(screen.getByText('loading')).toBeInTheDocument();
+
+      await act(async () => {
+        await vi.advanceTimersByTimeAsync(CONTENT_TIMEOUT_MS);
+      });
+      expect(signal?.aborted).toBe(true);
+      expect(screen.getByText(`fallback: ${fallbackContent.education[0]?.degree}`)).toBeInTheDocument();
+    });
   });
 });
