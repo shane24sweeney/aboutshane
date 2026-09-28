@@ -41,10 +41,51 @@ Browser ──► CloudFront (selenium-automation.com, TLS, security headers)
 | Load | JMeter | The request behind every button: page load, each nav link's content API, contact Send (invalid, sends nothing). `e2e/production-buttons.spec.ts` is the Playwright twin: real clicks on the live site, same checks |
 | Infrastructure | cfn-lint | SAM/CloudFormation template |
 
+### How TypeScript and Playwright work together
+
+The site and its end-to-end tests are both written in strict TypeScript. `tsc` only type-checks
+(`noEmit`), so a wrong type fails the build before any browser starts. Vite compiles the site, and
+Playwright compiles the specs itself when it runs them.
+
+```mermaid
+flowchart LR
+  subgraph code["TypeScript source"]
+    app["src/**/*.tsx<br/>the website"]
+    specs["e2e/*.spec.ts<br/>the tests"]
+    config["playwright.config.ts<br/>projects: device + target URL"]
+  end
+
+  code --> tsc{{"tsc -b<br/>strict type check"}}
+  app --> vite["vite build<br/>to ./build"]
+  vite --> preview["npm run preview<br/>localhost:4173"]
+
+  specs & config --> runner["Playwright test runner<br/>compiles specs on the fly"]
+  runner -- "starts (webServer)" --> preview
+  runner --> browsers["Chromium and WebKit<br/>one run per project"]
+  fixtures["e2e/fixtures.ts<br/>answers /api/content/* from content/*.json"] -. "mocks the API" .-> browsers
+  browsers -- "load pages" --> preview
+  browsers --> reports["HTML report, JUnit XML,<br/>GitHub job summary"]
+```
+
 ### Mobile testing (Android and iOS)
 
 Every Playwright spec runs on an Android phone and an iPhone as well as desktop, and
 `e2e/mobile.spec.ts` adds phone-only checks. Each check skips itself on screens wider than a phone.
+
+```mermaid
+flowchart TD
+  specs["Every e2e spec<br/>+ e2e/mobile.spec.ts phone-layout checks"]
+
+  specs --> ci["CI: every push and pull request<br/>local build, mocked API"]
+  ci --> android["Android on Chromium<br/>Pixel 7 · Galaxy S24"]
+  ci --> ios["iPhone on WebKit<br/>iPhone 15 · iPhone SE · iPhone 15 Pro Max"]
+
+  specs --> daily["Daily production smoke<br/>selenium-automation.com"]
+  daily --> live["Pixel 7 · iPhone 15<br/>page and phone-layout checks only"]
+
+  specs -.-> bs["BrowserStack real devices<br/>prepared, not yet in use"]
+  bs -.-> real["Galaxy S23 · Pixel 8 on Chrome<br/>iPhone 15 · iPhone 14 on Safari"]
+```
 
 | | Android | iOS |
 |---|---|---|
@@ -89,6 +130,33 @@ API is mocked, so no email is sent.
 CI (`.github/workflows/ci.yml`) runs all of it on every push and pull request and publishes the
 Playwright HTML report as a build artifact. A daily workflow runs the smoke suite against production,
 then the JMeter button-click load test, and publishes its HTML report.
+
+### How the JMeter load test works
+
+`jmeter/button-clicks.jmx` sends the request behind every button on the live site, as a few
+visitors clicking through it at once. The defaults keep it under the API's limit of 2 requests per
+second. Change them with JMeter properties, for example
+`jmeter -n -t jmeter/button-clicks.jmx -Jusers=5 -Jloops=10`; more users can hit that limit.
+
+```mermaid
+flowchart LR
+  start["Daily workflow, after the smoke job passes<br/>or npm run test:load"] --> plan
+
+  subgraph plan["button-clicks.jmx: 3 visitors, 10 s ramp-up, 3 loops, 1.5 to 2.5 s between clicks"]
+    direction TB
+    home["GET /home<br/>serves the app shell"] --> nav["GET /api/content/*<br/>profile, about, resume, testimonials,<br/>education, charity: valid JSON"]
+    nav --> contact["POST /api/contact with an invalid form<br/>rejected with 400, nothing sent"]
+  end
+
+  plan -- "every request and its result" --> jtl["results.jtl"]
+  jtl --> check{"check-results.py<br/>any failed sample?"}
+  check -- yes --> fail["Job fails"]
+  check -- no --> pass["Job passes"]
+  jtl --> report["HTML report and job-summary table<br/>(median and max ms per button)"]
+```
+
+`e2e/production-buttons.spec.ts` runs the same checks with Playwright, clicking the real buttons
+in a browser.
 
 ## Running locally
 
