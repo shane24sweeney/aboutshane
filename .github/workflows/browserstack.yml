@@ -2,8 +2,8 @@ name: BrowserStack mobile
 
 # Runs the local Playwright suite on the real devices in browserstack.yml, against this commit's
 # build served through BrowserStack Local. The contact API is mocked, so nothing sends email.
-# Manual until the BROWSERSTACK_USERNAME and BROWSERSTACK_ACCESS_KEY secrets are set; then add a
-# push or schedule trigger here if you want it automatic.
+# Switched off: the job is skipped unless the repository variable REAL_DEVICE_TESTS is "on"
+# (Settings > Secrets and variables > Actions > Variables). See docs/browserstack.md.
 on:
   workflow_dispatch:
 
@@ -13,8 +13,10 @@ permissions:
 jobs:
   devices:
     name: Real devices (BrowserStack)
+    if: ${{ vars.REAL_DEVICE_TESTS == 'on' }}
     runs-on: ubuntu-latest
     env:
+      REAL_DEVICE_TESTS: ${{ vars.REAL_DEVICE_TESTS }}
       BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
       BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
       BROWSERSTACK_BUILD_NAME: aboutshane-mobile-${{ github.run_number }}

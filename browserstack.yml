@@ -6,7 +6,7 @@ projectName: AboutShane
 buildName: aboutshane-mobile
 framework: playwright
 
-# Real devices. Pick from https://www.browserstack.com/list-of-browsers-and-platforms/playwright
+# Real devices, kept in step with appium/wdio.conf.ts (see docs/browserstack.md). Pick from https://www.browserstack.com/list-of-browsers-and-platforms/playwright
 # and confirm each one is available on your plan before enabling it.
 platforms:
   - deviceName: Samsung Galaxy S23
