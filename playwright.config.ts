@@ -34,16 +34,21 @@ export default defineConfig({
       testIgnore: [productionSpecs, /mobile\.spec\.ts/],
       use: { ...devices['Desktop Chrome'], baseURL: localURL },
     },
-    {
-      name: 'mobile',
+    // Emulated phones: Android on Chromium, iPhone on WebKit, from the smallest to the largest
+    // current screens.
+    ...(
+      [
+        ['mobile', 'Pixel 7'],
+        ['mobile-small', 'Galaxy S24'],
+        ['mobile-safari', 'iPhone 15'],
+        ['mobile-safari-small', 'iPhone SE (3rd gen)'],
+        ['mobile-safari-large', 'iPhone 15 Pro Max'],
+      ] as const
+    ).map(([name, device]) => ({
+      name,
       testIgnore: productionSpecs,
-      use: { ...devices['Pixel 7'], baseURL: localURL },
-    },
-    {
-      name: 'mobile-safari',
-      testIgnore: productionSpecs,
-      use: { ...devices['iPhone 15'], baseURL: localURL },
-    },
+      use: { ...devices[device], baseURL: localURL },
+    })),
     // Read-only smoke checks against the live site and API.
     {
       name: 'production',
