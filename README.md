@@ -34,7 +34,7 @@ Browser ──► CloudFront (selenium-automation.com, TLS, security headers)
 |---|---|---|
 | Unit / component | Vitest, Testing Library | Routing, one `h1` per page, alt text, nav labels, contact form states, resume rendering |
 | API | JUnit 5, MockMvc, Mockito | Validation, error mapping, honeypot, storage and notification order, full Spring context wiring |
-| End-to-end | Playwright (desktop, Pixel 7, iPhone 15) | Navigation, deep links, console errors, resume accordion, contact form with mocked API |
+| End-to-end | Playwright (desktop, 2 Android and 3 iPhone profiles) | Navigation, deep links, console errors, resume accordion, contact form with mocked API |
 | Mobile | Playwright emulation; real-device setup for BrowserStack prepared, not yet in use | One-row nav with 44px tap targets, tapping every nav button, no sideways scroll, contact keyboards and no zoom-on-focus, resume taps |
 | Accessibility | axe-core via Playwright | WCAG 2.1 A/AA, no serious or critical violations on any page |
 | Production smoke | Playwright (desktop, Pixel 7, iPhone 15), Postman | Live pages, phone layouts, security headers, API health, validation and 404 handling (read-only) |
@@ -48,7 +48,7 @@ Every Playwright spec runs on an Android phone and an iPhone as well as desktop,
 
 | | Android | iOS |
 |---|---|---|
-| Emulated in CI, on every push and PR | `mobile` project: Pixel 7 profile on Chromium | `mobile-safari` project: iPhone 15 profile on WebKit, the engine behind Safari |
+| Emulated in CI, on every push and PR | On Chromium: `mobile` (Pixel 7, 412px wide), `mobile-small` (Galaxy S24, 360px) | On WebKit, the engine behind Safari: `mobile-safari` (iPhone 15, 393px), `mobile-safari-small` (iPhone SE, 375px), `mobile-safari-large` (iPhone 15 Pro Max, 430px) |
 | Live site, daily smoke run | `production-mobile`: Pixel 7 | `production-mobile-safari`: iPhone 15 |
 | Real devices (BrowserStack, prepared, not yet in use) | Samsung Galaxy S23 (Android 13), Google Pixel 8 (Android 14), Chrome | iPhone 15 (iOS 17), iPhone 14 (iOS 16), Safari |
 
@@ -74,8 +74,8 @@ times over.
 How to run them:
 
 ```bash
-npm run build && npm run test:mobile                    # emulated Pixel 7 and iPhone 15
-npx playwright test --project=mobile-safari             # iOS only
+npm run build && npm run test:mobile                    # all five emulated phones
+npx playwright test --project='mobile-safari*'          # iPhones only
 npm run test:smoke                                      # live site on desktop and both phones
 BROWSERSTACK_USERNAME=... BROWSERSTACK_ACCESS_KEY=... npm run test:browserstack   # real devices
 ```
@@ -101,7 +101,7 @@ npm run lint && npm run typecheck && npm test
 
 npm run build
 npm run test:e2e     # Playwright desktop + Android + iPhone against the production build
-npm run test:mobile  # just the emulated Pixel 7 and iPhone 15 projects
+npm run test:mobile  # just the emulated Android and iPhone projects
 npm run test:browserstack  # real devices from browserstack.yml; needs BROWSERSTACK_USERNAME/ACCESS_KEY
 npm run test:smoke   # read-only checks against selenium-automation.com, desktop + phones
 npm run test:load    # JMeter button-click load test (brew install jmeter); report in jmeter/results/report
