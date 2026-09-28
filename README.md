@@ -41,9 +41,12 @@ backend/          The API: Spring Boot on Java 21
   src/main/       Contact and content API
   src/test/       API tests (JUnit), kept here because Maven expects them here
 content/          Page text as JSON, shared by the frontend, backend and tests
-tests/            Every other test, one folder per type
+tests/            Every other test, one folder per type; commands in tests/README.md
   unit/           Vitest + Testing Library, testing frontend/src
-  e2e/            Playwright: end-to-end, mobile, accessibility, production smoke
+  e2e/
+    regression/   Playwright: the full suite on desktop and phones, every push and PR
+    smoke/        Playwright: quick read-only checks of the live site, daily and after deploys
+    support/      Shared fixtures, page list and CI reporter
   jmeter/         JMeter load tests, run from the JMeter CLI (see its README)
   api/            Postman collection for the live API
   appium/         Real-device tests with Appium (switched off)
@@ -59,19 +62,19 @@ and `browserstack.yml`.
 
 ## Testing
 
-Every push and pull request runs the unit, API, end-to-end, mobile, accessibility and
-infrastructure tests, and a pull request can't merge until they pass. A daily run checks the live
-site. **[docs/testing.md](docs/testing.md)** covers each type of test in its own section, with
-diagrams and commands.
+Every push and pull request runs the unit, API, regression (including mobile and accessibility)
+and infrastructure tests, and a pull request can't merge until they pass. A daily smoke run checks the
+live site. **[tests/README.md](tests/README.md)** lists every command for running the tests locally
+and in CI/CD; **[docs/testing.md](docs/testing.md)** explains each type of test, with diagrams.
 
 | Type | Tool | Runs |
 |---|---|---|
 | Unit and component | Vitest, Testing Library | Every push and PR |
 | API | JUnit 5, MockMvc, Mockito | Every push and PR |
-| End-to-end | Playwright, TypeScript | Every push and PR |
+| Regression (end-to-end) | Playwright, TypeScript | Every push and PR |
 | Mobile | Playwright: 2 Android and 3 iPhone emulations | Every push and PR; daily on the live site |
 | Accessibility | axe-core (WCAG 2.1 A/AA) | Every push and PR |
-| Production smoke | Playwright, Postman | Daily |
+| Smoke (live site) | Playwright, Postman | Daily, and after each deploy |
 | Load | JMeter | Daily, after the smoke tests |
 | Infrastructure | cfn-lint | Every push and PR |
 | Real devices | BrowserStack, Appium | Switched off; see [docs/browserstack.md](docs/browserstack.md) |

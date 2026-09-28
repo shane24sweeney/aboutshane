@@ -1,6 +1,6 @@
 import AxeBuilder from '@axe-core/playwright';
-import { expect, test } from './fixtures';
-import { pages } from './pages';
+import { expect, test } from '../support/fixtures';
+import { pages } from '../support/pages';
 
 test.describe('accessibility (axe, WCAG 2.1 A/AA)', () => {
   for (const { path } of pages) {

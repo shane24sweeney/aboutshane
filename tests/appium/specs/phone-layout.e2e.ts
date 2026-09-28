@@ -1,6 +1,6 @@
 import { $, $$, browser, expect } from '@wdio/globals';
 
-// A few of the checks from tests/e2e/mobile.spec.ts, in the phone's real browser through Appium.
+// A few of the checks from tests/e2e/regression/mobile.spec.ts, in the phone's real browser through Appium.
 // Read-only: the contact form is never submitted.
 
 /** WCAG 2.5.5 and Apple's minimum touch target. */

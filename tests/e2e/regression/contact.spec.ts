@@ -1,5 +1,5 @@
 import type { Page } from '@playwright/test';
-import { expect, test } from './fixtures';
+import { expect, test } from '../support/fixtures';
 
 async function fillForm(page: Page) {
   await page.getByLabel('Name').fill('Jane Doe');

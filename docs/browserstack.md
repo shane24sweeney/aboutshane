@@ -17,7 +17,7 @@ Until real-device testing is set up, it is blocked in three places, so it can't 
 
 All three check `REAL_DEVICE_TESTS=on`. To switch on, set it in your shell for local runs and as
 a repository variable (**Settings → Secrets and variables → Actions → Variables**) for GitHub
-Actions. Normal CI, `npm test` and `npm run test:e2e` never use BrowserStack or Appium.
+Actions. Normal CI, `npm test`, `npm run test:regression` and `npm run test:smoke` never use BrowserStack or Appium.
 
 ## Why real devices
 
@@ -132,7 +132,7 @@ The checks are read-only, so by default they run against the live site,
 | BrowserStack, with BrowserStack Local | `http://bs-local.com:4173` (the tunnel starts automatically) |
 
 `tests/appium/specs/phone-layout.e2e.ts` repeats the most device-sensitive checks from
-`tests/e2e/mobile.spec.ts`:
+`tests/e2e/regression/mobile.spec.ts`:
 
 - the nav fits on one row of buttons at least 44px square
 - no page scrolls sideways

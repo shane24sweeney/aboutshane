@@ -103,7 +103,7 @@ jmeter -t tests/jmeter/button-clicks.jmx
 ```
 
 Save it, then run it from the CLI as above. Don't run load from the GUI. When you add a button to
-the site, add its request here and its twin to `tests/e2e/production-buttons.spec.ts`, which clicks
+the site, add its request here and its twin to `tests/e2e/smoke/production-buttons.spec.ts`, which clicks
 the same buttons in a real browser.
 
 ## In CI

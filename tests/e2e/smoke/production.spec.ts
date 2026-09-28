@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { pages } from './pages';
+import { pages } from '../support/pages';
 
 // Read-only checks against the live site. Nothing here submits the contact form.
 

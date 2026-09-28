@@ -1,5 +1,5 @@
-import { expect, test } from './fixtures';
-import { pages } from './pages';
+import { expect, test } from '../support/fixtures';
+import { pages } from '../support/pages';
 
 test.describe('navigation', () => {
   test('every nav link opens its page and marks it active', async ({ page }) => {

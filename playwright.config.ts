@@ -3,8 +3,14 @@ import { defineConfig, devices } from '@playwright/test';
 const isCI = Boolean(process.env.CI);
 const localURL = 'http://localhost:4173';
 const productionURL = process.env.PRODUCTION_URL ?? 'https://selenium-automation.com';
-/** Specs that only run against the live site: production.spec.ts, production-buttons.spec.ts. */
-export const productionSpecs = /production(-[a-z]+)?\.spec\.ts/;
+/**
+ * Regression: the full suite, against the local production build with mocked APIs. Runs on every
+ * push and pull request. Smoke: quick read-only checks of the live site. Runs daily and after deploys.
+ */
+export const regressionDir = './tests/e2e/regression';
+const smokeDir = './tests/e2e/smoke';
+/** Phone-only checks; they skip themselves on wider screens, so desktop leaves them out. */
+const phoneLayoutSpec = /mobile\.spec\.ts/;
 
 export default defineConfig({
   testDir: './tests/e2e',
@@ -20,7 +26,7 @@ export default defineConfig({
         ['github'],
         ['list'],
         ['junit', { outputFile: 'test-results/junit.xml' }],
-        ['./tests/e2e/reporters/github-summary.ts'],
+        ['./tests/e2e/support/reporters/github-summary.ts'],
       ]
     : [['html', { open: 'never' }], ['list']],
   use: {
@@ -28,10 +34,11 @@ export default defineConfig({
     screenshot: 'only-on-failure',
   },
   projects: [
-    // Local production build; the contact API is mocked so these never send email.
+    // Regression: local production build; the contact API is mocked so these never send email.
     {
       name: 'desktop',
-      testIgnore: [productionSpecs, /mobile\.spec\.ts/],
+      testDir: regressionDir,
+      testIgnore: phoneLayoutSpec,
       use: { ...devices['Desktop Chrome'], baseURL: localURL },
     },
     // Emulated phones: Android on Chromium, iPhone on WebKit, from the smallest to the largest
@@ -46,18 +53,18 @@ export default defineConfig({
       ] as const
     ).map(([name, device]) => ({
       name,
-      testIgnore: productionSpecs,
+      testDir: regressionDir,
       use: { ...devices[device], baseURL: localURL },
     })),
-    // Read-only smoke checks against the live site and API.
+    // Smoke: read-only checks against the live site and API.
     {
       name: 'production',
-      testMatch: productionSpecs,
+      testDir: smokeDir,
       use: { ...devices['Desktop Chrome'], baseURL: productionURL },
     },
     // The live site on phones: the page checks from the smoke suite plus the phone-layout checks.
     // API-only smoke tests stay desktop-only so the API's 2 req/s throttle isn't spent three times;
-    // the phone-layout checks serve content from content/*.json (see fixtures.ts) for the same reason.
+    // the phone-layout checks serve content from content/*.json (see support/fixtures.ts) for the same reason.
     ...(
       [
         ['production-mobile', 'Pixel 7'],
@@ -65,7 +72,7 @@ export default defineConfig({
       ] as const
     ).map(([name, device]) => ({
       name,
-      testMatch: [productionSpecs, /mobile\.spec\.ts/],
+      testMatch: [/smoke\/.*\.spec\.ts/, /regression\/mobile\.spec\.ts/],
       grep: /is up|renders content from the live API|phone layout/,
       use: { ...devices[device], baseURL: productionURL },
     })),

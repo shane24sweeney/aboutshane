@@ -73,7 +73,7 @@ jobs:
           name: frontend-build
           path: frontend/build
       - run: npx playwright install --with-deps chromium webkit
-      - run: npx playwright test --project=desktop --project=mobile --project=mobile-small --project=mobile-safari --project=mobile-safari-small --project=mobile-safari-large
+      - run: npm run test:regression
       - uses: actions/upload-artifact@v7
         if: ${{ !cancelled() }}
         with:

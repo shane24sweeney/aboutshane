@@ -4,8 +4,8 @@
 
 | Workflow | Runs | Jobs |
 |---|---|---|
-| **CI** (`.github/workflows/ci.yml`) | Every push and pull request | Frontend (lint, types, unit tests, build) · Backend (Maven verify) · Infrastructure (cfn-lint) · End-to-end (Playwright, desktop + Android + iPhone) |
-| **Production smoke** (`production-smoke.yml`) | Daily at 11:17 UTC, or by hand | smoke (Playwright on the live site) · Load (JMeter button clicks) |
+| **CI** (`.github/workflows/ci.yml`) | Every push and pull request, or `gh workflow run ci.yml --ref <branch>` | Frontend (lint, types, unit tests, build) · Backend (Maven verify) · Infrastructure (cfn-lint) · End-to-end (Playwright, desktop + Android + iPhone) |
+| **Production smoke** (`production-smoke.yml`) | Daily at 11:17 UTC, or by hand | smoke (`npm run test:smoke` on the live site) · Load (JMeter button clicks) |
 | **BrowserStack mobile** (`browserstack.yml`) | By hand | Real devices; skipped while real-device tests are switched off |
 
 The four CI jobs are required checks on `master`: a pull request can't merge until they pass.

@@ -16,6 +16,7 @@ Run these from the repo root after `npm ci` and `npm run build`:
 |---|---|
 | `npm run debug:desktop` | Opens Playwright's UI mode with the desktop tests: pick a test, watch it run, step through each action |
 | `npm run debug:mobile` | The same for the five emulated phones |
+| `npm run inspect:ios` / `npm run inspect:android` | Opens the site as a phone to inspect elements, ids and locators ([mobile.md](mobile.md#inspect-elements-on-ios-and-android)) |
 | `npm run debug:ci` | Downloads the reports from the latest failed GitHub Actions run on this branch and opens them ([ci-report.sh](ci-report.sh)) |
 | `npx playwright show-report` | Opens the HTML report from your last local run |
 | `npx playwright test --last-failed` | Reruns only the tests that failed last time |

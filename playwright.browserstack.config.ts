@@ -1,5 +1,5 @@
 import { defineConfig } from '@playwright/test';
-import baseConfig, { productionSpecs } from './playwright.config';
+import baseConfig, { regressionDir } from './playwright.config';
 
 // Used by `npm run test:browserstack`. browserstack.yml picks the devices, so this config has no
 // projects. BrowserStack Local tunnels the preview server; bs-local.com resolves to this machine
@@ -12,7 +12,8 @@ if (process.env.REAL_DEVICE_TESTS !== 'on') {
 
 export default defineConfig({
   ...baseConfig,
-  testIgnore: productionSpecs,
+  // The regression suite only; smoke tests target the live site.
+  testDir: regressionDir,
   projects: undefined,
   // Real devices are slower and share a remote session, so run fewer at once.
   workers: 2,

@@ -1,8 +1,8 @@
 # Debugging desktop tests
 
-The `desktop` Playwright project runs every spec in `tests/e2e/` in Desktop Chrome, against the
+The `desktop` Playwright project runs the regression suite in `tests/e2e/regression/` in Desktop Chrome, against the
 production build served on `http://localhost:4173`. The content API is answered from
-`content/*.json` by `tests/e2e/fixtures.ts`, and the contact API is mocked in each test.
+`content/*.json` by `tests/e2e/support/fixtures.ts`, and the contact API is mocked in each test.
 
 ## Before you start
 
@@ -21,9 +21,9 @@ already running. If a test sees old code, stop the old preview server and rebuil
 |---|---|
 | Browse the tests, run one, and step through it with DOM snapshots | `npm run debug:desktop` (UI mode) |
 | Watch the browser while the tests run | `npx playwright test --project=desktop --headed` |
-| Pause before every action and step through in the Inspector | `npx playwright test --project=desktop --debug tests/e2e/contact.spec.ts` |
+| Pause before every action and step through in the Inspector | `npx playwright test --project=desktop --debug tests/e2e/regression/contact.spec.ts` |
 | Run one test by name | `npx playwright test --project=desktop -g "sends the message"` |
-| Run the test on one line | `npx playwright test --project=desktop tests/e2e/contact.spec.ts:33` |
+| Run the test on one line | `npx playwright test --project=desktop tests/e2e/regression/contact.spec.ts:33` |
 | Rerun only what failed | `npx playwright test --last-failed` |
 | Check whether a test is flaky | `npx playwright test --project=desktop -g "name" --repeat-each 20` |
 | Record a trace even when it passes | `npx playwright test --project=desktop -g "name" --trace on` |
