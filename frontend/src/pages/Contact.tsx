@@ -6,19 +6,42 @@ import './Contact.css';
 
 type Status = { state: 'idle' } | { state: 'sending' } | { state: 'sent' } | { state: 'error'; message: string };
 
+/** Fields the browser's `required` check lets through when they hold only spaces. */
+type BlankField = 'name' | 'message';
+
 function Contact() {
   const [status, setStatus] = useState<Status>({ state: 'idle' });
+  const [blank, setBlank] = useState<Set<BlankField>>(new Set());
+
+  const clearBlank = (field: BlankField) =>
+    setBlank((current) => {
+      if (!current.has(field)) return current;
+      const next = new Set(current);
+      next.delete(field);
+      return next;
+    });
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.currentTarget;
     const data = new FormData(form);
+    const name = String(data.get('name') ?? '').trim();
+    const message = String(data.get('message') ?? '').trim();
+
+    const blankFields = (['name', 'message'] as const).filter((field) => (field === 'name' ? name : message) === '');
+    if (blankFields.length > 0) {
+      setBlank(new Set(blankFields));
+      setStatus({ state: 'idle' });
+      form.querySelector<HTMLElement>(`[name="${blankFields[0]}"]`)?.focus();
+      return;
+    }
+
     setStatus({ state: 'sending' });
     try {
       await sendContactMessage({
-        name: String(data.get('name') ?? '').trim(),
+        name,
         email: String(data.get('email') ?? '').trim(),
-        message: String(data.get('message') ?? '').trim(),
+        message,
         website: String(data.get('website') ?? ''),
       });
       form.reset();
@@ -41,7 +64,25 @@ function Contact() {
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="contact-name">
             <Form.Label>Name</Form.Label>
-            <Form.Control name="name" type="text" placeholder="Your name..." autoComplete="name" maxLength={100} required />
+            <Form.Control
+              name="name"
+              type="text"
+              placeholder="Your name..."
+              autoComplete="name"
+              maxLength={100}
+              required
+              isInvalid={blank.has('name')}
+              aria-invalid={blank.has('name') || undefined}
+              aria-describedby={blank.has('name') ? 'contact-name-error' : undefined}
+              onChange={() => clearBlank('name')}
+            />
+            {blank.has('name') && (
+              // Rendered only when needed and shown directly: WebKit (Safari) doesn't re-lay out
+              // Bootstrap's `.is-invalid ~ .invalid-feedback` rule when the class is added later.
+              <Form.Control.Feedback type="invalid" className="d-block" id="contact-name-error">
+                Please enter your name.
+              </Form.Control.Feedback>
+            )}
           </Form.Group>
           <Form.Group className="mb-3" controlId="contact-email">
             <Form.Label>E-mail</Form.Label>
@@ -49,7 +90,23 @@ function Contact() {
           </Form.Group>
           <Form.Group className="mb-3" controlId="contact-message">
             <Form.Label>Message</Form.Label>
-            <Form.Control name="message" as="textarea" rows={8} placeholder="Your message..." maxLength={5000} required />
+            <Form.Control
+              name="message"
+              as="textarea"
+              rows={8}
+              placeholder="Your message..."
+              maxLength={5000}
+              required
+              isInvalid={blank.has('message')}
+              aria-invalid={blank.has('message') || undefined}
+              aria-describedby={blank.has('message') ? 'contact-message-error' : undefined}
+              onChange={() => clearBlank('message')}
+            />
+            {blank.has('message') && (
+              <Form.Control.Feedback type="invalid" className="d-block" id="contact-message-error">
+                Please enter a message.
+              </Form.Control.Feedback>
+            )}
           </Form.Group>
           <div className="contact-honeypot" aria-hidden="true">
             <label htmlFor="contact-website">Website</label>
