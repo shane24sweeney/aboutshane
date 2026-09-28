@@ -35,11 +35,56 @@ Browser ──► CloudFront (selenium-automation.com, TLS, security headers)
 | Unit / component | Vitest, Testing Library | Routing, one `h1` per page, alt text, nav labels, contact form states, resume rendering |
 | API | JUnit 5, MockMvc, Mockito | Validation, error mapping, honeypot, storage and notification order, full Spring context wiring |
 | End-to-end | Playwright (desktop, Pixel 7, iPhone 15) | Navigation, deep links, console errors, resume accordion, contact form with mocked API |
-| Mobile | Playwright emulation; real devices via BrowserStack (manual workflow) | One-row nav with 44px tap targets, tapping every nav button, no sideways scroll, contact keyboards and no zoom-on-focus, resume taps |
+| Mobile | Playwright emulation; real-device setup for BrowserStack prepared, not yet in use | One-row nav with 44px tap targets, tapping every nav button, no sideways scroll, contact keyboards and no zoom-on-focus, resume taps |
 | Accessibility | axe-core via Playwright | WCAG 2.1 A/AA, no serious or critical violations on any page |
 | Production smoke | Playwright (desktop, Pixel 7, iPhone 15), Postman | Live pages, phone layouts, security headers, API health, validation and 404 handling (read-only) |
 | Load | JMeter | The request behind every button: page load, each nav link's content API, contact Send (invalid, sends nothing). `e2e/production-buttons.spec.ts` is the Playwright twin: real clicks on the live site, same checks |
 | Infrastructure | cfn-lint | SAM/CloudFormation template |
+
+### Mobile testing (Android and iOS)
+
+Every Playwright spec runs on an Android phone and an iPhone as well as desktop, and
+`e2e/mobile.spec.ts` adds phone-only checks. Each check skips itself on screens wider than a phone.
+
+| | Android | iOS |
+|---|---|---|
+| Emulated in CI, on every push and PR | `mobile` project: Pixel 7 profile on Chromium | `mobile-safari` project: iPhone 15 profile on WebKit, the engine behind Safari |
+| Live site, daily smoke run | `production-mobile`: Pixel 7 | `production-mobile-safari`: iPhone 15 |
+| Real devices (BrowserStack, prepared, not yet in use) | Samsung Galaxy S23 (Android 13), Google Pixel 8 (Android 14), Chrome | iPhone 15 (iOS 17), iPhone 14 (iOS 16), Safari |
+
+The emulated projects use each phone's screen size, pixel density, touch input and user agent.
+They run in the desktop builds of Chromium and WebKit, so they catch layout and touch problems,
+not bugs that only appear in the phone's own browser. The BrowserStack setup is there to cover
+those once it is switched on.
+
+The phone-only checks (`phone layout` in `e2e/mobile.spec.ts`):
+
+- The nav fits on one row of icon buttons, each at least 44px, the minimum tap size in Apple's guidelines.
+- Tapping each nav button opens its page.
+- No page scrolls sideways.
+- Home page buttons are large enough to tap.
+- The contact form's E-mail field brings up the email keyboard, Name and E-mail offer autofill,
+  and no field zooms the page on focus (font size of at least 16px, which stops iOS Safari from zooming).
+- Resume roles expand with a tap and stay on screen.
+
+On the live site the phone projects run only the page checks and the phone-layout checks. The
+API-only smoke tests stay on desktop, so the API's limit of 2 requests per second isn't hit three
+times over.
+
+How to run them:
+
+```bash
+npm run build && npm run test:mobile                    # emulated Pixel 7 and iPhone 15
+npx playwright test --project=mobile-safari             # iOS only
+npm run test:smoke                                      # live site on desktop and both phones
+BROWSERSTACK_USERNAME=... BROWSERSTACK_ACCESS_KEY=... npm run test:browserstack   # real devices
+```
+
+When BrowserStack is in use, run the real-device suite in GitHub Actions from the **BrowserStack mobile** workflow
+(`.github/workflows/browserstack.yml`). It needs the `BROWSERSTACK_USERNAME` and
+`BROWSERSTACK_ACCESS_KEY` repository secrets. BrowserStack Local tunnels the preview build to the
+devices at `bs-local.com`, because iOS can't reach `localhost` through the tunnel, and the contact
+API is mocked, so no email is sent.
 
 CI (`.github/workflows/ci.yml`) runs all of it on every push and pull request and publishes the
 Playwright HTML report as a build artifact. A daily workflow runs the smoke suite against production,

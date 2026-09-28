@@ -17,10 +17,14 @@ platforms:
     osVersion: 14.0
     browserName: chrome
     deviceOrientation: portrait
-  # - deviceName: iPhone 15
-  #   osVersion: 17
-  #   browserName: safari
-  #   deviceOrientation: portrait
+  - deviceName: iPhone 15
+    osVersion: 17
+    browserName: safari
+    deviceOrientation: portrait
+  - deviceName: iPhone 14
+    osVersion: 16
+    browserName: safari
+    deviceOrientation: portrait
 
 parallelsPerPlatform: 1
 
