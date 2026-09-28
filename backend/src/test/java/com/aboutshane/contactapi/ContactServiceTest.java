@@ -14,6 +14,7 @@ import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneOffset;
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InOrder;
@@ -43,6 +44,7 @@ class ContactServiceTest {
         assertThat(message.message()).isEqualTo("Hello");
     }
 
+    @Tag("negative")
     @Test
     void dropsHoneypotSubmissionsSilently() {
         service.submit(new ContactRequest("Bot", "bot@example.com", "Buy now", "https://spam.example"));
@@ -50,6 +52,7 @@ class ContactServiceTest {
         verifyNoInteractions(repository, notifier);
     }
 
+    @Tag("negative")
     @Test
     void aFailedNotificationDoesNotLoseTheMessage() {
         doThrow(new RuntimeException("SES unavailable")).when(notifier).notify(any());
@@ -59,6 +62,7 @@ class ContactServiceTest {
         verify(repository).save(any());
     }
 
+    @Tag("negative")
     @Test
     void aFailedSaveIsReported() {
         doThrow(new RuntimeException("DynamoDB unavailable")).when(repository).save(any());

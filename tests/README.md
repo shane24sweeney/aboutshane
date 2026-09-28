@@ -38,12 +38,12 @@ npm run build
 
 | Command | Runs |
 |---|---|
-| `npm run test:regression` | Regression: desktop and all five phones, against the local build (312 tests) |
+| `npm run test:regression` | Regression: desktop and all five phones, against the local build (378 tests) |
 | `npm run test:regression:desktop` | Regression on desktop Chrome only |
 | `npm run test:mobile` | Regression on the five emulated phones |
 | `npm run test:mobile:android` | Regression on the Pixel 7 and Galaxy S24 (Chromium) |
 | `npm run test:mobile:ios` | Regression on the iPhone 15, iPhone SE and iPhone 15 Pro Max (WebKit) |
-| `npm run test:smoke` | Smoke: read-only checks of the live site, desktop plus Pixel 7 and iPhone 15 (64 tests; no build needed) |
+| `npm run test:smoke` | Smoke: read-only checks of the live site, desktop plus Pixel 7 and iPhone 15 (65 tests; no build needed) |
 | `npm run test:e2e` | Regression, then smoke |
 
 Narrow any of them down by adding arguments after `--`:
@@ -65,9 +65,25 @@ npx playwright show-report                                            # the last
 | `npm test` | Unit and component tests (Vitest) |
 | `npm run test:watch` | Unit tests, rerunning on save |
 | `cd backend && mvn verify` | API tests (JUnit) and the backend build |
+| `npm run test:api` | Postman collection against the live API, run with Newman (read-only) |
 | `npm run test:load` | JMeter load test of the live site ([details](jmeter/README.md)) |
 | `npm run lint && npm run typecheck` | ESLint and the TypeScript type check |
 | `cfn-lint infra/template.yaml` | The AWS template (`pip install cfn-lint`) |
+
+### Negative tests
+
+Tests that feed the site bad input, failing APIs or wrong requests, and check it fails safely,
+are tagged `negative` in every layer. They still run with their suites; these commands run only
+them:
+
+| Command | Runs |
+|---|---|
+| `npm run test:negative` | Negative unit tests, then negative regression tests on desktop and all five phones |
+| `npm run test:negative:api` | Negative API tests (JUnit `@Tag("negative")`) |
+| `npm run test:negative:smoke` | Negative checks against the live API (read-only) |
+| `npm run test:regression -- --grep-invert @negative` | Regression without the negative tests |
+
+What they cover is listed in [docs/testing.md](../docs/testing.md#negative-tests).
 
 ### Everything CI checks on a pull request
 

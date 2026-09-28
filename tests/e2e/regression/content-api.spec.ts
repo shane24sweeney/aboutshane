@@ -39,11 +39,30 @@ test.describe('content API', () => {
     await expect(page.getByText('Highlight from the API')).toBeVisible();
   });
 
-  test('falls back to the bundled content when the API fails', async ({ page }) => {
+  test('falls back to the bundled content when the API fails', { tag: '@negative' }, async ({ page }) => {
     await page.route('**/api/content/resume', (route) => route.fulfill({ status: 500, json: { error: 'internal_error' } }));
 
     await page.goto('/resume');
     await expect(page.getByRole('button', { name: /FIFTH THIRD BANK/ })).toBeVisible();
+    await expect(page.getByRole('button')).toHaveCount(resume.length);
+  });
+
+  for (const [problem, answer] of [
+    ['the page is not found', { status: 404, json: { error: 'request_rejected' } }],
+    ['the response is not JSON', { status: 200, contentType: 'text/html', body: '<html>Bad gateway</html>' }],
+    ['the response has the wrong shape', { status: 200, json: { unexpected: true } }],
+  ] as const) {
+    test(`falls back to the bundled content when ${problem}`, { tag: '@negative' }, async ({ page }) => {
+      await page.route('**/api/content/resume', (route) => route.fulfill(answer));
+      await page.goto('/resume');
+      await expect(page.getByRole('button', { name: /FIFTH THIRD BANK/ })).toBeVisible();
+      await expect(page.getByRole('button')).toHaveCount(resume.length);
+    });
+  }
+
+  test('falls back to the bundled content when the network drops the request', { tag: '@negative' }, async ({ page }) => {
+    await page.route('**/api/content/resume', (route) => route.abort('connectionreset'));
+    await page.goto('/resume');
     await expect(page.getByRole('button')).toHaveCount(resume.length);
   });
 

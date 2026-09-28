@@ -77,6 +77,7 @@ and in CI/CD; **[docs/testing.md](docs/testing.md)** explains each type of test,
 | Smoke (live site) | Playwright, Postman | Daily, and after each deploy |
 | Load | JMeter | Daily, after the smoke tests |
 | Infrastructure | cfn-lint | Every push and PR |
+| Negative (bad input, failing APIs) | Tagged `negative` in the unit, API, regression and smoke tests | With their suites; `npm run test:negative` runs them alone |
 | Real devices | BrowserStack, Appium | Switched off; see [docs/browserstack.md](docs/browserstack.md) |
 
 ## Running locally

@@ -39,7 +39,7 @@ test.describe('production buttons', () => {
     });
   }
 
-  test('Submit on an empty contact form is blocked before anything is sent', async ({ page }) => {
+  test('Submit on an empty contact form is blocked before anything is sent', { tag: '@negative' }, async ({ page }) => {
     const posts: string[] = [];
     page.on('request', (request) => request.method() === 'POST' && posts.push(request.url()));
 

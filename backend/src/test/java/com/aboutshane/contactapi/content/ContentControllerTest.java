@@ -1,11 +1,14 @@
 package com.aboutshane.contactapi.content;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -58,8 +61,19 @@ class ContentControllerTest {
                 .andExpect(jsonPath("$[1].link.href").value("https://www.dogdaysrescue.org/"));
     }
 
+    @Tag("negative")
+    @ParameterizedTest(name = "{0} is not found")
+    @ValueSource(strings = {"/api/content/secrets", "/api/content/PROFILE", "/api/content/profile/extra", "/api/content/", "/api/content"})
+    void unknownPagesAreNotFound(String path) throws Exception {
+        mvc.perform(get(path))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.error").value("request_rejected"));
+    }
+
+    @Tag("negative")
     @Test
-    void unknownPagesAreNotFound() throws Exception {
-        mvc.perform(get("/api/content/secrets")).andExpect(status().isNotFound());
+    void contentIsReadOnly() throws Exception {
+        mvc.perform(post("/api/content/profile").content("{}")).andExpect(status().isMethodNotAllowed());
+        mvc.perform(delete("/api/content/resume")).andExpect(status().isMethodNotAllowed());
     }
 }

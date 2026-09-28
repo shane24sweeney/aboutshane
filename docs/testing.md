@@ -27,13 +27,29 @@ The Playwright tests are split into two suites, each in its own folder:
 | Folder | `tests/e2e/regression/` | `tests/e2e/smoke/` |
 | Question it answers | Did this change break anything? | Is the live site up and working? |
 | Target | The local production build, with mocked APIs | selenium-automation.com and its real API |
-| Size | Everything: 312 tests on desktop and five phones | Quick and read-only: 64 tests on desktop and two phones |
+| Size | Everything: 378 tests on desktop and five phones | Quick and read-only: 65 tests on desktop and two phones |
 | Runs | Every push and pull request (required to merge) | Daily, and after each deploy |
 | Command | `npm run test:regression` | `npm run test:smoke` |
 
 Shared code for both is in `tests/e2e/support/`: the content fixtures, the list of pages and the
 GitHub job-summary reporter. Every command for running them, locally or in CI, is in
 [tests/README.md](../tests/README.md).
+
+## Negative tests
+
+Negative tests check that the site fails safely: bad input is rejected, a failing API doesn't
+break a page, and nothing is sent or stored by mistake. They're tagged `negative` in every layer,
+so they run with their own suite and can also be run on their own (commands in
+[tests/README.md](../tests/README.md#negative-tests)).
+
+| Layer | Tag | What they check |
+|---|---|---|
+| Unit (Vitest) | `tags: ['negative']` | Contact form: 400, 429 and 500 responses, network failure, whitespace-only fields, retrying after an error, the hidden spam trap. Page content: falling back to the bundled copy when the API errors, times out, returns 404, non-JSON, an empty body or the wrong shape |
+| API (JUnit) | `@Tag("negative")` | Contact API: missing, blank, invalid and over-length fields; an empty object; malformed JSON, arrays, strings and truncated bodies; non-JSON content type (415); wrong method (405); unknown paths (404); internal errors hidden as `internal_error`; spam-trap submissions dropped; a failed save reported, a failed email not losing the message. Content API: unknown, wrongly cased and nested pages (404); writes rejected (405) |
+| Regression (Playwright) | `@negative` | Contact form: required fields, invalid email, fields stopping at their length limits, 400, 429 and 500 responses, network failure, a double click sending once, the spam trap. Content: falling back when the API fails, returns 404, non-JSON or the wrong shape, or drops the connection. Navigation: unknown, nested, wrongly cased and script-like paths redirecting home |
+| Smoke (Playwright, live) | `@negative` | Invalid input (400), malformed JSON (400), non-JSON body (415), wrong method (405), unknown API path and content page (404, answered as JSON), and an empty contact form blocked in the browser |
+| Postman (live) | | Invalid input, malformed JSON, non-JSON body, wrong method, unknown path and page |
+| JMeter (live) | | Every run sends an invalid contact form and expects it rejected with 400 |
 
 ## When tests run
 
@@ -210,7 +226,8 @@ form or sends an email.
 - **Phones:** the Pixel 7 and iPhone 15 run the page and phone-layout checks only. The API-only
   checks stay on desktop, so the API's limit of 2 requests per second isn't hit three times over.
 - **Postman** (`tests/api/AboutShane-API.postman_collection.json`): health, invalid input, malformed
-  JSON and unknown-path checks for the API. Run it by hand in Postman or Newman; it isn't in CI.
+  JSON, unsupported content type, wrong method and unknown-path checks for the API. Run it with
+  `npm run test:api` (Newman) or in the Postman app; it isn't in CI.
 - **Runs:** daily workflow, and after each deploy.
 
 ```bash

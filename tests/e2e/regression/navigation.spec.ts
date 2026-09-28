@@ -23,10 +23,13 @@ test.describe('navigation', () => {
     });
   }
 
-  test('unknown paths redirect to the home page', async ({ page }) => {
-    await page.goto('/this-page-does-not-exist');
-    await expect(page).toHaveURL('/home');
-  });
+  for (const path of ['/this-page-does-not-exist', '/resume/not-a-page', '/Contact-us', '/%3Cscript%3E']) {
+    test(`unknown path ${path} redirects to the home page`, { tag: '@negative' }, async ({ page }) => {
+      await page.goto(path);
+      await expect(page).toHaveURL('/home');
+      await expect(page.getByRole('heading', { level: 1 })).toHaveText('Shane James Sweeney');
+    });
+  }
 
   test('pages load without console errors', async ({ page }) => {
     const errors: string[] = [];

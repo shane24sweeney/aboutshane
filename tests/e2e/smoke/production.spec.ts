@@ -26,7 +26,7 @@ test.describe('production smoke', () => {
     expect(await response.json()).toEqual({ status: 'ok' });
   });
 
-  test('contact API validates input without sending anything', async ({ request }) => {
+  test('contact API validates input without sending anything', { tag: '@negative' }, async ({ request }) => {
     const response = await request.post('/api/contact', {
       data: { name: '', email: 'not-an-email', message: '', website: '' },
     });
@@ -58,9 +58,29 @@ test.describe('production smoke', () => {
     await expect(page.getByRole('button', { name: /FIFTH THIRD BANK/ })).toBeVisible();
   });
 
-  test('unknown API paths return 404 instead of the web page', async ({ request }) => {
+  test('unknown API paths return 404 instead of the web page', { tag: '@negative' }, async ({ request }) => {
     const response = await request.get('/api/does-not-exist');
     expect(response.status()).toBe(404);
     expect(response.headers()['content-type']).toContain('application/json');
+  });
+
+  // One test, in sequence, to stay well inside the API's 2 requests/second limit.
+  test('the API rejects malformed, unsupported and unknown requests', { tag: '@negative' }, async ({ request }) => {
+    const malformed = await request.post('/api/contact', {
+      headers: { 'Content-Type': 'application/json' },
+      data: '{not json',
+    });
+    expect(malformed.status()).toBe(400);
+    expect((await malformed.json()).error).toBe('malformed_request');
+
+    const notJson = await request.post('/api/contact', { headers: { 'Content-Type': 'text/plain' }, data: 'name=Jane' });
+    expect(notJson.status()).toBe(415);
+
+    const wrongMethod = await request.get('/api/contact');
+    expect(wrongMethod.status()).toBe(405);
+
+    const unknownPage = await request.get('/api/content/secrets');
+    expect(unknownPage.status()).toBe(404);
+    expect(unknownPage.headers()['content-type']).toContain('application/json');
   });
 });
