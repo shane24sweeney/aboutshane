@@ -29,8 +29,13 @@ class ContactServiceTest {
 
     @Test
     void storesThenNotifies() {
-        service.submit(new ContactRequest("  Jane Doe ", " jane@example.com", " Hello\n", ""));
+        // given a message with stray whitespace and an empty honeypot
+        ContactRequest request = new ContactRequest("  Jane Doe ", " jane@example.com", " Hello\n", "");
 
+        // when it is submitted
+        service.submit(request);
+
+        // then it is saved, then the owner is notified, with the whitespace trimmed
         InOrder order = inOrder(repository, notifier);
         ArgumentCaptor<ContactMessage> saved = ArgumentCaptor.forClass(ContactMessage.class);
         order.verify(repository).save(saved.capture());
@@ -47,16 +52,23 @@ class ContactServiceTest {
     @Tag("negative")
     @Test
     void dropsHoneypotSubmissionsSilently() {
-        service.submit(new ContactRequest("Bot", "bot@example.com", "Buy now", "https://spam.example"));
+        // given a submission with the hidden honeypot field filled in, as bots do
+        ContactRequest request = new ContactRequest("Bot", "bot@example.com", "Buy now", "https://spam.example");
 
+        // when it is submitted
+        service.submit(request);
+
+        // then nothing is stored and nobody is emailed
         verifyNoInteractions(repository, notifier);
     }
 
     @Tag("negative")
     @Test
     void aFailedNotificationDoesNotLoseTheMessage() {
+        // given the email service is down
         doThrow(new RuntimeException("SES unavailable")).when(notifier).notify(any());
 
+        // when a message is submitted, then it succeeds and the message is still saved
         assertThatCode(() -> service.submit(new ContactRequest("Jane", "jane@example.com", "Hi", null)))
                 .doesNotThrowAnyException();
         verify(repository).save(any());
@@ -65,8 +77,10 @@ class ContactServiceTest {
     @Tag("negative")
     @Test
     void aFailedSaveIsReported() {
+        // given the database is down
         doThrow(new RuntimeException("DynamoDB unavailable")).when(repository).save(any());
 
+        // when a message is submitted, then the failure is reported and nobody is emailed
         assertThatThrownBy(() -> service.submit(new ContactRequest("Jane", "jane@example.com", "Hi", null)))
                 .hasMessage("DynamoDB unavailable");
         verifyNoInteractions(notifier);

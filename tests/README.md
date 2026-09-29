@@ -118,6 +118,26 @@ In CI the regression job runs `npm run test:regression` and the smoke job runs `
 the same commands as above, with `CI=1` (2 retries, 2 workers). To reproduce a CI run locally,
 prefix the command with `CI=1`.
 
+## Writing tests: Given, When, Then
+
+Every test except the unit tests is written as Given (the starting state), When (what the visitor
+or client does) and Then (what should happen), with And for extra checks.
+
+- **Playwright** (`e2e/`): use the steps in [e2e/support/steps.ts](e2e/support/steps.ts). Each
+  one is a named step, so the HTML report, the trace viewer and CI logs show the test as a
+  readable scenario, and a failure points at the step it happened in:
+
+  ```ts
+  await given('the contact API is rate limiting (429)', () => page.route('**/api/contact', (route) => route.fulfill({ status: 429 })));
+  await when('the visitor submits a message', () => submit.click());
+  await then('they are asked to try again later', () => expect(page.getByRole('alert')).toContainText('Too many messages'));
+  ```
+
+  A Given shared by every test in a file goes in its `beforeEach`.
+- **JUnit** (`backend/src/test/`) and **Appium** (`appium/`): mark each part with a comment,
+  `// given …`, `// when …`, `// then …`.
+- **Unit tests** (`unit/`) keep the usual arrange, act, assert layout.
+
 ## Debug and inspect
 
 | Command | Opens |
