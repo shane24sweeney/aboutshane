@@ -97,4 +97,5 @@ Commands for every other type of test are in [docs/testing.md](docs/testing.md).
 
 ## Deploying
 
-See [infra/README.md](infra/README.md).
+See [infra/README.md](infra/README.md), which also explains
+[how the backend is built and deployed](infra/README.md#how-the-backend-is-built-and-deployed).
