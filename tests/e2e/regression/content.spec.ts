@@ -9,7 +9,7 @@ test.describe('home page', () => {
 
     await given('the visitor opens the home page', () => page.goto('/home'));
     await then('the headline and profile links are shown', async () => {
-      await expect(page.getByText('Senior QE & Automation Consultant')).toBeVisible();
+      await expect(page.getByText('Senior QE & Mobile Automation Consultant')).toBeVisible();
       await expect(linkedIn).toHaveAttribute('href', 'https://linkedin.com/in/shane-sweeney-37a934135');
       await expect(linkedIn).toHaveAttribute('target', '_blank');
       await expect(main.getByRole('link', { name: 'GitHub', exact: true })).toHaveAttribute('href', 'https://github.com/shane24sweeney');
@@ -24,8 +24,8 @@ test.describe('home page', () => {
 
     await given('the home page is open', () => page.goto('/home'));
     await then('it has a title and description for search results', async () => {
-      await expect(page).toHaveTitle('Shane James Sweeney | Senior QE & Automation Consultant');
-      await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /Senior QE and Automation Consultant/);
+      await expect(page).toHaveTitle('Shane James Sweeney | Senior QE & Mobile Automation Consultant');
+      await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /Senior QE and Mobile Automation Consultant/);
     });
     await and('it names a social preview image', async () => {
       ogImage = await page.locator('meta[property="og:image"]').getAttribute('content');
@@ -59,21 +59,22 @@ test.describe('footer', () => {
 });
 
 test.describe('resume page', () => {
-  test('opens the current role, then one role at a time, each with dates and highlights', async ({ page }) => {
+  test('opens the most recent role, then one role at a time, each with dates and highlights', async ({ page }) => {
     const fifthThird = page.getByRole('button', { name: /FIFTH THIRD BANK/ });
     const ameritas = page.getByRole('button', { name: /TECH QA MANAGER - AMERITAS/ });
     const highlights = page.locator('.accordion-collapse.show li');
 
     await given('the visitor opens the resume', () => page.goto('/resume'));
-    await then('the current role is open with its dates and highlights', async () => {
+    await then('the most recent role is open with its dates and highlights', async () => {
       await expect(fifthThird).toHaveAttribute('aria-expanded', 'true');
-      await expect(fifthThird).toContainText('2026 – Present');
+      await expect(fifthThird).toContainText('2026');
+      await expect(fifthThird).not.toContainText('Present');
       await expect(ameritas).toContainText('2023 – 2025');
-      await expect(highlights).toHaveCount(5);
+      await expect(highlights).toHaveCount(8);
       await expect(highlights.first()).toContainText('from 45% to 80%');
     });
     await when('they open an earlier role', () => ameritas.click());
-    await then('that role opens and the current role closes', async () => {
+    await then('that role opens and the most recent role closes', async () => {
       await expect(ameritas).toHaveAttribute('aria-expanded', 'true');
       await expect(fifthThird).toHaveAttribute('aria-expanded', 'false');
     });

@@ -1,39 +1,39 @@
 {
   "name": "Shane James Sweeney",
-  "headline": "Senior QE & Automation Consultant",
-  "meta": "27+ years in quality engineering · Kennesaw, GA",
-  "summaryTitle": "Professional Summary - 27 Years in Quality Engineering",
+  "headline": "Senior QE & Mobile Automation Consultant",
+  "meta": "15+ years in test automation · Kennesaw, GA",
+  "summaryTitle": "Professional Summary",
   "summary": [
-    "Quality engineering professional with **27+ years of experience** spanning software engineering, SQA, test automation, performance engineering, and enterprise quality leadership.",
-    "Proven expertise in **architecting scalable automation frameworks** for web, mobile, API, and backend systems across banking, healthcare, enterprise software, telecommunications, and utility products.",
-    "Experienced in Agile delivery, application modernization, performance testing, CI/CD enablement, technical mentoring, and **cross-functional stakeholder leadership**.",
-    "Combines hands-on engineering depth with strategic quality leadership to improve reliability, delivery speed, and organizational capability."
+    "Quality engineering professional with **15+ years in test automation**, building scalable frameworks for mobile, web, API, and backend systems across banking, insurance, healthcare, and utility products.",
+    "Hands-on **Appium automation of iOS and Android** since 2014 on real devices and simulators/emulators (Perfecto, BrowserStack), alongside WebdriverIO, Playwright, and Selenium.",
+    "Designs **OOP-based Page Object frameworks** in TypeScript, JavaScript, Java, and C#, and integrates them into **CI/CD pipelines** (Jenkins, GitHub Actions, Azure DevOps) with parallel execution, reporting, and environment configuration.",
+    "Combines hands-on engineering depth with quality leadership: former Tech QA Manager, mentor, and early adopter of **AI-assisted testing** with GitHub Copilot and Claude."
   ],
   "strengthsTitle": "Core Strengths - Quality Engineering & Automation",
   "strengths": [
-    "Enterprise Quality Strategy",
+    "Mobile Automation (Appium iOS/Android)",
     "Automation Architecture",
+    "OOP & Design Patterns",
     "Test Strategy Development",
-    "Process Optimization & Improvement",
+    "CI/CD Pipeline Integration",
+    "Parallel Test Execution",
+    "Flaky Test Troubleshooting",
+    "Device & Emulator Management",
     "Performance Engineering",
-    "Risk Governance Frameworks",
-    "Program Management Expertise",
     "Scalability Planning",
-    "Continuous Delivery Enablement",
+    "Process Optimization & Improvement",
     "Stakeholder Alignment",
-    "Regulatory Compliance Oversight",
-    "Change Management",
-    "Organizational Coaching",
     "Talent Development Coaching",
+    "AI-Assisted Testing",
     "Strategic Roadmap Execution"
   ],
-  "highlightsTitle": "Career Highlights - 27-Year Quality Engineering Career",
-  "frameworks": "Designed and implemented automation frameworks in Java, Groovy (GEB/Spock), Playwright, JavaScript, TypeScript, C#, and Selenium, incorporating BDD and TDD practices to enhance test reliability and maintainability.",
+  "highlightsTitle": "Career Highlights",
+  "frameworks": "Designed and implemented automation frameworks in TypeScript, JavaScript, Java, C#, and Groovy (Geb/Spock) with Appium, WebdriverIO, Playwright, and Selenium, incorporating BDD and TDD practices to enhance test reliability and maintainability.",
   "highlights": [
-    { "label": "Automation Impact", "text": "Reduced regression testing time by 60% by automating thousands of test cases." },
+    { "label": "Automation Impact", "text": "Increased automated test coverage from 45% to 80% and cut manual mobile regression from 2 days to 4 hours at Fifth Third Bank." },
     { "label": "Quality Strategy", "text": "Led UI, API, scale, regression, and PDF validation initiatives across all U.S. counties." },
     { "label": "Team Leadership", "text": "Mentored junior and senior QA engineers through coaching and documentation, strengthening automation practices." },
-    { "label": "Delivery & Performance", "text": "Ran automation and performance tests with Jenkins, GitHub Workflows, Postman, Apache JMeter, and BlazeMeter, then presented QA results in sprint demos to stakeholders." },
-    { "label": "Quality Engineering", "text": "Used GitHub Copilot and Claude to accelerate test script development by 40%, while applying SonarQube to improve automation code quality." }
+    { "label": "Delivery & Performance", "text": "Migrated CI from Jenkins to GitHub Actions, cutting regression cycles from 3 days to 6 hours, and ran performance tests with JMeter and BlazeMeter for 10,000+ concurrent users." },
+    { "label": "Quality Engineering", "text": "Used GitHub Copilot and Claude for PR reviews and test scripting, accelerating script development by 30%, with SonarQube enforcing quality gates." }
   ]
 }

@@ -42,7 +42,7 @@ class ContentControllerTest {
         mvc.perform(get("/api/content/profile"))
                 // then it has the name, headline, strengths and highlights
                 .andExpect(jsonPath("$.name").value("Shane James Sweeney"))
-                .andExpect(jsonPath("$.headline").value("Senior QE & Automation Consultant"))
+                .andExpect(jsonPath("$.headline").value("Senior QE & Mobile Automation Consultant"))
                 .andExpect(jsonPath("$.strengths", hasSize(15)))
                 .andExpect(jsonPath("$.highlights", hasSize(5)));
     }
@@ -52,12 +52,12 @@ class ContentControllerTest {
         // given the content API
         // when the resume is requested
         mvc.perform(get("/api/content/resume"))
-                // then it lists all 14 roles, the current one first
+                // then it lists all 14 roles, the most recent first
                 .andExpect(jsonPath("$", hasSize(14)))
                 .andExpect(jsonPath("$[0].company").value("Fifth Third Bank"))
                 .andExpect(jsonPath("$[0].contractVia").value("TEKsystems"))
-                .andExpect(jsonPath("$[0].dates").value("2026 – Present"))
-                .andExpect(jsonPath("$[0].highlights", hasSize(5)))
+                .andExpect(jsonPath("$[0].dates").value("2026"))
+                .andExpect(jsonPath("$[0].highlights", hasSize(8)))
                 .andExpect(jsonPath("$[1].contractVia").doesNotExist());
     }
 
