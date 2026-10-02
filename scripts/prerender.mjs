@@ -53,14 +53,11 @@ const bodies = {
     `<h1>Send me a message.</h1>${intro}<p>The contact form needs JavaScript. You can also reach me on ` +
     `<a href="https://linkedin.com/in/shane-sweeney-37a934135">LinkedIn</a>.</p>`,
 
-  resume: () => {
-    const entries = content('resume');
-    const roles = entries.filter((entry) => !entry.earlier);
-    const earlier = entries.filter((entry) => entry.earlier);
-    return [
+  resume: () =>
+    [
       `<h1>Professional Experience</h1>`,
       intro,
-      ...roles.map((entry) =>
+      ...content('resume').map((entry) =>
         [
           `<h2>${escape(entry.role)} - ${escape(entry.company)}${entry.contractVia ? ` (Contract via ${escape(entry.contractVia)})` : ''}</h2>`,
           entry.dates ? `<p>${escape(entry.dates)}</p>` : '',
@@ -69,13 +66,7 @@ const bodies = {
           entry.highlights.length ? list(entry.highlights.map(escape)) : '',
         ].join(''),
       ),
-      earlier.length
-        ? `<p><strong>Earlier experience:</strong> ${earlier
-            .map(({ role, company, meta }) => escape(meta ? `${role}, ${company} – ${meta}` : `${role}, ${company}`))
-            .join(' • ')}</p>`
-        : '',
-    ].join('');
-  },
+    ].join(''),
 
   testimonials: () =>
     `<h1>Testimonials</h1>` +

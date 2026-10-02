@@ -26,7 +26,7 @@ test.describe('pre-rendered pages', () => {
   test.describe('without JavaScript', () => {
     test.use({ javaScriptEnabled: false });
 
-    test('the resume shows every role, its bullets and the earlier experience', async ({ page }) => {
+    test('the resume shows every role and its bullets', async ({ page }) => {
       await given('a browser with JavaScript turned off', () => {});
       await when('it opens the resume', () => page.goto('/resume'));
       await then('the full resume is readable', async () => {
