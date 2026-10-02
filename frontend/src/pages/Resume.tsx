@@ -20,7 +20,7 @@ function Resume() {
         <PageLoading />
       ) : (
         <div className="resume-card">
-          {/* The current role starts open, so recruiters see recent work without clicking. */}
+          {/* The most recent role starts open, so recruiters see recent work without clicking. */}
           <Accordion defaultActiveKey="0">
             {content.data.map((entry, index) => (
               <Accordion.Item key={`${entry.company}-${entry.role}`} eventKey={String(index)}>
