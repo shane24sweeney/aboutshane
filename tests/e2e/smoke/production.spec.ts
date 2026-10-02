@@ -83,6 +83,18 @@ test.describe('production smoke', () => {
     });
   });
 
+  test('the resume can be read without JavaScript', async ({ request }) => {
+    await given('a resume parser or crawler that does not run JavaScript', () => {});
+    const response = await when('it requests /resume', () => request.get('/resume'));
+    await then('the HTML holds the resume, with the page as its canonical address', async () => {
+      const html = await response.text();
+      expect(response.status()).toBe(200);
+      expect(html).toContain('<h1>Professional Experience</h1>');
+      expect(html).toContain('Fifth Third Bank');
+      expect(html).toContain('<link rel="canonical" href="https://selenium-automation.com/resume" />');
+    });
+  });
+
   test('unknown API paths return 404 instead of the web page', { tag: '@negative' }, async ({ request }) => {
     await given('the live API', () => {});
     const response = await when('a path that does not exist is requested', () => request.get('/api/does-not-exist'));

@@ -61,20 +61,26 @@ Resources:
         SigningBehavior: always
         SigningProtocol: sigv4
 
-  # Serves index.html for client-side routes such as /resume. Unlike custom error responses,
-  # this leaves real 403/404 responses (including API errors) untouched.
+  # Serves each pre-rendered page from <page>/index.html (written by scripts/prerender.mjs, so
+  # tools that don't run JavaScript still get the page's text) and index.html for any other
+  # client-side route. Unlike custom error responses, this leaves real 403/404 responses
+  # (including API errors) untouched.
   SpaRoutingFunction:
     Type: AWS::CloudFront::Function
     Properties:
       Name: !Sub '${ProjectName}-spa-routing'
       AutoPublish: true
       FunctionConfig:
-        Comment: Rewrite extensionless paths to /index.html
+        Comment: Serve pre-rendered pages, and /index.html for other extensionless paths
         Runtime: cloudfront-js-2.0
       FunctionCode: |
+        var PAGES = ['/home', '/about', '/contact', '/resume', '/testimonials', '/education', '/charity'];
         function handler(event) {
           var request = event.request;
-          if (request.uri.indexOf('.') === -1) {
+          var path = request.uri.length > 1 ? request.uri.replace(/\/$/, '') : request.uri;
+          if (PAGES.indexOf(path) !== -1) {
+            request.uri = path + '/index.html';
+          } else if (request.uri.indexOf('.') === -1) {
             request.uri = '/index.html';
           }
           return request;
