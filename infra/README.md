@@ -51,7 +51,11 @@ CLOUDFRONT_DISTRIBUTION_ID=$(aws cloudformation describe-stacks --stack-name abo
 ./infra/deploy-frontend.sh
 ```
 
-The script builds the site, syncs it to S3, and invalidates the CloudFront cache.
+The script builds the site, syncs it to S3, and invalidates the CloudFront cache. The build also runs
+`scripts/prerender.mjs`, which writes `<page>/index.html` for each route with the page's text in
+`<noscript>`, for resume parsers and crawlers that don't run JavaScript. CloudFront's
+`SpaRoutingFunction` serves `/resume` from `resume/index.html`, and any other client-side route from
+`index.html`.
 
 ## After deploying
 
