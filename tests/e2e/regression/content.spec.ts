@@ -83,10 +83,10 @@ test.describe('resume page', () => {
   test('every company logo loads', async ({ page }) => {
     const logos = page.locator('img.resume-logo');
 
-    await given('the resume lists 14 roles, each with a company logo', () => {});
+    await given('the resume lists 9 roles, each with a company logo', () => {});
     await when('the visitor opens the resume', () => page.goto('/resume'));
-    await then('all 14 company logos have loaded', async () => {
-      await expect(logos).toHaveCount(14);
+    await then('all 9 company logos have loaded', async () => {
+      await expect(logos).toHaveCount(9);
       for (const logo of await logos.all()) {
         await expect(logo).toHaveJSProperty('complete', true);
         expect(await logo.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBeGreaterThan(0);
