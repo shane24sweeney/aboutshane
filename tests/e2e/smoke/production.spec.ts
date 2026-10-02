@@ -49,7 +49,7 @@ test.describe('production smoke', () => {
     });
   });
 
-  for (const [api, minimumEntries] of [['resume', 14], ['testimonials', 11], ['education', 3], ['charity', 5]] as const) {
+  for (const [api, minimumEntries] of [['resume', 9], ['testimonials', 11], ['education', 3], ['charity', 5]] as const) {
     test(`content API serves ${api} with edge caching`, async ({ request }) => {
       await given('the live content API', () => {});
       const response = await when(`/api/content/${api} is requested`, () => request.get(`/api/content/${api}`));

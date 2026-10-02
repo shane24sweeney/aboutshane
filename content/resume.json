@@ -90,17 +90,6 @@
   },
   {
     "role": "Senior Automation Test Engineer",
-    "company": "Celtic Testing",
-    "dates": "2017",
-    "highlights": [
-      "Automated Aaron's department store e-commerce and mobile apps in C# with Ranorex.",
-      "Developed multiple TDD projects for new clients in Java and Selenium.",
-      "Integrated automated testing into the e-commerce CI/CD pipeline."
-    ],
-    "logo": "CelticTesting"
-  },
-  {
-    "role": "Senior Automation Test Engineer",
     "company": "Bottomline",
     "dates": "2015 – 2016",
     "summary": "Senior Test Automation Engineer for all Bottomline Healthcare product lines.",
@@ -136,37 +125,5 @@
       "Developed and executed software test plans, test designs, test objectives, and test cases."
     ],
     "logo": "GE"
-  },
-  {
-    "role": "SQA Engineer II",
-    "company": "Itron",
-    "dates": "2008 – 2009",
-    "meta": "Raleigh, NC",
-    "highlights": [],
-    "logo": "Itron"
-  },
-  {
-    "role": "Member of Technical Staff",
-    "company": "XM Satellite Radio",
-    "dates": "2004 – 2008",
-    "meta": "Deerfield Beach, FL",
-    "highlights": [],
-    "logo": "XM"
-  },
-  {
-    "role": "Senior Software Engineer",
-    "company": "Motorola",
-    "dates": "2001 – 2004",
-    "meta": "Boynton Beach, FL",
-    "highlights": [],
-    "logo": "Motorola"
-  },
-  {
-    "role": "Network Subsystem Test",
-    "company": "Alcatel",
-    "dates": "1999 – 2000",
-    "meta": "Cork, Ireland",
-    "highlights": [],
-    "logo": "Alcatel"
   }
 ]
