@@ -27,7 +27,7 @@ The Playwright tests are split into two suites, each in its own folder:
 | Folder | `tests/e2e/regression/` | `tests/e2e/smoke/` |
 | Question it answers | Did this change break anything? | Is the live site up and working? |
 | Target | The local production build, with mocked APIs | selenium-automation.com and its real API |
-| Size | Everything: 378 tests on desktop and five phones | Quick and read-only: 65 tests on desktop and two phones |
+| Size | Everything: 444 tests on desktop and five phones | Quick and read-only: 66 tests on desktop and two phones |
 | Runs | Every push and pull request (required to merge) | Daily, and after each deploy |
 | Command | `npm run test:regression` | `npm run test:smoke` |
 
@@ -117,8 +117,8 @@ the production build. The content API is answered from `content/*.json` by `test
 is mocked, so no email is sent.
 
 - **Covers:** navigation and active links, deep links, unknown paths redirecting home, no console
-  errors, the resume accordion, carousels, content loading and fallback, and the contact form with
-  a mocked API.
+  errors, the resume accordion, carousels, content loading and fallback, the contact form with
+  a mocked API, and the pre-rendered HTML each page serves to clients without JavaScript.
 - **Lives in:** `tests/e2e/regression/`; shared helpers in `tests/e2e/support/`; settings in
   `playwright.config.ts`.
 - **Runs:** CI End-to-end job, on every push and PR, on desktop Chrome and all five phones.

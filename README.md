@@ -3,7 +3,7 @@
 [![CI](https://github.com/shane24sweeney/aboutshane/actions/workflows/ci.yml/badge.svg)](https://github.com/shane24sweeney/aboutshane/actions/workflows/ci.yml)
 [![Production smoke](https://github.com/shane24sweeney/aboutshane/actions/workflows/production-smoke.yml/badge.svg)](https://github.com/shane24sweeney/aboutshane/actions/workflows/production-smoke.yml)
 
-Portfolio site for Shane James Sweeney, Senior QE and Automation Consultant.
+Portfolio site for Shane James Sweeney, Senior QE and Mobile Automation Consultant.
 Live at **[selenium-automation.com](https://selenium-automation.com)**.
 
 The site is small, but it is built and tested the way I build production systems: typed code,
@@ -21,7 +21,8 @@ Browser ──► CloudFront (selenium-automation.com, TLS, security headers)
 
 - **Frontend** (`frontend/`): React 18, TypeScript (strict), Vite, React Router 7, React Bootstrap.
   Pages are lazy-loaded. Page text comes from the content API, with the same `content/*.json`
-  bundled as a fallback.
+  bundled as a fallback. Each page is also pre-rendered at build time with its text in `<noscript>`,
+  so resume parsers and crawlers that don't run JavaScript can read it.
 - **Backend** (`backend/`): Spring Boot 3.5 on Java 21, run on Lambda through
   `aws-serverless-java-container`. `POST /api/contact` validates input, drops honeypot spam,
   stores the message, then emails it. A failed email never loses a message.

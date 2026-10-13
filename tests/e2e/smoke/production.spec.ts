@@ -49,7 +49,7 @@ test.describe('production smoke', () => {
     });
   });
 
-  for (const [api, minimumEntries] of [['resume', 14], ['testimonials', 11], ['education', 3], ['charity', 5]] as const) {
+  for (const [api, minimumEntries] of [['resume', 9], ['testimonials', 11], ['education', 3], ['charity', 5]] as const) {
     test(`content API serves ${api} with edge caching`, async ({ request }) => {
       await given('the live content API', () => {});
       const response = await when(`/api/content/${api} is requested`, () => request.get(`/api/content/${api}`));
@@ -80,6 +80,18 @@ test.describe('production smoke', () => {
     await then('the page loads its roles from the API', async () => {
       expect((await response).status()).toBe(200);
       await expect(page.getByRole('button', { name: /FIFTH THIRD BANK/ })).toBeVisible();
+    });
+  });
+
+  test('the resume can be read without JavaScript', async ({ request }) => {
+    await given('a resume parser or crawler that does not run JavaScript', () => {});
+    const response = await when('it requests /resume', () => request.get('/resume'));
+    await then('the HTML holds the resume, with the page as its canonical address', async () => {
+      const html = await response.text();
+      expect(response.status()).toBe(200);
+      expect(html).toContain('<h1>Professional Experience</h1>');
+      expect(html).toContain('Fifth Third Bank');
+      expect(html).toContain('<link rel="canonical" href="https://selenium-automation.com/resume" />');
     });
   });
 

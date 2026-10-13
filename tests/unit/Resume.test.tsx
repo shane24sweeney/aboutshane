@@ -17,10 +17,11 @@ describe('Resume page', () => {
     render(<Resume />);
     const buttons = await screen.findAllByRole('button');
     buttons.forEach((button, index) => expect(button).toHaveTextContent(resume[index]?.dates ?? 'missing'));
-    expect(buttons[0]).toHaveTextContent('2026 – Present');
+    expect(buttons[0]).toHaveTextContent('2026');
+    expect(buttons[0]).not.toHaveTextContent('Present');
   });
 
-  it('opens the current role with its highlights as a bulleted list', async () => {
+  it('opens the most recent role with its highlights as a bulleted list', async () => {
     render(<Resume />);
     const button = await screen.findByRole('button', { name: /FIFTH THIRD BANK/ });
     expect(button).toHaveAttribute('aria-expanded', 'true');

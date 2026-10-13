@@ -38,12 +38,12 @@ npm run build
 
 | Command | Runs |
 |---|---|
-| `npm run test:regression` | Regression: desktop and all five phones, against the local build (378 tests) |
+| `npm run test:regression` | Regression: desktop and all five phones, against the local build (444 tests) |
 | `npm run test:regression:desktop` | Regression on desktop Chrome only |
 | `npm run test:mobile` | Regression on the five emulated phones |
 | `npm run test:mobile:android` | Regression on the Pixel 7 and Galaxy S24 (Chromium) |
 | `npm run test:mobile:ios` | Regression on the iPhone 15, iPhone SE and iPhone 15 Pro Max (WebKit) |
-| `npm run test:smoke` | Smoke: read-only checks of the live site, desktop plus Pixel 7 and iPhone 15 (65 tests; no build needed) |
+| `npm run test:smoke` | Smoke: read-only checks of the live site, desktop plus Pixel 7 and iPhone 15 (66 tests; no build needed) |
 | `npm run test:e2e` | Regression, then smoke |
 
 Narrow any of them down by adding arguments after `--`:

@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --config frontend/vite.config.ts",
-    "build": "tsc -b && vite build --config frontend/vite.config.ts",
+    "build": "tsc -b && vite build --config frontend/vite.config.ts && node scripts/prerender.mjs",
     "preview": "vite preview --config frontend/vite.config.ts --port 4173",
     "typecheck": "tsc -b",
     "lint": "eslint .",
