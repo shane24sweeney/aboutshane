@@ -69,7 +69,7 @@ test.describe('resume page', () => {
       await expect(fifthThird).toHaveAttribute('aria-expanded', 'true');
       await expect(fifthThird).toContainText('2026');
       await expect(fifthThird).not.toContainText('Present');
-      await expect(ameritas).toContainText('2023 – 2025');
+      await expect(ameritas).toContainText('2022 – 2025');
       await expect(highlights).toHaveCount(8);
       await expect(highlights.first()).toContainText('from 45% to 80%');
     });
@@ -83,10 +83,10 @@ test.describe('resume page', () => {
   test('every company logo loads', async ({ page }) => {
     const logos = page.locator('img.resume-logo');
 
-    await given('the resume lists 9 roles, each with a company logo', () => {});
+    await given('the resume lists 8 roles, each with a company logo', () => {});
     await when('the visitor opens the resume', () => page.goto('/resume'));
-    await then('all 9 company logos have loaded', async () => {
-      await expect(logos).toHaveCount(9);
+    await then('all 8 company logos have loaded', async () => {
+      await expect(logos).toHaveCount(8);
       for (const logo of await logos.all()) {
         await expect(logo).toHaveJSProperty('complete', true);
         expect(await logo.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBeGreaterThan(0);

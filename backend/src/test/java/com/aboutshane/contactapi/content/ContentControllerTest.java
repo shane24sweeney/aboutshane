@@ -52,9 +52,12 @@ class ContentControllerTest {
         // given the content API
         // when the resume is requested
         mvc.perform(get("/api/content/resume"))
-                // then it lists all 9 roles, the most recent first
-                .andExpect(jsonPath("$", hasSize(9)))
-                .andExpect(jsonPath("$[8].company").value("GE"))
+                // then it lists all 8 roles, the most recent first, with Ameritas as one role
+                .andExpect(jsonPath("$", hasSize(8)))
+                .andExpect(jsonPath("$[1].company").value("Ameritas"))
+                .andExpect(jsonPath("$[1].dates").value("2022 – 2025"))
+                .andExpect(jsonPath("$[2].company").value("FIS"))
+                .andExpect(jsonPath("$[7].company").value("GE"))
                 .andExpect(jsonPath("$[0].company").value("Fifth Third Bank"))
                 .andExpect(jsonPath("$[0].contractVia").value("TEKsystems"))
                 .andExpect(jsonPath("$[0].dates").value("2026"))
