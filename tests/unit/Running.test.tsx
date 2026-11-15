@@ -18,6 +18,8 @@ describe('running page', () => {
     );
 
     const table = await screen.findByRole('table', { name: 'Race results' });
+    const { races } = fallbackContent.running;
+    expect(screen.getByText(`${races.length} races · ${races[races.length - 1]!.date.slice(0, 4)} – ${races[0]!.date.slice(0, 4)}`)).toBeInTheDocument();
     const rows = within(table).getAllByRole('row').slice(1);
     expect(rows).toHaveLength(fallbackContent.running.races.length);
 

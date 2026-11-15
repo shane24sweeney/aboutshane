@@ -1,6 +1,9 @@
 {
   "intro": "Official chip-timed race results, newest first.",
-  "profile": { "href": "https://www.athlinks.com/athletes/593706339", "label": "Full results on Athlinks" },
+  "profile": {
+    "href": "https://www.athlinks.com/athletes/593706339",
+    "label": "Full results on Athlinks"
+  },
   "races": [
     {
       "date": "2025-11-27",
@@ -23,14 +26,224 @@
       "finishers": 81
     },
     {
-      "date": "2019-12-01",
-      "event": "Santa Claus Classic",
+      "date": "2019-11-09",
+      "event": "Geek Rush 5K",
+      "location": "Alpharetta, GA",
+      "distance": "5K",
+      "time": "29:06",
+      "pace": "9:21",
+      "place": 45,
+      "finishers": 198
+    },
+    {
+      "date": "2019-05-18",
+      "event": "Three Taverns 5K",
+      "location": "Decatur, GA",
+      "distance": "5K",
+      "time": "30:05",
+      "pace": "9:40",
+      "place": 224,
+      "finishers": 478
+    },
+    {
+      "date": "2019-03-30",
+      "event": "Dirty Spokes Iron Hill Trail Run",
+      "location": "Cartersville, GA",
+      "distance": "7.5 mile trail",
+      "time": "1:16:41",
+      "pace": "10:13",
+      "place": 106,
+      "finishers": 139
+    },
+    {
+      "date": "2019-02-02",
+      "event": "Dirty Spokes Heritage Park Trail Run",
+      "location": "Watkinsville, GA",
+      "distance": "7.5 mile trail",
+      "time": "1:30:56",
+      "pace": "12:07",
+      "place": 131,
+      "finishers": 162
+    },
+    {
+      "date": "2019-01-26",
+      "event": "Callaway Gardens Half Marathon",
       "location": "Pine Mountain, GA",
       "distance": "Half marathon",
       "time": "2:32:17",
       "pace": "11:37",
       "place": 132,
       "finishers": 169
+    },
+    {
+      "date": "2019-01-12",
+      "event": "Hogpen Hill Climb",
+      "location": "Helen, GA",
+      "distance": "18K",
+      "time": "2:32:35",
+      "pace": "13:38",
+      "place": 77,
+      "finishers": 109
+    },
+    {
+      "date": "2019-01-05",
+      "event": "Red Nose Half Marathon",
+      "location": "Columbus, GA",
+      "distance": "Half marathon",
+      "time": "2:30:46",
+      "pace": "11:30",
+      "place": 653,
+      "finishers": 896
+    },
+    {
+      "date": "2018-12-08",
+      "event": "Carpet Capital 10 Miler",
+      "location": "Varnell, GA",
+      "distance": "10 miles",
+      "time": "1:44:54",
+      "pace": "10:29",
+      "place": 76,
+      "finishers": 105
+    },
+    {
+      "date": "2018-10-27",
+      "event": "Race for Rest 5K",
+      "location": "Atlanta, GA",
+      "distance": "5K",
+      "time": "31:02",
+      "pace": "9:59",
+      "place": 193,
+      "finishers": 455
+    },
+    {
+      "date": "2018-05-26",
+      "event": "Downhill@Dawn Half Marathon",
+      "location": "Ridgecrest, NC",
+      "distance": "Half marathon",
+      "time": "2:13:07",
+      "pace": "10:09",
+      "place": 273,
+      "finishers": 523
+    },
+    {
+      "date": "2017-01-14",
+      "event": "Hogpen Hill Climb",
+      "location": "Helen, GA",
+      "distance": "18K",
+      "time": "2:37:43",
+      "pace": "14:06",
+      "place": 77,
+      "finishers": 86
+    },
+    {
+      "date": "2016-05-21",
+      "event": "Run Sunset Beach Half Marathon",
+      "location": "Sunset Beach, NC",
+      "distance": "Half marathon",
+      "time": "2:27:30",
+      "pace": "11:15",
+      "place": 338,
+      "finishers": 568
+    },
+    {
+      "date": "2016-01-09",
+      "event": "Hogpen Hill Climb",
+      "location": "Helen, GA",
+      "distance": "18K",
+      "time": "2:24:54",
+      "pace": "12:57",
+      "place": 124,
+      "finishers": 149
+    },
+    {
+      "date": "2015-12-12",
+      "event": "Carpet Capital 10 Miler",
+      "location": "Dalton, GA",
+      "distance": "10 miles",
+      "time": "1:46:24",
+      "pace": "10:38",
+      "place": 75,
+      "finishers": 101
+    },
+    {
+      "date": "2015-01-10",
+      "event": "Hogpen Hill Climb",
+      "location": "Helen, GA",
+      "distance": "18K",
+      "time": "2:25:38",
+      "pace": "13:01",
+      "place": 155,
+      "finishers": 179
+    },
+    {
+      "date": "2014-12-13",
+      "event": "Carpet Capital 10 Miler",
+      "location": "Dalton, GA",
+      "distance": "10 miles",
+      "time": "1:30:12",
+      "pace": "9:01",
+      "place": 58,
+      "finishers": 116
+    },
+    {
+      "date": "2012-05-12",
+      "event": "Twisted Ankle Trail Half Marathon",
+      "location": "Summerville, GA",
+      "distance": "Half marathon (trail)",
+      "time": "2:13:14",
+      "pace": "10:10",
+      "place": 11,
+      "finishers": 114
+    },
+    {
+      "date": "2011-12-10",
+      "event": "Carpet Capital 10 Miler",
+      "location": "Dalton, GA",
+      "distance": "10 miles",
+      "time": "1:34:07",
+      "pace": "9:24",
+      "place": 136,
+      "finishers": 212
+    },
+    {
+      "date": "2011-01-15",
+      "event": "Hogpen Hill Climb",
+      "location": "Helen, GA",
+      "distance": "17K",
+      "time": "2:11:04",
+      "pace": "12:24",
+      "place": 186,
+      "finishers": 238
+    },
+    {
+      "date": "2010-05-23",
+      "event": "Warrior Dash Southeast",
+      "location": "Mountain City, GA",
+      "distance": "Obstacle run (3.2 mi)",
+      "time": "25:37",
+      "pace": "7:57",
+      "place": 1517,
+      "finishers": 5281
+    },
+    {
+      "date": "2009-12-12",
+      "event": "Carpet Capital 10 Miler",
+      "location": "Dalton, GA",
+      "distance": "10 miles",
+      "time": "1:33:59",
+      "pace": "9:23",
+      "place": 112,
+      "finishers": 162
+    },
+    {
+      "date": "2009-06-13",
+      "event": "Komen NC Triangle Race for the Cure",
+      "location": "Raleigh, NC",
+      "distance": "5K",
+      "time": "28:12",
+      "pace": "9:04",
+      "place": 1090,
+      "finishers": 2623
     }
   ]
 }

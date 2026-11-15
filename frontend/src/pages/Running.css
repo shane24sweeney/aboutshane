@@ -13,6 +13,13 @@
   text-align: center;
 }
 
+.running-summary {
+  margin: 0 auto 6px;
+  color: var(--site-text);
+  font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+  font-weight: 700;
+}
+
 .running-intro {
   margin: 0 auto 20px;
   color: var(--site-text-muted);

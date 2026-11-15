@@ -5,6 +5,15 @@ import { formatRaceDate } from '../content/raceDate';
 import { usePageContent } from '../hooks/usePageContent';
 import './Running.css';
 
+/** "24 races · 2009 – 2025", from the newest-first race list. */
+function raceSummary(races: { date: string }[]) {
+  if (races.length === 0) return '';
+  const newest = races[0]!.date.slice(0, 4);
+  const oldest = races[races.length - 1]!.date.slice(0, 4);
+  const years = newest === oldest ? newest : `${oldest} – ${newest}`;
+  return `${races.length} ${races.length === 1 ? 'race' : 'races'} · ${years}`;
+}
+
 function Running() {
   const content = usePageContent('running');
 
@@ -15,6 +24,7 @@ function Running() {
         <PageLoading />
       ) : (
         <div className="carousel-card running-card">
+          <p className="running-summary">{raceSummary(content.data.races)}</p>
           <p className="running-intro">{content.data.intro}</p>
           <Table className="running-table" aria-label="Race results">
             <thead>

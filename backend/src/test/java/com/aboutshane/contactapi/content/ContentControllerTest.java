@@ -83,7 +83,7 @@ class ContentControllerTest {
         mvc.perform(get("/api/content/running"))
                 // then it links the Athlinks profile and lists every race, the most recent first
                 .andExpect(jsonPath("$.profile.href").value("https://www.athlinks.com/athletes/593706339"))
-                .andExpect(jsonPath("$.races", hasSize(3)))
+                .andExpect(jsonPath("$.races", hasSize(24)))
                 .andExpect(jsonPath("$.races[0].event").value("Blue Ridge Turkey Trot"))
                 .andExpect(jsonPath("$.races[0].date").value("2025-11-27"))
                 .andExpect(jsonPath("$.races[0].place").value(645))
