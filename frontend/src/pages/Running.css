@@ -1,0 +1,137 @@
+.running-page h1 {
+  margin: 0 0 18px;
+  color: var(--site-title-accent);
+  font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+  font-weight: 700;
+  text-align: center;
+}
+
+.running-card {
+  width: min(100%, 960px);
+  min-height: 0;
+  padding: 28px clamp(14px, 4vw, 40px) 32px;
+  text-align: center;
+}
+
+.running-intro {
+  margin: 0 auto 20px;
+  color: var(--site-text-muted);
+  font-size: clamp(1rem, 2vw, 1.1rem);
+}
+
+.running-table {
+  --bs-table-bg: transparent;
+  --bs-table-color: var(--site-text);
+  --bs-table-border-color: var(--site-border);
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.running-table th {
+  color: var(--site-accent);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.running-table td {
+  vertical-align: middle;
+}
+
+.running-date,
+.running-time {
+  white-space: nowrap;
+}
+
+.running-time {
+  color: var(--site-title-accent);
+  font-weight: 700;
+}
+
+.running-event {
+  display: block;
+  font-weight: 700;
+}
+
+.running-location {
+  display: block;
+  color: var(--site-text-muted);
+  font-size: 0.9rem;
+}
+
+.running-profile.btn {
+  padding: 10px 18px;
+  border: 1px solid var(--site-accent);
+  background: var(--site-accent);
+  color: #14221f;
+  font-weight: 700;
+  box-shadow: 0 8px 18px rgba(121, 210, 192, 0.18);
+}
+
+.running-profile.btn:hover,
+.running-profile.btn:focus-visible {
+  border-color: var(--site-accent-strong);
+  background: var(--site-accent-strong);
+  color: #14221f;
+}
+
+/* Phones: each race becomes a card, with the column name shown beside each value. */
+@media (max-width: 640px) {
+  .running-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .running-table,
+  .running-table tbody,
+  .running-table tr,
+  .running-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .running-table tr {
+    margin-bottom: 14px;
+    padding: 12px 14px;
+    border: 1px solid var(--site-border);
+    border-radius: 10px;
+    background: var(--site-surface-raised);
+  }
+
+  .running-table td {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 4px 0;
+    border: 0;
+    text-align: right;
+  }
+
+  .running-table td::before {
+    content: attr(data-label);
+    color: var(--site-accent);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-align: left;
+    text-transform: uppercase;
+  }
+
+  .running-table td.running-race {
+    display: block;
+    margin-bottom: 4px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--site-border);
+    text-align: left;
+  }
+
+  .running-table td.running-race::before {
+    content: none;
+  }
+}

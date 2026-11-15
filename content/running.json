@@ -1,0 +1,36 @@
+{
+  "intro": "Official chip-timed race results, newest first.",
+  "profile": { "href": "https://www.athlinks.com/athletes/593706339", "label": "Full results on Athlinks" },
+  "races": [
+    {
+      "date": "2025-11-27",
+      "event": "Blue Ridge Turkey Trot",
+      "location": "Blue Ridge, GA",
+      "distance": "5K",
+      "time": "34:42",
+      "pace": "11:10",
+      "place": 645,
+      "finishers": 1326
+    },
+    {
+      "date": "2022-12-10",
+      "event": "Carpet Capital 10 Miler",
+      "location": "Dalton, GA",
+      "distance": "10 miles",
+      "time": "1:53:27",
+      "pace": "11:20",
+      "place": 71,
+      "finishers": 81
+    },
+    {
+      "date": "2019-12-01",
+      "event": "Santa Claus Classic",
+      "location": "Pine Mountain, GA",
+      "distance": "Half marathon",
+      "time": "2:32:17",
+      "pace": "11:37",
+      "place": 132,
+      "finishers": 169
+    }
+  ]
+}

@@ -17,7 +17,7 @@ const build = new URL('frontend/build/', root);
 const SITE = 'https://selenium-automation.com';
 
 /** The routes the app serves; keep in step with App.tsx and the routing rules above. */
-export const PAGES = ['home', 'about', 'contact', 'resume', 'testimonials', 'education', 'charity'];
+export const PAGES = ['home', 'about', 'contact', 'resume', 'testimonials', 'education', 'charity', 'running'];
 
 const content = (name) => JSON.parse(readFileSync(new URL(`content/${name}.json`, root), 'utf8'));
 
@@ -83,6 +83,21 @@ const bodies = {
         link ? `${escape(title)} (<a href="${escape(link.href)}">${escape(link.label)}</a>)` : escape(title),
       ),
     )}`,
+
+  running: () => {
+    const { intro: runningIntro, profile: athlinks, races } = content('running');
+    return (
+      `<h1>Running</h1><p>${escape(runningIntro)}</p>` +
+      list(
+        races.map(
+          ({ date, event, location, distance, time, pace, place, finishers }) =>
+            `${escape(date)}: ${escape(event)}, ${escape(location)}. ${escape(distance)} in ${escape(time)} ` +
+            `(${escape(pace)} /mi), ${place} of ${finishers} overall`,
+        ),
+      ) +
+      `<p><a href="${escape(athlinks.href)}">${escape(athlinks.label)}</a></p>`
+    );
+  },
 };
 
 const template = readFileSync(new URL('index.html', build), 'utf8');

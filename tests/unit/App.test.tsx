@@ -19,6 +19,7 @@ describe('routing', () => {
     ['/testimonials', 'Testimonials'],
     ['/education', 'Education'],
     ['/charity', 'Charity Work'],
+    ['/running', 'Running'],
   ])('%s renders a single page heading "%s"', async (path, heading) => {
     renderAt(path);
     expect(await screen.findByRole('heading', { level: 1, name: heading })).toBeInTheDocument();
@@ -38,7 +39,7 @@ describe('routing', () => {
   });
 
   it('gives every image alt text', async () => {
-    for (const path of ['/home', '/about', '/resume', '/testimonials', '/education', '/charity']) {
+    for (const path of ['/home', '/about', '/resume', '/testimonials', '/education', '/charity', '/running']) {
       const { unmount } = renderAt(path);
       await screen.findByRole('heading', { level: 1 });
       for (const image of document.querySelectorAll('img')) {

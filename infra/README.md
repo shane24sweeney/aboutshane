@@ -107,7 +107,7 @@ tests exercise the same controllers with MockMvc.
 |---|---|
 | `GET /api/health` | Returns `{"status":"ok"}` |
 | `POST /api/contact` | Validates the message, drops honeypot spam, saves it to DynamoDB, then emails it. A failed email never loses a saved message |
-| `GET /api/content/{profile,about,resume,testimonials,education,charity}` | Page text as JSON, cacheable for 5 minutes |
+| `GET /api/content/{profile,about,resume,testimonials,education,charity,running}` | Page text as JSON, cacheable for 5 minutes |
 
 ### 4. See what was created
 

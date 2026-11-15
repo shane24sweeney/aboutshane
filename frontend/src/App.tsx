@@ -9,6 +9,7 @@ const Charity = lazy(() => import('./pages/Charity'));
 const Contact = lazy(() => import('./pages/Contact'));
 const Education = lazy(() => import('./pages/Education'));
 const Resume = lazy(() => import('./pages/Resume'));
+const Running = lazy(() => import('./pages/Running'));
 const Testimonials = lazy(() => import('./pages/Testimonials'));
 
 /** Routes and layout; the router itself is supplied by the caller so tests can use a MemoryRouter. */
@@ -28,6 +29,7 @@ function App() {
               <Route path="/testimonials" element={<Testimonials />} />
               <Route path="/education" element={<Education />} />
               <Route path="/charity" element={<Charity />} />
+              <Route path="/running" element={<Running />} />
               <Route path="*" element={<Navigate to="/home" replace />} />
             </Routes>
           </Suspense>

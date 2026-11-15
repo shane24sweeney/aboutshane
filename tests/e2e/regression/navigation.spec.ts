@@ -1,5 +1,5 @@
 import { expect, test } from '../support/fixtures';
-import { pages } from '../support/pages';
+import { allPages, pages } from '../support/pages';
 import { given, then, when } from '../support/steps';
 
 test.describe('navigation', () => {
@@ -19,7 +19,7 @@ test.describe('navigation', () => {
     }
   });
 
-  for (const { path, heading } of pages) {
+  for (const { path, heading } of allPages) {
     test(`deep link ${path} loads directly`, async ({ page }) => {
       await given('a visitor has a link to the page', () => {});
       await when(`they open ${path} directly`, () => page.goto(path));
@@ -49,7 +49,7 @@ test.describe('navigation', () => {
       page.on('pageerror', (error) => errors.push(error.message));
     });
     await when('the visitor opens every page', async () => {
-      for (const { path } of pages) {
+      for (const { path } of allPages) {
         await page.goto(path);
         await page.waitForLoadState('networkidle');
       }

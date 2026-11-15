@@ -14,6 +14,11 @@ const looksValid: { [P in ContentPage]: (value: unknown) => boolean } = {
   testimonials: (value) => Array.isArray(value) && value.every((entry) => isObject(entry) && typeof entry.name === 'string'),
   education: (value) => Array.isArray(value) && value.every((entry) => isObject(entry) && typeof entry.degree === 'string'),
   charity: (value) => Array.isArray(value) && value.every((entry) => isObject(entry) && typeof entry.title === 'string'),
+  running: (value) =>
+    isObject(value) &&
+    isObject(value.profile) &&
+    Array.isArray(value.races) &&
+    value.races.every((race) => isObject(race) && typeof race.event === 'string' && typeof race.place === 'number'),
 };
 
 export async function fetchContent<P extends ContentPage>(page: P, signal: AbortSignal): Promise<ContentByPage[P]> {

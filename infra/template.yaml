@@ -74,7 +74,7 @@ Resources:
         Comment: Serve pre-rendered pages, and /index.html for other extensionless paths
         Runtime: cloudfront-js-2.0
       FunctionCode: |
-        var PAGES = ['/home', '/about', '/contact', '/resume', '/testimonials', '/education', '/charity'];
+        var PAGES = ['/home', '/about', '/contact', '/resume', '/testimonials', '/education', '/charity', '/running'];
         function handler(event) {
           var request = event.request;
           var path = request.uri.length > 1 ? request.uri.replace(/\/$/, '') : request.uri;

@@ -8,6 +8,7 @@ import com.aboutshane.contactapi.content.SiteContent.CharityEvent;
 import com.aboutshane.contactapi.content.SiteContent.Degree;
 import com.aboutshane.contactapi.content.SiteContent.Profile;
 import com.aboutshane.contactapi.content.SiteContent.ResumeEntry;
+import com.aboutshane.contactapi.content.SiteContent.Running;
 import com.aboutshane.contactapi.content.SiteContent.Testimonial;
 import org.springframework.http.CacheControl;
 import org.springframework.http.ResponseEntity;
@@ -55,6 +56,11 @@ public class ContentController {
     @GetMapping("/charity")
     public ResponseEntity<List<CharityEvent>> charity() {
         return cached(content.charity());
+    }
+
+    @GetMapping("/running")
+    public ResponseEntity<Running> running() {
+        return cached(content.running());
     }
 
     private static <T> ResponseEntity<T> cached(T body) {
