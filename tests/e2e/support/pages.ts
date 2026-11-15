@@ -7,14 +7,5 @@ export const pages = [
   { path: '/testimonials', nav: 'Testimonials', heading: 'Testimonials' },
   { path: '/education', nav: 'Education', heading: 'Education' },
   { path: '/charity', nav: 'Charity Work', heading: 'Charity Work' },
+  { path: '/running', nav: 'Running', heading: 'Running' },
 ] as const;
-
-/**
- * Routes reached from the footer instead of the nav (eight nav icons don't fit a small phone).
- * Kept out of `pages` because the production smoke tests use that list, and these pages may not be
- * deployed yet.
- */
-export const footerPages = [{ path: '/running', footer: 'Running', heading: 'Running' }] as const;
-
-/** Every route, for local checks that don't depend on the nav. */
-export const allPages = [...pages, ...footerPages];
