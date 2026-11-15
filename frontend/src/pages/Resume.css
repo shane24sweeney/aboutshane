@@ -35,6 +35,8 @@
 
 .resume-logo {
   flex: none;
+  box-sizing: border-box;
+  padding: 5px;
   border-radius: 50%;
   object-fit: contain;
   background: white;
