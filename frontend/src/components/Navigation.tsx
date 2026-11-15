@@ -7,6 +7,7 @@ import {
   FaHeart,
   FaHouse,
   FaMedal,
+  FaPersonRunning,
 } from 'react-icons/fa6';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -27,6 +28,7 @@ const navItems: NavItem[] = [
   { to: '/testimonials', label: 'Testimonials', icon: FaMedal },
   { to: '/education', label: 'Education', icon: FaBuildingColumns },
   { to: '/charity', label: 'Charity Work', icon: FaHeart },
+  { to: '/running', label: 'Running', icon: FaPersonRunning },
 ];
 
 function Navigation() {

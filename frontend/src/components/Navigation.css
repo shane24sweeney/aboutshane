@@ -56,6 +56,7 @@
 .site-nav-links .nav-button:nth-child(5) .nav-icon { color: #f2a7d5; }
 .site-nav-links .nav-button:nth-child(6) .nav-icon { color: #b6a1ff; }
 .site-nav-links .nav-button:nth-child(7) .nav-icon { color: #ff8fa3; }
+.site-nav-links .nav-button:nth-child(8) .nav-icon { color: #8fe388; }
 
 .nav-label {
   display: block;
@@ -92,5 +93,26 @@
 
   .nav-label {
     display: none;
+  }
+}
+
+/* Eight icons across the smallest phones (360px): 8 × 44px tap targets need 352px, so the nav
+   runs edge to edge (cancelling .site-shell's 8px phone padding) with no side padding or gaps. */
+@media (max-width: 400px) {
+  .site-nav {
+    width: calc(100% + 16px);
+    margin-right: -8px;
+    margin-left: -8px;
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .site-nav-links {
+    gap: 0;
+  }
+
+  .site-nav-links .nav-link {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
   }
 }
