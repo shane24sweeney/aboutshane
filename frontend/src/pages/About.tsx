@@ -1,21 +1,29 @@
 import Carousel from 'react-bootstrap/Carousel';
 import SiteCarousel from '../components/SiteCarousel';
 import PageLoading from '../components/PageLoading';
+import { formatIsoDate } from '../content/dates';
 import { usePageContent } from '../hooks/usePageContent';
 import './About.css';
 
-// Challenge results first, then workout logs, each in numeric order.
-const photoModules = import.meta.glob<string>('../assets/fitness/*.png', { eager: true, import: 'default' });
+// Activity awards first (newest first), then challenge results, then workout logs, each in numeric
+// order. Award files are named Award<NN>-<yyyy-mm-dd>.webp; the date becomes the alt text.
+const photoModules = import.meta.glob<string>('../assets/fitness/*.{png,webp}', { eager: true, import: 'default' });
+const KIND_ORDER = ['Award', 'Challenge', 'Workout'];
 
 const fitnessPhotos = Object.entries(photoModules)
   .map(([path, src]) => {
-    const [, kind = '', number = '0'] = /\/(Challenge|Workout)(\d+)\.png$/.exec(path) ?? [];
-    return { kind, number: Number(number), src };
+    const [, kind = '', number = '0', date] = /\/(Award|Challenge|Workout)(\d+)(?:-(\d{4}-\d{2}-\d{2}))?\.(?:png|webp)$/.exec(path) ?? [];
+    return { kind, number: Number(number), date, src };
   })
-  .sort((a, b) => a.kind.localeCompare(b.kind) || a.number - b.number)
-  .map(({ kind, number, src }) => ({
+  .sort((a, b) => KIND_ORDER.indexOf(a.kind) - KIND_ORDER.indexOf(b.kind) || a.number - b.number)
+  .map(({ kind, number, date, src }) => ({
     src,
-    alt: kind === 'Challenge' ? `Fitness challenge result ${number}` : `Workout log ${number}`,
+    alt:
+      kind === 'Award' && date
+        ? `Apple Watch activity award, ${formatIsoDate(date)}`
+        : kind === 'Challenge'
+          ? `Fitness challenge result ${number}`
+          : `Workout log ${number}`,
   }));
 
 function About() {

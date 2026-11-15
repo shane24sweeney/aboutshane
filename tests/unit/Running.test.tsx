@@ -2,12 +2,12 @@ import { render, screen, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import App from '../../frontend/src/App';
 import { fallbackContent } from '../../frontend/src/content/fallback';
-import { formatRaceDate } from '../../frontend/src/content/raceDate';
+import { formatIsoDate } from '../../frontend/src/content/dates';
 
 describe('running page', () => {
   it('formats race dates without shifting the day for the visitor time zone', () => {
-    expect(formatRaceDate('2025-11-27')).toBe('Nov 27, 2025');
-    expect(formatRaceDate('2019-12-01')).toBe('Dec 1, 2019');
+    expect(formatIsoDate('2025-11-27')).toBe('Nov 27, 2025');
+    expect(formatIsoDate('2019-12-01')).toBe('Dec 1, 2019');
   });
 
   it('lists every race newest first with its time and overall place', async () => {
