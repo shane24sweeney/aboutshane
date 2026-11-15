@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url';
 import { defineConfig, type Plugin } from 'vite';
 
 /** Pages pre-rendered to <page>/index.html by scripts/prerender.mjs; keep in step with App.tsx. */
-const PAGES = ['home', 'about', 'contact', 'resume', 'testimonials', 'education', 'charity'];
+const PAGES = ['home', 'about', 'contact', 'resume', 'testimonials', 'education', 'charity', 'running'];
 
 /** Serves /resume from resume/index.html in `npm run preview`, as CloudFront's SpaRoutingFunction does. */
 function prerenderedPages(): Plugin {

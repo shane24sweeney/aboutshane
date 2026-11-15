@@ -1,12 +1,12 @@
 import { expect, test } from '../support/fixtures';
-import { pages } from '../support/pages';
+import { allPages } from '../support/pages';
 import { and, given, then, when } from '../support/steps';
 
 // scripts/prerender.mjs writes each page's text into its HTML for tools that don't run JavaScript:
 // resume parsers, recruiter tools and plain crawlers.
 
 test.describe('pre-rendered pages', () => {
-  for (const { path, heading } of pages) {
+  for (const { path, heading } of allPages) {
     test(`${path} has its own HTML with the page's text`, async ({ request }) => {
       await given('a client that reads HTML without running JavaScript', () => {});
       const response = await when(`it requests ${path}`, () => request.get(path));

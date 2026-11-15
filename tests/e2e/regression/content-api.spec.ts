@@ -37,6 +37,20 @@ test.describe('content API', () => {
     }
   });
 
+  test('the footer Running link loads its page from the content API', async ({ page }) => {
+    await given('the visitor is on the contact page, which loads no content', () => page.goto('/contact'));
+
+    const request = page.waitForRequest('**/api/content/running');
+    await when('they click Running in the footer', () =>
+      page.getByRole('contentinfo').getByRole('link', { name: 'Running', exact: true }).click(),
+    );
+    await then('the page is loaded with GET /api/content/running', async () => {
+      expect((await request).method()).toBe('GET');
+      await expect(page).toHaveURL('/running');
+      await expect(page.getByRole('table', { name: 'Race results' })).toBeVisible();
+    });
+  });
+
   test('renders what the API returns', async ({ page }) => {
     const entry = page.getByRole('button', { name: /ROLE SERVED BY THE API/ });
 

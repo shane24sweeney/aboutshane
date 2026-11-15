@@ -1,6 +1,6 @@
 import type { Locator } from '@playwright/test';
 import { expect, test } from '../support/fixtures';
-import { pages } from '../support/pages';
+import { allPages, pages } from '../support/pages';
 import { and, given, then, when } from '../support/steps';
 
 // Phone-layout checks: emulated phones locally and in CI, and real devices on BrowserStack once in use.
@@ -56,7 +56,7 @@ test.describe('phone layout', () => {
     }
   });
 
-  for (const { path, heading } of pages) {
+  for (const { path, heading } of allPages) {
     test(`${path} does not scroll sideways`, async ({ page }) => {
       await when(`the visitor opens ${path}`, async () => {
         await page.goto(path);

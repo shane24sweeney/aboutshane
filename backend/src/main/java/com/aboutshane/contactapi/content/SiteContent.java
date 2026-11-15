@@ -43,5 +43,18 @@ public final class SiteContent {
 
     public record CharityEvent(String title, String image, String alt, Link link) {}
 
+    public record Running(String intro, Link profile, List<RaceResult> races) {}
+
+    /** One official race result. {@code date} is ISO (yyyy-MM-dd); {@code pace} is minutes per mile. */
+    public record RaceResult(
+            String date,
+            String event,
+            String location,
+            String distance,
+            String time,
+            String pace,
+            int place,
+            int finishers) {}
+
     public record Link(String href, String label) {}
 }

@@ -24,7 +24,7 @@ class ContentControllerTest {
     private MockMvc mvc;
 
     @ParameterizedTest
-    @ValueSource(strings = {"profile", "about", "resume", "testimonials", "education", "charity"})
+    @ValueSource(strings = {"profile", "about", "resume", "testimonials", "education", "charity", "running"})
     void everyPageIsServedAsCacheableJson(String page) throws Exception {
         // given the content API
         // when a page is requested
@@ -74,6 +74,20 @@ class ContentControllerTest {
         mvc.perform(get("/api/content/charity"))
                 .andExpect(jsonPath("$", hasSize(5)))
                 .andExpect(jsonPath("$[1].link.href").value("https://www.dogdaysrescue.org/"));
+    }
+
+    @Test
+    void runningListsRaceResultsNewestFirst() throws Exception {
+        // given the content API
+        // when the running page is requested
+        mvc.perform(get("/api/content/running"))
+                // then it links the Athlinks profile and lists every race, the most recent first
+                .andExpect(jsonPath("$.profile.href").value("https://www.athlinks.com/athletes/593706339"))
+                .andExpect(jsonPath("$.races", hasSize(24)))
+                .andExpect(jsonPath("$.races[0].event").value("Blue Ridge Turkey Trot"))
+                .andExpect(jsonPath("$.races[0].date").value("2025-11-27"))
+                .andExpect(jsonPath("$.races[0].place").value(645))
+                .andExpect(jsonPath("$.races[0].finishers").value(1326));
     }
 
     @Tag("negative")

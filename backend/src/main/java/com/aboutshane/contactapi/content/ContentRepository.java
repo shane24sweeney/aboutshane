@@ -10,6 +10,7 @@ import com.aboutshane.contactapi.content.SiteContent.CharityEvent;
 import com.aboutshane.contactapi.content.SiteContent.Degree;
 import com.aboutshane.contactapi.content.SiteContent.Profile;
 import com.aboutshane.contactapi.content.SiteContent.ResumeEntry;
+import com.aboutshane.contactapi.content.SiteContent.Running;
 import com.aboutshane.contactapi.content.SiteContent.Testimonial;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -29,6 +30,7 @@ public class ContentRepository {
     private final List<Testimonial> testimonials;
     private final List<Degree> education;
     private final List<CharityEvent> charity;
+    private final Running running;
 
     public ContentRepository(ObjectMapper objectMapper) {
         ObjectMapper strict = objectMapper.copy().enable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
@@ -38,6 +40,8 @@ public class ContentRepository {
         testimonials = List.copyOf(read(strict, "testimonials", new TypeReference<List<Testimonial>>() {}));
         education = List.copyOf(read(strict, "education", new TypeReference<List<Degree>>() {}));
         charity = List.copyOf(read(strict, "charity", new TypeReference<List<CharityEvent>>() {}));
+        Running runningFile = read(strict, "running", new TypeReference<>() {});
+        running = new Running(runningFile.intro(), runningFile.profile(), List.copyOf(runningFile.races()));
     }
 
     private static <T> T read(ObjectMapper mapper, String name, TypeReference<T> type) {
@@ -70,5 +74,9 @@ public class ContentRepository {
 
     public List<CharityEvent> charity() {
         return charity;
+    }
+
+    public Running running() {
+        return running;
     }
 }

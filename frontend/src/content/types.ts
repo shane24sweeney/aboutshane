@@ -54,6 +54,27 @@ export interface CharityEvent {
   link?: { href: string; label: string };
 }
 
+export interface RaceResult {
+  /** ISO date, e.g. "2025-11-27". */
+  date: string;
+  event: string;
+  location: string;
+  distance: string;
+  /** Chip time, e.g. "34:42" or "1:53:27". */
+  time: string;
+  /** Minutes per mile, e.g. "11:10". */
+  pace: string;
+  place: number;
+  finishers: number;
+}
+
+export interface Running {
+  intro: string;
+  profile: { href: string; label: string };
+  /** Newest first. */
+  races: RaceResult[];
+}
+
 export interface ContentByPage {
   profile: Profile;
   about: About;
@@ -61,6 +82,7 @@ export interface ContentByPage {
   testimonials: Testimonial[];
   education: Degree[];
   charity: CharityEvent[];
+  running: Running;
 }
 
 export type ContentPage = keyof ContentByPage;
