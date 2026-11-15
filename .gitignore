@@ -45,3 +45,7 @@ local.log
 # JMeter
 /tests/jmeter/results
 jmeter.log
+
+# IDE
+.idea/
+.DS_Store
