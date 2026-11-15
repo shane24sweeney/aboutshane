@@ -1,7 +1,7 @@
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import PageLoading from '../components/PageLoading';
-import { formatRaceDate } from '../content/raceDate';
+import { formatIsoDate } from '../content/dates';
 import { usePageContent } from '../hooks/usePageContent';
 import './Running.css';
 
@@ -41,7 +41,7 @@ function Running() {
               {content.data.races.map(({ date, event, location, distance, time, pace, place, finishers }) => (
                 <tr key={`${date}-${event}`}>
                   <td className="running-date" data-label="Date">
-                    <time dateTime={date}>{formatRaceDate(date)}</time>
+                    <time dateTime={date}>{formatIsoDate(date)}</time>
                   </td>
                   <td className="running-race" data-label="Race">
                     <span className="running-event">{event}</span>

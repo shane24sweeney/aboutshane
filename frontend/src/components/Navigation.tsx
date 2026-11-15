@@ -1,13 +1,13 @@
 import type { IconType } from 'react-icons';
 import {
-  FaAddressBook,
-  FaAddressCard,
-  FaBuildingColumns,
-  FaChess,
-  FaHeart,
+  FaBriefcase,
+  FaEnvelope,
+  FaGraduationCap,
+  FaHandHoldingHeart,
   FaHouse,
-  FaMedal,
   FaPersonRunning,
+  FaQuoteLeft,
+  FaUser,
 } from 'react-icons/fa6';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -22,12 +22,12 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   { to: '/home', label: 'Home', icon: FaHouse },
-  { to: '/contact', label: 'Contact', icon: FaAddressCard },
-  { to: '/about', label: 'About', icon: FaChess },
-  { to: '/resume', label: 'Resume', icon: FaAddressBook },
-  { to: '/testimonials', label: 'Testimonials', icon: FaMedal },
-  { to: '/education', label: 'Education', icon: FaBuildingColumns },
-  { to: '/charity', label: 'Charity Work', icon: FaHeart },
+  { to: '/contact', label: 'Contact', icon: FaEnvelope },
+  { to: '/about', label: 'About', icon: FaUser },
+  { to: '/resume', label: 'Resume', icon: FaBriefcase },
+  { to: '/testimonials', label: 'Testimonials', icon: FaQuoteLeft },
+  { to: '/education', label: 'Education', icon: FaGraduationCap },
+  { to: '/charity', label: 'Charity Work', icon: FaHandHoldingHeart },
   { to: '/running', label: 'Running', icon: FaPersonRunning },
 ];
 
