@@ -1,4 +1,4 @@
-import type { ContentByPage, ContentPage } from '../content/types';
+import type { ContentByPage, ContentPage, RunningStats } from '../content/types';
 
 /** Give up on the API after this long and show the bundled copy instead (e.g. during a Lambda cold start). */
 export const CONTENT_TIMEOUT_MS = 2500;
@@ -27,4 +27,23 @@ export async function fetchContent<P extends ContentPage>(page: P, signal: Abort
   const body: unknown = await response.json();
   if (!looksValid[page](body)) throw new Error(`GET /api/content/${page} returned unexpected data`);
   return body as ContentByPage[P];
+}
+
+const looksLikeRunningStats = (value: unknown): value is RunningStats =>
+  isObject(value) &&
+  typeof value.races === 'number' &&
+  typeof value.totalMiles === 'number' &&
+  typeof value.totalTime === 'string' &&
+  Array.isArray(value.personalBests) &&
+  value.personalBests.every(
+    (best) => isObject(best) && typeof best.distance === 'string' && typeof best.time === 'string' && typeof best.event === 'string',
+  );
+
+/** Totals and personal bests for the running page, worked out by the API from the race history. */
+export async function fetchRunningStats(signal: AbortSignal): Promise<RunningStats> {
+  const response = await fetch('/api/content/running/stats', { signal, headers: { Accept: 'application/json' } });
+  if (!response.ok) throw new Error(`GET /api/content/running/stats returned ${response.status}`);
+  const body: unknown = await response.json();
+  if (!looksLikeRunningStats(body)) throw new Error('GET /api/content/running/stats returned unexpected data');
+  return body;
 }

@@ -24,7 +24,7 @@ class ContentControllerTest {
     private MockMvc mvc;
 
     @ParameterizedTest
-    @ValueSource(strings = {"profile", "about", "resume", "testimonials", "education", "charity", "running"})
+    @ValueSource(strings = {"profile", "about", "resume", "testimonials", "education", "charity", "running", "running/stats"})
     void everyPageIsServedAsCacheableJson(String page) throws Exception {
         // given the content API
         // when a page is requested
@@ -88,6 +88,35 @@ class ContentControllerTest {
                 .andExpect(jsonPath("$.races[0].date").value("2025-11-27"))
                 .andExpect(jsonPath("$.races[0].place").value(645))
                 .andExpect(jsonPath("$.races[0].finishers").value(1326));
+    }
+
+    @Test
+    void runningStatsTotalTheRacesAndListPersonalBests() throws Exception {
+        // given the content API
+        // when the running stats are requested
+        mvc.perform(get("/api/content/running/stats"))
+                // then they total all 24 races from 2009 to 2025
+                .andExpect(jsonPath("$.races").value(24))
+                .andExpect(jsonPath("$.firstYear").value(2009))
+                .andExpect(jsonPath("$.lastYear").value(2025))
+                .andExpect(jsonPath("$.totalMiles").value(214.6))
+                .andExpect(jsonPath("$.totalTime").value("39:58:12"))
+                // and list the fastest race at each of the 8 distances, shortest first
+                .andExpect(jsonPath("$.personalBests", hasSize(8)))
+                .andExpect(jsonPath("$.personalBests[0].distance").value("5K"))
+                .andExpect(jsonPath("$.personalBests[0].time").value("28:12"))
+                .andExpect(jsonPath("$.personalBests[0].event").value("Komen NC Triangle Race for the Cure"))
+                .andExpect(jsonPath("$.personalBests[6].distance").value("Half marathon"))
+                .andExpect(jsonPath("$.personalBests[6].time").value("2:13:07"));
+    }
+
+    @Tag("negative")
+    @Test
+    void runningStatsAreReadOnly() throws Exception {
+        // given the content API
+        // when the running stats are posted to or deleted, then the method is not allowed
+        mvc.perform(post("/api/content/running/stats")).andExpect(status().isMethodNotAllowed());
+        mvc.perform(delete("/api/content/running/stats")).andExpect(status().isMethodNotAllowed());
     }
 
     @Tag("negative")
