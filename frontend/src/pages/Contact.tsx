@@ -59,7 +59,7 @@ function Contact() {
       <div className="contact-card">
         <div className="contact-accent" aria-hidden="true" />
         <h1 className="contact-title">Send me a message.</h1>
-        <p className="contact-intro">Let&apos;s talk about quality engineering, automation, or your next project.</p>
+        <p className="contact-intro">Let&apos;s talk about architect, engineering manager, or developer roles across frontend and backend, or charity work supporting dog rescues, dementia care, and cancer research.</p>
 
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="contact-name">
