@@ -1,12 +1,13 @@
 import { readFileSync } from 'node:fs';
 import { test as base } from '@playwright/test';
+import { expectedRunningStats } from './running-stats';
 
 export { expect } from '@playwright/test';
 
 /**
  * The local preview has no backend, so serve the content API from the same content/*.json files the
  * real API is built from. Tests can register their own page.route afterwards to override it
- * (later routes take precedence).
+ * (later routes take precedence). The running stats are worked out by ./running-stats.ts.
  */
 export const test = base.extend({
   page: async ({ page }, use) => {
@@ -19,6 +20,7 @@ export const test = base.extend({
         return route.fulfill({ status: 404, json: { error: 'request_rejected' } });
       }
     });
+    await page.route('**/api/content/running/stats', (route) => route.fulfill({ json: expectedRunningStats() }));
     await use(page);
   },
 });

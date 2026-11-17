@@ -3,6 +3,8 @@ import Table from 'react-bootstrap/Table';
 import PageLoading from '../components/PageLoading';
 import { formatIsoDate } from '../content/dates';
 import { usePageContent } from '../hooks/usePageContent';
+import { useRunningStats } from '../hooks/useRunningStats';
+import type { RunningStats } from '../content/types';
 import './Running.css';
 
 /** "24 races · 2009 – 2025", from the newest-first race list. */
@@ -14,8 +16,32 @@ function raceSummary(races: { date: string }[]) {
   return `${races.length} ${races.length === 1 ? 'race' : 'races'} · ${years}`;
 }
 
+/** Totals and personal bests from GET /api/content/running/stats. */
+function PersonalBests({ stats }: { stats: RunningStats }) {
+  return (
+    <section className="running-stats" aria-labelledby="running-bests-heading">
+      <p className="running-totals">
+        {stats.totalMiles.toLocaleString('en-US')} race miles · {stats.totalTime} racing
+      </p>
+      <h2 id="running-bests-heading">Personal bests</h2>
+      <ul className="running-bests">
+        {stats.personalBests.map(({ distance, time, pace, event, date }) => (
+          <li key={distance}>
+            <span className="running-best-distance">{distance}</span>
+            <span className="running-best-time">{time}</span>
+            <span className="running-best-detail">
+              {pace} /mi · {event}, <time dateTime={date}>{formatIsoDate(date)}</time>
+            </span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
 function Running() {
   const content = usePageContent('running');
+  const stats = useRunningStats();
 
   return (
     <section id="running" className="carousel-page running-page">
@@ -26,6 +52,7 @@ function Running() {
         <div className="carousel-card running-card">
           <p className="running-summary">{raceSummary(content.data.races)}</p>
           <p className="running-intro">{content.data.intro}</p>
+          {stats && stats.personalBests.length > 0 && <PersonalBests stats={stats} />}
           <Table className="running-table" aria-label="Race results">
             <thead>
               <tr>
