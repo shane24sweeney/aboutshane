@@ -111,12 +111,14 @@ test.describe('production API: running', () => {
     });
   });
 
+  // CloudFront only forwards GET and HEAD on the cached /api/content/* paths, so writes are refused
+  // at the edge (403) and never reach the API. The API's own 405 is covered by ContentControllerTest.
   test('the running stats are read-only', { tag: '@negative' }, async ({ request }) => {
     await given('the live stats API', () => {});
     const posted = await when('it is posted to', () => call(() => request.post('/api/content/running/stats', { data: {} })));
-    await then('the method is not allowed (405)', () => expect(posted.status()).toBe(405));
+    await then('CloudFront refuses the write (403)', () => expect(posted.status()).toBe(403));
     const deleted = await when('it is deleted', () => call(() => request.delete('/api/content/running/stats')));
-    await then('the method is not allowed (405)', () => expect(deleted.status()).toBe(405));
+    await then('CloudFront refuses the write (403)', () => expect(deleted.status()).toBe(403));
   });
 
   test('unknown running paths are not found', { tag: '@negative' }, async ({ request }) => {

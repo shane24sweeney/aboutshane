@@ -358,7 +358,7 @@
           "script": {
             "type": "text/javascript",
             "exec": [
-              "pm.test('POST is not allowed (405)', () => pm.response.to.have.status(405));"
+              "pm.test('POST is refused at the CloudFront edge (403)', () => pm.response.to.have.status(403));"
             ]
           }
         }
