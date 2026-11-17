@@ -59,6 +59,7 @@ class ContentRepositoryTest {
             assertThat(race.time()).matches("(\\d{1,2}:)?[0-5]?\\d:[0-5]\\d");
             assertThat(race.pace()).matches("\\d{1,2}:[0-5]\\d");
             assertThat(race.place()).isBetween(1, race.finishers());
+            assertThat(RunningStats.miles(race.distance())).as("miles in \"%s\"", race.distance()).isPositive();
         });
         // and the races are listed newest first
         assertThat(dates).isSortedAccordingTo(Comparator.reverseOrder());

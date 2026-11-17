@@ -75,6 +75,29 @@ export interface Running {
   races: RaceResult[];
 }
 
+/** The fastest race at one distance. */
+export interface PersonalBest {
+  distance: string;
+  miles: number;
+  time: string;
+  pace: string;
+  event: string;
+  /** ISO date, e.g. "2009-06-13". */
+  date: string;
+}
+
+/** GET /api/content/running/stats: totals and personal bests worked out by the API. */
+export interface RunningStats {
+  races: number;
+  firstYear: number;
+  lastYear: number;
+  totalMiles: number;
+  /** h:mm:ss, e.g. "39:58:12". */
+  totalTime: string;
+  /** Shortest distance first. */
+  personalBests: PersonalBest[];
+}
+
 export interface ContentByPage {
   profile: Profile;
   about: About;

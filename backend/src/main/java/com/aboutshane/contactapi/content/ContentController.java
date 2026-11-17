@@ -63,6 +63,12 @@ public class ContentController {
         return cached(content.running());
     }
 
+    /** Race count, years, total miles and time, and the fastest race at each distance. */
+    @GetMapping("/running/stats")
+    public ResponseEntity<RunningStats> runningStats() {
+        return cached(RunningStats.from(content.running().races()));
+    }
+
     private static <T> ResponseEntity<T> cached(T body) {
         return ResponseEntity.ok().cacheControl(CACHE).body(body);
     }

@@ -101,8 +101,9 @@ npm run test:watch   # re-runs on save
 **JUnit 5, MockMvc and Mockito** for the Spring Boot backend.
 
 - **Covers:** contact-form validation and error responses, the honeypot spam trap, saving a
-  message before emailing it (so a failed email never loses one), the content API, the AWS
-  adapters, and that the whole Spring context starts.
+  message before emailing it (so a failed email never loses one), the content API, the running
+  stats (distance and time parsing, totals, personal bests, and malformed input in
+  `RunningStatsTest`), the AWS adapters, and that the whole Spring context starts.
 - **Lives in:** `backend/src/test/java/`.
 - **Runs:** CI Backend job, on every push and PR.
 
@@ -119,6 +120,11 @@ is mocked, so no email is sent.
 - **Covers:** navigation and active links, deep links, unknown paths redirecting home, no console
   errors, the resume accordion, carousels, content loading and fallback, the contact form with
   a mocked API, and the pre-rendered HTML each page serves to clients without JavaScript.
+  `pages.spec.ts` walks every testimonial, degree and charity slide and checks each image loads.
+  `running.spec.ts` checks every race row, the race data itself (order, placing, pace against
+  time and distance), dates in a time zone behind UTC, the personal bests against
+  `tests/e2e/support/running-stats.ts` (the stats worked out independently of the Java API), the
+  page when either running API fails or returns bad data, and the card layout on a 360px phone.
 - **Lives in:** `tests/e2e/regression/`; shared helpers in `tests/e2e/support/`; settings in
   `playwright.config.ts`.
 - **Runs:** CI End-to-end job, on every push and PR, on desktop Chrome and all five phones.
@@ -216,17 +222,23 @@ npx playwright test tests/e2e/regression/accessibility.spec.ts
 ## 6. Smoke tests (live site)
 
 **Playwright and Postman, against the live site.** Quick checks that it's up and working, in
-`tests/e2e/smoke/`. All read-only: nothing submits the contact
-form or sends an email.
+`tests/e2e/smoke/`. All read-only: nothing stores a contact
+message or sends an email.
 
 - **Playwright covers:** every page is up; HTTPS and security headers; API health; the contact API
   rejecting invalid input; each content API responding with edge caching; the resume rendering
   from the live API; and unknown API paths returning 404.
+  `tests/e2e/smoke/production-api.spec.ts` checks the shape of every content page, the running
+  history and stats (compared with stats worked out independently from the live races), the
+  personal bests on the live running page, and the contact API's required fields, length limits
+  and honeypot. The only contact request that passes validation fills in the honeypot, so the API
+  drops it without storing or emailing anything.
   `tests/e2e/smoke/production-buttons.spec.ts` clicks every nav button and checks the request behind it.
 - **Phones:** the Pixel 7 and iPhone 15 run the page and phone-layout checks only. The API-only
   checks stay on desktop, so the API's limit of 2 requests per second isn't hit three times over.
 - **Postman** (`tests/api/AboutShane-API.postman_collection.json`): health, invalid input, malformed
-  JSON, unsupported content type, wrong method and unknown-path checks for the API. Run it with
+  JSON, unsupported content type, wrong method and unknown-path checks for the API, plus the
+  running race history and stats. Run it with
   `npm run test:api` (Newman) or in the Postman app; it isn't in CI.
 - **Runs:** daily workflow, and after each deploy.
 
