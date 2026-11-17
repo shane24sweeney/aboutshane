@@ -10,6 +10,8 @@ describe('about page', () => {
       </MemoryRouter>,
     );
     await screen.findByRole('heading', { level: 1, name: 'About Shane' });
+    // The heading is there while the content is still loading, so wait for the photos themselves.
+    await screen.findAllByAltText(/^Apple Watch activity award/);
 
     const alts = Array.from(document.querySelectorAll('img')).map((image) => image.getAttribute('alt') ?? '');
     const awards = alts.filter((alt) => alt.startsWith('Apple Watch activity award'));
