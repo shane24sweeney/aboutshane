@@ -69,7 +69,7 @@ class ContentControllerTest {
     void otherPagesHaveTheirEntries() throws Exception {
         // given the content API
         // when each list page is requested, then it has all its entries
-        mvc.perform(get("/api/content/testimonials")).andExpect(jsonPath("$", hasSize(11)));
+        mvc.perform(get("/api/content/testimonials")).andExpect(jsonPath("$", hasSize(12)));
         mvc.perform(get("/api/content/education")).andExpect(jsonPath("$", hasSize(3)));
         mvc.perform(get("/api/content/charity"))
                 .andExpect(jsonPath("$", hasSize(5)))
