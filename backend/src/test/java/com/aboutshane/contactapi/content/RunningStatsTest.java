@@ -18,7 +18,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 class RunningStatsTest {
 
     private static RaceResult race(String date, String distance, String time) {
-        return new RaceResult(date, "Race on " + date, "Atlanta, GA", distance, time, "10:00", 1, 10);
+        return new RaceResult(date, "Race on " + date, "Atlanta, GA", 33.7545, -84.3898, distance, time, "10:00", 1, 10);
     }
 
     @ParameterizedTest(name = "\"{0}\" is {1} miles")

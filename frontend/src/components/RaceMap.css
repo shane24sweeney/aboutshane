@@ -1,0 +1,42 @@
+.race-map {
+  height: clamp(260px, 45vw, 400px);
+  margin: 0 auto 24px;
+  border: 1px solid var(--site-border);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--site-surface);
+  /* Below the sticky navigation and Bootstrap overlays. */
+  z-index: 0;
+}
+
+.race-map .race-pin {
+  fill: var(--site-accent);
+  fill-opacity: 0.85;
+  stroke: #14171c;
+  stroke-width: 2;
+}
+
+.race-map .race-pin:hover {
+  fill-opacity: 1;
+}
+
+.race-map .leaflet-popup-content {
+  margin: 10px 14px;
+  color: #14171c;
+  font-size: 0.9rem;
+  text-align: left;
+}
+
+.race-pin-races {
+  margin: 6px 0 0;
+  padding-left: 18px;
+}
+
+.race-pin-races li + li {
+  margin-top: 4px;
+}
+
+.race-pin-detail {
+  display: block;
+  color: #4a5561;
+}

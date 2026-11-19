@@ -289,3 +289,51 @@ test.describe('running page on a narrow phone', () => {
     });
   });
 });
+
+test.describe('running page: race map', () => {
+  const towns = [...new Set(races.map(({ location }) => location))];
+  const map = (page: Page) => page.getByRole('region', { name: /^Map of race locations/ });
+  const pins = (page: Page) => map(page).locator('.race-pin');
+
+  test('shows one pin per town above the results table', async ({ page }) => {
+    await given('the visitor is on the running page', () => page.goto('/running'));
+    await then(`the map has a pin for each of the ${towns.length} towns`, async () => {
+      await expect(map(page)).toHaveAccessibleName(`Map of race locations: ${towns.length} places`);
+      await expect(pins(page)).toHaveCount(towns.length);
+    });
+    await and('it sits above the results table', async () => {
+      const mapBox = (await map(page).boundingBox())!;
+      const tableBox = (await table(page).boundingBox())!;
+      expect(mapBox.y + mapBox.height).toBeLessThanOrEqual(tableBox.y);
+    });
+    await and('it credits OpenStreetMap', () => expect(map(page).getByRole('link', { name: 'OpenStreetMap' })).toBeVisible());
+  });
+
+  test('clicking a pin lists the races run in that town', async ({ page }) => {
+    const town = 'Helen, GA';
+    const inTown = races.filter(({ location }) => location === town);
+
+    await given('the visitor is on the running page', () => page.goto('/running'));
+    await when(`they click the pin for ${town}`, () => map(page).locator(`.race-pin[data-location="${town}"]`).click());
+    await then(`a popup lists all ${inTown.length} races there`, async () => {
+      const popup = map(page).locator('.leaflet-popup-content');
+      await expect(popup).toContainText(town);
+      await expect(popup.getByRole('listitem')).toHaveCount(inTown.length);
+      for (const { event, time } of inTown) {
+        await expect(popup).toContainText(event);
+        await expect(popup).toContainText(time);
+      }
+    });
+  });
+
+  test('leaves the map out when there are no races', { tag: '@negative' }, async ({ page }) => {
+    await given('the race history is empty', () =>
+      page.route('**/api/content/running', (route) => route.fulfill({ json: { ...running, races: [] } })),
+    );
+    await when('the visitor opens the running page', () => page.goto('/running'));
+    await then('the table shows, without a map', async () => {
+      await expect(table(page)).toBeAttached();
+      await expect(map(page)).toHaveCount(0);
+    });
+  });
+});
