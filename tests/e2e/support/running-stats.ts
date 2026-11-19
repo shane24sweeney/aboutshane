@@ -4,7 +4,8 @@ import running from '../../../content/running.json' with { type: 'json' };
  * The running stats worked out independently of the Java API, as a test oracle. The local fixture
  * serves these in place of GET /api/content/running/stats, and tests compare the page against them.
  */
-type Race = (typeof running.races)[number];
+/** The fields the stats are worked out from; the map coordinates play no part. */
+type Race = Omit<(typeof running.races)[number], 'lat' | 'lng'>;
 
 export function raceMiles(distance: string): number {
   const label = distance.toLowerCase();

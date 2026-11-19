@@ -1,6 +1,7 @@
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import PageLoading from '../components/PageLoading';
+import RaceMap from '../components/RaceMap';
 import { formatIsoDate } from '../content/dates';
 import { usePageContent } from '../hooks/usePageContent';
 import { useRunningStats } from '../hooks/useRunningStats';
@@ -53,6 +54,7 @@ function Running() {
           <p className="running-summary">{raceSummary(content.data.races)}</p>
           <p className="running-intro">{content.data.intro}</p>
           {stats && stats.personalBests.length > 0 && <PersonalBests stats={stats} />}
+          <RaceMap races={content.data.races} />
           <Table className="running-table" aria-label="Race results">
             <thead>
               <tr>

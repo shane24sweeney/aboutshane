@@ -66,6 +66,24 @@ class ContentRepositoryTest {
     }
 
     @Test
+    void everyRaceIsPlacedOnTheMapWhereItsTownIs() {
+        // given the content files
+        // when the running page is read
+        var races = content.running().races();
+
+        // then every race has coordinates in the contiguous United States
+        assertThat(races).allSatisfy(race -> {
+            assertThat(race.lat()).as("latitude of %s", race.location()).isBetween(24.0, 50.0);
+            assertThat(race.lng()).as("longitude of %s", race.location()).isBetween(-125.0, -66.0);
+        });
+        // and races in the same town share one pin
+        races.stream().collect(java.util.stream.Collectors.groupingBy(SiteContent.RaceResult::location)).forEach((town, inTown) ->
+                assertThat(inTown).as("coordinates for %s", town)
+                        .extracting(SiteContent.RaceResult::lat, SiteContent.RaceResult::lng)
+                        .containsOnly(org.assertj.core.groups.Tuple.tuple(inTown.get(0).lat(), inTown.get(0).lng())));
+    }
+
+    @Test
     void contentHasNoCopyPasteArtifacts() throws Exception {
         // given every content page
         // when it is written out as text
