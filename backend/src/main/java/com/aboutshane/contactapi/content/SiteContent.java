@@ -45,11 +45,16 @@ public final class SiteContent {
 
     public record Running(String intro, Link profile, List<RaceResult> races) {}
 
-    /** One official race result. {@code date} is ISO (yyyy-MM-dd); {@code pace} is minutes per mile. */
+    /**
+     * One official race result. {@code date} is ISO (yyyy-MM-dd); {@code pace} is minutes per mile;
+     * {@code lat} and {@code lng} place the race's town on the map.
+     */
     public record RaceResult(
             String date,
             String event,
             String location,
+            double lat,
+            double lng,
             String distance,
             String time,
             String pace,

@@ -18,7 +18,14 @@ const looksValid: { [P in ContentPage]: (value: unknown) => boolean } = {
     isObject(value) &&
     isObject(value.profile) &&
     Array.isArray(value.races) &&
-    value.races.every((race) => isObject(race) && typeof race.event === 'string' && typeof race.place === 'number'),
+    value.races.every(
+      (race) =>
+        isObject(race) &&
+        typeof race.event === 'string' &&
+        typeof race.place === 'number' &&
+        typeof race.lat === 'number' &&
+        typeof race.lng === 'number',
+    ),
 };
 
 export async function fetchContent<P extends ContentPage>(page: P, signal: AbortSignal): Promise<ContentByPage[P]> {

@@ -59,6 +59,9 @@ export interface RaceResult {
   date: string;
   event: string;
   location: string;
+  /** Where the race was, for the map; races in the same town share coordinates. */
+  lat: number;
+  lng: number;
   distance: string;
   /** Chip time, e.g. "34:42" or "1:53:27". */
   time: string;
