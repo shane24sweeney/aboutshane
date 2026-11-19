@@ -12,7 +12,9 @@ const looksValid: { [P in ContentPage]: (value: unknown) => boolean } = {
   about: (value) => isObject(value) && typeof value.essay === 'string',
   resume: (value) => Array.isArray(value) && value.every((entry) => isObject(entry) && Array.isArray(entry.highlights)),
   testimonials: (value) => Array.isArray(value) && value.every((entry) => isObject(entry) && typeof entry.name === 'string'),
-  education: (value) => Array.isArray(value) && value.every((entry) => isObject(entry) && typeof entry.degree === 'string'),
+  education: (value) =>
+    Array.isArray(value) &&
+    value.every((entry) => isObject(entry) && typeof entry.degree === 'string' && isObject(entry.campus)),
   charity: (value) => Array.isArray(value) && value.every((entry) => isObject(entry) && typeof entry.title === 'string'),
   running: (value) =>
     isObject(value) &&

@@ -6,7 +6,9 @@ import type { Degree } from '../../frontend/src/content/types';
 import Education from '../../frontend/src/pages/Education';
 import { usePageContent } from '../../frontend/src/hooks/usePageContent';
 
-const apiDegrees: Degree[] = [{ degree: 'Degree served by the API', school: 'API University', logo: 'UCC' }];
+const apiDegrees: Degree[] = [
+  { degree: 'Degree served by the API', school: 'API University', logo: 'UCC', campus: fallbackContent.education[1]!.campus },
+];
 
 function jsonResponse(body: unknown, status = 200) {
   return new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json' } });

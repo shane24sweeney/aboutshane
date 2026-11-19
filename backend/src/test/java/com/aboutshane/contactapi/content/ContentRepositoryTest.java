@@ -46,6 +46,21 @@ class ContentRepositoryTest {
     }
 
     @Test
+    void everyCampusPhotoCarriesTheCreditItsLicenceRequires() {
+        // given the content files
+        // when the education page is read, then each campus photo names its photographer and links its source and licence
+        assertThat(content.education()).allSatisfy(degree -> {
+            var campus = degree.campus();
+            assertThat(campus.image()).isNotBlank();
+            assertThat(campus.alt()).isNotBlank();
+            assertThat(campus.author()).isNotBlank();
+            assertThat(campus.source().href()).startsWith("https://commons.wikimedia.org/wiki/File:");
+            assertThat(campus.license().href()).startsWith("https://creativecommons.org/licenses/");
+            assertThat(campus.license().label()).startsWith("CC ");
+        });
+    }
+
+    @Test
     void everyRaceResultIsCompleteAndNewestFirst() {
         // given the content files
         // when the running page is read
