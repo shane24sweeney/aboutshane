@@ -11,4 +11,5 @@ function byName(files: Glob): Record<string, string> {
 export const logos = byName(import.meta.glob<string>('../assets/logos/*', { eager: true, import: 'default' }));
 export const people = byName(import.meta.glob<string>('../assets/people/*', { eager: true, import: 'default' }));
 export const schoolLogos = byName(import.meta.glob<string>('../assets/education/*', { eager: true, import: 'default' }));
+export const campusPhotos = byName(import.meta.glob<string>('../assets/campus/*', { eager: true, import: 'default' }));
 export const charityImages = byName(import.meta.glob<string>('../assets/charity/*', { eager: true, import: 'default' }));

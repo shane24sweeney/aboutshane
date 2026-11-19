@@ -39,7 +39,10 @@ public final class SiteContent {
 
     public record Testimonial(String name, String title, String photo, String recommendation) {}
 
-    public record Degree(String degree, String school, String logo) {}
+    public record Degree(String degree, String school, String logo, CampusPhoto campus) {}
+
+    /** A licensed campus photo and the credit its licence requires; {@code image} is a frontend key. */
+    public record CampusPhoto(String image, String alt, String author, Link source, Link license) {}
 
     public record CharityEvent(String title, String image, String alt, Link link) {}
 

@@ -1,5 +1,5 @@
 import { fallbackContent } from '../../frontend/src/content/fallback';
-import { charityImages, logos, people, schoolLogos } from '../../frontend/src/content/images';
+import { campusPhotos, charityImages, logos, people, schoolLogos } from '../../frontend/src/content/images';
 
 // The content files and the bundled images must agree, or a page renders a broken image.
 describe('content files', () => {
@@ -16,7 +16,10 @@ describe('content files', () => {
   });
 
   it('every education and charity image key has a bundled image', () => {
-    for (const { logo } of fallbackContent.education) expect(schoolLogos[logo], logo).toBeDefined();
+    for (const { logo, campus } of fallbackContent.education) {
+      expect(schoolLogos[logo], logo).toBeDefined();
+      expect(campusPhotos[campus.image], campus.image).toBeDefined();
+    }
     for (const { image } of fallbackContent.charity) expect(charityImages[image], image).toBeDefined();
   });
 

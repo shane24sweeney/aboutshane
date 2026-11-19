@@ -44,7 +44,19 @@ export interface Testimonial {
 export interface Degree {
   degree: string;
   school: string;
+  /** The school's official logo, from ../assets/education. */
   logo: string;
+  campus: CampusPhoto;
+}
+
+/** A licensed photo of a campus, with the credit its licence requires. */
+export interface CampusPhoto {
+  /** Key of the image in ../assets/campus. */
+  image: string;
+  alt: string;
+  author: string;
+  source: { href: string; label: string };
+  license: { href: string; label: string };
 }
 
 export interface CharityEvent {

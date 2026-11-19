@@ -1,5 +1,56 @@
 [
-  { "degree": "Master's in Computer Science - 2015", "school": "North Carolina State University", "logo": "NCState" },
-  { "degree": "Higher Diploma in Computer Science", "school": "University College Cork", "logo": "UCC" },
-  { "degree": "B.A. Mathematical Studies and Sociology", "school": "University College Cork", "logo": "UCC" }
+  {
+    "degree": "Master's in Computer Science - 2015",
+    "school": "North Carolina State University",
+    "logo": "NCState",
+    "campus": {
+      "image": "NCStateCampus",
+      "alt": "The Memorial Belltower at NC State in spring, Raleigh, NC",
+      "author": "Suzie Tremmel",
+      "source": {
+        "href": "https://commons.wikimedia.org/wiki/File:Belltower_ncsu.jpg",
+        "label": "Wikimedia Commons"
+      },
+      "license": {
+        "href": "https://creativecommons.org/licenses/by/2.0/",
+        "label": "CC BY 2.0"
+      }
+    }
+  },
+  {
+    "degree": "Higher Diploma in Computer Science",
+    "school": "University College Cork",
+    "logo": "UCC",
+    "campus": {
+      "image": "UCCCampus",
+      "alt": "The Main Quadrangle at University College Cork, Cork, Ireland",
+      "author": "Marathon",
+      "source": {
+        "href": "https://commons.wikimedia.org/wiki/File:The_Main_Quadrangle,_University_College,_Cork_-_geograph.org.uk_-_8158359.jpg",
+        "label": "Wikimedia Commons"
+      },
+      "license": {
+        "href": "https://creativecommons.org/licenses/by-sa/2.0/",
+        "label": "CC BY-SA 2.0"
+      }
+    }
+  },
+  {
+    "degree": "B.A. Mathematical Studies and Sociology",
+    "school": "University College Cork",
+    "logo": "UCC",
+    "campus": {
+      "image": "UCCCampus",
+      "alt": "The Main Quadrangle at University College Cork, Cork, Ireland",
+      "author": "Marathon",
+      "source": {
+        "href": "https://commons.wikimedia.org/wiki/File:The_Main_Quadrangle,_University_College,_Cork_-_geograph.org.uk_-_8158359.jpg",
+        "label": "Wikimedia Commons"
+      },
+      "license": {
+        "href": "https://creativecommons.org/licenses/by-sa/2.0/",
+        "label": "CC BY-SA 2.0"
+      }
+    }
+  }
 ]
