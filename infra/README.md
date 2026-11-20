@@ -8,7 +8,8 @@ routes `/api/*` to the API, so the frontend calls it on the same origin.
 
 - AWS CLI signed in to the target account
 - AWS SAM CLI
-- Java 21 and Maven, Node 20+
+- Java 25 and Maven, Node 20+. `sam build` compiles with whichever Java is your default; if that
+  isn't 25, point it there first, e.g. `export JAVA_HOME=/opt/homebrew/opt/openjdk@25` (Homebrew)
 
 ## Deploy the stack
 
@@ -80,7 +81,7 @@ stack to create the Lambda function's IAM role. The backend's resources:
 | `SesRecipientIdentity` | The address that receives messages | Must be verified while SES is in sandbox mode |
 | `BackendLogGroup` | CloudWatch logs for the function | Kept 30 days |
 | IAM role (made by SAM) | What the function may do | Write to the table; send email from the two SES identities only |
-| `BackendFunction` | The Lambda function | Java 21, 1 GB, 30 s timeout; handler `StreamLambdaHandler`; SnapStart on the `live` alias for fast cold starts; table and email settings as environment variables |
+| `BackendFunction` | The Lambda function | Java 25, 1 GB, 30 s timeout; handler `StreamLambdaHandler`; SnapStart on the `live` alias for fast cold starts; table and email settings as environment variables |
 | `BackendApi` | API Gateway HTTP API | Every route goes to the function; 2 requests/second, bursts of 10, then 429 |
 | CloudFront behaviours | How `/api/*` on the site reaches the API | `/api/content/*` cached for 5 minutes; other `/api/*` never cached |
 

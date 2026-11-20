@@ -23,7 +23,7 @@ Browser ──► CloudFront (selenium-automation.com, TLS, security headers)
   Pages are lazy-loaded. Page text comes from the content API, with the same `content/*.json`
   bundled as a fallback. Each page is also pre-rendered at build time with its text in `<noscript>`,
   so resume parsers and crawlers that don't run JavaScript can read it.
-- **Backend** (`backend/`): Spring Boot 3.5 on Java 21, run on Lambda through
+- **Backend** (`backend/`): Spring Boot 3.5 on Java 25, run on Lambda through
   `aws-serverless-java-container`. `POST /api/contact` validates input, drops honeypot spam,
   stores the message, then emails it. A failed email never loses a message.
 - **Infrastructure** (`infra/template.yaml`): one AWS SAM stack for everything above, including
@@ -38,7 +38,7 @@ frontend/         The website: React + TypeScript
   public/         Static files copied into the build (icons, manifest, robots.txt)
   index.html
   vite.config.ts  Dev server and build; output goes to frontend/build
-backend/          The API: Spring Boot on Java 21
+backend/          The API: Spring Boot on Java 25
   src/main/       Contact and content API
   src/test/       API tests (JUnit), kept here because Maven expects them here
 content/          Page text as JSON, shared by the frontend, backend and tests
@@ -83,7 +83,7 @@ and in CI/CD; **[docs/testing.md](docs/testing.md)** explains each type of test,
 
 ## Running locally
 
-Requirements: Node 20+, Java 21, Maven, and the AWS SAM CLI for deployment.
+Requirements: Node 20+, Java 25, Maven, and the AWS SAM CLI for deployment.
 
 ```bash
 npm ci

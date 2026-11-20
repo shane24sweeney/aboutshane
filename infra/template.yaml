@@ -30,7 +30,7 @@ Parameters:
 
 Globals:
   Function:
-    Runtime: java21
+    Runtime: java25
     MemorySize: 1024
     Timeout: 30
 
