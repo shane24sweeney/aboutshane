@@ -47,7 +47,7 @@ function Running() {
   return (
     <section id="running" className="carousel-page running-page">
       <h1>Running</h1>
-      {content.status === 'loading' ? (
+      {content.status === 'loading' || stats === undefined ? (
         <PageLoading />
       ) : (
         <div className="carousel-card running-card">

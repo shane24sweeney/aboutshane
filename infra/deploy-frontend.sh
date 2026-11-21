@@ -6,7 +6,16 @@ set -euo pipefail
 : "${CLOUDFRONT_DISTRIBUTION_ID:?Set CLOUDFRONT_DISTRIBUTION_ID to the CloudFormation output}"
 
 npm run build
-aws s3 sync frontend/build "s3://${FRONTEND_BUCKET}" --delete
+# Browser caching: files under assets/ have a content hash in their names, so a new build never
+# reuses a name and browsers can keep them for a year. Pages are re-checked on every visit so a
+# deploy shows at once, and the remaining files (icons, images in public/) are kept for a day.
+aws s3 sync frontend/build/assets "s3://${FRONTEND_BUCKET}/assets" --delete \
+  --cache-control "public, max-age=31536000, immutable"
+aws s3 sync frontend/build "s3://${FRONTEND_BUCKET}" --delete --exclude "assets/*" --exclude "*.html" \
+  --cache-control "public, max-age=86400"
+# Pages are always uploaded (not synced), so a changed page never keeps an old copy.
+aws s3 cp frontend/build "s3://${FRONTEND_BUCKET}" --recursive --exclude "*" --include "*.html" \
+  --cache-control "no-cache" --content-type "text/html; charset=utf-8" --only-show-errors
 aws cloudfront create-invalidation \
   --distribution-id "${CLOUDFRONT_DISTRIBUTION_ID}" \
   --paths '/*'
