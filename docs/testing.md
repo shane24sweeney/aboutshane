@@ -64,10 +64,12 @@ flowchart LR
   push --> infra["Infrastructure job<br/>cfn-lint"]
   frontend -- "build" --> e2e["End-to-end job<br/>desktop · 2 Android · 3 iPhones<br/>incl. mobile and accessibility"]
 
+  daily --> unit["UI and API jobs<br/>unit tests · code coverage"]
   daily --> regression["Regression job<br/>desktop · 2 Android · 3 iPhones"]
   daily --> smoke["Smoke job<br/>live site: desktop · Pixel 7 · iPhone 15"]
   smoke --> load["Load job<br/>JMeter"]
-  regression --> report["Report job<br/>dashboard on GitHub Pages · email"]
+  unit --> report["Report job<br/>quality report on GitHub Pages · email"]
+  regression --> report
   load --> report
 
   off -.-> real["Real devices<br/>BrowserStack · Appium"]

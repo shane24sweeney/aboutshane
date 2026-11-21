@@ -11,5 +11,13 @@ export default defineConfig({
     css: false,
     include: ['tests/unit/**/*.test.{ts,tsx}'],
     tags: [{ name: 'negative', description: 'Error handling, invalid input and failure paths' }],
+    // `npm run test:coverage`: coverage of frontend/src for the daily quality report.
+    coverage: {
+      provider: 'v8',
+      include: ['frontend/src/**/*.{ts,tsx}'],
+      exclude: ['frontend/src/**/*.d.ts', 'frontend/src/main.tsx'],
+      reporter: ['text-summary', 'json-summary', 'html'],
+      reportsDirectory: 'coverage',
+    },
   },
 });

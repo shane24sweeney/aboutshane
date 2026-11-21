@@ -100,18 +100,37 @@ These use the GitHub CLI (`gh`), signed in to the repo.
 | Workflow | Runs automatically | Start it by hand |
 |---|---|---|
 | **CI**: lint, types, unit, API, build, regression, cfn-lint | Every push and pull request | `gh workflow run ci.yml --ref <branch>` |
-| **Daily tests and report**: regression, live smoke and JMeter, then a dashboard and an email | Daily at 11:17 UTC | `gh workflow run production-smoke.yml --ref master` |
+| **Daily tests and report**: UI and API tests with coverage, regression, live smoke and JMeter, then a quality report and an email | Daily at 11:17 UTC | `gh workflow run production-smoke.yml --ref master` |
 | **BrowserStack mobile**: real devices | Never (switched off) | Skipped until `REAL_DEVICE_TESTS` is on ([details](../docs/browserstack.md)) |
 
 ### The daily report
 
-Each morning's results go to a public dashboard at
-**[shane24sweeney.github.io/aboutshane](https://shane24sweeney.github.io/aboutshane/)**: pass, fail,
-flaky and skipped counts per suite and per device, every failure with its error, the JMeter timings
-per button, a strip of the last 30 days, and the full Playwright and JMeter HTML reports.
-A summary email with the same tables and a link to the dashboard goes to the contact address.
-`scripts/test-report/build.mjs` builds both from the run's artifacts. Both are free: GitHub Pages and
-Actions cost nothing for a public repo, and one SES email a day is a fraction of a cent a month.
+Each morning a quality report for the whole project goes to a public dashboard at
+**[shane24sweeney.github.io/aboutshane](https://shane24sweeney.github.io/aboutshane/)**, written so
+it can be read without opening any test output:
+
+- **Verdict:** Healthy, Needs attention or Incomplete, with a plain-English summary and a donut of
+  every check.
+- **Headline numbers:** pass rate, checks run, code coverage, devices covered, typical response time
+  under load, and how many of the last 30 days were fully green.
+- **Development:** donuts for the UI unit tests (Vitest) and API tests (JUnit), and line and branch
+  coverage for each (Vitest coverage and JaCoCo).
+- **Quality assurance:** donuts for regression, the live site and the load test; coverage by device;
+  speed per button under load.
+- **Delivery:** pull requests merged, commits and the CI pass rate over 30 days, with merges per week.
+- **Every test in 3D** (`3d.html`): one bar per test file and device, stacked by result. Drag to
+  turn it and select a bar to list its tests. A table view has the same numbers.
+- Links to the full Playwright, JMeter and coverage reports.
+
+A summary email with the same verdict, numbers and donut charts (as an attached image, since email
+apps don't draw charts) goes to the contact address. The scripts are in `scripts/test-report/`:
+`build.mjs` builds the dashboard and email, `charts.mjs` draws the charts, `development.mjs` reads
+the unit-test and coverage results, `delivery.mjs` asks GitHub for the delivery numbers, and
+`send-email.mjs` wraps the email for SES. It's all free: GitHub Pages and Actions cost nothing for a
+public repo, and one SES email a day is a fraction of a cent a month.
+
+`npm run test:coverage` runs the UI unit tests with coverage (open `coverage/index.html`);
+`mvn verify` in `backend/` writes the API's to `backend/target/site/jacoco/index.html`.
 
 One-time setup (already done for this repo):
 
@@ -125,9 +144,15 @@ One-time setup (already done for this repo):
 Until steps 3 and 4 are done the email job is skipped; the dashboard still publishes.
 
 To try the report locally after running the suites, copy each run's `playwright-report` and
-`test-results` into `reports/regression` and `reports/smoke`, and `tests/jmeter/results` into
-`reports/jmeter/tests/jmeter/results`, then `node scripts/test-report/build.mjs reports site` and
-open `site/index.html` and `reports/email.html`.
+`test-results` into `reports/regression` and `reports/smoke`, `tests/jmeter/results` into
+`reports/jmeter/tests/jmeter/results`, `test-results/unit.json` and `coverage` from
+`npm run test:coverage` into `reports/ui`, and `backend/target/surefire-reports` and
+`backend/target/site/jacoco` into `reports/api/surefire-reports` and `reports/api/site/jacoco`. Then:
+
+```bash
+node scripts/test-report/delivery.mjs shane24sweeney/aboutshane reports/delivery.json
+node scripts/test-report/build.mjs reports site   # open site/index.html, site/3d.html, reports/email.html
+```
 
 Follow and manage runs:
 
