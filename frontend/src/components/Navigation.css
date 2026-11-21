@@ -26,6 +26,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 10px;
   border: 1px solid transparent;
   background: rgba(255, 255, 255, 0.035);
   cursor: pointer;
@@ -45,18 +46,84 @@
   color: var(--site-accent-strong) !important;
 }
 
-.nav-icon {
-  font-size: 2em;
+/* Each icon sits on a raised, glossy tile in its page's colour (--tile, set in Navigation.tsx):
+   a lit face, a darker edge underneath for thickness, a highlight across the top and a soft
+   shadow. Hovering tilts the tile toward the visitor; pressing sinks it; the current page glows. */
+.nav-tile {
+  --size: 46px;
+  --depth: 4px;
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--size);
+  height: var(--size);
+  margin: 0 auto;
+  border-radius: 13px;
+  background:
+    radial-gradient(120% 90% at 30% 15%, color-mix(in srgb, var(--tile) 55%, #fff) 0%, transparent 55%),
+    linear-gradient(160deg, var(--tile) 20%, color-mix(in srgb, var(--tile) 62%, #000) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.18),
+    0 var(--depth) 0 color-mix(in srgb, var(--tile) 45%, #000),
+    0 calc(var(--depth) + 6px) 14px rgba(0, 0, 0, 0.45);
+  transform: perspective(320px) translateY(calc(var(--depth) * -0.5));
+  transform-style: preserve-3d;
+  transition: transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 220ms ease;
 }
 
-.site-nav-links .nav-button:nth-child(1) .nav-icon { color: #79d2c0; }
-.site-nav-links .nav-button:nth-child(2) .nav-icon { color: #ff9f80; }
-.site-nav-links .nav-button:nth-child(3) .nav-icon { color: #f5c86b; }
-.site-nav-links .nav-button:nth-child(4) .nav-icon { color: #83b9ff; }
-.site-nav-links .nav-button:nth-child(5) .nav-icon { color: #f2a7d5; }
-.site-nav-links .nav-button:nth-child(6) .nav-icon { color: #b6a1ff; }
-.site-nav-links .nav-button:nth-child(7) .nav-icon { color: #ff8fa3; }
-.site-nav-links .nav-button:nth-child(8) .nav-icon { color: #8fe388; }
+/* Gloss: a soft reflection over the top half of the face. */
+.nav-tile::before {
+  content: '';
+  position: absolute;
+  inset: 2px 3px 48%;
+  border-radius: 11px 11px 40% 40% / 11px 11px 14px 14px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.04));
+  pointer-events: none;
+}
+
+.nav-icon {
+  position: relative;
+  font-size: 1.45em;
+  color: #fff;
+  filter: drop-shadow(0 1.5px 1px rgba(0, 0, 0, 0.35));
+}
+
+.site-nav-links .nav-button:hover .nav-tile,
+.site-nav-links .nav-button:focus-visible .nav-tile {
+  transform: perspective(320px) translateY(-4px) rotateX(14deg) rotateY(-10deg);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.18),
+    0 var(--depth) 0 color-mix(in srgb, var(--tile) 45%, #000),
+    4px calc(var(--depth) + 12px) 20px rgba(0, 0, 0, 0.5);
+}
+
+.site-nav-links .nav-button:active .nav-tile {
+  transform: perspective(320px) translateY(calc(var(--depth) * 0.5));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.2),
+    0 1px 0 color-mix(in srgb, var(--tile) 45%, #000),
+    0 3px 6px rgba(0, 0, 0, 0.4);
+}
+
+.site-nav-links .nav-link.active .nav-tile {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.18),
+    0 var(--depth) 0 color-mix(in srgb, var(--tile) 45%, #000),
+    0 calc(var(--depth) + 4px) 18px color-mix(in srgb, var(--tile) 55%, transparent),
+    0 0 0 2px color-mix(in srgb, var(--tile) 70%, #fff);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-tile { transition: none; }
+  .site-nav-links .nav-button:hover .nav-tile,
+  .site-nav-links .nav-button:focus-visible .nav-tile {
+    transform: perspective(320px) translateY(calc(var(--depth) * -0.5));
+  }
+}
 
 .nav-label {
   display: block;
@@ -85,10 +152,20 @@
     -webkit-tap-highlight-color: rgba(121, 210, 192, 0.24);
   }
 
+  .nav-tile {
+    --size: 34px;
+    --depth: 3px;
+    border-radius: 10px;
+  }
+
+  .nav-tile::before {
+    border-radius: 8px 8px 40% 40% / 8px 8px 10px 10px;
+  }
+
   .site-nav-links .nav-link svg {
     display: block;
     margin: 0 auto;
-    font-size: 1.35em;
+    font-size: 1.15em;
   }
 
   .nav-label {
