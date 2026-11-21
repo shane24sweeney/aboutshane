@@ -82,8 +82,15 @@ select:focus {
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+}
+
+/* The nav stays at the top and the page area keeps a full screen of room while its content
+   loads, so nothing jumps when it arrives (centring the frame used to drop the nav halfway down
+   an empty page, then snap it up). */
+.site-frame > main {
+  min-height: 100vh;
 }
 
 .site-frame > * {
