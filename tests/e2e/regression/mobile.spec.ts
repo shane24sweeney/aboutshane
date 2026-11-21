@@ -29,7 +29,7 @@ test.describe('phone layout', () => {
     test.skip(width > PHONE_MAX_WIDTH, `phone layouts only (viewport is ${width}px)`);
   });
 
-  test('nav shows every tab with its name, in two rows of four large enough to tap', async ({ page }) => {
+  test('nav shows every tab with its name, in three rows of three large enough to tap', async ({ page }) => {
     const links = page.getByRole('navigation', { name: 'Primary navigation' }).getByRole('link');
     const tops: number[] = [];
 
@@ -48,10 +48,10 @@ test.describe('phone layout', () => {
         tops.push((await link.boundingBox())!.y);
       }
     });
-    await and('they sit in two rows', () => {
+    await and('they sit in three rows', () => {
       // Buttons within a few pixels share a row; sub-pixel layout rounds differently per device.
       const rows = tops.sort((a, b) => a - b).filter((top, i, all) => i === 0 || top - all[i - 1] > 10);
-      expect(rows.length, 'nav rows').toBe(2);
+      expect(rows.length, 'nav rows').toBe(3);
     });
   });
 
