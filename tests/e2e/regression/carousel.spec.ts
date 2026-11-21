@@ -2,13 +2,11 @@ import type { Page } from '@playwright/test';
 import { expect, test } from '../support/fixtures';
 import { and, given, then, when } from '../support/steps';
 
-// Every page carousel, by path and the region label SiteCarousel gives it.
+// Every page carousel, by path and the region label SiteCarousel gives it. Home, Education and
+// Charity show all their content at once instead (see the home test below and pages.spec.ts).
 const carousels = [
-  { path: '/home', label: 'Career overview' },
   { path: '/about', label: 'About Shane' },
   { path: '/testimonials', label: 'Testimonials' },
-  { path: '/education', label: 'Education' },
-  { path: '/charity', label: 'Charity work' },
 ] as const;
 
 async function slideCount(page: Page) {
@@ -37,7 +35,6 @@ test.describe('carousels', () => {
 
     for (const { path, label } of carousels) {
       test(`${path} keeps its height and the scroll position on every slide`, async ({ page }) => {
-        test.skip(path === '/home' && page.viewportSize()!.width <= 600, 'Home stacks its sections on phones');
         const carousel = page.getByRole('region', { name: label });
 
         const before = await given(`the visitor has scrolled to the bottom of ${path}`, async () => {
@@ -66,25 +63,24 @@ test.describe('carousels', () => {
   });
 
   test('autoplay advances a carousel nobody has touched', async ({ page }) => {
-    await given('the visitor is on the first education slide', async () => {
+    await given('the visitor is on the first testimonial', async () => {
       await page.clock.install();
-      await page.goto('/education');
-      await expect(page.locator('.site-carousel-position')).toHaveText('1 of 3');
+      await page.goto('/testimonials');
+      await expect(page.locator('.site-carousel-position')).toHaveText(/^1 of /);
     });
     await when('4.5 seconds pass without them touching it', () => page.clock.runFor(4_500));
-    await then('the carousel moves to the next slide', () => expect(page.locator('.site-carousel-position')).toHaveText('2 of 3'));
+    await then('the carousel moves to the next slide', () => expect(page.locator('.site-carousel-position')).toHaveText(/^2 of /));
   });
 
-  test('home shows its sections stacked on phones and as a carousel on wider screens', async ({ page }) => {
-    const isPhone = page.viewportSize()!.width <= 600;
-
-    await given(`a ${isPhone ? 'phone' : 'wider'} screen`, () => {});
+  test('home shows all three sections at once on every screen, with no carousel', async ({ page }) => {
+    await given(`a ${page.viewportSize()!.width}px-wide screen`, () => {});
     await when('the visitor opens the home page', () => page.goto('/home'));
-    await then(isPhone ? 'all three sections are stacked, with no carousel' : 'the sections are in a carousel, one at a time', async () => {
-      await expect(page.getByRole('region', { name: 'Career overview' })).toHaveCount(isPhone ? 0 : 1);
-      // Stacked, all three section headings are readable without waiting or tapping.
-      const visibleHeadings = page.getByRole('heading', { level: 2 });
-      await expect(visibleHeadings).toHaveCount(isPhone ? 3 : 1);
+    await then('all three sections are stacked and visible, with no carousel controls', async () => {
+      await expect(page.getByRole('region', { name: 'Career overview' })).toHaveCount(0);
+      await expect(page.getByRole('button', { name: 'Next slide' })).toHaveCount(0);
+      const headings = page.getByRole('heading', { level: 2 });
+      await expect(headings).toHaveCount(3);
+      for (const heading of await headings.all()) await expect(heading).toBeVisible();
     });
   });
 
@@ -104,20 +100,20 @@ test.describe('carousels', () => {
   });
 
   test('the pause button stops autoplay and play resumes it', async ({ page }) => {
-    await given('the visitor is on the education carousel', async () => {
+    await given('the visitor is on the testimonials carousel', async () => {
       await page.clock.install();
-      await page.goto('/education');
+      await page.goto('/testimonials');
     });
     await when('they pause it and 20 seconds pass', async () => {
       await page.getByRole('button', { name: 'Pause slideshow' }).click();
       await page.clock.runFor(20_000);
     });
-    await then('it stays on the first slide', () => expect(page.locator('.site-carousel-position')).toHaveText('1 of 3'));
+    await then('it stays on the first slide', () => expect(page.locator('.site-carousel-position')).toHaveText(/^1 of /));
     await when('they press Play and 4.5 seconds pass', async () => {
       await page.getByRole('button', { name: 'Play slideshow' }).click();
       await page.clock.runFor(4_500);
     });
-    await then('it moves to the next slide', () => expect(page.locator('.site-carousel-position')).toHaveText('2 of 3'));
+    await then('it moves to the next slide', () => expect(page.locator('.site-carousel-position')).toHaveText(/^2 of /));
   });
 
   test('never autoplays for visitors who prefer reduced motion', async ({ page }) => {
@@ -125,12 +121,12 @@ test.describe('carousels', () => {
       await page.emulateMedia({ reducedMotion: 'reduce' });
       await page.clock.install();
     });
-    await when('they open the charity carousel and 30 seconds pass', async () => {
-      await page.goto('/charity');
+    await when('they open the testimonials carousel and 30 seconds pass', async () => {
+      await page.goto('/testimonials');
       await page.clock.runFor(30_000);
     });
     await then('it stays on the first slide and offers Play', async () => {
-      await expect(page.locator('.site-carousel-position')).toHaveText('1 of 5');
+      await expect(page.locator('.site-carousel-position')).toHaveText(/^1 of /);
       await expect(page.getByRole('button', { name: 'Play slideshow' })).toBeVisible();
     });
   });

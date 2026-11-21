@@ -17,7 +17,7 @@ const contentPages = [
 ] as const;
 
 async function expectBundledResume(page: Page) {
-  await expect(page.getByRole('button', { name: /FIFTH THIRD BANK/ })).toBeVisible();
+  await expect(page.getByRole('button', { name: /Fifth Third Bank/i })).toBeVisible();
   await expect(page.getByRole('button')).toHaveCount(resume.length);
 }
 
@@ -39,7 +39,7 @@ test.describe('content API', () => {
   });
 
   test('renders what the API returns', async ({ page }) => {
-    const entry = page.getByRole('button', { name: /ROLE SERVED BY THE API/ });
+    const entry = page.getByRole('button', { name: /Role served by the API/i });
 
     await given('the content API returns one resume role', async () => {
       const served = [{ ...resume[0], role: 'Role served by the API', highlights: ['Highlight from the API'] }];
@@ -98,7 +98,7 @@ test.describe('content API', () => {
     await then('a loading indicator is shown', () => expect(page.locator('.page-loading .spinner-border')).toBeVisible());
     await when('the response arrives', () => release());
     await then('the resume replaces the loading indicator', async () => {
-      await expect(page.getByRole('button', { name: /FIFTH THIRD BANK/ })).toBeVisible();
+      await expect(page.getByRole('button', { name: /Fifth Third Bank/i })).toBeVisible();
       await expect(page.locator('.page-loading')).toHaveCount(0);
     });
   });

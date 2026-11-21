@@ -76,29 +76,9 @@
   background: var(--site-accent-strong);
 }
 
-.home-carousel {
-  overflow: hidden;
-  border-radius: 10px;
-  background: linear-gradient(145deg, #20262d 0%, #171a1f 100%);
-}
-
-.home-carousel .carousel-item {
-  position: relative;
-}
-
-.home-carousel .carousel-item::before {
-  content: '';
-  display: block;
-  width: 72px;
-  height: 4px;
-  margin: 0 auto 22px;
-  border-radius: 999px;
-  background: var(--site-accent);
-}
-
-/* Phones: the three carousel sections stacked, with the photo once at the top. */
+/* The three sections stacked, with the photo once at the top. */
 .home-sections {
-  padding: 24px 16px 8px;
+  padding: clamp(24px, 4vw, 40px) clamp(16px, 4vw, 48px) 8px;
   border-radius: 10px;
   background: linear-gradient(145deg, #20262d 0%, #171a1f 100%);
 }
@@ -115,11 +95,6 @@
   margin: 0 auto 22px;
   border-radius: 999px;
   background: var(--site-accent);
-}
-
-.home-slide {
-  min-height: 540px;
-  padding: 4px 24px 24px;
 }
 
 .home-slide-body {
@@ -190,6 +165,17 @@
   grid-template-columns: minmax(0, 1fr);
 }
 
+/* Wide screens use the width: strengths three across, highlights two. */
+@media (min-width: 900px) {
+  .home-card-grid-strengths {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .home-card-grid-highlights {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 .home-card {
   box-sizing: border-box;
   display: flex;
@@ -253,11 +239,6 @@
     margin: 8px auto;
     padding: 14px 12px;
     border-radius: 10px;
-  }
-
-  .home-slide {
-    min-height: 0;
-    padding: 4px 12px 18px;
   }
 
   .home-slide-body {

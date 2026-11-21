@@ -53,7 +53,7 @@ test.describe('pre-rendered pages', () => {
     await given('a normal browser', () => {});
     await when('it opens the resume', () => page.goto('/resume'));
     await then('the interactive resume is shown', () =>
-      expect(page.getByRole('button', { name: /FIFTH THIRD BANK/ })).toBeVisible(),
+      expect(page.getByRole('button', { name: /Fifth Third Bank/i })).toBeVisible(),
     );
     await and('the pre-rendered copy stays hidden', () =>
       expect(page.getByText(/^Turn on JavaScript for the full site\.$/)).toBeHidden(),

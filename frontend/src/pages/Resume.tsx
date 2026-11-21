@@ -6,7 +6,8 @@ import { usePageContent } from '../hooks/usePageContent';
 import './Resume.css';
 
 function entryTitle({ role, company, contractVia }: ResumeEntry) {
-  const title = `${role} - ${company}`.toUpperCase();
+  // Title Case as written in the content: capitals-only text is slower to read.
+  const title = `${role} - ${company}`;
   return contractVia ? `${title} (Contract via ${contractVia})` : title;
 }
 

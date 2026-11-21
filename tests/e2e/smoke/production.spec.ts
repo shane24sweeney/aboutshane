@@ -79,7 +79,7 @@ test.describe('production smoke', () => {
     await when('a visitor opens the resume', () => page.goto('/resume'));
     await then('the page loads its roles from the API', async () => {
       expect((await response).status()).toBe(200);
-      await expect(page.getByRole('button', { name: /FIFTH THIRD BANK/ })).toBeVisible();
+      await expect(page.getByRole('button', { name: /Fifth Third Bank/i })).toBeVisible();
     });
   });
 
