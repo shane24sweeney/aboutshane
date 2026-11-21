@@ -1,0 +1,2772 @@
+{
+ "version": 1,
+ "generatedAt": "2026-11-21T22:08:14.734Z",
+ "day": "Saturday, November 21, 2026",
+ "status": "attention",
+ "statusText": "Needs attention",
+ "headline": "1 test failed",
+ "summary": "Development: 124 of 124 UI and API tests passed, covering 82% of the code. Quality assurance: 740 of 741 end-to-end tests passed on 6 devices, covering desktop, Android and iPhone. Under load, the live site answered all 108 requests, typically in 28 ms. The failures are in Live site on Desktop (Chrome), listed below. In the last 30 days the team merged 18 pull requests, and CI passed 96.9% of the time.",
+ "reportUrl": "https://shane24sweeney.github.io/aboutshane/",
+ "runUrl": "",
+ "kpis": [
+  {
+   "label": "Pass rate",
+   "value": "99.9%",
+   "sub": "972 of 973 checks",
+   "tone": "bad"
+  },
+  {
+   "label": "Checks run",
+   "value": "973",
+   "sub": "865 tests \u00b7 108 load requests"
+  },
+  {
+   "label": "Code coverage",
+   "value": "82%",
+   "sub": "of 446 lines, UI and API"
+  },
+  {
+   "label": "Devices covered",
+   "value": "6",
+   "sub": "Desktop, Android, iPhone"
+  },
+  {
+   "label": "Typical response",
+   "value": "28 ms",
+   "sub": "95% within 188 ms"
+  },
+  {
+   "label": "30-day stability",
+   "value": "0/1",
+   "sub": "day fully green"
+  }
+ ],
+ "overall": {
+  "passed": 972,
+  "failed": 1,
+  "flaky": 0
+ },
+ "development": {
+  "ui": {
+   "totals": {
+    "passed": 45,
+    "failed": 0,
+    "skipped": 0
+   },
+   "total": 45,
+   "duration": 1905.620849609375,
+   "files": 8,
+   "coverage": {
+    "lines": 73.62,
+    "branches": 58.6,
+    "functions": 67.79,
+    "linesCovered": 187,
+    "linesTotal": 254
+   }
+  },
+  "api": {
+   "totals": {
+    "passed": 79,
+    "failed": 0,
+    "skipped": 0
+   },
+   "total": 79,
+   "duration": 2794,
+   "files": 7,
+   "coverage": {
+    "lines": 93.2,
+    "branches": 96.2,
+    "functions": 92.7,
+    "linesCovered": 179,
+    "linesTotal": 192
+   }
+  }
+ },
+ "qa": {
+  "regression": {
+   "totals": {
+    "passed": 660,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 5
+   },
+   "total": 665,
+   "duration": 168536.075,
+   "devices": 6
+  },
+  "smoke": {
+   "totals": {
+    "passed": 80,
+    "failed": 1,
+    "flaky": 0,
+    "skipped": 0
+   },
+   "total": 81,
+   "duration": 22245.744,
+   "devices": 3
+  },
+  "load": {
+   "samples": 108,
+   "failed": 0,
+   "median": 28,
+   "p95": 188,
+   "duration": 52683,
+   "actions": [
+    {
+     "action": "Open site",
+     "samples": 9,
+     "failed": 0,
+     "median": 95,
+     "p95": 565
+    },
+    {
+     "action": "Nav: Home",
+     "samples": 9,
+     "failed": 0,
+     "median": 22,
+     "p95": 188
+    },
+    {
+     "action": "Nav: About",
+     "samples": 9,
+     "failed": 0,
+     "median": 20,
+     "p95": 71
+    },
+    {
+     "action": "Nav: Resume",
+     "samples": 9,
+     "failed": 0,
+     "median": 29,
+     "p95": 125
+    },
+    {
+     "action": "Nav: Testimonials",
+     "samples": 9,
+     "failed": 0,
+     "median": 23,
+     "p95": 86
+    },
+    {
+     "action": "Nav: Education",
+     "samples": 9,
+     "failed": 0,
+     "median": 20,
+     "p95": 80
+    },
+    {
+     "action": "Nav: Charity Work",
+     "samples": 9,
+     "failed": 0,
+     "median": 19,
+     "p95": 74
+    },
+    {
+     "action": "Contact: Send (invalid form)",
+     "samples": 9,
+     "failed": 0,
+     "median": 102,
+     "p95": 617
+    }
+   ]
+  }
+ },
+ "failures": [
+  {
+   "area": "Live site",
+   "title": "production smoke \u203a the API rejects malformed, unsupported and unknown requests",
+   "device": "Desktop (Chrome)",
+   "error": "Error: expect(received).toBe(expected) // Object.is equality\nExpected: 404\nReceived: 429"
+  }
+ ],
+ "devices": [
+  {
+   "device": "Desktop (Chrome)",
+   "regression": {
+    "passed": 100,
+    "failed": 0,
+    "flaky": 0
+   },
+   "smoke": {
+    "passed": 36,
+    "failed": 1,
+    "flaky": 0
+   }
+  },
+  {
+   "device": "Android \u00b7 Pixel 7",
+   "regression": {
+    "passed": 112,
+    "failed": 0,
+    "flaky": 0
+   },
+   "smoke": {
+    "passed": 22,
+    "failed": 0,
+    "flaky": 0
+   }
+  },
+  {
+   "device": "Android \u00b7 Galaxy S24",
+   "regression": {
+    "passed": 112,
+    "failed": 0,
+    "flaky": 0
+   },
+   "smoke": null
+  },
+  {
+   "device": "iPhone 15",
+   "regression": {
+    "passed": 112,
+    "failed": 0,
+    "flaky": 0
+   },
+   "smoke": {
+    "passed": 22,
+    "failed": 0,
+    "flaky": 0
+   }
+  },
+  {
+   "device": "iPhone SE",
+   "regression": {
+    "passed": 112,
+    "failed": 0,
+    "flaky": 0
+   },
+   "smoke": null
+  },
+  {
+   "device": "iPhone 15 Pro Max",
+   "regression": {
+    "passed": 112,
+    "failed": 0,
+    "flaky": 0
+   },
+   "smoke": null
+  }
+ ],
+ "delivery": {
+  "days": 30,
+  "since": "2026-10-22",
+  "mergedPullRequests": 18,
+  "commits": 28,
+  "contributors": 1,
+  "ciRuns": 64,
+  "ciPassed": 62,
+  "weeks": [
+   {
+    "start": "2026-10-17",
+    "end": "2026-10-24",
+    "merged": 0
+   },
+   {
+    "start": "2026-10-24",
+    "end": "2026-10-31",
+    "merged": 0
+   },
+   {
+    "start": "2026-10-31",
+    "end": "2026-11-07",
+    "merged": 0
+   },
+   {
+    "start": "2026-11-07",
+    "end": "2026-11-14",
+    "merged": 0
+   },
+   {
+    "start": "2026-11-14",
+    "end": "2026-11-21",
+    "merged": 18
+   }
+  ],
+  "recent": [
+   {
+    "number": 40,
+    "title": "Add CAPABILITY_NAMED_IAM to the deploy command",
+    "url": "https://github.com/shane24sweeney/aboutshane/pull/40",
+    "merged": "2026-11-21T17:44:42Z"
+   },
+   {
+    "number": 39,
+    "title": "Daily test report: GitHub Pages dashboard and email",
+    "url": "https://github.com/shane24sweeney/aboutshane/pull/39",
+    "merged": "2026-11-21T17:07:15Z"
+   },
+   {
+    "number": 38,
+    "title": "Show the fitness medals uniformly, with what each took, and spin them",
+    "url": "https://github.com/shane24sweeney/aboutshane/pull/38",
+    "merged": "2026-11-21T16:44:24Z"
+   },
+   {
+    "number": 37,
+    "title": "Replace the charity pictures with matching branded cards",
+    "url": "https://github.com/shane24sweeney/aboutshane/pull/37",
+    "merged": "2026-11-21T16:30:41Z"
+   },
+   {
+    "number": 36,
+    "title": "Upgrade the backend to Java 25",
+    "url": "https://github.com/shane24sweeney/aboutshane/pull/36",
+    "merged": "2026-11-20T13:29:07Z"
+   }
+  ]
+ },
+ "history": [
+  {
+   "date": "2026-11-21",
+   "status": "attention",
+   "checks": 973
+  }
+ ],
+ "grid": {
+  "rows": [
+   {
+    "name": "UI unit tests"
+   },
+   {
+    "name": "API tests"
+   },
+   {
+    "name": "About page"
+   },
+   {
+    "name": "Accessibility"
+   },
+   {
+    "name": "Contact form"
+   },
+   {
+    "name": "Content API"
+   },
+   {
+    "name": "Every page"
+   },
+   {
+    "name": "Navigation"
+   },
+   {
+    "name": "Page content"
+   },
+   {
+    "name": "Phone layout"
+   },
+   {
+    "name": "Photo carousels"
+   },
+   {
+    "name": "Pre-rendered pages"
+   },
+   {
+    "name": "Running and race map"
+   },
+   {
+    "name": "Live API"
+   },
+   {
+    "name": "Live buttons"
+   },
+   {
+    "name": "Live site"
+   },
+   {
+    "name": "Load test (JMeter)"
+   }
+  ],
+  "columns": [
+   {
+    "name": "Build"
+   },
+   {
+    "name": "Desktop"
+   },
+   {
+    "name": "Pixel 7"
+   },
+   {
+    "name": "Galaxy S24"
+   },
+   {
+    "name": "iPhone 15"
+   },
+   {
+    "name": "iPhone SE"
+   },
+   {
+    "name": "15 Pro Max"
+   },
+   {
+    "name": "Live desktop"
+   },
+   {
+    "name": "Live Pixel 7"
+   },
+   {
+    "name": "Live iPhone 15"
+   },
+   {
+    "name": "Load"
+   }
+  ],
+  "cells": {
+   "0|0": {
+    "passed": 45,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "link": "ui-coverage/",
+    "tests": [
+     {
+      "t": "About \u203a about page shows every Apple Fitness medal with its name, detail and what it took, awards first",
+      "s": "passed"
+     },
+     {
+      "t": "App \u203a routing /home renders a single page heading \"Shane James Sweeney\"",
+      "s": "passed"
+     },
+     {
+      "t": "App \u203a routing /about renders a single page heading \"About Shane\"",
+      "s": "passed"
+     },
+     {
+      "t": "App \u203a routing /contact renders a single page heading \"Send me a message.\"",
+      "s": "passed"
+     },
+     {
+      "t": "App \u203a routing /resume renders a single page heading \"Professional Experience\"",
+      "s": "passed"
+     },
+     {
+      "t": "App \u203a routing /testimonials renders a single page heading \"Testimonials\"",
+      "s": "passed"
+     }
+    ]
+   },
+   "1|0": {
+    "passed": 79,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "link": "api-coverage/",
+    "tests": [
+     {
+      "t": "AwsAdaptersTest \u203a repositoryWritesTheMessageWithAnExpiry",
+      "s": "passed"
+     },
+     {
+      "t": "AwsAdaptersTest \u203a notifierEmailsTheOwnerWithReplyToTheVisitor",
+      "s": "passed"
+     },
+     {
+      "t": "ContactApiApplicationTest \u203a aSubmittedMessageIsStoredAndEmailed",
+      "s": "passed"
+     },
+     {
+      "t": "ContactApiApplicationTest \u203a theHoneypotKeepsBotsOutOfStorage",
+      "s": "passed"
+     },
+     {
+      "t": "ContactControllerTest \u203a unknownPathsAndMethodsKeepTheirClientErrorStatus",
+      "s": "passed"
+     },
+     {
+      "t": "ContactControllerTest \u203a acceptsAValidMessage",
+      "s": "passed"
+     }
+    ]
+   },
+   "2|1": {
+    "passed": 2,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "about page: fitness medals \u203a every medal slide has the same layout: medal, name and detail",
+      "s": "passed"
+     },
+     {
+      "t": "about page: fitness medals \u203a dragging a medal spins it, and it comes to rest facing front",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Adesktop%20about.spec.ts"
+   },
+   "2|2": {
+    "passed": 2,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "about page: fitness medals \u203a every medal slide has the same layout: medal, name and detail",
+      "s": "passed"
+     },
+     {
+      "t": "about page: fitness medals \u203a dragging a medal spins it, and it comes to rest facing front",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile%20about.spec.ts"
+   },
+   "2|3": {
+    "passed": 2,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "about page: fitness medals \u203a every medal slide has the same layout: medal, name and detail",
+      "s": "passed"
+     },
+     {
+      "t": "about page: fitness medals \u203a dragging a medal spins it, and it comes to rest facing front",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-small%20about.spec.ts"
+   },
+   "2|4": {
+    "passed": 2,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "about page: fitness medals \u203a every medal slide has the same layout: medal, name and detail",
+      "s": "passed"
+     },
+     {
+      "t": "about page: fitness medals \u203a dragging a medal spins it, and it comes to rest facing front",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-safari%20about.spec.ts"
+   },
+   "2|5": {
+    "passed": 2,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "about page: fitness medals \u203a every medal slide has the same layout: medal, name and detail",
+      "s": "passed"
+     },
+     {
+      "t": "about page: fitness medals \u203a dragging a medal spins it, and it comes to rest facing front",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-safari-small%20about.spec.ts"
+   },
+   "2|6": {
+    "passed": 2,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "about page: fitness medals \u203a every medal slide has the same layout: medal, name and detail",
+      "s": "passed"
+     },
+     {
+      "t": "about page: fitness medals \u203a dragging a medal spins it, and it comes to rest facing front",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-safari-large%20about.spec.ts"
+   },
+   "3|1": {
+    "passed": 8,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "accessibility (axe, WCAG 2.1 A/AA) \u203a /home has no serious or critical violations",
+      "s": "passed"
+     },
+     {
+      "t": "accessibility (axe, WCAG 2.1 A/AA) \u203a /contact has no serious or critical violations",
+      "s": "passed"
+     },
+     {
+      "t": "accessibility (axe, WCAG 2.1 A/AA) \u203a /about has no serious or critical violations",
+      "s": "passed"
+     },
+     {
+      "t": "accessibility (axe, WCAG 2.1 A/AA) \u203a /resume has no serious or critical violations",
+      "s": "passed"
+     },
+     {
+      "t": "accessibility (axe, WCAG 2.1 A/AA) \u203a /testimonials has no serious or critical violations",
+      "s": "passed"
+     },
+     {
+      "t": "accessibility (axe, WCAG 2.1 A/AA) \u203a /education has no serious or critical violations",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Adesktop%20accessibility.spec.ts"
+   },
+   "3|2": {
+    "passed": 8,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "accessibility (axe, WCAG 2.1 A/AA) \u203a /home has no serious or critical violations",
+      "s": "passed"
+     },
+     {
+      "t": "accessibility (axe, WCAG 2.1 A/AA) \u203a /contact has no serious or critical violations",
+      "s": "passed"
+     },
+     {
+      "t": "accessibility (axe, WCAG 2.1 A/AA) \u203a /about has no serious or critical violations",
+      "s": "passed"
+     },
+     {
+      "t": "accessibility (axe, WCAG 2.1 A/AA) \u203a /resume has no serious or critical violations",
+      "s": "passed"
+     },
+     {
+      "t": "accessibility (axe, WCAG 2.1 A/AA) \u203a /testimonials has no serious or critical violations",
+      "s": "passed"
+     },
+     {
+      "t": "accessibility (axe, WCAG 2.1 A/AA) \u203a /education has no serious or critical violations",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile%20accessibility.spec.ts"
+   },
+   "3|3": {
+    "passed": 8,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "accessibility (axe, WCAG 2.1 A/AA) \u203a /home has no serious or critical violations",
+      "s": "passed"
+     },
+     {
+      "t": "accessibility (axe, WCAG 2.1 A/AA) \u203a /contact has no serious or critical violations",
+      "s": "passed"
+     },
+     {
+      "t": "accessibility (axe, WCAG 2.1 A/AA) \u203a /about has no serious or critical violations",
+      "s": "passed"
+     },
+     {
+      "t": "accessibility (axe, WCAG 2.1 A/AA) \u203a /resume has no serious or critical violations",
+      "s": "passed"
+     },
+     {
+      "t": "accessibility (axe, WCAG 2.1 A/AA) \u203a /testimonials has no serious or critical violations",
+      "s": "passed"
+     },
+     {
+      "t": "accessibility (axe, WCAG 2.1 A/AA) \u203a /education has no serious or critical violations",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-small%20accessibility.spec.ts"
+   },
+   "3|4": {
+    "passed": 8,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "accessibility (axe, WCAG 2.1 A/AA) \u203a /home has no serious or critical violations",
+      "s": "passed"
+     },
+     {
+      "t": "accessibility (axe, WCAG 2.1 A/AA) \u203a /contact has no serious or critical violations",
+      "s": "passed"
+     },
+     {
+      "t": "accessibility (axe, WCAG 2.1 A/AA) \u203a /about has no serious or critical violations",
+      "s": "passed"
+     },
+     {
+      "t": "accessibility (axe, WCAG 2.1 A/AA) \u203a /resume has no serious or critical violations",
+      "s": "passed"
+     },
+     {
+      "t": "accessibility (axe, WCAG 2.1 A/AA) \u203a /testimonials has no serious or critical violations",
+      "s": "passed"
+     },
+     {
+      "t": "accessibility (axe, WCAG 2.1 A/AA) \u203a /education has no serious or critical violations",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-safari%20accessibility.spec.ts"
+   },
+   "3|5": {
+    "passed": 8,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "accessibility (axe, WCAG 2.1 A/AA) \u203a /home has no serious or critical violations",
+      "s": "passed"
+     },
+     {
+      "t": "accessibility (axe, WCAG 2.1 A/AA) \u203a /contact has no serious or critical violations",
+      "s": "passed"
+     },
+     {
+      "t": "accessibility (axe, WCAG 2.1 A/AA) \u203a /about has no serious or critical violations",
+      "s": "passed"
+     },
+     {
+      "t": "accessibility (axe, WCAG 2.1 A/AA) \u203a /resume has no serious or critical violations",
+      "s": "passed"
+     },
+     {
+      "t": "accessibility (axe, WCAG 2.1 A/AA) \u203a /testimonials has no serious or critical violations",
+      "s": "passed"
+     },
+     {
+      "t": "accessibility (axe, WCAG 2.1 A/AA) \u203a /education has no serious or critical violations",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-safari-small%20accessibility.spec.ts"
+   },
+   "3|6": {
+    "passed": 8,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "accessibility (axe, WCAG 2.1 A/AA) \u203a /home has no serious or critical violations",
+      "s": "passed"
+     },
+     {
+      "t": "accessibility (axe, WCAG 2.1 A/AA) \u203a /contact has no serious or critical violations",
+      "s": "passed"
+     },
+     {
+      "t": "accessibility (axe, WCAG 2.1 A/AA) \u203a /about has no serious or critical violations",
+      "s": "passed"
+     },
+     {
+      "t": "accessibility (axe, WCAG 2.1 A/AA) \u203a /resume has no serious or critical violations",
+      "s": "passed"
+     },
+     {
+      "t": "accessibility (axe, WCAG 2.1 A/AA) \u203a /testimonials has no serious or critical violations",
+      "s": "passed"
+     },
+     {
+      "t": "accessibility (axe, WCAG 2.1 A/AA) \u203a /education has no serious or critical violations",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-safari-large%20accessibility.spec.ts"
+   },
+   "10|1": {
+    "passed": 11,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "carousels \u203a autoplay advances a carousel nobody has touched",
+      "s": "passed"
+     },
+     {
+      "t": "carousels \u203a home shows its sections stacked on phones and as a carousel on wider screens",
+      "s": "passed"
+     },
+     {
+      "t": "carousels \u203a autoplay stops for good once the visitor touches the carousel",
+      "s": "passed"
+     },
+     {
+      "t": "carousels \u203a the pause button stops autoplay and play resumes it",
+      "s": "passed"
+     },
+     {
+      "t": "carousels \u203a never autoplays for visitors who prefer reduced motion",
+      "s": "passed"
+     },
+     {
+      "t": "carousels \u203a previous wraps from the first slide to the last, and only the current slide is exposed",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Adesktop%20carousel.spec.ts"
+   },
+   "10|2": {
+    "passed": 10,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 1,
+    "tests": [
+     {
+      "t": "carousels \u203a changing slides while scrolled down \u203a /home keeps its height and the scroll position on every slide",
+      "s": "skipped"
+     },
+     {
+      "t": "carousels \u203a autoplay advances a carousel nobody has touched",
+      "s": "passed"
+     },
+     {
+      "t": "carousels \u203a home shows its sections stacked on phones and as a carousel on wider screens",
+      "s": "passed"
+     },
+     {
+      "t": "carousels \u203a autoplay stops for good once the visitor touches the carousel",
+      "s": "passed"
+     },
+     {
+      "t": "carousels \u203a the pause button stops autoplay and play resumes it",
+      "s": "passed"
+     },
+     {
+      "t": "carousels \u203a never autoplays for visitors who prefer reduced motion",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile%20carousel.spec.ts"
+   },
+   "10|3": {
+    "passed": 10,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 1,
+    "tests": [
+     {
+      "t": "carousels \u203a changing slides while scrolled down \u203a /home keeps its height and the scroll position on every slide",
+      "s": "skipped"
+     },
+     {
+      "t": "carousels \u203a autoplay advances a carousel nobody has touched",
+      "s": "passed"
+     },
+     {
+      "t": "carousels \u203a home shows its sections stacked on phones and as a carousel on wider screens",
+      "s": "passed"
+     },
+     {
+      "t": "carousels \u203a autoplay stops for good once the visitor touches the carousel",
+      "s": "passed"
+     },
+     {
+      "t": "carousels \u203a the pause button stops autoplay and play resumes it",
+      "s": "passed"
+     },
+     {
+      "t": "carousels \u203a never autoplays for visitors who prefer reduced motion",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-small%20carousel.spec.ts"
+   },
+   "10|4": {
+    "passed": 10,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 1,
+    "tests": [
+     {
+      "t": "carousels \u203a changing slides while scrolled down \u203a /home keeps its height and the scroll position on every slide",
+      "s": "skipped"
+     },
+     {
+      "t": "carousels \u203a autoplay advances a carousel nobody has touched",
+      "s": "passed"
+     },
+     {
+      "t": "carousels \u203a home shows its sections stacked on phones and as a carousel on wider screens",
+      "s": "passed"
+     },
+     {
+      "t": "carousels \u203a autoplay stops for good once the visitor touches the carousel",
+      "s": "passed"
+     },
+     {
+      "t": "carousels \u203a the pause button stops autoplay and play resumes it",
+      "s": "passed"
+     },
+     {
+      "t": "carousels \u203a never autoplays for visitors who prefer reduced motion",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-safari%20carousel.spec.ts"
+   },
+   "10|5": {
+    "passed": 10,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 1,
+    "tests": [
+     {
+      "t": "carousels \u203a changing slides while scrolled down \u203a /home keeps its height and the scroll position on every slide",
+      "s": "skipped"
+     },
+     {
+      "t": "carousels \u203a autoplay advances a carousel nobody has touched",
+      "s": "passed"
+     },
+     {
+      "t": "carousels \u203a home shows its sections stacked on phones and as a carousel on wider screens",
+      "s": "passed"
+     },
+     {
+      "t": "carousels \u203a autoplay stops for good once the visitor touches the carousel",
+      "s": "passed"
+     },
+     {
+      "t": "carousels \u203a the pause button stops autoplay and play resumes it",
+      "s": "passed"
+     },
+     {
+      "t": "carousels \u203a never autoplays for visitors who prefer reduced motion",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-safari-small%20carousel.spec.ts"
+   },
+   "10|6": {
+    "passed": 10,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 1,
+    "tests": [
+     {
+      "t": "carousels \u203a changing slides while scrolled down \u203a /home keeps its height and the scroll position on every slide",
+      "s": "skipped"
+     },
+     {
+      "t": "carousels \u203a autoplay advances a carousel nobody has touched",
+      "s": "passed"
+     },
+     {
+      "t": "carousels \u203a home shows its sections stacked on phones and as a carousel on wider screens",
+      "s": "passed"
+     },
+     {
+      "t": "carousels \u203a autoplay stops for good once the visitor touches the carousel",
+      "s": "passed"
+     },
+     {
+      "t": "carousels \u203a the pause button stops autoplay and play resumes it",
+      "s": "passed"
+     },
+     {
+      "t": "carousels \u203a never autoplays for visitors who prefer reduced motion",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-safari-large%20carousel.spec.ts"
+   },
+   "4|1": {
+    "passed": 10,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "contact form \u203a requires every field before sending",
+      "s": "passed"
+     },
+     {
+      "t": "contact form \u203a sends the message and confirms it",
+      "s": "passed"
+     },
+     {
+      "t": "contact form \u203a explains when the server is rate limiting",
+      "s": "passed"
+     },
+     {
+      "t": "contact form \u203a explains when sending fails",
+      "s": "passed"
+     },
+     {
+      "t": "contact form \u203a explains when the server answers 400, and keeps the message",
+      "s": "passed"
+     },
+     {
+      "t": "contact form \u203a explains when the server answers 500, and keeps the message",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Adesktop%20contact.spec.ts"
+   },
+   "4|2": {
+    "passed": 10,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "contact form \u203a requires every field before sending",
+      "s": "passed"
+     },
+     {
+      "t": "contact form \u203a sends the message and confirms it",
+      "s": "passed"
+     },
+     {
+      "t": "contact form \u203a explains when the server is rate limiting",
+      "s": "passed"
+     },
+     {
+      "t": "contact form \u203a explains when sending fails",
+      "s": "passed"
+     },
+     {
+      "t": "contact form \u203a explains when the server answers 400, and keeps the message",
+      "s": "passed"
+     },
+     {
+      "t": "contact form \u203a explains when the server answers 500, and keeps the message",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile%20contact.spec.ts"
+   },
+   "4|3": {
+    "passed": 10,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "contact form \u203a requires every field before sending",
+      "s": "passed"
+     },
+     {
+      "t": "contact form \u203a sends the message and confirms it",
+      "s": "passed"
+     },
+     {
+      "t": "contact form \u203a explains when the server is rate limiting",
+      "s": "passed"
+     },
+     {
+      "t": "contact form \u203a explains when sending fails",
+      "s": "passed"
+     },
+     {
+      "t": "contact form \u203a explains when the server answers 400, and keeps the message",
+      "s": "passed"
+     },
+     {
+      "t": "contact form \u203a explains when the server answers 500, and keeps the message",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-small%20contact.spec.ts"
+   },
+   "4|4": {
+    "passed": 10,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "contact form \u203a requires every field before sending",
+      "s": "passed"
+     },
+     {
+      "t": "contact form \u203a sends the message and confirms it",
+      "s": "passed"
+     },
+     {
+      "t": "contact form \u203a explains when the server is rate limiting",
+      "s": "passed"
+     },
+     {
+      "t": "contact form \u203a explains when sending fails",
+      "s": "passed"
+     },
+     {
+      "t": "contact form \u203a explains when the server answers 400, and keeps the message",
+      "s": "passed"
+     },
+     {
+      "t": "contact form \u203a explains when the server answers 500, and keeps the message",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-safari%20contact.spec.ts"
+   },
+   "4|5": {
+    "passed": 10,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "contact form \u203a requires every field before sending",
+      "s": "passed"
+     },
+     {
+      "t": "contact form \u203a sends the message and confirms it",
+      "s": "passed"
+     },
+     {
+      "t": "contact form \u203a explains when the server is rate limiting",
+      "s": "passed"
+     },
+     {
+      "t": "contact form \u203a explains when sending fails",
+      "s": "passed"
+     },
+     {
+      "t": "contact form \u203a explains when the server answers 400, and keeps the message",
+      "s": "passed"
+     },
+     {
+      "t": "contact form \u203a explains when the server answers 500, and keeps the message",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-safari-small%20contact.spec.ts"
+   },
+   "4|6": {
+    "passed": 10,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "contact form \u203a requires every field before sending",
+      "s": "passed"
+     },
+     {
+      "t": "contact form \u203a sends the message and confirms it",
+      "s": "passed"
+     },
+     {
+      "t": "contact form \u203a explains when the server is rate limiting",
+      "s": "passed"
+     },
+     {
+      "t": "contact form \u203a explains when sending fails",
+      "s": "passed"
+     },
+     {
+      "t": "contact form \u203a explains when the server answers 400, and keeps the message",
+      "s": "passed"
+     },
+     {
+      "t": "contact form \u203a explains when the server answers 500, and keeps the message",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-safari-large%20contact.spec.ts"
+   },
+   "5|1": {
+    "passed": 8,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "content API \u203a each navigation button loads its page from the content API",
+      "s": "passed"
+     },
+     {
+      "t": "content API \u203a renders what the API returns",
+      "s": "passed"
+     },
+     {
+      "t": "content API \u203a falls back to the bundled content when the API fails",
+      "s": "passed"
+     },
+     {
+      "t": "content API \u203a falls back to the bundled content when the page is not found",
+      "s": "passed"
+     },
+     {
+      "t": "content API \u203a falls back to the bundled content when the response is not JSON",
+      "s": "passed"
+     },
+     {
+      "t": "content API \u203a falls back to the bundled content when the response has the wrong shape",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Adesktop%20content-api.spec.ts"
+   },
+   "5|2": {
+    "passed": 8,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "content API \u203a each navigation button loads its page from the content API",
+      "s": "passed"
+     },
+     {
+      "t": "content API \u203a renders what the API returns",
+      "s": "passed"
+     },
+     {
+      "t": "content API \u203a falls back to the bundled content when the API fails",
+      "s": "passed"
+     },
+     {
+      "t": "content API \u203a falls back to the bundled content when the page is not found",
+      "s": "passed"
+     },
+     {
+      "t": "content API \u203a falls back to the bundled content when the response is not JSON",
+      "s": "passed"
+     },
+     {
+      "t": "content API \u203a falls back to the bundled content when the response has the wrong shape",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile%20content-api.spec.ts"
+   },
+   "5|3": {
+    "passed": 8,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "content API \u203a each navigation button loads its page from the content API",
+      "s": "passed"
+     },
+     {
+      "t": "content API \u203a renders what the API returns",
+      "s": "passed"
+     },
+     {
+      "t": "content API \u203a falls back to the bundled content when the API fails",
+      "s": "passed"
+     },
+     {
+      "t": "content API \u203a falls back to the bundled content when the page is not found",
+      "s": "passed"
+     },
+     {
+      "t": "content API \u203a falls back to the bundled content when the response is not JSON",
+      "s": "passed"
+     },
+     {
+      "t": "content API \u203a falls back to the bundled content when the response has the wrong shape",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-small%20content-api.spec.ts"
+   },
+   "5|4": {
+    "passed": 8,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "content API \u203a each navigation button loads its page from the content API",
+      "s": "passed"
+     },
+     {
+      "t": "content API \u203a renders what the API returns",
+      "s": "passed"
+     },
+     {
+      "t": "content API \u203a falls back to the bundled content when the API fails",
+      "s": "passed"
+     },
+     {
+      "t": "content API \u203a falls back to the bundled content when the page is not found",
+      "s": "passed"
+     },
+     {
+      "t": "content API \u203a falls back to the bundled content when the response is not JSON",
+      "s": "passed"
+     },
+     {
+      "t": "content API \u203a falls back to the bundled content when the response has the wrong shape",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-safari%20content-api.spec.ts"
+   },
+   "5|5": {
+    "passed": 8,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "content API \u203a each navigation button loads its page from the content API",
+      "s": "passed"
+     },
+     {
+      "t": "content API \u203a renders what the API returns",
+      "s": "passed"
+     },
+     {
+      "t": "content API \u203a falls back to the bundled content when the API fails",
+      "s": "passed"
+     },
+     {
+      "t": "content API \u203a falls back to the bundled content when the page is not found",
+      "s": "passed"
+     },
+     {
+      "t": "content API \u203a falls back to the bundled content when the response is not JSON",
+      "s": "passed"
+     },
+     {
+      "t": "content API \u203a falls back to the bundled content when the response has the wrong shape",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-safari-small%20content-api.spec.ts"
+   },
+   "5|6": {
+    "passed": 8,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "content API \u203a each navigation button loads its page from the content API",
+      "s": "passed"
+     },
+     {
+      "t": "content API \u203a renders what the API returns",
+      "s": "passed"
+     },
+     {
+      "t": "content API \u203a falls back to the bundled content when the API fails",
+      "s": "passed"
+     },
+     {
+      "t": "content API \u203a falls back to the bundled content when the page is not found",
+      "s": "passed"
+     },
+     {
+      "t": "content API \u203a falls back to the bundled content when the response is not JSON",
+      "s": "passed"
+     },
+     {
+      "t": "content API \u203a falls back to the bundled content when the response has the wrong shape",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-safari-large%20content-api.spec.ts"
+   },
+   "8|1": {
+    "passed": 5,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "home page \u203a shows the headline and outbound profile links",
+      "s": "passed"
+     },
+     {
+      "t": "home page \u203a has search and social preview metadata",
+      "s": "passed"
+     },
+     {
+      "t": "footer \u203a links to LinkedIn, GitHub and the contact form without publishing the email address",
+      "s": "passed"
+     },
+     {
+      "t": "resume page \u203a opens the most recent role, then one role at a time, each with dates and highlights",
+      "s": "passed"
+     },
+     {
+      "t": "resume page \u203a every company logo loads",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Adesktop%20content.spec.ts"
+   },
+   "8|2": {
+    "passed": 5,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "home page \u203a shows the headline and outbound profile links",
+      "s": "passed"
+     },
+     {
+      "t": "home page \u203a has search and social preview metadata",
+      "s": "passed"
+     },
+     {
+      "t": "footer \u203a links to LinkedIn, GitHub and the contact form without publishing the email address",
+      "s": "passed"
+     },
+     {
+      "t": "resume page \u203a opens the most recent role, then one role at a time, each with dates and highlights",
+      "s": "passed"
+     },
+     {
+      "t": "resume page \u203a every company logo loads",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile%20content.spec.ts"
+   },
+   "8|3": {
+    "passed": 5,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "home page \u203a shows the headline and outbound profile links",
+      "s": "passed"
+     },
+     {
+      "t": "home page \u203a has search and social preview metadata",
+      "s": "passed"
+     },
+     {
+      "t": "footer \u203a links to LinkedIn, GitHub and the contact form without publishing the email address",
+      "s": "passed"
+     },
+     {
+      "t": "resume page \u203a opens the most recent role, then one role at a time, each with dates and highlights",
+      "s": "passed"
+     },
+     {
+      "t": "resume page \u203a every company logo loads",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-small%20content.spec.ts"
+   },
+   "8|4": {
+    "passed": 5,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "home page \u203a shows the headline and outbound profile links",
+      "s": "passed"
+     },
+     {
+      "t": "home page \u203a has search and social preview metadata",
+      "s": "passed"
+     },
+     {
+      "t": "footer \u203a links to LinkedIn, GitHub and the contact form without publishing the email address",
+      "s": "passed"
+     },
+     {
+      "t": "resume page \u203a opens the most recent role, then one role at a time, each with dates and highlights",
+      "s": "passed"
+     },
+     {
+      "t": "resume page \u203a every company logo loads",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-safari%20content.spec.ts"
+   },
+   "8|5": {
+    "passed": 5,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "home page \u203a shows the headline and outbound profile links",
+      "s": "passed"
+     },
+     {
+      "t": "home page \u203a has search and social preview metadata",
+      "s": "passed"
+     },
+     {
+      "t": "footer \u203a links to LinkedIn, GitHub and the contact form without publishing the email address",
+      "s": "passed"
+     },
+     {
+      "t": "resume page \u203a opens the most recent role, then one role at a time, each with dates and highlights",
+      "s": "passed"
+     },
+     {
+      "t": "resume page \u203a every company logo loads",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-safari-small%20content.spec.ts"
+   },
+   "8|6": {
+    "passed": 5,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "home page \u203a shows the headline and outbound profile links",
+      "s": "passed"
+     },
+     {
+      "t": "home page \u203a has search and social preview metadata",
+      "s": "passed"
+     },
+     {
+      "t": "footer \u203a links to LinkedIn, GitHub and the contact form without publishing the email address",
+      "s": "passed"
+     },
+     {
+      "t": "resume page \u203a opens the most recent role, then one role at a time, each with dates and highlights",
+      "s": "passed"
+     },
+     {
+      "t": "resume page \u203a every company logo loads",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-safari-large%20content.spec.ts"
+   },
+   "7|1": {
+    "passed": 14,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "navigation \u203a every nav link opens its page and marks it active",
+      "s": "passed"
+     },
+     {
+      "t": "navigation \u203a deep link /home loads directly",
+      "s": "passed"
+     },
+     {
+      "t": "navigation \u203a deep link /contact loads directly",
+      "s": "passed"
+     },
+     {
+      "t": "navigation \u203a deep link /about loads directly",
+      "s": "passed"
+     },
+     {
+      "t": "navigation \u203a deep link /resume loads directly",
+      "s": "passed"
+     },
+     {
+      "t": "navigation \u203a deep link /testimonials loads directly",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Adesktop%20navigation.spec.ts"
+   },
+   "7|2": {
+    "passed": 14,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "navigation \u203a every nav link opens its page and marks it active",
+      "s": "passed"
+     },
+     {
+      "t": "navigation \u203a deep link /home loads directly",
+      "s": "passed"
+     },
+     {
+      "t": "navigation \u203a deep link /contact loads directly",
+      "s": "passed"
+     },
+     {
+      "t": "navigation \u203a deep link /about loads directly",
+      "s": "passed"
+     },
+     {
+      "t": "navigation \u203a deep link /resume loads directly",
+      "s": "passed"
+     },
+     {
+      "t": "navigation \u203a deep link /testimonials loads directly",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile%20navigation.spec.ts"
+   },
+   "7|3": {
+    "passed": 14,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "navigation \u203a every nav link opens its page and marks it active",
+      "s": "passed"
+     },
+     {
+      "t": "navigation \u203a deep link /home loads directly",
+      "s": "passed"
+     },
+     {
+      "t": "navigation \u203a deep link /contact loads directly",
+      "s": "passed"
+     },
+     {
+      "t": "navigation \u203a deep link /about loads directly",
+      "s": "passed"
+     },
+     {
+      "t": "navigation \u203a deep link /resume loads directly",
+      "s": "passed"
+     },
+     {
+      "t": "navigation \u203a deep link /testimonials loads directly",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-small%20navigation.spec.ts"
+   },
+   "7|4": {
+    "passed": 14,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "navigation \u203a every nav link opens its page and marks it active",
+      "s": "passed"
+     },
+     {
+      "t": "navigation \u203a deep link /home loads directly",
+      "s": "passed"
+     },
+     {
+      "t": "navigation \u203a deep link /contact loads directly",
+      "s": "passed"
+     },
+     {
+      "t": "navigation \u203a deep link /about loads directly",
+      "s": "passed"
+     },
+     {
+      "t": "navigation \u203a deep link /resume loads directly",
+      "s": "passed"
+     },
+     {
+      "t": "navigation \u203a deep link /testimonials loads directly",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-safari%20navigation.spec.ts"
+   },
+   "7|5": {
+    "passed": 14,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "navigation \u203a every nav link opens its page and marks it active",
+      "s": "passed"
+     },
+     {
+      "t": "navigation \u203a deep link /home loads directly",
+      "s": "passed"
+     },
+     {
+      "t": "navigation \u203a deep link /contact loads directly",
+      "s": "passed"
+     },
+     {
+      "t": "navigation \u203a deep link /about loads directly",
+      "s": "passed"
+     },
+     {
+      "t": "navigation \u203a deep link /resume loads directly",
+      "s": "passed"
+     },
+     {
+      "t": "navigation \u203a deep link /testimonials loads directly",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-safari-small%20navigation.spec.ts"
+   },
+   "7|6": {
+    "passed": 14,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "navigation \u203a every nav link opens its page and marks it active",
+      "s": "passed"
+     },
+     {
+      "t": "navigation \u203a deep link /home loads directly",
+      "s": "passed"
+     },
+     {
+      "t": "navigation \u203a deep link /contact loads directly",
+      "s": "passed"
+     },
+     {
+      "t": "navigation \u203a deep link /about loads directly",
+      "s": "passed"
+     },
+     {
+      "t": "navigation \u203a deep link /resume loads directly",
+      "s": "passed"
+     },
+     {
+      "t": "navigation \u203a deep link /testimonials loads directly",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-safari-large%20navigation.spec.ts"
+   },
+   "6|1": {
+    "passed": 7,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "testimonials page \u203a shows every testimonial in order, each with name, title and quote",
+      "s": "passed"
+     },
+     {
+      "t": "testimonials page \u203a every testimonial photo loads",
+      "s": "passed"
+     },
+     {
+      "t": "testimonials page \u203a a testimonial without a photo shows no image",
+      "s": "passed"
+     },
+     {
+      "t": "education page \u203a shows every degree with its school logo and a credited campus photo",
+      "s": "passed"
+     },
+     {
+      "t": "charity page \u203a shows every charity event with its photo, and outside links open in a new tab",
+      "s": "passed"
+     },
+     {
+      "t": "about page \u203a opens on the essay and signature from the content API",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Adesktop%20pages.spec.ts"
+   },
+   "6|2": {
+    "passed": 7,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "testimonials page \u203a shows every testimonial in order, each with name, title and quote",
+      "s": "passed"
+     },
+     {
+      "t": "testimonials page \u203a every testimonial photo loads",
+      "s": "passed"
+     },
+     {
+      "t": "testimonials page \u203a a testimonial without a photo shows no image",
+      "s": "passed"
+     },
+     {
+      "t": "education page \u203a shows every degree with its school logo and a credited campus photo",
+      "s": "passed"
+     },
+     {
+      "t": "charity page \u203a shows every charity event with its photo, and outside links open in a new tab",
+      "s": "passed"
+     },
+     {
+      "t": "about page \u203a opens on the essay and signature from the content API",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile%20pages.spec.ts"
+   },
+   "6|3": {
+    "passed": 7,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "testimonials page \u203a shows every testimonial in order, each with name, title and quote",
+      "s": "passed"
+     },
+     {
+      "t": "testimonials page \u203a every testimonial photo loads",
+      "s": "passed"
+     },
+     {
+      "t": "testimonials page \u203a a testimonial without a photo shows no image",
+      "s": "passed"
+     },
+     {
+      "t": "education page \u203a shows every degree with its school logo and a credited campus photo",
+      "s": "passed"
+     },
+     {
+      "t": "charity page \u203a shows every charity event with its photo, and outside links open in a new tab",
+      "s": "passed"
+     },
+     {
+      "t": "about page \u203a opens on the essay and signature from the content API",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-small%20pages.spec.ts"
+   },
+   "6|4": {
+    "passed": 7,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "testimonials page \u203a shows every testimonial in order, each with name, title and quote",
+      "s": "passed"
+     },
+     {
+      "t": "testimonials page \u203a every testimonial photo loads",
+      "s": "passed"
+     },
+     {
+      "t": "testimonials page \u203a a testimonial without a photo shows no image",
+      "s": "passed"
+     },
+     {
+      "t": "education page \u203a shows every degree with its school logo and a credited campus photo",
+      "s": "passed"
+     },
+     {
+      "t": "charity page \u203a shows every charity event with its photo, and outside links open in a new tab",
+      "s": "passed"
+     },
+     {
+      "t": "about page \u203a opens on the essay and signature from the content API",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-safari%20pages.spec.ts"
+   },
+   "6|5": {
+    "passed": 7,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "testimonials page \u203a shows every testimonial in order, each with name, title and quote",
+      "s": "passed"
+     },
+     {
+      "t": "testimonials page \u203a every testimonial photo loads",
+      "s": "passed"
+     },
+     {
+      "t": "testimonials page \u203a a testimonial without a photo shows no image",
+      "s": "passed"
+     },
+     {
+      "t": "education page \u203a shows every degree with its school logo and a credited campus photo",
+      "s": "passed"
+     },
+     {
+      "t": "charity page \u203a shows every charity event with its photo, and outside links open in a new tab",
+      "s": "passed"
+     },
+     {
+      "t": "about page \u203a opens on the essay and signature from the content API",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-safari-small%20pages.spec.ts"
+   },
+   "6|6": {
+    "passed": 7,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "testimonials page \u203a shows every testimonial in order, each with name, title and quote",
+      "s": "passed"
+     },
+     {
+      "t": "testimonials page \u203a every testimonial photo loads",
+      "s": "passed"
+     },
+     {
+      "t": "testimonials page \u203a a testimonial without a photo shows no image",
+      "s": "passed"
+     },
+     {
+      "t": "education page \u203a shows every degree with its school logo and a credited campus photo",
+      "s": "passed"
+     },
+     {
+      "t": "charity page \u203a shows every charity event with its photo, and outside links open in a new tab",
+      "s": "passed"
+     },
+     {
+      "t": "about page \u203a opens on the essay and signature from the content API",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-safari-large%20pages.spec.ts"
+   },
+   "11|1": {
+    "passed": 11,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "pre-rendered pages \u203a /home has its own HTML with the page's text",
+      "s": "passed"
+     },
+     {
+      "t": "pre-rendered pages \u203a /contact has its own HTML with the page's text",
+      "s": "passed"
+     },
+     {
+      "t": "pre-rendered pages \u203a /about has its own HTML with the page's text",
+      "s": "passed"
+     },
+     {
+      "t": "pre-rendered pages \u203a /resume has its own HTML with the page's text",
+      "s": "passed"
+     },
+     {
+      "t": "pre-rendered pages \u203a /testimonials has its own HTML with the page's text",
+      "s": "passed"
+     },
+     {
+      "t": "pre-rendered pages \u203a /education has its own HTML with the page's text",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Adesktop%20prerender.spec.ts"
+   },
+   "11|2": {
+    "passed": 11,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "pre-rendered pages \u203a /home has its own HTML with the page's text",
+      "s": "passed"
+     },
+     {
+      "t": "pre-rendered pages \u203a /contact has its own HTML with the page's text",
+      "s": "passed"
+     },
+     {
+      "t": "pre-rendered pages \u203a /about has its own HTML with the page's text",
+      "s": "passed"
+     },
+     {
+      "t": "pre-rendered pages \u203a /resume has its own HTML with the page's text",
+      "s": "passed"
+     },
+     {
+      "t": "pre-rendered pages \u203a /testimonials has its own HTML with the page's text",
+      "s": "passed"
+     },
+     {
+      "t": "pre-rendered pages \u203a /education has its own HTML with the page's text",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile%20prerender.spec.ts"
+   },
+   "11|3": {
+    "passed": 11,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "pre-rendered pages \u203a /home has its own HTML with the page's text",
+      "s": "passed"
+     },
+     {
+      "t": "pre-rendered pages \u203a /contact has its own HTML with the page's text",
+      "s": "passed"
+     },
+     {
+      "t": "pre-rendered pages \u203a /about has its own HTML with the page's text",
+      "s": "passed"
+     },
+     {
+      "t": "pre-rendered pages \u203a /resume has its own HTML with the page's text",
+      "s": "passed"
+     },
+     {
+      "t": "pre-rendered pages \u203a /testimonials has its own HTML with the page's text",
+      "s": "passed"
+     },
+     {
+      "t": "pre-rendered pages \u203a /education has its own HTML with the page's text",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-small%20prerender.spec.ts"
+   },
+   "11|4": {
+    "passed": 11,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "pre-rendered pages \u203a /home has its own HTML with the page's text",
+      "s": "passed"
+     },
+     {
+      "t": "pre-rendered pages \u203a /contact has its own HTML with the page's text",
+      "s": "passed"
+     },
+     {
+      "t": "pre-rendered pages \u203a /about has its own HTML with the page's text",
+      "s": "passed"
+     },
+     {
+      "t": "pre-rendered pages \u203a /resume has its own HTML with the page's text",
+      "s": "passed"
+     },
+     {
+      "t": "pre-rendered pages \u203a /testimonials has its own HTML with the page's text",
+      "s": "passed"
+     },
+     {
+      "t": "pre-rendered pages \u203a /education has its own HTML with the page's text",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-safari%20prerender.spec.ts"
+   },
+   "11|5": {
+    "passed": 11,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "pre-rendered pages \u203a /home has its own HTML with the page's text",
+      "s": "passed"
+     },
+     {
+      "t": "pre-rendered pages \u203a /contact has its own HTML with the page's text",
+      "s": "passed"
+     },
+     {
+      "t": "pre-rendered pages \u203a /about has its own HTML with the page's text",
+      "s": "passed"
+     },
+     {
+      "t": "pre-rendered pages \u203a /resume has its own HTML with the page's text",
+      "s": "passed"
+     },
+     {
+      "t": "pre-rendered pages \u203a /testimonials has its own HTML with the page's text",
+      "s": "passed"
+     },
+     {
+      "t": "pre-rendered pages \u203a /education has its own HTML with the page's text",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-safari-small%20prerender.spec.ts"
+   },
+   "11|6": {
+    "passed": 11,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "pre-rendered pages \u203a /home has its own HTML with the page's text",
+      "s": "passed"
+     },
+     {
+      "t": "pre-rendered pages \u203a /contact has its own HTML with the page's text",
+      "s": "passed"
+     },
+     {
+      "t": "pre-rendered pages \u203a /about has its own HTML with the page's text",
+      "s": "passed"
+     },
+     {
+      "t": "pre-rendered pages \u203a /resume has its own HTML with the page's text",
+      "s": "passed"
+     },
+     {
+      "t": "pre-rendered pages \u203a /testimonials has its own HTML with the page's text",
+      "s": "passed"
+     },
+     {
+      "t": "pre-rendered pages \u203a /education has its own HTML with the page's text",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-safari-large%20prerender.spec.ts"
+   },
+   "12|1": {
+    "passed": 24,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "running page: race history \u203a lists every race, newest first, with date, location, time, pace and placing",
+      "s": "passed"
+     },
+     {
+      "t": "running page: race history \u203a labels its columns Date, Race, Distance, Time, Pace and Overall",
+      "s": "passed"
+     },
+     {
+      "t": "running page: race history \u203a the race data is consistent: newest first, placed within the field, pace matching time and distance",
+      "s": "passed"
+     },
+     {
+      "t": "running page: race history \u203a the race profile link opens Athlinks in a new tab",
+      "s": "passed"
+     },
+     {
+      "t": "running page: race history \u203a writes large fields with thousands separators",
+      "s": "passed"
+     },
+     {
+      "t": "running page: race history \u203a says \"1 race\" and a single year when there is only one race",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Adesktop%20running.spec.ts"
+   },
+   "12|2": {
+    "passed": 24,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "running page: race history \u203a lists every race, newest first, with date, location, time, pace and placing",
+      "s": "passed"
+     },
+     {
+      "t": "running page: race history \u203a labels its columns Date, Race, Distance, Time, Pace and Overall",
+      "s": "passed"
+     },
+     {
+      "t": "running page: race history \u203a the race data is consistent: newest first, placed within the field, pace matching time and distance",
+      "s": "passed"
+     },
+     {
+      "t": "running page: race history \u203a the race profile link opens Athlinks in a new tab",
+      "s": "passed"
+     },
+     {
+      "t": "running page: race history \u203a writes large fields with thousands separators",
+      "s": "passed"
+     },
+     {
+      "t": "running page: race history \u203a says \"1 race\" and a single year when there is only one race",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile%20running.spec.ts"
+   },
+   "12|3": {
+    "passed": 24,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "running page: race history \u203a lists every race, newest first, with date, location, time, pace and placing",
+      "s": "passed"
+     },
+     {
+      "t": "running page: race history \u203a labels its columns Date, Race, Distance, Time, Pace and Overall",
+      "s": "passed"
+     },
+     {
+      "t": "running page: race history \u203a the race data is consistent: newest first, placed within the field, pace matching time and distance",
+      "s": "passed"
+     },
+     {
+      "t": "running page: race history \u203a the race profile link opens Athlinks in a new tab",
+      "s": "passed"
+     },
+     {
+      "t": "running page: race history \u203a writes large fields with thousands separators",
+      "s": "passed"
+     },
+     {
+      "t": "running page: race history \u203a says \"1 race\" and a single year when there is only one race",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-small%20running.spec.ts"
+   },
+   "12|4": {
+    "passed": 24,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "running page: race history \u203a lists every race, newest first, with date, location, time, pace and placing",
+      "s": "passed"
+     },
+     {
+      "t": "running page: race history \u203a labels its columns Date, Race, Distance, Time, Pace and Overall",
+      "s": "passed"
+     },
+     {
+      "t": "running page: race history \u203a the race data is consistent: newest first, placed within the field, pace matching time and distance",
+      "s": "passed"
+     },
+     {
+      "t": "running page: race history \u203a the race profile link opens Athlinks in a new tab",
+      "s": "passed"
+     },
+     {
+      "t": "running page: race history \u203a writes large fields with thousands separators",
+      "s": "passed"
+     },
+     {
+      "t": "running page: race history \u203a says \"1 race\" and a single year when there is only one race",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-safari%20running.spec.ts"
+   },
+   "12|5": {
+    "passed": 24,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "running page: race history \u203a lists every race, newest first, with date, location, time, pace and placing",
+      "s": "passed"
+     },
+     {
+      "t": "running page: race history \u203a labels its columns Date, Race, Distance, Time, Pace and Overall",
+      "s": "passed"
+     },
+     {
+      "t": "running page: race history \u203a the race data is consistent: newest first, placed within the field, pace matching time and distance",
+      "s": "passed"
+     },
+     {
+      "t": "running page: race history \u203a the race profile link opens Athlinks in a new tab",
+      "s": "passed"
+     },
+     {
+      "t": "running page: race history \u203a writes large fields with thousands separators",
+      "s": "passed"
+     },
+     {
+      "t": "running page: race history \u203a says \"1 race\" and a single year when there is only one race",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-safari-small%20running.spec.ts"
+   },
+   "12|6": {
+    "passed": 24,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "running page: race history \u203a lists every race, newest first, with date, location, time, pace and placing",
+      "s": "passed"
+     },
+     {
+      "t": "running page: race history \u203a labels its columns Date, Race, Distance, Time, Pace and Overall",
+      "s": "passed"
+     },
+     {
+      "t": "running page: race history \u203a the race data is consistent: newest first, placed within the field, pace matching time and distance",
+      "s": "passed"
+     },
+     {
+      "t": "running page: race history \u203a the race profile link opens Athlinks in a new tab",
+      "s": "passed"
+     },
+     {
+      "t": "running page: race history \u203a writes large fields with thousands separators",
+      "s": "passed"
+     },
+     {
+      "t": "running page: race history \u203a says \"1 race\" and a single year when there is only one race",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-safari-large%20running.spec.ts"
+   },
+   "9|2": {
+    "passed": 13,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "phone layout \u203a nav fits on one row of icon buttons large enough to tap",
+      "s": "passed"
+     },
+     {
+      "t": "phone layout \u203a tapping each nav button opens its page",
+      "s": "passed"
+     },
+     {
+      "t": "phone layout \u203a /home does not scroll sideways",
+      "s": "passed"
+     },
+     {
+      "t": "phone layout \u203a /contact does not scroll sideways",
+      "s": "passed"
+     },
+     {
+      "t": "phone layout \u203a /about does not scroll sideways",
+      "s": "passed"
+     },
+     {
+      "t": "phone layout \u203a /resume does not scroll sideways",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile%20mobile.spec.ts"
+   },
+   "9|3": {
+    "passed": 13,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "phone layout \u203a nav fits on one row of icon buttons large enough to tap",
+      "s": "passed"
+     },
+     {
+      "t": "phone layout \u203a tapping each nav button opens its page",
+      "s": "passed"
+     },
+     {
+      "t": "phone layout \u203a /home does not scroll sideways",
+      "s": "passed"
+     },
+     {
+      "t": "phone layout \u203a /contact does not scroll sideways",
+      "s": "passed"
+     },
+     {
+      "t": "phone layout \u203a /about does not scroll sideways",
+      "s": "passed"
+     },
+     {
+      "t": "phone layout \u203a /resume does not scroll sideways",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-small%20mobile.spec.ts"
+   },
+   "9|4": {
+    "passed": 13,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "phone layout \u203a nav fits on one row of icon buttons large enough to tap",
+      "s": "passed"
+     },
+     {
+      "t": "phone layout \u203a tapping each nav button opens its page",
+      "s": "passed"
+     },
+     {
+      "t": "phone layout \u203a /home does not scroll sideways",
+      "s": "passed"
+     },
+     {
+      "t": "phone layout \u203a /contact does not scroll sideways",
+      "s": "passed"
+     },
+     {
+      "t": "phone layout \u203a /about does not scroll sideways",
+      "s": "passed"
+     },
+     {
+      "t": "phone layout \u203a /resume does not scroll sideways",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-safari%20mobile.spec.ts"
+   },
+   "9|5": {
+    "passed": 13,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "phone layout \u203a nav fits on one row of icon buttons large enough to tap",
+      "s": "passed"
+     },
+     {
+      "t": "phone layout \u203a tapping each nav button opens its page",
+      "s": "passed"
+     },
+     {
+      "t": "phone layout \u203a /home does not scroll sideways",
+      "s": "passed"
+     },
+     {
+      "t": "phone layout \u203a /contact does not scroll sideways",
+      "s": "passed"
+     },
+     {
+      "t": "phone layout \u203a /about does not scroll sideways",
+      "s": "passed"
+     },
+     {
+      "t": "phone layout \u203a /resume does not scroll sideways",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-safari-small%20mobile.spec.ts"
+   },
+   "9|6": {
+    "passed": 13,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "phone layout \u203a nav fits on one row of icon buttons large enough to tap",
+      "s": "passed"
+     },
+     {
+      "t": "phone layout \u203a tapping each nav button opens its page",
+      "s": "passed"
+     },
+     {
+      "t": "phone layout \u203a /home does not scroll sideways",
+      "s": "passed"
+     },
+     {
+      "t": "phone layout \u203a /contact does not scroll sideways",
+      "s": "passed"
+     },
+     {
+      "t": "phone layout \u203a /about does not scroll sideways",
+      "s": "passed"
+     },
+     {
+      "t": "phone layout \u203a /resume does not scroll sideways",
+      "s": "passed"
+     }
+    ],
+    "link": "regression/#?q=p%3Amobile-safari-large%20mobile.spec.ts"
+   },
+   "13|7": {
+    "passed": 10,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "production API: content contract \u203a every content page is cacheable JSON in the shape the site expects",
+      "s": "passed"
+     },
+     {
+      "t": "production API: running \u203a the race history is complete, consistent and newest first",
+      "s": "passed"
+     },
+     {
+      "t": "production API: running \u203a the running stats match the live race history",
+      "s": "passed"
+     },
+     {
+      "t": "production API: running \u203a the running stats are read-only",
+      "s": "passed"
+     },
+     {
+      "t": "production API: running \u203a unknown running paths are not found",
+      "s": "passed"
+     },
+     {
+      "t": "production API: running \u203a the live running page shows the personal bests from the API",
+      "s": "passed"
+     }
+    ],
+    "link": "smoke/#?q=p%3Aproduction%20production-api.spec.ts"
+   },
+   "14|7": {
+    "passed": 7,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "production buttons \u203a clicking Home loads /api/content/profile",
+      "s": "passed"
+     },
+     {
+      "t": "production buttons \u203a clicking About loads /api/content/about",
+      "s": "passed"
+     },
+     {
+      "t": "production buttons \u203a clicking Resume loads /api/content/resume",
+      "s": "passed"
+     },
+     {
+      "t": "production buttons \u203a clicking Testimonials loads /api/content/testimonials",
+      "s": "passed"
+     },
+     {
+      "t": "production buttons \u203a clicking Education loads /api/content/education",
+      "s": "passed"
+     },
+     {
+      "t": "production buttons \u203a clicking Charity Work loads /api/content/charity",
+      "s": "passed"
+     }
+    ],
+    "link": "smoke/#?q=p%3Aproduction%20production-buttons.spec.ts"
+   },
+   "15|7": {
+    "passed": 19,
+    "failed": 1,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "production smoke \u203a the API rejects malformed, unsupported and unknown requests",
+      "s": "failed"
+     },
+     {
+      "t": "production smoke \u203a /home is up",
+      "s": "passed"
+     },
+     {
+      "t": "production smoke \u203a /contact is up",
+      "s": "passed"
+     },
+     {
+      "t": "production smoke \u203a /about is up",
+      "s": "passed"
+     },
+     {
+      "t": "production smoke \u203a /resume is up",
+      "s": "passed"
+     },
+     {
+      "t": "production smoke \u203a /testimonials is up",
+      "s": "passed"
+     }
+    ],
+    "link": "smoke/#?q=p%3Aproduction%20production.spec.ts"
+   },
+   "15|8": {
+    "passed": 9,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "production smoke \u203a /home is up",
+      "s": "passed"
+     },
+     {
+      "t": "production smoke \u203a /contact is up",
+      "s": "passed"
+     },
+     {
+      "t": "production smoke \u203a /about is up",
+      "s": "passed"
+     },
+     {
+      "t": "production smoke \u203a /resume is up",
+      "s": "passed"
+     },
+     {
+      "t": "production smoke \u203a /testimonials is up",
+      "s": "passed"
+     },
+     {
+      "t": "production smoke \u203a /education is up",
+      "s": "passed"
+     }
+    ],
+    "link": "smoke/#?q=p%3Aproduction-mobile%20production.spec.ts"
+   },
+   "15|9": {
+    "passed": 9,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "production smoke \u203a /home is up",
+      "s": "passed"
+     },
+     {
+      "t": "production smoke \u203a /contact is up",
+      "s": "passed"
+     },
+     {
+      "t": "production smoke \u203a /about is up",
+      "s": "passed"
+     },
+     {
+      "t": "production smoke \u203a /resume is up",
+      "s": "passed"
+     },
+     {
+      "t": "production smoke \u203a /testimonials is up",
+      "s": "passed"
+     },
+     {
+      "t": "production smoke \u203a /education is up",
+      "s": "passed"
+     }
+    ],
+    "link": "smoke/#?q=p%3Aproduction-mobile-safari%20production.spec.ts"
+   },
+   "9|8": {
+    "passed": 13,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "phone layout \u203a nav fits on one row of icon buttons large enough to tap",
+      "s": "passed"
+     },
+     {
+      "t": "phone layout \u203a tapping each nav button opens its page",
+      "s": "passed"
+     },
+     {
+      "t": "phone layout \u203a /home does not scroll sideways",
+      "s": "passed"
+     },
+     {
+      "t": "phone layout \u203a /contact does not scroll sideways",
+      "s": "passed"
+     },
+     {
+      "t": "phone layout \u203a /about does not scroll sideways",
+      "s": "passed"
+     },
+     {
+      "t": "phone layout \u203a /resume does not scroll sideways",
+      "s": "passed"
+     }
+    ],
+    "link": "smoke/#?q=p%3Aproduction-mobile%20mobile.spec.ts"
+   },
+   "9|9": {
+    "passed": 13,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "tests": [
+     {
+      "t": "phone layout \u203a nav fits on one row of icon buttons large enough to tap",
+      "s": "passed"
+     },
+     {
+      "t": "phone layout \u203a tapping each nav button opens its page",
+      "s": "passed"
+     },
+     {
+      "t": "phone layout \u203a /home does not scroll sideways",
+      "s": "passed"
+     },
+     {
+      "t": "phone layout \u203a /contact does not scroll sideways",
+      "s": "passed"
+     },
+     {
+      "t": "phone layout \u203a /about does not scroll sideways",
+      "s": "passed"
+     },
+     {
+      "t": "phone layout \u203a /resume does not scroll sideways",
+      "s": "passed"
+     }
+    ],
+    "link": "smoke/#?q=p%3Aproduction-mobile-safari%20mobile.spec.ts"
+   },
+   "16|10": {
+    "passed": 108,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "link": "jmeter/",
+    "tests": [
+     {
+      "t": "Open site: 9 requests, typical 95 ms",
+      "s": "passed"
+     },
+     {
+      "t": "Nav: Home: 9 requests, typical 22 ms",
+      "s": "passed"
+     },
+     {
+      "t": "Nav: About: 9 requests, typical 20 ms",
+      "s": "passed"
+     },
+     {
+      "t": "Nav: Resume: 9 requests, typical 29 ms",
+      "s": "passed"
+     },
+     {
+      "t": "Nav: Testimonials: 9 requests, typical 23 ms",
+      "s": "passed"
+     },
+     {
+      "t": "Nav: Education: 9 requests, typical 20 ms",
+      "s": "passed"
+     }
+    ]
+   }
+  }
+ }
+}

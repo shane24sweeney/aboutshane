@@ -10,13 +10,13 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 4px 10px;
+  gap: 4px 6px;
   width: 100%;
 }
 
 .site-nav-links .nav-link {
-  min-width: 76px;
-  padding: 9px 11px !important;
+  min-width: 92px;
+  padding: 10px 6px 8px !important;
   border-radius: 8px;
   color: var(--site-text) !important;
   line-height: 1.2;
@@ -25,8 +25,9 @@
 .site-nav-links .nav-button {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 7px;
   border: 1px solid transparent;
   background: rgba(255, 255, 255, 0.035);
   cursor: pointer;
@@ -50,7 +51,7 @@
    a lit face, a darker edge underneath for thickness, a highlight across the top and a soft
    shadow. Hovering tilts the tile toward the visitor; pressing sinks it; the current page glows. */
 .nav-tile {
-  --size: 46px;
+  --size: 42px;
   --depth: 4px;
   position: relative;
   display: grid;
@@ -117,7 +118,30 @@
     0 0 0 2px color-mix(in srgb, var(--tile) 70%, #fff);
 }
 
+/* Test Metrics: a globe made from a flat world map (scripts/earth/) sliding behind a round,
+   shaded window. The map is twice as wide as it is tall, so one turn moves it two globe-widths. */
+.nav-earth {
+  --globe: 1.5em;
+  display: block;
+  width: var(--globe);
+  height: var(--globe);
+  border-radius: 50%;
+  background: url('../assets/earth.jpg') 0 0 / auto 100% repeat-x;
+  box-shadow:
+    inset calc(var(--globe) * -0.22) calc(var(--globe) * -0.12) calc(var(--globe) * 0.3) rgba(0, 0, 0, 0.7),
+    inset calc(var(--globe) * 0.08) calc(var(--globe) * 0.06) calc(var(--globe) * 0.18) rgba(255, 255, 255, 0.4),
+    0 0 calc(var(--globe) * 0.22) rgba(150, 205, 255, 0.75);
+  animation: earth-spin 14s linear infinite;
+}
+
+@keyframes earth-spin {
+  to {
+    background-position: calc(var(--globe) * -2) 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .nav-earth { animation: none; }
   .nav-tile { transition: none; }
   .site-nav-links .nav-button:hover .nav-tile,
   .site-nav-links .nav-button:focus-visible .nav-tile {
@@ -127,12 +151,14 @@
 
 .nav-label {
   display: block;
-  margin-top: 5px;
+  font-size: 0.9rem;
+  line-height: 1.15;
+  white-space: nowrap;
 }
 
-/* Phones: two rows of four, each tile with its name underneath, so every tab says where it goes.
-   Four across leaves about 80px per tab on the smallest phones (360px), room for "Testimonials"
-   and "Charity Work" at a readable size, and every tab is well over the 44px tap-target minimum. */
+/* Phones: three rows of three, each tile with its name underneath, so every tab says where it goes.
+   Three across leaves over 110px per tab on the smallest phones (360px), room for "Testimonials"
+   and "Test Metrics" at a readable size, and every tab is well over the 44px tap-target minimum. */
 @media (max-width: 600px) {
   .site-nav {
     padding: 10px 6px 6px;
@@ -140,14 +166,11 @@
 
   .site-nav-links {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 4px;
   }
 
   .site-nav-links .nav-link {
-    flex-direction: column;
-    /* Tiles line up along the top even when a name wraps to two lines. */
-    justify-content: flex-start;
     gap: 6px;
     min-width: 0;
     min-height: 64px;
@@ -175,7 +198,7 @@
 
   .nav-label {
     display: block;
-    margin-top: 0;
+    white-space: normal;
     max-width: 100%;
     font-size: 0.75rem;
     font-weight: 500;

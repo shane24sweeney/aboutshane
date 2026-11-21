@@ -8,6 +8,7 @@ const About = lazy(() => import('./pages/About'));
 const Charity = lazy(() => import('./pages/Charity'));
 const Contact = lazy(() => import('./pages/Contact'));
 const Education = lazy(() => import('./pages/Education'));
+const Metrics = lazy(() => import('./pages/Metrics'));
 const Resume = lazy(() => import('./pages/Resume'));
 const Running = lazy(() => import('./pages/Running'));
 const Testimonials = lazy(() => import('./pages/Testimonials'));
@@ -30,6 +31,7 @@ function App() {
               <Route path="/education" element={<Education />} />
               <Route path="/charity" element={<Charity />} />
               <Route path="/running" element={<Running />} />
+              <Route path="/metrics" element={<Metrics />} />
               <Route path="*" element={<Navigate to="/home" replace />} />
             </Routes>
           </Suspense>

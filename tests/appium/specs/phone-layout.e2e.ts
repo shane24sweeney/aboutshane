@@ -9,10 +9,10 @@ const MIN_TAP_TARGET = 44;
 /** iOS zooms the page when a focused field's text is smaller than this. */
 const MIN_INPUT_FONT_PX = 16;
 const NAV_BUTTONS = 'nav[aria-label="Primary navigation"] .nav-button';
-const PATHS = ['/home', '/contact', '/about', '/resume', '/testimonials', '/education', '/charity', '/running'];
+const PATHS = ['/home', '/contact', '/about', '/resume', '/testimonials', '/education', '/charity', '/running', '/metrics'];
 
 describe('phone layout in the real mobile browser', () => {
-  it('nav shows two rows of four labelled buttons large enough to tap', async () => {
+  it('nav shows three rows of three labelled buttons large enough to tap', async () => {
     // Given the visitor is on the home page on a phone
     // When the page has loaded
     await browser.url('/home');
@@ -21,7 +21,7 @@ describe('phone layout in the real mobile browser', () => {
     // Then every page has a nav button
     expect(links.length).toBe(PATHS.length);
 
-    // And each is at least 44px square, in two rows of four
+    // And each is at least 44px square, in three rows of three
     const tops = new Set<number>();
     for (const link of links) {
       const { width, height } = await link.getSize();
@@ -29,7 +29,7 @@ describe('phone layout in the real mobile browser', () => {
       expect(height).toBeGreaterThanOrEqual(MIN_TAP_TARGET);
       tops.add(Math.round((await link.getLocation()).y));
     }
-    expect(tops.size).toBe(2);
+    expect(tops.size).toBe(3);
   });
 
   for (const path of PATHS) {

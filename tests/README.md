@@ -143,6 +143,13 @@ it can be read without opening any test output:
   turn it and select a bar to list its tests. A table view has the same numbers.
 - Links to the full Playwright, JMeter and coverage reports.
 
+The same numbers are published as `metrics.json` next to the dashboard. The site's **Test Metrics**
+tab (`/metrics`, `frontend/src/pages/Metrics.tsx`) reads it straight from GitHub Pages, so it shows
+the latest run without a redeploy: the verdict, headline numbers, donuts for development and QA,
+the 3D chart (select a bar, or a cell in its table view, to list the bar's tests), device coverage,
+speed under load, delivery and the 30-day trend. Tests serve `tests/e2e/support/metrics.sample.json`
+in its place.
+
 A summary email with the same verdict, numbers and donut charts (as an attached image, since email
 apps don't draw charts) goes to the contact address. The scripts are in `scripts/test-report/`:
 `build.mjs` builds the dashboard and email, `charts.mjs` draws the charts, `development.mjs` reads
