@@ -18,7 +18,9 @@ function About() {
         <div className="carousel-card about-card">
           <SiteCarousel label="About Shane" className="about-carousel">
             <Carousel.Item interval={5000}>
-              <p>{content.data.essay}</p>
+              {content.data.essay.split(/\n\s*\n/).map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
               <cite>{content.data.signature}</cite>
             </Carousel.Item>
             {medals.map(({ image, name, detail, took }) => (

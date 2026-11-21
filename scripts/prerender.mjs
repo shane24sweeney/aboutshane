@@ -46,7 +46,8 @@ const bodies = {
 
   about: () => {
     const { essay, signature } = content('about');
-    return `<h1>About Shane</h1><p>${escape(essay)}</p><p>${escape(signature)}</p>`;
+    const paragraphs = essay.split(/\n\s*\n/).map((paragraph) => `<p>${escape(paragraph)}</p>`).join('');
+    return `<h1>About Shane</h1>${paragraphs}<p>${escape(signature)}</p>`;
   },
 
   contact: () =>
