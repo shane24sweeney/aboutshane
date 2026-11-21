@@ -109,3 +109,45 @@
     padding: 8px 16px 20px;
   }
 }
+
+/* Download résumé (PDF): built by the API from the same content as this page. */
+.resume-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12px;
+}
+
+.resume-download {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: var(--site-accent);
+  color: #14221f;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color 160ms ease, transform 160ms ease;
+}
+
+.resume-download:hover,
+.resume-download:focus-visible {
+  background: var(--site-accent-strong);
+  color: #14221f;
+}
+
+.resume-download:active {
+  transform: translateY(1px);
+}
+
+@media (max-width: 600px) {
+  .resume-actions {
+    justify-content: stretch;
+  }
+
+  .resume-download {
+    justify-content: center;
+    width: 100%;
+  }
+}

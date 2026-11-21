@@ -379,6 +379,313 @@
           ]
         }
       }
+    },
+    {
+      "name": "Search - finds matches across pages",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('returns 200 JSON, cacheable for 5 minutes', () => {",
+              "  pm.response.to.have.status(200);",
+              "  pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+              "  pm.expect(pm.response.headers.get('Cache-Control')).to.eql('max-age=300, public');",
+              "});",
+              "const body = pm.response.json();",
+              "pm.test('echoes the query and counts the results', () => {",
+              "  pm.expect(body.query).to.eql('appium');",
+              "  pm.expect(body.count).to.eql(body.results.length);",
+              "  pm.expect(body.count).to.be.within(2, 20);",
+              "});",
+              "pm.test('each result links to a page, with a snippet and highlights inside it', () => {",
+              "  for (const result of body.results) {",
+              "    pm.expect(result.path).to.match(/^\\/(home|about|resume|testimonials|education|charity|running)$/);",
+              "    pm.expect(result.title).to.be.a('string').and.not.empty;",
+              "    for (const h of result.highlights) pm.expect(h.start + h.length).to.be.at.most(result.snippet.length);",
+              "  }",
+              "});",
+              "pm.test('finds the resume and the home page', () => {",
+              "  const pages = body.results.map((r) => r.page);",
+              "  pm.expect(pages).to.include('Resume');",
+              "  pm.expect(pages).to.include('Home');",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/search?q=appium",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "search"
+          ],
+          "query": [
+            {
+              "key": "q",
+              "value": "appium"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Search - every word must match",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('returns no results when one word appears nowhere', () => {",
+              "  pm.response.to.have.status(200);",
+              "  pm.expect(pm.response.json().count).to.eql(0);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/search?q=appium%20zzqx",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "search"
+          ],
+          "query": [
+            {
+              "key": "q",
+              "value": "appium%20zzqx"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Search - rejects a one-letter query",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('returns 400 invalid_query', () => {",
+              "  pm.response.to.have.status(400);",
+              "  pm.expect(pm.response.json().error).to.eql('invalid_query');",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/search?q=a",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "search"
+          ],
+          "query": [
+            {
+              "key": "q",
+              "value": "a"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Search - rejects a missing query",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('returns 400 invalid_query', () => {",
+              "  pm.response.to.have.status(400);",
+              "  pm.expect(pm.response.json().error).to.eql('invalid_query');",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/search",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "search"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Search - is read-only",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('returns 405', () => pm.response.to.have.status(405));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/search?q=appium",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "search"
+          ],
+          "query": [
+            {
+              "key": "q",
+              "value": "appium"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Resume - downloads the PDF",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('returns a PDF to save, cacheable for an hour', () => {",
+              "  pm.response.to.have.status(200);",
+              "  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/pdf');",
+              "  pm.expect(pm.response.headers.get('Content-Disposition')).to.include('Shane-James-Sweeney-Resume.pdf');",
+              "  pm.expect(pm.response.headers.get('Cache-Control')).to.eql('max-age=3600, public');",
+              "});",
+              "pm.test('is a real PDF of a sensible size', () => {",
+              "  pm.expect(pm.response.stream.slice(0, 5).toString()).to.eql('%PDF-');",
+              "  pm.expect(pm.response.responseSize).to.be.within(2000, 500000);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/resume.pdf",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "resume.pdf"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Status - reports the API and the latest tests",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('returns 200 JSON, cacheable for a minute', () => {",
+              "  pm.response.to.have.status(200);",
+              "  pm.expect(pm.response.headers.get('Cache-Control')).to.eql('max-age=60, public');",
+              "});",
+              "const body = pm.response.json();",
+              "pm.test('says the API is ok and what it runs on', () => {",
+              "  pm.expect(body.status).to.eql('ok');",
+              "  pm.expect(body.runtime).to.match(/^Java \\d+$/);",
+              "  pm.expect(body.uptimeSeconds).to.be.at.least(0);",
+              "  pm.expect(new Date(body.startedAt).getTime()).to.be.below(Date.now() + 60000);",
+              "});",
+              "pm.test('counts the content', () => {",
+              "  pm.expect(body.content.pages).to.eql(7);",
+              "  pm.expect(body.content.races).to.be.above(0);",
+              "});",
+              "pm.test('includes the daily test verdict when the report is reachable', () => {",
+              "  if (body.quality) pm.expect(['healthy', 'attention', 'incomplete']).to.include(body.quality.status);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/status",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "status"
+          ]
+        }
+      }
     }
   ]
 }

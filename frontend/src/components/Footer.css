@@ -65,3 +65,43 @@
   color: var(--site-accent-strong);
   text-decoration: underline;
 }
+
+/* The API status badge sits on its own line under the links. */
+.site-footer-status {
+  flex-basis: 100%;
+  display: flex;
+  justify-content: center;
+  min-height: 28px;
+  margin-top: 8px;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 12px;
+  border: 1px solid var(--site-border);
+  border-radius: 999px;
+  color: var(--site-text-muted);
+  font-size: 0.8rem;
+  text-decoration: none;
+}
+
+.status-badge:hover,
+.status-badge:focus-visible {
+  border-color: var(--site-accent);
+  color: var(--site-text);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #3fb950;
+  box-shadow: 0 0 0 3px rgba(63, 185, 80, 0.2);
+}
+
+.status-warn .status-dot {
+  background: #d29922;
+  box-shadow: 0 0 0 3px rgba(210, 153, 34, 0.2);
+}

@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react';
 import { Navigate, Route, Routes } from 'react-router';
 import Footer from './components/Footer';
 import Navigation from './components/Navigation';
+import SiteSearch from './components/SiteSearch';
 import Home from './pages/Home';
 
 const About = lazy(() => import('./pages/About'));
@@ -19,6 +20,7 @@ function App() {
     <div className="site-shell">
       <div className="site-frame">
         <Navigation />
+        <SiteSearch />
         <main>
           <Suspense fallback={null}>
             <Routes>

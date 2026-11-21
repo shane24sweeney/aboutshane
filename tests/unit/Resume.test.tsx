@@ -5,6 +5,13 @@ import Resume from '../../frontend/src/pages/Resume';
 const resume = fallbackContent.resume;
 
 describe('Resume page', () => {
+  it('offers the résumé as a PDF download from the API', async () => {
+    render(<Resume />);
+    const link = await screen.findByRole('link', { name: 'Download résumé (PDF)' });
+    expect(link).toHaveAttribute('href', '/api/resume.pdf');
+    expect(link).toHaveAttribute('download', 'Shane-James-Sweeney-Resume.pdf');
+  });
+
   it('lists every role with its company logo', async () => {
     render(<Resume />);
     const buttons = await screen.findAllByRole('button');

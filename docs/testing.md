@@ -270,7 +270,8 @@ flowchart LR
   subgraph plan["button-clicks.jmx: 3 visitors, 10 s ramp-up, 3 loops, 1.5 to 2.5 s between clicks"]
     direction TB
     home["GET /home<br/>serves the app shell"] --> nav["GET /api/content/*<br/>profile, about, resume, testimonials,<br/>education, charity, running: valid JSON"]
-    nav --> contact["POST /api/contact with an invalid form<br/>rejected with 400, nothing sent"]
+    nav --> api["GET /api/health, /api/search (and a rejected one-letter search),<br/>/api/status, /api/resume.pdf"]
+    api --> contact["POST /api/contact with an invalid form<br/>rejected with 400, nothing sent"]
   end
 
   plan -- "every request and its result" --> jtl["results.jtl"]

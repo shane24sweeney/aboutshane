@@ -10,7 +10,11 @@ Each simulated visitor, on every loop:
    in the results as `/home-0`, `/home-1` and so on).
 2. Clicks every nav button: `GET /api/content/{profile,about,resume,testimonials,education,charity}`.
    Each response must be valid JSON with the expected content.
-3. Clicks Send on an invalid contact form: `POST /api/contact` must be rejected with 400. No
+3. Calls the rest of the API the site uses:
+   - `GET /api/health` (ok), `GET /api/content/running` and `/running/stats`
+   - `GET /api/search?q=appium` and `?q=page object` (matches found), and `?q=a` (rejected with 400)
+   - `GET /api/status` (ok, 7 pages) and `GET /api/resume.pdf` (a PDF)
+4. Clicks Send on an invalid contact form: `POST /api/contact` must be rejected with 400. No
    message is stored and no email is sent.
 
 Between clicks it waits 1.5 to 2.5 seconds, like a person would.
