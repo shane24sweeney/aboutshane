@@ -95,7 +95,10 @@ test.describe('test metrics page: cross-site scripting', { tag: ['@security', '@
     await when('the visitor opens Test Metrics and lists the first area’s tests from the table', async () => {
       await page.goto('/metrics');
       await page.getByText('Table view').click();
-      await page.getByRole('region', { name: 'Test results by area and device' }).getByRole('row').nth(1).getByRole('button').first().click();
+      // The long payload makes the table wide; selecting with the keyboard avoids clicking mid-scroll.
+      const cell = page.getByRole('region', { name: 'Test results by area and device' }).getByRole('row').nth(1).getByRole('button').first();
+      await cell.focus();
+      await page.keyboard.press('Enter');
     });
     await then('the payloads are shown literally and never run', async () => {
       await expect(page.getByText(`xss-probe ${payload}`)).toBeVisible();
