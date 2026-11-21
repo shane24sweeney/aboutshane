@@ -21,7 +21,7 @@ sam deploy \
   --stack-name aboutshane \
   --region us-east-1 \
   --resolve-s3 \
-  --capabilities CAPABILITY_IAM
+  --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM
 ```
 
 Parameters default to the production values (domain, certificate and Route 53 zone); override
@@ -72,7 +72,8 @@ frontend bundles as its fallback. Tests don't run here; CI runs `mvn verify`.
 
 `--resolve-s3` uploads the build to a bucket SAM manages. SAM turns the template into a
 CloudFormation change set and applies it to the `aboutshane` stack. `CAPABILITY_IAM` allows the
-stack to create the Lambda function's IAM role. The backend's resources:
+stack to create the Lambda function's IAM role, and `CAPABILITY_NAMED_IAM` the
+`aboutshane-report-email` role the daily test-report workflow uses to send its email. The backend's resources:
 
 | Resource | What it is | Key settings |
 |---|---|---|
