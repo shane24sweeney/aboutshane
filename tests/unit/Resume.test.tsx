@@ -9,7 +9,7 @@ describe('Resume page', () => {
     render(<Resume />);
     const buttons = await screen.findAllByRole('button');
     expect(buttons).toHaveLength(resume.length);
-    expect(buttons[0]).toHaveTextContent('SENIOR QE CONSULTANT - FIFTH THIRD BANK (Contract via TEKsystems)');
+    expect(buttons[0]).toHaveTextContent('Senior QE Consultant - Fifth Third Bank (Contract via TEKsystems)');
     expect(screen.getByAltText('Fifth Third Bank logo')).toHaveAttribute('src', expect.stringContaining('FifthThirdBank'));
   });
 
@@ -23,7 +23,7 @@ describe('Resume page', () => {
 
   it('opens the most recent role with its highlights as a bulleted list', async () => {
     render(<Resume />);
-    const button = await screen.findByRole('button', { name: /FIFTH THIRD BANK/ });
+    const button = await screen.findByRole('button', { name: /Fifth Third Bank/i });
     expect(button).toHaveAttribute('aria-expanded', 'true');
     const item = button.closest<HTMLElement>('.accordion-item');
     if (!item) throw new Error('accordion item not found');

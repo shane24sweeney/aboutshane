@@ -1,6 +1,4 @@
 import Button from 'react-bootstrap/Button';
-import Carousel from 'react-bootstrap/Carousel';
-import SiteCarousel from '../components/SiteCarousel';
 import PageLoading from '../components/PageLoading';
 import { charityImages } from '../content/images';
 import { usePageContent } from '../hooks/usePageContent';
@@ -11,25 +9,24 @@ function Charity() {
 
   return (
     <section id="charity" className="carousel-page">
-      <h1 className="visually-hidden">Charity Work</h1>
+      <h1 className="grid-page-title">Charity Work</h1>
       {content.status === 'loading' ? (
         <PageLoading />
       ) : (
-        <div className="carousel-card">
-          <SiteCarousel label="Charity work" className="page-carousel charity-carousel">
-            {content.data.map(({ title, image, alt, link }) => (
-              <Carousel.Item key={title} interval={4000}>
-                <h2>{title}</h2>
-                {link && (
-                  <Button variant="success" href={link.href} target="_blank" rel="noreferrer" className="rounded-pill">
-                    {link.label}
-                  </Button>
-                )}
-                <img className="page-carousel-logo" src={charityImages[image]} alt={alt} />
-              </Carousel.Item>
-            ))}
-          </SiteCarousel>
-        </div>
+        // Every charity at once, as a grid of cards.
+        <ul className="card-grid charity-grid" aria-label="Charities">
+          {content.data.map(({ title, image, alt, link }) => (
+            <li key={title} className="grid-card charity-card">
+              <img className="charity-card-image" src={charityImages[image]} alt={alt} />
+              <h2>{title}</h2>
+              {link && (
+                <Button variant="success" href={link.href} target="_blank" rel="noreferrer" className="rounded-pill">
+                  {link.label}
+                </Button>
+              )}
+            </li>
+          ))}
+        </ul>
       )}
     </section>
   );

@@ -77,48 +77,59 @@ test.describe('testimonials page', () => {
 });
 
 test.describe('education page', () => {
-  test('shows every degree with its school logo and a credited campus photo', async ({ page }) => {
+  test('shows every degree at once with its school logo and a credited campus photo', async ({ page }) => {
+    const cards = page.getByRole('list', { name: 'Degrees' }).getByRole('listitem');
+
     await given('the visitor is on the education page', () => page.goto('/education'));
+    await then(`all ${education.length} degrees are on the page, with no carousel to click through`, async () => {
+      await expect(cards).toHaveCount(education.length);
+      await expect(page.getByRole('button', { name: 'Next slide' })).toHaveCount(0);
+    });
 
     for (const [index, { degree, school, campus }] of education.entries()) {
-      const slide = currentSlide(page, 'Education');
-      await then(`slide ${index + 1} is ${degree}`, async () => {
-        await expect(slide.getByRole('heading', { level: 2 })).toHaveText(degree);
-        await expectImageLoaded(slide.getByRole('img', { name: `${school} logo` }));
+      const card = cards.nth(index);
+      await then(`card ${index + 1} is ${degree}`, async () => {
+        await expect(card.getByRole('heading', { level: 2 })).toHaveText(degree);
+        await expect(card).toBeVisible();
+        await expectImageLoaded(card.getByRole('img', { name: `${school} logo` }));
       });
       await and(`it shows the campus, credited to ${campus.author} under ${campus.license.label}`, async () => {
-        await expectImageLoaded(slide.getByRole('img', { name: campus.alt }));
-        await expect(slide.locator('figcaption')).toContainText(`Photo: ${campus.author}`);
-        const license = slide.getByRole('link', { name: campus.license.label });
+        await expectImageLoaded(card.getByRole('img', { name: campus.alt }));
+        await expect(card.locator('figcaption')).toContainText(`Photo: ${campus.author}`);
+        const license = card.getByRole('link', { name: campus.license.label });
         await expect(license).toHaveAttribute('href', campus.license.href);
         await expect(license).toHaveAttribute('target', '_blank');
-        await expect(slide.getByRole('link', { name: campus.source.label })).toHaveAttribute('href', campus.source.href);
+        await expect(card.getByRole('link', { name: campus.source.label })).toHaveAttribute('href', campus.source.href);
       });
-      if (index < education.length - 1) await when('they press Next', () => nextSlide(page));
     }
   });
 });
 
 test.describe('charity page', () => {
-  test('shows every charity event with its photo, and outside links open in a new tab', async ({ page }) => {
+  test('shows every charity event at once with its photo, and outside links open in a new tab', async ({ page }) => {
+    const cards = page.getByRole('list', { name: 'Charities' }).getByRole('listitem');
+
     await given('the visitor is on the charity page', () => page.goto('/charity'));
+    await then(`all ${charity.length} charities are on the page, with no carousel to click through`, async () => {
+      await expect(cards).toHaveCount(charity.length);
+      await expect(page.getByRole('button', { name: 'Next slide' })).toHaveCount(0);
+    });
 
     for (const [index, event] of charity.entries()) {
-      const slide = currentSlide(page, 'Charity work');
-      await then(`slide ${index + 1} is "${event.title}"`, async () => {
-        await expect(slide.getByRole('heading', { level: 2 })).toHaveText(event.title);
-        await expectImageLoaded(slide.getByRole('img', { name: event.alt }));
+      const card = cards.nth(index);
+      await then(`card ${index + 1} is "${event.title}"`, async () => {
+        await expect(card.getByRole('heading', { level: 2 })).toHaveText(event.title);
+        await expectImageLoaded(card.getByRole('img', { name: event.alt }));
       });
       if ('link' in event && event.link) {
         const { href, label } = event.link;
         await and(`its "${label}" link opens ${href} in a new tab`, async () => {
-          const link = slide.getByRole('button', { name: label });
+          const link = card.getByRole('button', { name: label });
           await expect(link).toHaveAttribute('href', href);
           await expect(link).toHaveAttribute('target', '_blank');
           await expect(link).toHaveAttribute('rel', /noreferrer/);
         });
       }
-      if (index < charity.length - 1) await when('they press Next', () => nextSlide(page));
     }
   });
 });

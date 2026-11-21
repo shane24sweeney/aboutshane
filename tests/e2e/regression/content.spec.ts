@@ -60,8 +60,8 @@ test.describe('footer', () => {
 
 test.describe('resume page', () => {
   test('opens the most recent role, then one role at a time, each with dates and highlights', async ({ page }) => {
-    const fifthThird = page.getByRole('button', { name: /FIFTH THIRD BANK/ });
-    const ameritas = page.getByRole('button', { name: /TECH QA MANAGER - AMERITAS/ });
+    const fifthThird = page.getByRole('button', { name: /Fifth Third Bank/i });
+    const ameritas = page.getByRole('button', { name: /Tech QA Manager - Ameritas/i });
     const highlights = page.locator('.accordion-collapse.show li');
 
     await given('the visitor opens the resume', () => page.goto('/resume'));
