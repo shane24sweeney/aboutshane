@@ -129,11 +129,11 @@ test.describe('about page', () => {
 
     await given('the visitor is on the about page', () => page.goto('/about'));
     await then('the first slide is the essay, signed', async () => {
-      await expect(slide.locator('p')).toHaveText(about.essay);
+      await expect(slide.locator('p')).toHaveText(about.essay.split(/\n\s*\n/));
       await expect(slide.locator('cite')).toHaveText(about.signature);
     });
     await when('they press Next', () => nextSlide(page));
-    await then('the next slide is an activity photo that loads', () => expectImageLoaded(currentSlide(page, 'About Shane').getByRole('img')));
+    await then('the next slide is a medal whose image loads', () => expectImageLoaded(currentSlide(page, 'About Shane').getByRole('img')));
   });
 });
 

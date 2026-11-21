@@ -1,0 +1,72 @@
+.spinning-medal {
+  width: min(260px, 62vw);
+  aspect-ratio: 1;
+  margin: 0 auto;
+  perspective: 900px;
+  /* The shadow sits out here: in WebKit (Safari), a filter on the faces stops it hiding the back. */
+  filter: drop-shadow(0 16px 26px rgba(0, 0, 0, 0.45));
+  cursor: grab;
+  /* Horizontal drags spin the medal; vertical ones still scroll the page. */
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.spinning-medal:active {
+  cursor: grabbing;
+}
+
+/* Turns once each time the slide appears: hidden slides are display: none, so the animation
+   restarts whenever this one is shown. */
+.spinning-medal-intro {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  animation: medal-spin-in 1.4s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes medal-spin-in {
+  from {
+    transform: rotateY(-540deg) scale(0.82);
+  }
+
+  to {
+    transform: rotateY(0) scale(1);
+  }
+}
+
+.spinning-medal-body {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+.spinning-medal-body.is-settling {
+  transition: transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.spinning-medal-face {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  pointer-events: none;
+}
+
+/* The reverse side, so a half turn never shows a blank. No filter here, for the same WebKit reason. */
+.spinning-medal-back {
+  background: center / contain no-repeat;
+  transform: rotateY(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinning-medal-intro {
+    animation: none;
+  }
+
+  .spinning-medal-body.is-settling {
+    transition: none;
+  }
+}

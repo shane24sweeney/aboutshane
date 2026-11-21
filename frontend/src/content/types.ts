@@ -16,6 +16,7 @@ export interface Profile {
 }
 
 export interface About {
+  /** Paragraphs separated by a blank line. */
   essay: string;
   signature: string;
 }
