@@ -79,3 +79,29 @@ test.describe('test metrics page', () => {
     });
   });
 });
+
+test.describe('test metrics page: cross-site scripting', { tag: ['@security', '@negative'] }, () => {
+  test('shows report text as text, never as HTML', async ({ page }) => {
+    const payload = '<img src=x onerror="window.__xss=(window.__xss||0)+1">';
+    await given('a metrics file whose headline, area names and test names contain script', async () => {
+      await page.addInitScript(() => ((window as unknown as { __xss: number }).__xss = 0));
+      const metrics = structuredClone(sample);
+      metrics.headline = `xss-probe ${payload}`;
+      metrics.grid.rows[0]!.name = `xss-probe row ${payload}`;
+      const [key] = Object.keys(metrics.grid.cells).filter((k) => k.startsWith('0|'));
+      metrics.grid.cells[key as keyof typeof metrics.grid.cells]!.tests = [{ t: `xss-probe test ${payload}`, s: 'failed' }];
+      await page.route('https://shane24sweeney.github.io/aboutshane/metrics.json', (route) => route.fulfill({ json: metrics }));
+    });
+    await when('the visitor opens Test Metrics and lists the first area’s tests from the table', async () => {
+      await page.goto('/metrics');
+      await page.getByText('Table view').click();
+      await page.getByRole('region', { name: 'Test results by area and device' }).getByRole('row').nth(1).getByRole('button').first().click();
+    });
+    await then('the payloads are shown literally and never run', async () => {
+      await expect(page.getByText(`xss-probe ${payload}`)).toBeVisible();
+      await expect(page.getByText(`xss-probe test ${payload}`)).toBeVisible();
+      expect(await page.evaluate(() => (window as unknown as { __xss: number }).__xss)).toBe(0);
+      await expect(page.locator('img[src="x"]')).toHaveCount(0);
+    });
+  });
+});
