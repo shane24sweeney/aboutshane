@@ -66,20 +66,27 @@
   text-decoration: underline;
 }
 
-/* The API status badge sits on its own line under the links. */
+/* The API status badge sits on its own line under the links, in a slot of fixed height so the
+   page doesn't grow when it arrives a moment after the page. */
 .site-footer-status {
-  flex-basis: 100%;
+  /* Full width (not flex-basis, which means height in the phones' column layout). */
+  flex: 0 0 auto;
+  width: 100%;
   display: flex;
   justify-content: center;
-  min-height: 28px;
+  align-items: center;
+  height: 32px;
   margin-top: 8px;
 }
 
 .status-badge {
+  box-sizing: border-box;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 3px 12px;
+  height: 28px;
+  padding: 0 12px;
+  line-height: 1;
   border: 1px solid var(--site-border);
   border-radius: 999px;
   color: var(--site-text-muted);
