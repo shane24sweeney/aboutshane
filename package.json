@@ -22,6 +22,8 @@
     "test:negative": "vitest run --tagsFilter negative && playwright test --grep @negative --project=desktop --project=\"mobile*\"",
     "test:negative:smoke": "SKIP_WEBSERVER=1 playwright test --grep @negative --project=production",
     "test:negative:api": "mvn -q -f backend/pom.xml test -Dgroups=negative",
+    "test:security": "playwright test --grep @security --project=desktop --project=\"mobile*\" && npm run test:security:smoke",
+    "test:security:smoke": "SKIP_WEBSERVER=1 playwright test --grep @security --project=production",
     "test:api": "npx --yes newman@6 run tests/api/AboutShane-API.postman_collection.json",
     "test:browserstack": "node scripts/require-real-devices.mjs && browserstack-node-sdk playwright test --config=playwright.browserstack.config.ts",
     "debug:desktop": "playwright test --project=desktop --ui",

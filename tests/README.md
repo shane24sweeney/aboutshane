@@ -85,6 +85,27 @@ them:
 
 What they cover is listed in [docs/testing.md](../docs/testing.md#negative-tests).
 
+### Security tests
+
+Tagged `@security`. They run with the regression and smoke suites, and on their own with:
+
+```bash
+npm run test:security          # local injection tests on desktop + phones, then the live checks
+npm run test:security:smoke    # only the live checks (read-only)
+```
+
+- **Live site** (`tests/e2e/smoke/production-security.spec.ts`): every page sends HSTS for a year,
+  `nosniff`, same-origin framing and a strict referrer policy, sets no cookies and names no server
+  versions; HTTP redirects to HTTPS on both domains; `.env`, `.git`, `package.json`, `pom.xml` and the
+  template are refused; no source maps, AWS keys, private keys or GitHub tokens in the JavaScript;
+  nothing loads over plain HTTP; new-tab links can't reach back (`noopener`/`noreferrer`) and none
+  use `javascript:`; other websites can't read the API or post to the contact form (CORS); the API
+  refuses TRACE and its errors name no framework or stack trace. Nothing is submitted.
+- **Cross-site scripting** (`tests/e2e/regression/security.spec.ts`, local, APIs mocked): script and
+  HTML payloads in content-API text (home, testimonials, resume, charity), race names in the map's
+  popups, contact-form fields and the API's error answers, and the address bar are all shown as
+  plain text and never run.
+
 ### Everything CI checks on a pull request
 
 ```bash
