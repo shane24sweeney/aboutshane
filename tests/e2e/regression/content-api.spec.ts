@@ -22,18 +22,23 @@ async function expectBundledResume(page: Page) {
 }
 
 test.describe('content API', () => {
-  test('each navigation button loads its page from the content API', async ({ page }) => {
+  test('each navigation button shows its page from the content API, asked once per visit', async ({ page }) => {
     const nav = page.getByRole('navigation', { name: 'Primary navigation' });
+    const requested: string[] = [];
 
-    await given('the visitor is on the contact page, which loads no content', () => page.goto('/contact'));
+    await given('the visitor is on the contact page, which loads no content', async () => {
+      page.on('request', (r) => r.url().includes('/api/content/') && requested.push(`${r.method()} ${new URL(r.url()).pathname}`));
+      await page.goto('/contact');
+    });
 
+    // Pages are prefetched in the background (frontend/src/prefetch.ts), so the request may come
+    // before the click; either way each page's content comes from the API, and only once.
     for (const { nav: label, api } of contentPages) {
-      const request = page.waitForRequest(`**/api/content/${api}`);
       await when(`they click ${label}`, () => nav.getByRole('link', { name: label, exact: true }).click());
-      await then(`the page is loaded with GET /api/content/${api}`, async () => {
-        expect((await request).method()).toBe('GET');
+      await then(`the page shows content from GET /api/content/${api}`, async () => {
         const heading = pages.find((entry) => entry.nav === label)?.heading ?? '';
         await expect(page.getByRole('heading', { level: 1, name: heading })).toBeAttached();
+        expect(requested.filter((r) => r === `GET /api/content/${api}`)).toHaveLength(1);
       });
     }
   });
