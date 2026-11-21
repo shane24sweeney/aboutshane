@@ -12,7 +12,7 @@ const NAV_BUTTONS = 'nav[aria-label="Primary navigation"] .nav-button';
 const PATHS = ['/home', '/contact', '/about', '/resume', '/testimonials', '/education', '/charity', '/running'];
 
 describe('phone layout in the real mobile browser', () => {
-  it('nav fits on one row of buttons large enough to tap', async () => {
+  it('nav shows two rows of four labelled buttons large enough to tap', async () => {
     // Given the visitor is on the home page on a phone
     // When the page has loaded
     await browser.url('/home');
@@ -21,7 +21,7 @@ describe('phone layout in the real mobile browser', () => {
     // Then every page has a nav button
     expect(links.length).toBe(PATHS.length);
 
-    // And each is at least 44px square, all on one row
+    // And each is at least 44px square, in two rows of four
     const tops = new Set<number>();
     for (const link of links) {
       const { width, height } = await link.getSize();
@@ -29,7 +29,7 @@ describe('phone layout in the real mobile browser', () => {
       expect(height).toBeGreaterThanOrEqual(MIN_TAP_TARGET);
       tops.add(Math.round((await link.getLocation()).y));
     }
-    expect(tops.size).toBe(1);
+    expect(tops.size).toBe(2);
   });
 
   for (const path of PATHS) {

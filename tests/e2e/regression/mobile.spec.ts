@@ -29,20 +29,30 @@ test.describe('phone layout', () => {
     test.skip(width > PHONE_MAX_WIDTH, `phone layouts only (viewport is ${width}px)`);
   });
 
-  test('nav fits on one row of icon buttons large enough to tap', async ({ page }) => {
+  test('nav shows every tab with its name, in two rows of four large enough to tap', async ({ page }) => {
     const links = page.getByRole('navigation', { name: 'Primary navigation' }).getByRole('link');
-    const tops = new Set<number>();
+    const tops: number[] = [];
 
     await when('the visitor looks at the nav', () => {});
     await then('every page has a nav button', () => expect(links).toHaveCount(pages.length));
-    await and('each is an icon at least 44px square', async () => {
-      for (const link of await links.all()) {
+    await and('each shows its name under its icon, fully on screen, and is at least 44px square', async () => {
+      const innerWidth = await page.evaluate(() => window.innerWidth);
+      for (const [index, link] of (await links.all()).entries()) {
         await expectTappable(link);
-        await expect(link.locator('.nav-label')).toBeHidden();
-        tops.add(Math.round((await link.boundingBox())!.y));
+        const label = link.locator('.nav-label');
+        await expect(label).toBeVisible();
+        await expect(label).toHaveText(pages[index].nav);
+        const box = (await label.boundingBox())!;
+        expect(box.x, `${pages[index].nav} label starts on screen`).toBeGreaterThanOrEqual(0);
+        expect(box.x + box.width, `${pages[index].nav} label ends on screen`).toBeLessThanOrEqual(innerWidth);
+        tops.push((await link.boundingBox())!.y);
       }
     });
-    await and('they all fit on one row', () => expect(tops.size, 'nav buttons share one row').toBe(1));
+    await and('they sit in two rows', () => {
+      // Buttons within a few pixels share a row; sub-pixel layout rounds differently per device.
+      const rows = tops.sort((a, b) => a - b).filter((top, i, all) => i === 0 || top - all[i - 1] > 10);
+      expect(rows.length, 'nav rows').toBe(2);
+    });
   });
 
   test('tapping each nav button opens its page', async ({ page }) => {
