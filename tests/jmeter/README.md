@@ -108,9 +108,11 @@ the same buttons in a real browser.
 
 ## In CI
 
-The daily **Production smoke** workflow (`.github/workflows/production-smoke.yml`) runs
-`npm run test:load` after the Playwright smoke tests pass. It uploads `tests/jmeter/results` and
-`jmeter.log` as the `jmeter-report` artifact and adds the results table to the job summary.
+The daily **Daily tests and report** workflow (`.github/workflows/production-smoke.yml`) runs
+`npm run test:load` after the Playwright smoke tests, whether or not they pass. It uploads
+`tests/jmeter/results` and `jmeter.log` as the `jmeter-report` artifact, adds the results table to the
+job summary, and publishes the JMeter dashboard on the
+[daily test report](https://shane24sweeney.github.io/aboutshane/jmeter/).
 
 ## Troubleshooting
 

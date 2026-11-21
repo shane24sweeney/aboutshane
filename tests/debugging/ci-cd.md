@@ -5,7 +5,7 @@
 | Workflow | Runs | Jobs |
 |---|---|---|
 | **CI** (`.github/workflows/ci.yml`) | Every push and pull request, or `gh workflow run ci.yml --ref <branch>` | Frontend (lint, types, unit tests, build) · Backend (Maven verify) · Infrastructure (cfn-lint) · End-to-end (Playwright, desktop + Android + iPhone) |
-| **Production smoke** (`production-smoke.yml`) | Daily at 11:17 UTC, or by hand | smoke (`npm run test:smoke` on the live site) · Load (JMeter button clicks) |
+| **Daily tests and report** (`production-smoke.yml`) | Daily at 11:17 UTC, or by hand | Regression (desktop + Android + iPhone) · smoke (`npm run test:smoke` on the live site) · Load (JMeter button clicks) · Build report · Publish to GitHub Pages · Email report |
 | **BrowserStack mobile** (`browserstack.yml`) | By hand | Real devices; skipped while real-device tests are switched off |
 
 The four CI jobs are required checks on `master`: a pull request can't merge until they pass.
@@ -27,10 +27,14 @@ On GitHub, a failed Playwright job shows its failures in four places:
 1. **Annotations:** each failing test is listed on the run's summary page.
 2. **Job summary:** a table of failures at the bottom of the run page.
 3. **Job log:** the full error for each test.
-4. **Artifacts:** `playwright-report` (CI) or `production-smoke-report` (daily), with the HTML
+4. **Artifacts:** `playwright-report` (CI), or `regression-report` and `production-smoke-report` (daily), with the HTML
    report, traces, screenshots and `test-results/junit.xml`. `npm run debug:ci` downloads them into
    `tests/debugging/ci-artifacts/<run-id>/` and opens the report. The daily run also uploads
-   `jmeter-report`.
+   `jmeter-report`, and publishes everything to the
+   [daily dashboard](https://shane24sweeney.github.io/aboutshane/).
+
+If the **Email report** job fails, it's usually SES: the recipient isn't verified yet (sandbox), or
+the `REPORT_ROLE_ARN` variable doesn't match the stack's `ReportEmailRoleArn` output.
 
 ## Reproduce it locally
 
