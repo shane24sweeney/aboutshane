@@ -2,19 +2,19 @@
   {
     "title": "Raised money and took part in the polar plunge for the Special Olympics",
     "image": "PolarPlunge",
-    "alt": "Polar plunge for the Special Olympics"
+    "alt": "Special Olympics logo: Polar Plunge, Special Olympics Georgia"
   },
   {
     "title": "Support Website for Dog Days Rescue",
     "image": "DogDays",
-    "alt": "Dog Days Rescue",
+    "alt": "Dog Days Rescue logo: website support for Dog Days Rescue, Atlanta",
     "link": { "href": "https://www.dogdaysrescue.org/", "label": "Dog Days Rescue Charity" }
   },
   {
     "title": "Raised money and ran in the Susan G Komen Race For The Cure",
     "image": "SusanKomen",
-    "alt": "Susan G. Komen Race for the Cure"
+    "alt": "Susan G. Komen logo: Race for the Cure"
   },
-  { "title": "Yearly Dalton Ten Miler Race for Charity", "image": "Dalton", "alt": "Dalton Ten Miler race" },
-  { "title": "Yearly 18K Habitat for Humanity Helen Race for Charity", "image": "Habitat", "alt": "Habitat for Humanity Helen 18K race" }
+  { "title": "Yearly Dalton Ten Miler Race for Charity", "image": "Dalton", "alt": "Runner icon: Carpet Capital 10 Miler, Dalton, GA" },
+  { "title": "Yearly 18K Habitat for Humanity Helen Race for Charity", "image": "Habitat", "alt": "Habitat for Humanity logo: Hogpen Hill Climb 18K, Helen, GA" }
 ]

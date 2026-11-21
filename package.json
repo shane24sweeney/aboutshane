@@ -31,6 +31,7 @@
     "inspect:ios:simulator": "bash tests/debugging/inspect-mobile.sh ios --simulator",
     "inspect:android:emulator": "bash tests/debugging/inspect-mobile.sh android --emulator",
     "og-image": "node scripts/og-image/render.mjs",
+    "charity-cards": "node scripts/charity-cards/render.mjs",
     "fitness-medals": "node scripts/fitness-medals/crop.mjs",
     "test:load": "rm -rf tests/jmeter/results && mkdir -p tests/jmeter/results && jmeter -n -t tests/jmeter/button-clicks.jmx -l tests/jmeter/results/results.jtl -e -o tests/jmeter/results/report && python3 tests/jmeter/check-results.py"
   },
