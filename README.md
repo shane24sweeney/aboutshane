@@ -1,7 +1,7 @@
 # selenium-automation.com
 
 [![CI](https://github.com/shane24sweeney/aboutshane/actions/workflows/ci.yml/badge.svg)](https://github.com/shane24sweeney/aboutshane/actions/workflows/ci.yml)
-[![Production smoke](https://github.com/shane24sweeney/aboutshane/actions/workflows/production-smoke.yml/badge.svg)](https://github.com/shane24sweeney/aboutshane/actions/workflows/production-smoke.yml)
+[![Daily tests](https://github.com/shane24sweeney/aboutshane/actions/workflows/production-smoke.yml/badge.svg)](https://shane24sweeney.github.io/aboutshane/)
 
 Portfolio site for Shane James Sweeney, Senior QE and Mobile Automation Consultant.
 Live at **[selenium-automation.com](https://selenium-automation.com)**.

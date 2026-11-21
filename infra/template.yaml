@@ -27,6 +27,10 @@ Parameters:
     AllowedPattern: '^[^@\s]+@[^@\s]+\.[^@\s]+$'
     ConstraintDescription: must be an email address.
     Description: Where contact-form notifications are sent.
+  GitHubRepository:
+    Type: String
+    Default: shane24sweeney/aboutshane
+    Description: owner/repo whose master-branch workflows may send the daily test-report email.
 
 Globals:
   Function:
@@ -287,6 +291,43 @@ Resources:
     Metadata:
       BuildMethod: makefile
 
+  # ---------- Daily test report email (GitHub Actions, no stored keys) ----------
+  # GitHub's OIDC tokens let the daily workflow on master assume ReportEmailRole for a few minutes.
+  GitHubOidcProvider:
+    Type: AWS::IAM::OIDCProvider
+    Properties:
+      Url: https://token.actions.githubusercontent.com
+      ClientIdList:
+        - sts.amazonaws.com
+
+  # Can only send email from the site's domain to the contact address; nothing else.
+  ReportEmailRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub '${ProjectName}-report-email'
+      MaxSessionDuration: 3600
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Federated: !Ref GitHubOidcProvider
+            Action: sts:AssumeRoleWithWebIdentity
+            Condition:
+              StringEquals:
+                token.actions.githubusercontent.com:aud: sts.amazonaws.com
+                token.actions.githubusercontent.com:sub: !Sub 'repo:${GitHubRepository}:ref:refs/heads/master'
+      Policies:
+        - PolicyName: send-report-email
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: ses:SendEmail
+                Resource:
+                  - !Sub 'arn:${AWS::Partition}:ses:${AWS::Region}:${AWS::AccountId}:identity/${FrontendDomainName}'
+                  - !Sub 'arn:${AWS::Partition}:ses:${AWS::Region}:${AWS::AccountId}:identity/${ContactRecipientEmail}'
+
   BackendApi:
     Type: AWS::Serverless::HttpApi
     Properties:
@@ -312,6 +353,9 @@ Outputs:
   BackendUrl:
     Description: HTTP API URL for the backend (the site reaches it through CloudFront at /api/*)
     Value: !Sub 'https://${BackendApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}'
+  ReportEmailRoleArn:
+    Description: Role the daily test-report workflow assumes to send its email (GitHub variable REPORT_ROLE_ARN)
+    Value: !GetAtt ReportEmailRole.Arn
   ContactMessagesTableName:
     Description: DynamoDB table holding contact-form messages
     Value: !Ref ContactMessagesTable

@@ -19,13 +19,15 @@ export default defineConfig({
   retries: isCI ? 2 : 0,
   workers: isCI ? 2 : undefined,
   // In CI, failures show in the job log (list), as annotations (github), in the job summary
-  // (github-summary), and in junit.xml and the HTML report, which the workflows upload.
+  // (github-summary), and in junit.xml, results.json and the HTML report, which the workflows upload.
   reporter: isCI
     ? [
         ['html', { open: 'never' }],
         ['github'],
         ['list'],
         ['junit', { outputFile: 'test-results/junit.xml' }],
+        // Read by scripts/test-report/build.mjs for the daily report and email.
+        ['json', { outputFile: 'test-results/results.json' }],
         ['./tests/e2e/support/reporters/github-summary.ts'],
       ]
     : [['html', { open: 'never' }], ['list']],

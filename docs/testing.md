@@ -64,15 +64,19 @@ flowchart LR
   push --> infra["Infrastructure job<br/>cfn-lint"]
   frontend -- "build" --> e2e["End-to-end job<br/>desktop · 2 Android · 3 iPhones<br/>incl. mobile and accessibility"]
 
+  daily --> regression["Regression job<br/>desktop · 2 Android · 3 iPhones"]
   daily --> smoke["Smoke job<br/>live site: desktop · Pixel 7 · iPhone 15"]
-  smoke -- "if it passes" --> load["Load job<br/>JMeter"]
+  smoke --> load["Load job<br/>JMeter"]
+  regression --> report["Report job<br/>dashboard on GitHub Pages · email"]
+  load --> report
 
   off -.-> real["Real devices<br/>BrowserStack · Appium"]
 ```
 
 The four push-and-PR jobs are required checks on `master`: a pull request can't merge until they
 pass. Every Playwright run uploads its HTML report as a build artifact, and failures appear in the
-job log and the job summary.
+job log and the job summary. The daily results are on the
+[test dashboard](https://shane24sweeney.github.io/aboutshane/) and in a summary email.
 
 Before the browser tests, run `npm ci` and, for local runs, `npm run build`. The regression,
 mobile and accessibility tests run against the production build in

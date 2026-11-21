@@ -49,3 +49,7 @@ jmeter.log
 # IDE
 .idea/
 .DS_Store
+
+# Daily test report, built by scripts/test-report/build.mjs
+/reports
+/site

@@ -100,8 +100,34 @@ These use the GitHub CLI (`gh`), signed in to the repo.
 | Workflow | Runs automatically | Start it by hand |
 |---|---|---|
 | **CI**: lint, types, unit, API, build, regression, cfn-lint | Every push and pull request | `gh workflow run ci.yml --ref <branch>` |
-| **Production smoke**: smoke tests, then the JMeter load test | Daily at 11:17 UTC | `gh workflow run production-smoke.yml --ref master` |
+| **Daily tests and report**: regression, live smoke and JMeter, then a dashboard and an email | Daily at 11:17 UTC | `gh workflow run production-smoke.yml --ref master` |
 | **BrowserStack mobile**: real devices | Never (switched off) | Skipped until `REAL_DEVICE_TESTS` is on ([details](../docs/browserstack.md)) |
+
+### The daily report
+
+Each morning's results go to a public dashboard at
+**[shane24sweeney.github.io/aboutshane](https://shane24sweeney.github.io/aboutshane/)**: pass, fail,
+flaky and skipped counts per suite and per device, every failure with its error, the JMeter timings
+per button, a strip of the last 30 days, and the full Playwright and JMeter HTML reports.
+A summary email with the same tables and a link to the dashboard goes to the contact address.
+`scripts/test-report/build.mjs` builds both from the run's artifacts. Both are free: GitHub Pages and
+Actions cost nothing for a public repo, and one SES email a day is a fraction of a cent a month.
+
+One-time setup (already done for this repo):
+
+1. Deploy the stack (`infra/template.yaml` adds `ReportEmailRole`, which can only send email from
+   the site's domain to the contact address; GitHub signs in with OIDC, so no AWS keys are stored).
+2. `gh api repos/shane24sweeney/aboutshane/pages -X POST -f build_type=workflow` turns on Pages.
+3. `gh variable set REPORT_ROLE_ARN --body <ReportEmailRoleArn stack output>`
+4. `gh secret set REPORT_EMAIL` and paste the address, which stays out of the public repo.
+5. While SES is in the sandbox, the address must be verified (the link in Amazon's email).
+
+Until steps 3 and 4 are done the email job is skipped; the dashboard still publishes.
+
+To try the report locally after running the suites, copy each run's `playwright-report` and
+`test-results` into `reports/regression` and `reports/smoke`, and `tests/jmeter/results` into
+`reports/jmeter/tests/jmeter/results`, then `node scripts/test-report/build.mjs reports site` and
+open `site/index.html` and `reports/email.html`.
 
 Follow and manage runs:
 

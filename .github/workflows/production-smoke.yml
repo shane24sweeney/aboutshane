@@ -1,6 +1,8 @@
-name: Production smoke
+name: Daily tests and report
 
-# Read-only checks that the live site and contact API are up. Never submits the form.
+# Every morning: regression (desktop and 5 phones), read-only smoke checks on the live site,
+# and the JMeter load test. Then a dashboard goes to GitHub Pages and a summary email goes out.
+# Never submits the contact form.
 on:
   schedule:
     - cron: '17 11 * * *' # daily, 11:17 UTC
@@ -10,6 +12,28 @@ permissions:
   contents: read
 
 jobs:
+  regression:
+    name: Regression (desktop + Android + iPhone)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium webkit
+      - run: npm run test:regression
+      - uses: actions/upload-artifact@v7
+        if: ${{ !cancelled() }}
+        with:
+          name: regression-report
+          path: |
+            playwright-report
+            test-results
+          retention-days: 14
+
   smoke:
     runs-on: ubuntu-latest
     steps:
@@ -35,7 +59,9 @@ jobs:
   # The request behind every button, under light load. Defaults stay under the API's 2 req/s throttle.
   load:
     name: Load (JMeter button clicks)
+    # After smoke so the two don't share the API's throttle; runs even when smoke fails.
     needs: smoke
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     env:
       JMETER_VERSION: 5.6.3
@@ -67,3 +93,85 @@ jobs:
             tests/jmeter/results
             jmeter.log
           retention-days: 14
+
+  # Builds the dashboard and the email from whatever the three jobs above produced.
+  report:
+    name: Build report
+    needs: [regression, smoke, load]
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - uses: actions/download-artifact@v8
+        continue-on-error: true
+        with:
+          name: regression-report
+          path: reports/regression
+      - uses: actions/download-artifact@v8
+        continue-on-error: true
+        with:
+          name: production-smoke-report
+          path: reports/smoke
+      - uses: actions/download-artifact@v8
+        continue-on-error: true
+        with:
+          name: jmeter-report
+          path: reports/jmeter
+      - run: node scripts/test-report/build.mjs reports site
+      - run: echo "Dashboard at https://shane24sweeney.github.io/aboutshane/" >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: site
+      - uses: actions/upload-artifact@v7
+        with:
+          name: report-email
+          path: |
+            reports/email.html
+            reports/email-subject.txt
+          retention-days: 14
+
+  pages:
+    name: Publish to GitHub Pages
+    needs: report
+    if: ${{ !cancelled() && needs.report.result == 'success' }}
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v5
+
+  # Sends after Pages so the email's link opens today's report. Skipped until the
+  # REPORT_ROLE_ARN variable and REPORT_EMAIL secret are set (see tests/README.md).
+  email:
+    name: Email report
+    needs: [report, pages]
+    if: ${{ !cancelled() && needs.report.result == 'success' && vars.REPORT_ROLE_ARN != '' }}
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: report-email
+      - uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: ${{ vars.REPORT_ROLE_ARN }}
+          aws-region: us-east-1
+      - name: Send with SES
+        env:
+          REPORT_EMAIL: ${{ secrets.REPORT_EMAIL }}
+        run: |
+          jq -n --rawfile subject email-subject.txt --rawfile html email.html \
+            '{Simple: {Subject: {Data: $subject, Charset: "UTF-8"}, Body: {Html: {Data: $html, Charset: "UTF-8"}}}}' > message.json
+          aws sesv2 send-email \
+            --from-email-address "Daily test report <noreply@selenium-automation.com>" \
+            --destination "ToAddresses=$REPORT_EMAIL" \
+            --content file://message.json
