@@ -1,7 +1,8 @@
 name: Daily tests and report
 
-# Every morning: regression (desktop and 5 phones), read-only smoke checks on the live site,
-# and the JMeter load test. Then a dashboard goes to GitHub Pages and a summary email goes out.
+# Every morning: UI and API tests with code coverage, regression (desktop and 5 phones),
+# read-only smoke checks on the live site, and the JMeter load test. Then a quality report for
+# the whole project goes to GitHub Pages and a summary email goes out.
 # Never submits the contact form.
 on:
   schedule:
@@ -12,6 +13,47 @@ permissions:
   contents: read
 
 jobs:
+  ui:
+    name: UI unit tests and coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run test:coverage
+      - uses: actions/upload-artifact@v7
+        if: ${{ !cancelled() }}
+        with:
+          name: ui-report
+          path: |
+            test-results/unit.json
+            coverage
+          retention-days: 14
+
+  api:
+    name: API tests and coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 25
+          cache: maven
+      - run: mvn -B verify
+        working-directory: backend
+      - uses: actions/upload-artifact@v7
+        if: ${{ !cancelled() }}
+        with:
+          name: api-report
+          path: |
+            backend/target/surefire-reports
+            backend/target/site/jacoco
+          retention-days: 14
+
   regression:
     name: Regression (desktop + Android + iPhone)
     runs-on: ubuntu-latest
@@ -97,14 +139,32 @@ jobs:
   # Builds the dashboard and the email from whatever the three jobs above produced.
   report:
     name: Build report
-    needs: [regression, smoke, load]
+    needs: [ui, api, regression, smoke, load]
     if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read
+      pull-requests: read
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
         with:
           node-version: 22
+          cache: npm
+      # Playwright draws the donut chart image for the email.
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - uses: actions/download-artifact@v8
+        continue-on-error: true
+        with:
+          name: ui-report
+          path: reports/ui
+      - uses: actions/download-artifact@v8
+        continue-on-error: true
+        with:
+          name: api-report
+          path: reports/api
       - uses: actions/download-artifact@v8
         continue-on-error: true
         with:
@@ -120,6 +180,9 @@ jobs:
         with:
           name: jmeter-report
           path: reports/jmeter
+      - run: node scripts/test-report/delivery.mjs "$GITHUB_REPOSITORY" reports/delivery.json
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
       - run: node scripts/test-report/build.mjs reports site
       - run: echo "Dashboard at https://shane24sweeney.github.io/aboutshane/" >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-pages-artifact@v5
@@ -131,6 +194,7 @@ jobs:
           path: |
             reports/email.html
             reports/email-subject.txt
+            reports/email-chart.png
           retention-days: 14
 
   pages:
@@ -156,11 +220,17 @@ jobs:
     if: ${{ !cancelled() && needs.report.result == 'success' && vars.REPORT_ROLE_ARN != '' }}
     runs-on: ubuntu-latest
     permissions:
+      contents: read
       id-token: write
     steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
       - uses: actions/download-artifact@v8
         with:
           name: report-email
+          path: email
       - uses: aws-actions/configure-aws-credentials@v6
         with:
           role-to-assume: ${{ vars.REPORT_ROLE_ARN }}
@@ -169,9 +239,8 @@ jobs:
         env:
           REPORT_EMAIL: ${{ secrets.REPORT_EMAIL }}
         run: |
-          jq -n --rawfile subject email-subject.txt --rawfile html email.html \
-            '{Simple: {Subject: {Data: $subject, Charset: "UTF-8"}, Body: {Html: {Data: $html, Charset: "UTF-8"}}}}' > message.json
+          node scripts/test-report/send-email.mjs email message.json
           aws sesv2 send-email \
-            --from-email-address "Daily test report <noreply@selenium-automation.com>" \
+            --from-email-address "Daily quality report <noreply@selenium-automation.com>" \
             --destination "ToAddresses=$REPORT_EMAIL" \
             --content file://message.json
