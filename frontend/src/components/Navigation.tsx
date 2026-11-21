@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import type { IconType } from 'react-icons';
+import type { IconBaseProps, IconType } from 'react-icons';
 import {
   FaBriefcase,
   FaEnvelope,
@@ -14,6 +14,11 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { NavLink } from 'react-router';
 import './Navigation.css';
+
+/** A small globe that turns slowly on its tile (still for visitors who prefer reduced motion). */
+function SpinningEarth({ className }: IconBaseProps) {
+  return <span className={`${className ?? ''} nav-earth`} />;
+}
 
 interface NavItem {
   to: string;
@@ -32,6 +37,7 @@ const navItems: NavItem[] = [
   { to: '/education', label: 'Education', icon: FaGraduationCap, colour: '#b6a1ff' },
   { to: '/charity', label: 'Charity Work', icon: FaHandHoldingHeart, colour: '#ff8fa3' },
   { to: '/running', label: 'Running', icon: FaPersonRunning, colour: '#8fe388' },
+  { to: '/metrics', label: 'Test Metrics', icon: SpinningEarth, colour: '#4f7bd9' },
 ];
 
 function Navigation() {

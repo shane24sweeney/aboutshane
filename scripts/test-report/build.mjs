@@ -11,7 +11,8 @@
 //   regression/  playwright-report/ and test-results/results.json (desktop and the 5 phones)
 //   smoke/       the same, from the live site
 //   jmeter/      tests/jmeter/results/results.jtl and report/
-// <site> gets index.html, 3d.html, history.json and each full report.
+// <site> gets index.html, 3d.html, history.json, metrics.json (read by the site's Test Metrics
+// page) and each full report.
 // <inputs> gets email.html, email-subject.txt and email-chart.png (see send-email.mjs).
 // Missing inputs (a job that didn't finish) show as "no results" and mark the day incomplete.
 
@@ -645,6 +646,45 @@ if (existsSync(jmeterReport)) cpSync(jmeterReport, join(site, 'jmeter'), { recur
 writeFileSync(join(site, 'index.html'), dashboard);
 writeFileSync(join(site, '3d.html'), gridPage({ rows: gridRows, columns: gridColumns, cells: gridCells, headline, day }));
 writeFileSync(join(site, 'history.json'), JSON.stringify(history, null, 2));
+// The same numbers as data, for the Test Metrics page on selenium-automation.com (GitHub Pages
+// lets any site read it). Grid links are relative to this site.
+const playwrightJson = (d) => d && { totals: d.totals, total: d.total, duration: d.duration, devices: d.devices.size };
+const devJson = (d) => d && { totals: d.totals, total: d.total, duration: d.duration, files: d.files.length, coverage: d.coverage };
+const deviceJson = (data, device) => {
+  if (!data) return null;
+  const counts = [...data.devices].filter(([p]) => deviceName(p) === device).map(([, c]) => c);
+  if (!counts.length) return null;
+  const sum = (k) => counts.reduce((n, c) => n + c[k], 0);
+  return { passed: sum('passed') + sum('flaky'), failed: sum('failed'), flaky: sum('flaky') };
+};
+const metrics = {
+  version: 1,
+  generatedAt: now.toISOString(),
+  day,
+  status,
+  statusText,
+  headline,
+  summary,
+  reportUrl: siteURL,
+  runUrl: runURL,
+  kpis,
+  overall: overall.counts,
+  development: { ui: devJson(ui), api: devJson(api) },
+  qa: {
+    regression: playwrightJson(regression),
+    smoke: playwrightJson(smoke),
+    load: jmeter && {
+      samples: jmeter.samples, failed: jmeter.failed, median: jmeter.median, p95: jmeter.p95, duration: jmeter.duration,
+      actions: jmeter.actions.map(({ action, samples, failed, median: m, p95: p }) => ({ action, samples, failed, median: m, p95: p })),
+    },
+  },
+  failures: allFailures.map(({ area, title, device, error }) => ({ area, title, device, error })),
+  devices: deviceOrder.map((device) => ({ device, regression: deviceJson(regression, device), smoke: deviceJson(smoke, device) })),
+  delivery,
+  history: history.map(({ date, status: s, passed, checks: c }) => ({ date, status: s ?? (passed ? 'healthy' : 'attention'), checks: c ?? null })),
+  grid: { rows: gridRows, columns: gridColumns, cells: gridCells },
+};
+writeFileSync(join(site, 'metrics.json'), JSON.stringify(metrics));
 // Jekyll would hide the reports' _-prefixed folders.
 writeFileSync(join(site, '.nojekyll'), '');
 writeFileSync(join(inputs, 'email.html'), email);

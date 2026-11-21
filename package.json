@@ -43,7 +43,8 @@
     "react-bootstrap": "^2.10.5",
     "react-dom": "^18.3.1",
     "react-icons": "^5.5.0",
-    "react-router": "^7.18.4"
+    "react-router": "^7.18.4",
+    "three": "^0.187.0"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.0",
@@ -57,6 +58,7 @@
     "@types/node": "^22.9.0",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
+    "@types/three": "^0.187.0",
     "@vitejs/plugin-react": "^4.3.3",
     "@vitest/coverage-v8": "^4.1.11",
     "browserstack-node-sdk": "^1.71.0",
