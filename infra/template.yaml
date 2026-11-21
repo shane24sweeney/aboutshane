@@ -322,8 +322,11 @@ Resources:
           PolicyDocument:
             Version: '2012-10-17'
             Statement:
+              # The report is sent as raw MIME (the chart is attached), which SES checks as SendRawEmail.
               - Effect: Allow
-                Action: ses:SendEmail
+                Action:
+                  - ses:SendEmail
+                  - ses:SendRawEmail
                 Resource:
                   - !Sub 'arn:${AWS::Partition}:ses:${AWS::Region}:${AWS::AccountId}:identity/${FrontendDomainName}'
                   - !Sub 'arn:${AWS::Partition}:ses:${AWS::Region}:${AWS::AccountId}:identity/${ContactRecipientEmail}'
