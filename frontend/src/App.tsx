@@ -5,6 +5,7 @@ import ConsentBanner from './components/ConsentBanner';
 import Footer from './components/Footer';
 import Navigation from './components/Navigation';
 import SiteSearch from './components/SiteSearch';
+import SubNav from './components/SubNav';
 import Home from './pages/Home';
 import { pageModules, prefetchAllWhenIdle } from './prefetch';
 
@@ -33,6 +34,7 @@ function App() {
       <div className="site-frame">
         <Navigation />
         <SiteSearch />
+        <SubNav />
         <main>
           <Suspense fallback={null}>
             <Routes>

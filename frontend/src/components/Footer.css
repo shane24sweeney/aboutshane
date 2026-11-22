@@ -129,3 +129,33 @@
 .site-footer-link:focus-visible {
   text-decoration: underline;
 }
+
+/* Site map: one column per navigation group, side by side, wrapping on phones. */
+.site-footer-map {
+  display: flex;
+  flex-basis: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px 48px;
+  margin-bottom: 14px;
+  text-align: left;
+}
+
+.site-footer-map-title {
+  margin: 0 0 4px;
+  color: var(--site-text);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.site-footer-map ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-footer-map a {
+  padding: 4px 0;
+}

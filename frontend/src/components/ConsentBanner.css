@@ -64,3 +64,12 @@
 .consent-decline:focus-visible {
   border-color: var(--site-accent);
 }
+
+/* Phones: above the bottom navigation bar. */
+@media (max-width: 600px) {
+  .consent-banner {
+    right: 8px;
+    bottom: calc(80px + env(safe-area-inset-bottom));
+    left: 8px;
+  }
+}

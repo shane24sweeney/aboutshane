@@ -43,6 +43,8 @@ test.describe('about page: fitness medals', () => {
     await given('the visitor is looking at a medal', async () => {
       await page.goto('/about');
       await page.getByRole('button', { name: 'Next slide' }).click();
+      // Clicking Next can scroll the page; bring the whole medal on screen, as a visitor would.
+      await medal.scrollIntoViewIfNeeded();
     });
     const box = (await medal.boundingBox())!;
 

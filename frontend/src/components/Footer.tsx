@@ -1,4 +1,5 @@
 import { Link } from 'react-router';
+import { NAV_GROUPS } from '../navigation';
 import { OPEN_COOKIE_SETTINGS } from './ConsentBanner';
 import StatusBadge from './StatusBadge';
 import './Footer.css';
@@ -7,6 +8,23 @@ import './Footer.css';
 function Footer() {
   return (
     <footer className="site-footer">
+      {/* A site map: every page, grouped as in the navigation, for anyone scanning. */}
+      <nav className="site-footer-map" aria-label="All pages">
+        {NAV_GROUPS.filter((group) => group.pages.length > 1).map((group) => (
+          <div key={group.label}>
+            <p className="site-footer-map-title" aria-hidden="true">
+              {group.label}
+            </p>
+            <ul aria-label={group.label}>
+              {group.pages.map(({ to, label }) => (
+                <li key={to}>
+                  <Link to={to}>{label}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </nav>
       <ul className="site-footer-group">
         <li>© {new Date().getFullYear()} Shane James Sweeney</li>
         <li>Kennesaw, GA</li>

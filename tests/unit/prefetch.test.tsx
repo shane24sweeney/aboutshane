@@ -55,7 +55,7 @@ describe('content cache', () => {
 });
 
 describe('prefetching', () => {
-  it('starts loading a page’s content the moment a pointer reaches its tab', () => {
+  it('starts loading a group’s first page the moment a pointer reaches its tile', () => {
     const fetchMock = vi.fn().mockReturnValue(new Promise(() => {}));
     vi.stubGlobal('fetch', fetchMock);
     render(
@@ -64,9 +64,9 @@ describe('prefetching', () => {
       </MemoryRouter>,
     );
 
-    fireEvent.pointerEnter(screen.getByRole('link', { name: 'Resume' }));
-    fireEvent.pointerDown(screen.getByRole('link', { name: 'Resume' }));
-    fireEvent.focus(screen.getByRole('link', { name: 'Resume' }));
+    fireEvent.pointerEnter(screen.getByRole('link', { name: 'Experience' }));
+    fireEvent.pointerDown(screen.getByRole('link', { name: 'Experience' }));
+    fireEvent.focus(screen.getByRole('link', { name: 'Experience' }));
 
     expect(contentRequests(fetchMock)).toEqual(['/api/content/resume']);
   });
