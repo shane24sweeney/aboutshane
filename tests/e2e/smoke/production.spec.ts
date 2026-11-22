@@ -1,4 +1,5 @@
-import { type APIResponse, expect, test } from '@playwright/test';
+import { type APIResponse } from '@playwright/test';
+import { expect, test } from '../support/smoke-fixtures';
 import { pages } from '../support/pages';
 import { and, given, then, when } from '../support/steps';
 

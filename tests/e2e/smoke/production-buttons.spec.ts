@@ -1,4 +1,5 @@
-import { type Response, expect, test } from '@playwright/test';
+import { type Response } from '@playwright/test';
+import { expect, test } from '../support/smoke-fixtures';
 import { openFromNav } from '../support/navigate';
 import { pages } from '../support/pages';
 import { and, given, then, when } from '../support/steps';
