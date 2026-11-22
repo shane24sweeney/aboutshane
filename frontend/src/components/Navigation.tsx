@@ -13,6 +13,7 @@ import {
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { NavLink } from 'react-router';
+import { prefetchPage } from '../prefetch';
 import './Navigation.css';
 
 /** A small globe that turns slowly on its tile (still for visitors who prefer reduced motion). */
@@ -45,7 +46,18 @@ function Navigation() {
     <Navbar className="site-nav" bg="dark" variant="dark" aria-label="Primary navigation">
       <Nav className="site-nav-links mx-auto">
         {navItems.map(({ to, label, icon: Icon, colour }) => (
-          <Nav.Link key={to} as={NavLink} to={to} className="nav-button text-center" title={label} aria-label={label}>
+          <Nav.Link
+            key={to}
+            as={NavLink}
+            to={to}
+            className="nav-button text-center"
+            title={label}
+            aria-label={label}
+            // Start loading the page the moment a finger, mouse or keyboard reaches its tab.
+            onPointerEnter={() => prefetchPage(to, { intent: true })}
+            onPointerDown={() => prefetchPage(to, { intent: true })}
+            onFocus={() => prefetchPage(to, { intent: true })}
+          >
             <span className="nav-tile" style={{ '--tile': colour } as CSSProperties} aria-hidden="true">
               <Icon className="nav-icon" />
             </span>
