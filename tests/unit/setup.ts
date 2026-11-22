@@ -2,6 +2,8 @@ import '@testing-library/jest-dom/vitest';
 import { cleanup } from '@testing-library/react';
 import { createElement } from 'react';
 import { afterEach, beforeEach, vi } from 'vitest';
+import { clearContentCache } from '../../frontend/src/content/cache';
+import { resetPrefetch } from '../../frontend/src/prefetch';
 
 // jsdom can't draw a Leaflet map, so pages render a stand-in for it. The grouping into pins is
 // tested on its own (raceLocations.test.ts), and the real map in the Playwright tests.
@@ -25,6 +27,8 @@ beforeEach(() => {
 });
 
 afterEach(() => {
+  clearContentCache();
+  resetPrefetch();
   cleanup();
   vi.useRealTimers();
   vi.restoreAllMocks();

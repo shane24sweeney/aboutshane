@@ -1,6 +1,8 @@
 /* Metrics: the daily quality report's numbers in the site's own style. Result colours all
    clear 4.5:1 on the dark cards, and every one is paired with a word or symbol. */
 .metrics-page {
+  /* Report text can hold long unbroken words (paths, names); wrap them instead of widening the page. */
+  overflow-wrap: anywhere;
   --pass: #3fb950;
   --fail: #ff7b72;
   --flaky: #d29922;

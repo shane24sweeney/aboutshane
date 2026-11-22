@@ -94,8 +94,10 @@ test.describe('test metrics page: cross-site scripting', { tag: ['@security', '@
     });
     await when('the visitor opens Metrics and lists the first area’s tests from the table', async () => {
       await page.goto('/metrics');
-      await page.getByText('Table view').click();
-      // The long payload makes the table wide; selecting with the keyboard avoids clicking mid-scroll.
+      // Keyboard, not clicks: with Bootstrap's smooth scrolling a click can land mid-scroll on CI.
+      await page.getByText('Table view').focus();
+      await page.keyboard.press('Enter');
+      await expect(page.getByRole('region', { name: 'Test results by area and device' })).toBeVisible();
       const cell = page.getByRole('region', { name: 'Test results by area and device' }).getByRole('row').nth(1).getByRole('button').first();
       await cell.focus();
       await page.keyboard.press('Enter');
@@ -105,6 +107,9 @@ test.describe('test metrics page: cross-site scripting', { tag: ['@security', '@
       await expect(page.getByText(`xss-probe test ${payload}`)).toBeVisible();
       expect(await page.evaluate(() => (window as unknown as { __xss: number }).__xss)).toBe(0);
       await expect(page.locator('img[src="x"]')).toHaveCount(0);
+    });
+    await and('long words wrap instead of making the page scroll sideways', async () => {
+      expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(page.viewportSize()!.width);
     });
   });
 });
