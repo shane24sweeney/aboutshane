@@ -1,4 +1,5 @@
 import { Link } from 'react-router';
+import StatusBadge from './StatusBadge';
 import './Footer.css';
 
 // No email address here: scrapers harvest mailto links, and the contact form is the protected route.
@@ -24,6 +25,9 @@ function Footer() {
           <Link to="/contact">Contact</Link>
         </li>
       </ul>
+      <div className="site-footer-status">
+        <StatusBadge />
+      </div>
     </footer>
   );
 }

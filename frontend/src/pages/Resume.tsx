@@ -1,4 +1,6 @@
 import Accordion from 'react-bootstrap/Accordion';
+import { FaFilePdf } from 'react-icons/fa6';
+import { RESUME_PDF } from '../api/site';
 import PageLoading from '../components/PageLoading';
 import { logos } from '../content/images';
 import type { ResumeEntry } from '../content/types';
@@ -21,6 +23,11 @@ function Resume() {
         <PageLoading />
       ) : (
         <div className="resume-card">
+          <div className="resume-actions">
+            <a className="resume-download" href={RESUME_PDF} download="Shane-James-Sweeney-Resume.pdf">
+              <FaFilePdf aria-hidden="true" /> Download résumé (PDF)
+            </a>
+          </div>
           {/* The most recent role starts open, so recruiters see recent work without clicking. */}
           <Accordion defaultActiveKey="0">
             {content.data.map((entry, index) => (
