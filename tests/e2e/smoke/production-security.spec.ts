@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../support/smoke-fixtures';
 import { CONTENT_SECURITY_POLICY, PERMISSIONS_POLICY } from '../../../frontend/security-headers';
 import { pages } from '../support/pages';
 import { and, given, then, when } from '../support/steps';
