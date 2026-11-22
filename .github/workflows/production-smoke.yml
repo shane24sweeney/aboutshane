@@ -209,17 +209,12 @@ jobs:
           API_ID: ${{ vars.API_ID }}
         run: |
           start=$(date -u -d '30 days ago' +%FT%TZ); end=$(date -u +%FT%TZ)
-          stats() { aws cloudwatch get-metric-statistics --namespace AWS/ApiGateway --dimensions "Name=ApiId,Value=$API_ID" \
-            --start-time "$start" --end-time "$end" --period 2592000 "$@" --output json; }
-          latency=$(stats --metric-name Latency --extended-statistics p50 p90 p99)
-          count=$(stats --metric-name Count --statistics Sum)
-          jq -n --argjson l "$latency" --argjson c "$count" '{
-            days: 30,
-            p50: ($l.Datapoints[0].ExtendedStatistics.p50 // null | if . then round else . end),
-            p90: ($l.Datapoints[0].ExtendedStatistics.p90 // null | if . then round else . end),
-            p99: ($l.Datapoints[0].ExtendedStatistics.p99 // null | if . then round else . end),
-            requests: ($c.Datapoints[0].Sum // 0 | round)
-          }' > reports/api-latency.json
+          # One datapoint per day (CloudWatch splits longer periods anyway): requests are the sum
+          # of the days, and each percentile is the days' values weighted by their requests.
+          aws cloudwatch get-metric-statistics --namespace AWS/ApiGateway --dimensions "Name=ApiId,Value=$API_ID" \
+            --start-time "$start" --end-time "$end" --period 86400 --metric-name Latency \
+            --statistics SampleCount --extended-statistics p50 p90 p99 --output json > reports/api-latency-daily.json
+          jq -f scripts/analytics/api-latency.jq reports/api-latency-daily.json > reports/api-latency.json
           cat reports/api-latency.json
       - name: Visitors from Google Analytics
         env:
