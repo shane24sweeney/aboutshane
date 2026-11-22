@@ -65,3 +65,50 @@
   color: var(--site-accent-strong);
   text-decoration: underline;
 }
+
+/* The API status badge sits on its own line under the links, in a slot of fixed height so the
+   page doesn't grow when it arrives a moment after the page. */
+.site-footer-status {
+  /* Full width (not flex-basis, which means height in the phones' column layout). */
+  flex: 0 0 auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 32px;
+  margin-top: 8px;
+}
+
+.status-badge {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 28px;
+  padding: 0 12px;
+  line-height: 1;
+  border: 1px solid var(--site-border);
+  border-radius: 999px;
+  color: var(--site-text-muted);
+  font-size: 0.8rem;
+  text-decoration: none;
+}
+
+.status-badge:hover,
+.status-badge:focus-visible {
+  border-color: var(--site-accent);
+  color: var(--site-text);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #3fb950;
+  box-shadow: 0 0 0 3px rgba(63, 185, 80, 0.2);
+}
+
+.status-warn .status-dot {
+  background: #d29922;
+  box-shadow: 0 0 0 3px rgba(210, 153, 34, 0.2);
+}

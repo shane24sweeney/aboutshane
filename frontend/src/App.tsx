@@ -1,24 +1,32 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { Navigate, Route, Routes } from 'react-router';
 import Footer from './components/Footer';
 import Navigation from './components/Navigation';
+import SiteSearch from './components/SiteSearch';
 import Home from './pages/Home';
+import { pageModules, prefetchAllWhenIdle } from './prefetch';
 
-const About = lazy(() => import('./pages/About'));
-const Charity = lazy(() => import('./pages/Charity'));
-const Contact = lazy(() => import('./pages/Contact'));
-const Education = lazy(() => import('./pages/Education'));
-const Metrics = lazy(() => import('./pages/Metrics'));
-const Resume = lazy(() => import('./pages/Resume'));
-const Running = lazy(() => import('./pages/Running'));
-const Testimonials = lazy(() => import('./pages/Testimonials'));
+// The same imports prefetch.ts warms up, so a prefetched page renders without waiting.
+const About = lazy(pageModules['/about']);
+const Charity = lazy(pageModules['/charity']);
+const Contact = lazy(pageModules['/contact']);
+const Education = lazy(pageModules['/education']);
+const Metrics = lazy(pageModules['/metrics']);
+const Resume = lazy(pageModules['/resume']);
+const Running = lazy(pageModules['/running']);
+const Testimonials = lazy(pageModules['/testimonials']);
+
+const PREFETCH = ['/home', '/resume', '/about', '/contact', '/testimonials', '/education', '/charity', '/running', '/metrics'];
 
 /** Routes and layout; the router itself is supplied by the caller so tests can use a MemoryRouter. */
 function App() {
+  useEffect(() => prefetchAllWhenIdle(PREFETCH), []);
+
   return (
     <div className="site-shell">
       <div className="site-frame">
         <Navigation />
+        <SiteSearch />
         <main>
           <Suspense fallback={null}>
             <Routes>

@@ -1,6 +1,7 @@
 package com.aboutshane.contactapi;
 
 import com.amazonaws.serverless.exceptions.ContainerInitializationException;
+import com.amazonaws.serverless.proxy.internal.LambdaContainerHandler;
 import com.amazonaws.serverless.proxy.model.AwsProxyResponse;
 import com.amazonaws.serverless.proxy.model.HttpApiV2ProxyRequest;
 import com.amazonaws.serverless.proxy.spring.SpringBootLambdaContainerHandler;
@@ -11,6 +12,8 @@ public class StreamLambdaHandler implements RequestHandler<HttpApiV2ProxyRequest
     private static final SpringBootLambdaContainerHandler<HttpApiV2ProxyRequest, AwsProxyResponse> handler;
 
     static {
+        // API Gateway must base64-encode binary bodies, such as GET /api/resume.pdf.
+        LambdaContainerHandler.getContainerConfig().addBinaryContentTypes("application/pdf");
         try {
             handler = SpringBootLambdaContainerHandler.getHttpApiV2ProxyHandler(ContactApiApplication.class);
         } catch (ContainerInitializationException exception) {
