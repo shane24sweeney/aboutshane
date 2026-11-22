@@ -15,7 +15,7 @@ const renderAt = (path: string) =>
 
 describe('navigation groups', () => {
   it('has five groups, within the 3 to 5 a phone tab bar should hold', () => {
-    expect(NAV_GROUPS.map((g) => g.label)).toEqual(['Home', 'Experience', 'Quality', 'About', 'Contact']);
+    expect(NAV_GROUPS.map((g) => g.label)).toEqual(['Home', 'Experience', 'Projects', 'About', 'Contact']);
   });
 
   it('puts every page in exactly one group, and each group’s tile opens its first page', () => {
@@ -27,7 +27,7 @@ describe('navigation groups', () => {
 
   it('finds the group for a page, ignoring a trailing slash', () => {
     expect(groupFor('/education')?.label).toBe('Experience');
-    expect(groupFor('/analytics/')?.label).toBe('Quality');
+    expect(groupFor('/analytics/')?.label).toBe('Projects');
     expect(groupFor('/nowhere')).toBeUndefined();
   });
 });

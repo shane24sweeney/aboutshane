@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { FaEnvelope, FaGithub, FaLinkedin } from 'react-icons/fa';
 import { Link } from 'react-router';
 import shane from '../assets/Shane.jpg';
@@ -77,7 +78,15 @@ function Home() {
     <section className="home-profile">
       <header className="home-hero">
         <h1 className="home-hero-name">{profile.name}</h1>
-        <p className="home-hero-role">{profile.headline}</p>
+        {/* Each role stays whole: side by side on wide screens, one per line on phones. */}
+        <p className="home-hero-role">
+          {profile.headline.split(' · ').map((role, i) => (
+            <Fragment key={role}>
+              {i > 0 && <span className="home-hero-role-sep"> · </span>}
+              <span className="home-hero-role-item">{role}</span>
+            </Fragment>
+          ))}
+        </p>
         <p className="home-hero-meta">{profile.meta}</p>
         <div className="home-hero-actions">
           <Link className="home-hero-button home-hero-button-primary" to="/contact">
