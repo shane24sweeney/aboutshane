@@ -2,6 +2,9 @@ import { lazy, Suspense, useEffect, useState } from 'react';
 import { fetchVisitors, isAvailable, vitalRating } from '../api/visitors';
 import type { VisitorStats, VisitorsResponse } from '../api/visitors';
 import PageLoading from '../components/PageLoading';
+// The globe's stylesheet ships with the page (only the three.js code is lazy), so the Suspense
+// placeholder below already has the stage's size and nothing shifts when the 3D view arrives.
+import '../components/VisitorGlobe3D.css';
 import './Analytics.css';
 
 // three.js and the detailed Earth load only with this page.

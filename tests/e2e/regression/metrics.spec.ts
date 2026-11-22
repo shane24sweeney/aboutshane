@@ -1,6 +1,7 @@
 import { expect, test } from '../support/fixtures';
 import sample from '../support/metrics.sample.json' with { type: 'json' };
 import { and, given, then, when } from '../support/steps';
+import { expect3D } from '../support/webgl';
 
 // The fixtures serve ./metrics.sample.json in place of the daily report's metrics.json.
 test.describe('test metrics page', () => {
@@ -27,7 +28,9 @@ test.describe('test metrics page', () => {
     const panel = page.getByRole('region', { name: 'Selected tests' });
 
     await given('the visitor opens Metrics', () => page.goto('/metrics'));
-    await then('the 3D chart is drawn', () => expect(chart.locator('canvas')).toBeVisible());
+    await then('the 3D chart is drawn', async () => {
+      test.skip(!(await expect3D(page, chart)), 'no WebGL in this browser: the table view test covers selecting');
+    });
     await when('they click across the chart until they land on a bar', async () => {
       await chart.locator('canvas').scrollIntoViewIfNeeded();
       const box = (await chart.boundingBox())!;
