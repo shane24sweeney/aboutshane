@@ -22,6 +22,7 @@ The API tests (JUnit) are in `backend/src/test/`, where Maven expects them.
 ```bash
 npm ci                                   # dependencies
 npx playwright install chromium webkit   # browsers for Playwright (Chrome/Android and Safari/iPhone)
+npx playwright install firefox chrome msedge   # only for the cross-browser runs below
 brew install jmeter                      # only for the load test
 ```
 
@@ -40,6 +41,8 @@ npm run build
 |---|---|
 | `npm run test:regression` | Regression: desktop and all five phones, against the local build (444 tests) |
 | `npm run test:regression:desktop` | Regression on desktop Chrome only |
+| `npm run test:browsers` | Regression on branded Google Chrome, Microsoft Edge, Firefox, Safari (WebKit), an iPad, a Galaxy Tab S9, an iPhone 17 Pro and a Pixel 9 |
+| `npm run test:regression:all` | Everything above in one run: what the daily report runs |
 | `npm run test:mobile` | Regression on the five emulated phones |
 | `npm run test:mobile:android` | Regression on the Pixel 7 and Galaxy S24 (Chromium) |
 | `npm run test:mobile:ios` | Regression on the iPhone 15, iPhone SE and iPhone 15 Pro Max (WebKit) |
@@ -219,7 +222,8 @@ gh run rerun <run-id> --failed         # rerun only the failed jobs
 npm run debug:ci                       # download the latest failed run's reports and open them
 ```
 
-In CI the regression job runs `npm run test:regression` and the smoke job runs `npm run test:smoke`,
+In CI the required end-to-end job runs `npm run test:regression`, a separate non-required Cross-browser job runs
+`npm run test:browsers`, the daily regression job runs `npm run test:regression:all` and the smoke job runs `npm run test:smoke`,
 the same commands as above, with `CI=1` (2 retries, 2 workers). To reproduce a CI run locally,
 prefix the command with `CI=1`.
 

@@ -82,3 +82,31 @@ jobs:
             playwright-report
             test-results
           retention-days: 14
+
+  # Not a required check: it runs on every push and PR so a browser-specific break is visible,
+  # but a flaky third-party browser download can't block a merge.
+  cross-browser:
+    name: Cross-browser (Chrome, Edge, Firefox, Safari, tablets, newer phones)
+    needs: frontend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - uses: actions/download-artifact@v8
+        with:
+          name: frontend-build
+          path: frontend/build
+      - run: npx playwright install --with-deps chromium webkit firefox chrome msedge
+      - run: npm run test:browsers
+      - uses: actions/upload-artifact@v7
+        if: ${{ !cancelled() }}
+        with:
+          name: cross-browser-report
+          path: |
+            playwright-report
+            test-results
+          retention-days: 14

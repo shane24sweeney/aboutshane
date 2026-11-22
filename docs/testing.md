@@ -63,9 +63,10 @@ flowchart LR
   push --> backend["Backend job<br/>API tests (mvn verify)"]
   push --> infra["Infrastructure job<br/>cfn-lint"]
   frontend -- "build" --> e2e["End-to-end job<br/>desktop · 2 Android · 3 iPhones<br/>incl. mobile and accessibility"]
+  frontend -- "build" --> xb["Cross-browser job (not required)<br/>Chrome · Edge · Firefox · Safari<br/>iPad · Tab S9 · iPhone 17 Pro · Pixel 9"]
 
   daily --> unit["UI and API jobs<br/>unit tests · code coverage"]
-  daily --> regression["Regression job<br/>desktop · 2 Android · 3 iPhones"]
+  daily --> regression["Regression job<br/>every browser, phone and tablet"]
   daily --> smoke["Smoke job<br/>live site: desktop · Pixel 7 · iPhone 15"]
   smoke --> load["Load job<br/>JMeter"]
   unit --> report["Report job<br/>quality report on GitHub Pages · email"]
@@ -153,7 +154,7 @@ flowchart LR
 
   specs & config --> runner["Playwright test runner<br/>compiles specs on the fly"]
   runner -- "starts (webServer)" --> preview
-  runner --> browsers["Chromium and WebKit<br/>one run per project"]
+  runner --> browsers["Chromium, Chrome, Edge, Firefox and WebKit<br/>one run per project"]
   fixtures["tests/e2e/support/fixtures.ts<br/>answers /api/content/* from content/*.json"] -. "mocks the API" .-> browsers
   browsers -- "load pages" --> preview
   browsers --> reports["HTML report, JUnit XML,<br/>GitHub job summary"]
@@ -163,6 +164,8 @@ flowchart LR
 npm run build
 npm run test:regression             # desktop and all phones
 npm run test:regression:desktop     # desktop only
+npm run test:browsers               # Chrome, Edge, Firefox, Safari, tablets, newer phones
+npm run test:regression:all         # all of the above together
 npx playwright show-report           # open the last HTML report
 ```
 
@@ -189,8 +192,13 @@ flowchart TD
 | | Android | iOS |
 |---|---|---|
 | Emulated, every push and PR | On Chromium: `mobile` (Pixel 7, 412px wide), `mobile-small` (Galaxy S24, 360px) | On WebKit, the engine behind Safari: `mobile-safari` (iPhone 15, 393px), `mobile-safari-small` (iPhone SE, 375px), `mobile-safari-large` (iPhone 15 Pro Max, 430px) |
+| Emulated, cross-browser | `phone-pixel-9` (Pixel 9), `tablet-android` (Galaxy Tab S9) | `phone-iphone-17-pro` (iPhone 17 Pro), `tablet-ipad` (iPad 11th gen) |
 | Live site, daily | `production-mobile`: Pixel 7 | `production-mobile-safari`: iPhone 15 |
 | Real devices, switched off | Samsung Galaxy S23 (Android 13), Google Pixel 8 (Android 14), Chrome | iPhone 15 (iOS 17), iPhone 14 (iOS 16), Safari |
+
+Desktop browsers, cross-browser job and daily report: `chrome` (branded Google Chrome), `edge` (Microsoft
+Edge), `firefox` and `safari` (WebKit, the engine behind Safari on macOS). They run every regression test
+except the phone-layout file, which only applies to touch screens. Tablets and the newer phones run everything.
 
 The emulated phones use each device's screen size, pixel density, touch input and user agent.
 They run in the desktop builds of Chromium and WebKit, so they catch layout and touch problems,

@@ -58,6 +58,34 @@ export default defineConfig({
       testDir: regressionDir,
       use: { ...devices[device], baseURL: localURL },
     })),
+    // Cross-browser: the same regression suite in the other major desktop browsers, on tablets
+    // (where the top bar changes layout) and on the newest phones. Run with `npm run test:browsers`
+    // and in CI's Cross-browser job; Edge and branded Chrome use the installed browsers.
+    ...(
+      [
+        ['firefox', 'Desktop Firefox', undefined],
+        ['safari', 'Desktop Safari', undefined],
+        ['edge', 'Desktop Edge', 'msedge'],
+        ['chrome', 'Desktop Chrome', 'chrome'],
+      ] as const
+    ).map(([name, device, channel]) => ({
+      name,
+      testDir: regressionDir,
+      testIgnore: phoneLayoutSpec,
+      use: { ...devices[device], ...(channel ? { channel } : {}), baseURL: localURL },
+    })),
+    ...(
+      [
+        ['tablet-ipad', 'iPad (gen 11)'],
+        ['tablet-android', 'Galaxy Tab S9'],
+        ['phone-iphone-17-pro', 'iPhone 17 Pro'],
+        ['phone-pixel-9', 'Pixel 9'],
+      ] as const
+    ).map(([name, device]) => ({
+      name,
+      testDir: regressionDir,
+      use: { ...devices[device], baseURL: localURL },
+    })),
     // Smoke: read-only checks against the live site and API.
     {
       name: 'production',

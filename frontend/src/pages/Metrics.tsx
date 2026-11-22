@@ -3,6 +3,9 @@ import { fetchMetrics, METRICS_TIMEOUT_MS, REPORT_URL, updatedAt } from '../api/
 import type { Metrics as MetricsData, Status } from '../api/metrics';
 import Donut from '../components/Donut';
 import PageLoading from '../components/PageLoading';
+// The 3D grid's stylesheet ships with the page (only the three.js code is lazy), so the Suspense
+// placeholder below already has the stage's size and nothing shifts when the 3D view arrives.
+import '../components/TestGrid3D.css';
 import './Metrics.css';
 
 // three.js is large, so the 3D chart loads only when this page does.
