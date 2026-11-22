@@ -9,7 +9,7 @@ test.describe('home page', () => {
 
     await given('the visitor opens the home page', () => page.goto('/home'));
     await then('the headline and profile links are shown', async () => {
-      await expect(page.getByText('Senior QE & Mobile Automation Consultant')).toBeVisible();
+      await expect(page.getByText('Test Automation Architect · QA / Test Manager · Senior QE & Mobile Automation Consultant')).toBeVisible();
       await expect(linkedIn).toHaveAttribute('href', 'https://linkedin.com/in/shane-sweeney-37a934135');
       await expect(linkedIn).toHaveAttribute('target', '_blank');
       await expect(main.getByRole('link', { name: 'GitHub', exact: true })).toHaveAttribute('href', 'https://github.com/shane24sweeney');
@@ -24,8 +24,8 @@ test.describe('home page', () => {
 
     await given('the home page is open', () => page.goto('/home'));
     await then('it has a title and description for search results', async () => {
-      await expect(page).toHaveTitle('Shane James Sweeney | Senior QE & Mobile Automation Consultant');
-      await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /Senior QE and Mobile Automation Consultant/);
+      await expect(page).toHaveTitle('Shane James Sweeney | Test Automation Architect, QA Manager & Senior QE Consultant');
+      await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /Test Automation Architect, QA \/ Test Manager and Senior QE & Mobile Automation Consultant/);
     });
     await and('it names a social preview image', async () => {
       ogImage = await page.locator('meta[property="og:image"]').getAttribute('content');

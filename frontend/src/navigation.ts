@@ -38,13 +38,13 @@ export const NAV_GROUPS: NavGroup[] = [
     ],
   },
   {
-    label: 'Quality',
+    label: 'Projects',
     to: '/metrics',
     icon: SpinningEarth,
     colour: '#4f7bd9',
     pages: [
-      { to: '/metrics', label: 'Metrics' },
-      { to: '/analytics', label: 'Analytics' },
+      { to: '/metrics', label: 'Quality dashboard' },
+      { to: '/analytics', label: 'Site analytics' },
     ],
   },
   {
@@ -53,9 +53,9 @@ export const NAV_GROUPS: NavGroup[] = [
     icon: FaUser,
     colour: '#f5c86b',
     pages: [
-      { to: '/about', label: 'About' },
+      { to: '/about', label: 'About me' },
       { to: '/running', label: 'Running' },
-      { to: '/charity', label: 'Charity Work' },
+      { to: '/charity', label: 'Giving back' },
     ],
   },
   { label: 'Contact', to: '/contact', icon: FaEnvelope, colour: '#ff9f80', pages: [{ to: '/contact', label: 'Contact' }], callToAction: true },

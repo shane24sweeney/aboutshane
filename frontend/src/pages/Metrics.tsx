@@ -367,7 +367,7 @@ function Metrics() {
   const state = useMetrics();
   return (
     <section id="metrics" className="metrics-page">
-      <h1>Metrics</h1>
+      <h1>Quality dashboard</h1>
       <p className="metrics-lede">
         How this site is built and tested, updated every morning: unit and API tests with code coverage, end-to-end tests on
         desktop and phones, the live site, and a load test.

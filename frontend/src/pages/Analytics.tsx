@@ -215,7 +215,7 @@ function Analytics() {
   const state = useVisitors();
   return (
     <section id="visitors" className="visitors-page">
-      <h1>Analytics</h1>
+      <h1>Site analytics</h1>
       <p className="visitors-lede">
         From Google Analytics: who visits this site, from where (the US or abroad), and how fast it is for them.
       </p>

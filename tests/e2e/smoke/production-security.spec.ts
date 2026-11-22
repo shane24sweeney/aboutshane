@@ -125,7 +125,7 @@ test.describe('production security', { tag: '@security' }, () => {
     const tag = page.waitForResponse((r) => r.url().startsWith('https://www.googletagmanager.com/gtag/js'));
     await when('they open the home page and then Analytics', async () => {
       await page.goto('/home', { waitUntil: 'networkidle' });
-      await page.getByRole('link', { name: 'Analytics', exact: true }).click();
+      await page.getByRole('link', { name: 'Site analytics', exact: true }).click();
       await page.waitForLoadState('networkidle');
     });
     await then('Google’s tag loads and sends page views, and nothing breaks the policy', async () => {

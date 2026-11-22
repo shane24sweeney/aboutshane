@@ -55,7 +55,7 @@ public class SearchService {
         }
         content.testimonials().forEach(t -> add(docs, "Testimonials", "/testimonials", t.name() + ", " + t.title(), t.recommendation()));
         content.education().forEach(d -> add(docs, "Education", "/education", d.degree(), d.school()));
-        content.charity().forEach(c -> add(docs, "Charity Work", "/charity", c.title(), c.title()));
+        content.charity().forEach(c -> add(docs, "Giving back", "/charity", c.title(), c.title()));
         add(docs, "Running", "/running", "Running", content.running().intro());
         for (RaceResult race : content.running().races()) {
             add(docs, "Running", "/running", race.event(),
