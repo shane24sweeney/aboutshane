@@ -8,13 +8,20 @@ Each simulated visitor, on every loop:
 
 1. Opens the site: `GET /home`, plus the scripts, styles and images the page loads (these appear
    in the results as `/home-0`, `/home-1` and so on).
-2. Clicks every nav button: `GET /api/content/{profile,about,resume,testimonials,education,charity}`.
+2. Opens every other page the way a visitor arriving from a link would: `GET /resume`, `/education`,
+   `/testimonials`, `/metrics`, `/analytics`, `/about`, `/running`, `/charity` and `/contact`, each
+   with its scripts, styles and images. Each must be that page's own pre-rendered HTML: the app
+   shell plus a canonical link to the same address.
+3. Clicks every nav button: `GET /api/content/{profile,about,resume,testimonials,education,charity}`.
    Each response must be valid JSON with the expected content.
-3. Calls the rest of the API the site uses:
+4. Calls the rest of the API the site uses:
    - `GET /api/health` (ok), `GET /api/content/running` and `/running/stats`
    - `GET /api/search?q=appium` and `?q=page object` (matches found), and `?q=a` (rejected with 400)
    - `GET /api/status` (ok, 7 pages) and `GET /api/resume.pdf` (a PDF)
-4. Clicks Send on an invalid contact form: `POST /api/contact` must be rejected with 400. No
+5. Tries to change things it must not be able to: `PUT /api/content/about`, `DELETE /api/content/resume`,
+   `PATCH /api/health`, `DELETE` and `PUT /api/contact`, and `PUT /home`. Each must be refused with 403
+   (at the CloudFront edge) or 405 (by the API), under load as well as on its own.
+6. Clicks Send on an invalid contact form: `POST /api/contact` must be rejected with 400. No
    message is stored and no email is sent.
 
 Between clicks it waits 1.5 to 2.5 seconds, like a person would.
