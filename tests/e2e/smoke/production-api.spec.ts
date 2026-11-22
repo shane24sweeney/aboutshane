@@ -1,22 +1,16 @@
-import { type APIRequestContext, type APIResponse, expect, test } from '@playwright/test';
+import { type APIRequestContext } from '@playwright/test';
+import { expect, test } from '../support/smoke-fixtures';
 import { expectedRunningStats, raceMiles, raceSeconds } from '../support/running-stats';
 import { and, given, then, when } from '../support/steps';
 
 // API contract checks against the live site. Read-only: every contact request here is one the API
-// rejects or silently drops, so nothing is stored and no email is sent. Requests in a test run one
-// after another, and a 429 from the 2 requests/second limit is waited out and retried once.
+// rejects or silently drops, so nothing is stored and no email is sent. A 429 from the 2
+// requests/second limit is waited out and retried (see ../support/smoke-fixtures.ts).
 
 test.describe.configure({ mode: 'default' });
 
-async function call(send: () => Promise<APIResponse>): Promise<APIResponse> {
-  const response = await send();
-  if (response.status() !== 429) return response;
-  await new Promise((resolve) => setTimeout(resolve, 1500));
-  return send();
-}
-
-const get = (request: APIRequestContext, path: string) => call(() => request.get(path));
-const postContact = (request: APIRequestContext, data: unknown) => call(() => request.post('/api/contact', { data }));
+const get = (request: APIRequestContext, path: string) => request.get(path);
+const postContact = (request: APIRequestContext, data: unknown) => request.post('/api/contact', { data });
 
 const isoDate = /^\d{4}-\d{2}-\d{2}$/;
 const raceTime = /^(\d{1,2}:)?[0-5]?\d:[0-5]\d$/;
@@ -115,9 +109,9 @@ test.describe('production API: running', () => {
   // at the edge (403) and never reach the API. The API's own 405 is covered by ContentControllerTest.
   test('the running stats are read-only', { tag: '@negative' }, async ({ request }) => {
     await given('the live stats API', () => {});
-    const posted = await when('it is posted to', () => call(() => request.post('/api/content/running/stats', { data: {} })));
+    const posted = await when('it is posted to', () => request.post('/api/content/running/stats', { data: {} }));
     await then('CloudFront refuses the write (403)', () => expect(posted.status()).toBe(403));
-    const deleted = await when('it is deleted', () => call(() => request.delete('/api/content/running/stats')));
+    const deleted = await when('it is deleted', () => request.delete('/api/content/running/stats'));
     await then('CloudFront refuses the write (403)', () => expect(deleted.status()).toBe(403));
   });
 
