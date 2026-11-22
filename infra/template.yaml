@@ -403,7 +403,7 @@ Resources:
         Comment: HSTS, nosniff, framing, referrer, CSP and Permissions-Policy for the site and API
         SecurityHeadersConfig:
           ContentSecurityPolicy:
-            ContentSecurityPolicy: "default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://tile.openstreetmap.org https://*.google-analytics.com https://*.googletagmanager.com; font-src 'self' data:; connect-src 'self' https://shane24sweeney.github.io https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; manifest-src 'self'; worker-src 'self' blob:; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'"
+            ContentSecurityPolicy: "default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://tile.openstreetmap.org https://*.google-analytics.com https://*.googletagmanager.com https://www.google.com; font-src 'self' data:; connect-src 'self' https://shane24sweeney.github.io https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://www.google.com; manifest-src 'self'; worker-src 'self' blob:; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'"
             Override: true
           ContentTypeOptions:
             Override: true

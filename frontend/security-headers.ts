@@ -6,15 +6,16 @@
 // - styles: the site, plus inline style attributes (React and Leaflet set element styles)
 // - images: the site, data: URIs (Bootstrap icons), map tiles, and Google Analytics' pixels
 // - connections: the site's API, the daily report's JSON on GitHub Pages, and Google Analytics
+//   (GA4 also sends to www.google.com/g/collect; allowed for connections and images only)
 // - nothing may frame the site but itself; no plugins; forms and <base> stay on the site
 
 export const CONTENT_SECURITY_POLICY = [
   "default-src 'self'",
   "script-src 'self' https://www.googletagmanager.com",
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob: https://tile.openstreetmap.org https://*.google-analytics.com https://*.googletagmanager.com",
+  "img-src 'self' data: blob: https://tile.openstreetmap.org https://*.google-analytics.com https://*.googletagmanager.com https://www.google.com",
   "font-src 'self' data:",
-  "connect-src 'self' https://shane24sweeney.github.io https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com",
+  "connect-src 'self' https://shane24sweeney.github.io https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://www.google.com",
   "manifest-src 'self'",
   "worker-src 'self' blob:",
   "frame-src 'none'",
