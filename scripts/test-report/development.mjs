@@ -29,7 +29,9 @@ export function readUi(dir) {
     }
     files.push(fileCounts);
   }
-  const summaryFile = join(dir, 'coverage', 'coverage-summary.json');
+  // Unit and browser tests together (scripts/coverage/merge.mjs) when the daily run produced it.
+  const combined = join(dir, 'coverage-combined', 'coverage-summary.json');
+  const summaryFile = existsSync(combined) ? combined : join(dir, 'coverage', 'coverage-summary.json');
   const coverage = existsSync(summaryFile)
     ? (({ lines, branches, functions }) => ({ lines: lines.pct, branches: branches.pct, functions: functions.pct, linesCovered: lines.covered, linesTotal: lines.total }))(JSON.parse(readFileSync(summaryFile, 'utf8')).total)
     : null;

@@ -1,7 +1,11 @@
 import { expect, test } from '../support/fixtures';
 import sample from '../support/metrics.sample.json' with { type: 'json' };
+import { hoverABar } from '../support/canvas';
 import { and, given, then, when } from '../support/steps';
 import { expect3D } from '../support/webgl';
+
+/** The 3D chart's bar colours: passed, failed, flaky, skipped. */
+const GRID_BARS = ['#3fb950', '#ff6b6b', '#d29922', '#7d8590'];
 
 // The fixtures serve ./metrics.sample.json in place of the daily report's metrics.json.
 test.describe('test metrics page', () => {
@@ -46,6 +50,42 @@ test.describe('test metrics page', () => {
       await expect(panel.getByRole('listitem').first()).toBeVisible();
       await expect(panel.getByRole('link', { name: 'Open in the full report' })).toHaveAttribute('href', /^https:\/\/shane24sweeney\.github\.io\/aboutshane\//);
     });
+  });
+
+  test('hovering a bar shows its numbers; dragging hides them and selects nothing', async ({ page, isMobile }) => {
+    test.skip(isMobile, 'touch screens have no hover');
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    const chart = page.getByTestId('test-grid-3d');
+    const tip = chart.locator('.grid3d-tip');
+    const panel = page.getByRole('region', { name: 'Selected tests' });
+    let bar: { x: number; y: number } | null = null;
+
+    await given('the visitor opens Metrics', async () => {
+      await page.goto('/metrics');
+      test.skip(!(await expect3D(page, chart)), 'no WebGL in this browser, so nothing to hover');
+    });
+    await when('they rest the pointer on a bar', async () => {
+      bar = await hoverABar(page, chart, tip, GRID_BARS);
+    });
+    await then('a tooltip names the test area and device and counts its results', async () => {
+      expect(bar, 'no bar found under the pointer').not.toBeNull();
+      await expect(tip).toContainText(' · ');
+      await expect(tip).toContainText(/\d+ (passed|failed|flaky|skipped)/);
+    });
+    await when('they press on the bar and drag the chart round', async () => {
+      await page.mouse.down();
+      await page.mouse.move(bar!.x + 60, bar!.y + 10, { steps: 5 });
+    });
+    await then('the tooltip goes while dragging', () => expect(tip).toBeHidden());
+    await and('letting go after a drag selects nothing', async () => {
+      await page.mouse.up();
+      await expect(panel.getByRole('listitem')).toHaveCount(0);
+    });
+    await when('they move the pointer off the chart', async () => {
+      await page.mouse.move(bar!.x, bar!.y);
+      await page.mouse.move(1, 1);
+    });
+    await then('no tooltip is left behind', () => expect(tip).toBeHidden());
   });
 
   test('the table view selects the same tests from the keyboard', async ({ page }) => {

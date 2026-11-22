@@ -65,7 +65,7 @@ flowchart LR
   frontend -- "build" --> e2e["End-to-end job<br/>desktop · 2 Android · 3 iPhones<br/>incl. mobile and accessibility"]
   frontend -- "build" --> xb["Cross-browser job (not required)<br/>Chrome · Edge · Firefox · Safari<br/>iPad · Tab S9 · iPhone 17 Pro · Pixel 9"]
 
-  daily --> unit["UI and API jobs<br/>unit tests · code coverage"]
+  daily --> unit["UI and API jobs<br/>unit tests · code coverage (UI: unit + browser)"]
   daily --> regression["Regression job<br/>every browser, phone and tablet"]
   daily --> smoke["Smoke job<br/>live site: desktop · Pixel 7 · iPhone 15"]
   smoke --> load["Load job<br/>JMeter"]

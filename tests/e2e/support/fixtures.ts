@@ -1,5 +1,6 @@
-import { readFileSync } from 'node:fs';
-import { test as base } from '@playwright/test';
+import { randomUUID } from 'node:crypto';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { type Page, test as base } from '@playwright/test';
 import { expectedRunningStats } from './running-stats';
 import { PDF_FIXTURE, STATUS_FIXTURE, searchFixture } from './search';
 
@@ -19,6 +20,32 @@ const BLANK_TILE = Buffer.from(
   'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=',
   'base64',
 );
+
+/**
+ * Browser code coverage (`npm run test:coverage:browser`). The coverage build counts what runs into
+ * window.__coverage__; save it to coverage-browser/ before anything that replaces the page (goto,
+ * reload) and when the test ends, so scripts/coverage/merge.mjs can add it to the unit-test coverage.
+ * A normal build has no window.__coverage__, so this does nothing.
+ */
+const COVERAGE_DIR = new URL('../../../coverage-browser/', import.meta.url);
+
+async function saveCoverage(page: Page) {
+  if (page.isClosed()) return;
+  const coverage = await page.evaluate(() => (window as { __coverage__?: unknown }).__coverage__).catch(() => undefined);
+  if (!coverage) return;
+  mkdirSync(COVERAGE_DIR, { recursive: true });
+  writeFileSync(new URL(`${randomUUID()}.json`, COVERAGE_DIR), JSON.stringify(coverage));
+}
+
+function collectCoverage(page: Page) {
+  for (const method of ['goto', 'reload'] as const) {
+    const original = page[method].bind(page) as (...args: unknown[]) => Promise<unknown>;
+    (page as unknown as Record<string, unknown>)[method] = async (...args: unknown[]) => {
+      await saveCoverage(page);
+      return original(...args);
+    };
+  }
+}
 
 export const test = base.extend({
   page: async ({ page }, use) => {
@@ -50,6 +77,8 @@ export const test = base.extend({
       }),
     );
     await page.route('https://tile.openstreetmap.org/**', (route) => route.fulfill({ contentType: 'image/png', body: BLANK_TILE }));
+    if (process.env.COVERAGE === '1') collectCoverage(page);
     await use(page);
+    if (process.env.COVERAGE === '1') await saveCoverage(page);
   },
 });

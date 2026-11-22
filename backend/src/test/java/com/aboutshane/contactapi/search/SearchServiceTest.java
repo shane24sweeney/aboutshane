@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.aboutshane.contactapi.content.ContentRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 class SearchServiceTest {
@@ -50,4 +51,22 @@ class SearchServiceTest {
             assertThat(result.snippet()).hasSizeLessThanOrEqualTo(165).doesNotContain("**");
         }
     }
+
+    @Tag("negative")
+    @Test
+    void aQueryOfOnlyPunctuationFindsNothing() {
+        assertThat(SearchService.terms(" !?, ")).isEmpty();
+        assertThat(search.search(" !?, ")).isEmpty();
+    }
+
+    @Test
+    void aMatchDeepInALongEntryGetsASnippetAroundItThatStartsOnAWord() {
+        // the Fifth Third role is long; a word near its end is far from the start of the text
+        var results = search.search("selenium");
+        assertThat(results).anySatisfy(result -> {
+            assertThat(result.snippet()).startsWith("…");
+            assertThat(result.snippet().substring(1)).doesNotStartWith(" ");
+        });
+    }
 }
+

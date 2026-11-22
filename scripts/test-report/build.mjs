@@ -5,7 +5,7 @@
 //   node scripts/test-report/build.mjs <inputs> <site>
 //
 // <inputs> holds the downloaded workflow artifacts:
-//   ui/          test-results/unit.json and coverage/ (Vitest)
+//   ui/          test-results/unit.json, coverage/ (Vitest) and coverage-combined/ (unit + browser)
 //   api/         surefire-reports/ and site/jacoco/ (Maven, from backend/target)
 //   delivery.json  from delivery.mjs
 //   regression/  playwright-report/ and test-results/results.json (desktop and the 5 phones)
@@ -647,7 +647,8 @@ for (const key of ['regression', 'smoke']) {
   const report = join(inputs, key, 'playwright-report');
   if (existsSync(report)) cpSync(report, join(site, key), { recursive: true });
 }
-if (existsSync(join(inputs, 'ui', 'coverage', 'index.html'))) cpSync(join(inputs, 'ui', 'coverage'), join(site, 'ui-coverage'), { recursive: true });
+const uiCoverage = ['coverage-combined', 'coverage'].map((d) => join(inputs, 'ui', d)).find((d) => existsSync(join(d, 'index.html')));
+if (uiCoverage) cpSync(uiCoverage, join(site, 'ui-coverage'), { recursive: true });
 if (existsSync(join(inputs, 'api', 'site', 'jacoco', 'index.html'))) cpSync(join(inputs, 'api', 'site', 'jacoco'), join(site, 'api-coverage'), { recursive: true });
 const jmeterReport = join(inputs, 'jmeter', 'tests', 'jmeter', 'results', 'report');
 if (existsSync(jmeterReport)) cpSync(jmeterReport, join(site, 'jmeter'), { recursive: true });

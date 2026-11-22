@@ -1,7 +1,11 @@
 import { expect, test } from '../support/fixtures';
 import sample from '../support/visitors.sample.json' with { type: 'json' };
+import { hoverABar } from '../support/canvas';
 import { and, given, then, when } from '../support/steps';
 import { expect3D } from '../support/webgl';
+
+/** The globe's bar colours: the US, and abroad. */
+const GLOBE_BARS = ['#f5c86b', '#79d2c0'];
 
 // The fixtures serve ./visitors.sample.json for GET /api/visitors.
 test.describe('analytics page', () => {
@@ -34,6 +38,63 @@ test.describe('analytics page', () => {
     const ireland = page.getByRole('list', { name: 'Top countries' }).getByRole('button', { name: /Ireland/ });
     await when('they choose Ireland', () => ireland.click());
     await then('Ireland is marked as selected', () => expect(ireland).toHaveAttribute('aria-pressed', 'true'));
+  });
+
+  test('hovering a bar on the globe names the country; selecting it marks it in the list', async ({ page, isMobile }) => {
+    test.skip(isMobile, 'touch screens have no hover');
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    const globe = page.getByTestId('visitor-globe');
+    const tip = globe.locator('.visitor-globe-tip');
+    let bar: { x: number; y: number } | null = null;
+
+    await given('the visitor opens Analytics', async () => {
+      await page.goto('/analytics');
+      test.skip(!(await expect3D(page, globe)), 'no WebGL in this browser, so nothing to hover');
+    });
+    await when('they rest the pointer on a bar', async () => {
+      bar = await hoverABar(page, globe, tip, GLOBE_BARS);
+    });
+    await then('a tooltip names the country and its visitors', async () => {
+      expect(bar, 'no bar found under the pointer').not.toBeNull();
+      await expect(tip).toContainText(/\d+ visitors$/);
+    });
+    const country = (await tip.locator('strong').textContent()) ?? '';
+    await when(`they select that bar (${country})`, () => page.mouse.click(bar!.x, bar!.y));
+    await then('the same country is marked in the list', () =>
+      expect(page.getByRole('list', { name: 'Top countries' }).getByRole('button', { name: new RegExp(country) })).toHaveAttribute('aria-pressed', 'true'),
+    );
+    await when('they drag the globe round', async () => {
+      await page.mouse.move(bar!.x, bar!.y);
+      await page.mouse.down();
+      await page.mouse.move(bar!.x + 80, bar!.y, { steps: 5 });
+    });
+    await then('the tooltip goes while dragging', () => expect(tip).toBeHidden());
+    await when('they move the pointer off the globe', async () => {
+      await page.mouse.up();
+      await page.mouse.move(1, 1);
+    });
+    await then('no tooltip is left behind', () => expect(tip).toBeHidden());
+  });
+
+  test('a single visitor reads "1 visitor", and a country with no place on the map is only listed', async ({ page, isMobile }) => {
+    test.skip(isMobile, 'touch screens have no hover');
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    const countries = [...sample.countries.slice(0, 11).map((c) => ({ ...c, users: 1, sessions: 1 })), { code: 'ZZ', name: 'Unknown region', users: 1, sessions: 1 }];
+    const globe = page.getByTestId('visitor-globe');
+    const tip = globe.locator('.visitor-globe-tip');
+
+    await given('the export has single visitors, one from a region the globe has no place for', () =>
+      page.route('**/api/visitors', (route) => route.fulfill({ json: { ...sample, usShare: 0.08, countries } })),
+    );
+    await when('the visitor opens Analytics and rests the pointer on a bar', async () => {
+      await page.goto('/analytics');
+      test.skip(!(await expect3D(page, globe)), 'no WebGL in this browser, so nothing to hover');
+      expect(await hoverABar(page, globe, tip, GLOBE_BARS), 'no bar found under the pointer').not.toBeNull();
+    });
+    await then('the tooltip says "1 visitor", not "1 visitors"', () => expect(tip).toContainText(/1 visitor$/));
+    await and('the region with no place on the globe is still listed', () =>
+      expect(page.getByRole('list', { name: 'Top countries' }).getByRole('button', { name: /Unknown region/ })).toBeVisible(),
+    );
   });
 
   test('fits every screen without scrolling sideways', async ({ page }) => {

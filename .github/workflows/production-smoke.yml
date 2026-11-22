@@ -32,7 +32,13 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      # Browser coverage first (Playwright empties test-results/ when it starts): the regression
+      # tests on an instrumented build. Then the unit tests, and the two added together.
+      - run: npm run build:coverage
+      - run: npx playwright install --with-deps chromium webkit
+      - run: npm run test:coverage:browser
       - run: npm run test:coverage
+      - run: npm run coverage:merge
       - uses: actions/upload-artifact@v7
         if: ${{ !cancelled() }}
         with:
@@ -40,6 +46,7 @@ jobs:
           path: |
             test-results/unit.json
             coverage
+            coverage-combined
           retention-days: 14
 
   api:

@@ -71,4 +71,25 @@ class VisitorStatsTest {
         answer(200, "{\"version\":1,\"totals\":{},\"countries\":{}}");
         assertThat(stats.latest()).isEmpty();
     }
+
+    @Tag("negative")
+    @Test
+    void needsEveryFieldTheVisitorsPageReads() throws Exception {
+        ObjectMapper json = new ObjectMapper();
+        assertThat(VisitorStats.looksValid(json.readTree("{\"version\":1,\"totals\":{},\"countries\":[],\"generatedAt\":\"x\"}"))).isTrue();
+        assertThat(VisitorStats.looksValid(json.readTree("{\"version\":1,\"totals\":[],\"countries\":[],\"generatedAt\":\"x\"}"))).isFalse();
+        assertThat(VisitorStats.looksValid(json.readTree("{\"version\":1,\"totals\":{},\"countries\":[],\"generatedAt\":5}"))).isFalse();
+    }
+
+    @Tag("negative")
+    @Test
+    void anInterruptedFetchIsNotAvailableAndKeepsTheInterrupt() throws Exception {
+        when(http.send(any(), any(HttpResponse.BodyHandler.class))).thenThrow(new InterruptedException("shutting down"));
+        try {
+            assertThat(stats.latest()).isEmpty();
+            assertThat(Thread.currentThread().isInterrupted()).isTrue();
+        } finally {
+            Thread.interrupted();
+        }
+    }
 }

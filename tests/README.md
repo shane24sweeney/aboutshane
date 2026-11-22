@@ -186,8 +186,26 @@ the unit-test and coverage results, `delivery.mjs` asks GitHub for the delivery 
 `send-email.mjs` wraps the email for SES. It's all free: GitHub Pages and Actions cost nothing for a
 public repo, and one SES email a day is a fraction of a cent a month.
 
-`npm run test:coverage` runs the UI unit tests with coverage (open `coverage/index.html`);
-`mvn verify` in `backend/` writes the API's to `backend/target/site/jacoco/index.html`.
+### Code coverage
+
+UI coverage counts the unit tests **and** the browser tests, because the 3D views, the race map and
+the phone layout only really run in a browser:
+
+```bash
+npm run coverage:all        # everything below, in order; open coverage-combined/index.html
+npm run build:coverage      # a build instrumented for coverage (COVERAGE=1); never deployed
+npm run test:coverage:browser   # the regression tests on it (desktop, Pixel 7, iPhone 15) -> coverage-browser/
+npm run test:coverage       # the unit tests -> coverage/
+npm run coverage:merge      # adds them up -> coverage-combined/, and checks the minimums
+```
+
+The minimums live in `scripts/coverage/thresholds.json`: 100% of lines for the navigation, footer,
+app shell and every page, and at least 95% of lines and 90% of branches for the UI overall. The CI
+job "UI coverage (unit + browser)" fails below them. `infra/deploy-frontend.sh` refuses to upload an
+instrumented build.
+
+`mvn verify` in `backend/` writes the API's coverage to `backend/target/site/jacoco/index.html`, and
+fails (so the required Backend check fails) below 95% of lines or 90% of branches.
 
 One-time setup (already done for this repo):
 
