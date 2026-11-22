@@ -423,6 +423,27 @@
             <hashTree/>
           </hashTree>
 
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Nav: Visitors - GET /api/visitors">
+            <stringProp name="HTTPSampler.path">/api/visitors</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Numbers or not yet available">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="0">"version":1|"available":false</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message">Expected the visitor export or available:false</stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">2</intProp>
+            </ResponseAssertion>
+            <hashTree/>
+          </hashTree>
+
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Status - GET /api/status">
             <stringProp name="HTTPSampler.path">/api/status</stringProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>

@@ -61,3 +61,16 @@ test.describe('production features', () => {
     });
   });
 });
+
+test('GET /api/visitors answers with the export, or says it is coming', async ({ request }) => {
+  const response = await when('the visitor numbers are requested', () => request.get('/api/visitors'));
+  await then('it is JSON: the last 30 days, or available: false', async () => {
+    expect(response.status()).toBe(200);
+    const body = await response.json();
+    if (body.available === false) expect(body.message).toEqual(expect.any(String));
+    else {
+      expect(body.version).toBe(1);
+      expect(Array.isArray(body.countries)).toBe(true);
+    }
+  });
+});

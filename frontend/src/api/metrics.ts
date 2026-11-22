@@ -1,5 +1,5 @@
 // The daily quality report's numbers, published by scripts/test-report/build.mjs to GitHub Pages
-// as metrics.json. GitHub Pages allows any site to read it, so the Test Metrics page fetches it
+// as metrics.json. GitHub Pages allows any site to read it, so the Metrics page fetches it
 // directly and always shows the latest run without a redeploy.
 
 export const REPORT_URL = 'https://shane24sweeney.github.io/aboutshane/';

@@ -15,7 +15,7 @@
 }
 
 .site-nav-links .nav-link {
-  min-width: 92px;
+  min-width: 76px;
   padding: 10px 6px 8px !important;
   border-radius: 8px;
   color: var(--site-text) !important;
@@ -118,7 +118,7 @@
     0 0 0 2px color-mix(in srgb, var(--tile) 70%, #fff);
 }
 
-/* Test Metrics: a globe made from a flat world map (scripts/earth/) sliding behind a round,
+/* Metrics: a globe made from a flat world map (scripts/earth/) sliding behind a round,
    shaded window. The map is twice as wide as it is tall, so one turn moves it two globe-widths. */
 .nav-earth {
   --globe: 1.5em;
@@ -156,9 +156,9 @@
   white-space: nowrap;
 }
 
-/* Phones: three rows of three, each tile with its name underneath, so every tab says where it goes.
-   Three across leaves over 110px per tab on the smallest phones (360px), room for "Testimonials"
-   and "Test Metrics" at a readable size, and every tab is well over the 44px tap-target minimum. */
+/* Phones: two rows of five, each tile with its name underneath, so every tab says where it goes.
+   Five across leaves about 70px per tab on the smallest phones (360px): "Testimonials" fits at
+   11px and two-word names wrap, and every tab stays over the 44px tap-target minimum. */
 @media (max-width: 600px) {
   .site-nav {
     padding: 10px 6px 6px;
@@ -166,7 +166,7 @@
 
   .site-nav-links {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 4px;
   }
 
@@ -199,11 +199,14 @@
   .nav-label {
     display: block;
     white-space: normal;
+    /* Wrap between words only, never mid-word ("Testimonials" fits whole at this size). */
+    overflow-wrap: normal;
+    word-break: normal;
     max-width: 100%;
-    font-size: 0.75rem;
+    /* Scales with the screen so "Testimonials" fits a fifth of a 360px phone. */
+    font-size: clamp(0.62rem, 2.9vw, 0.72rem);
     font-weight: 500;
     line-height: 1.15;
     text-align: center;
-    overflow-wrap: anywhere;
   }
 }

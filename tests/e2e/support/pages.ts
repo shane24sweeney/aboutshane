@@ -8,5 +8,6 @@ export const pages = [
   { path: '/education', nav: 'Education', heading: 'Education' },
   { path: '/charity', nav: 'Charity Work', heading: 'Charity Work' },
   { path: '/running', nav: 'Running', heading: 'Running' },
-  { path: '/metrics', nav: 'Test Metrics', heading: 'Test Metrics' },
+  { path: '/metrics', nav: 'Metrics', heading: 'Metrics' },
+  { path: '/visitors', nav: 'Visitors', heading: 'Visitors' },
 ] as const;

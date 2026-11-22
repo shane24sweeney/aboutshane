@@ -1,4 +1,5 @@
 import { Link } from 'react-router';
+import { OPEN_COOKIE_SETTINGS } from './ConsentBanner';
 import StatusBadge from './StatusBadge';
 import './Footer.css';
 
@@ -23,6 +24,11 @@ function Footer() {
         </li>
         <li>
           <Link to="/contact">Contact</Link>
+        </li>
+        <li>
+          <button type="button" className="site-footer-link" onClick={() => window.dispatchEvent(new Event(OPEN_COOKIE_SETTINGS))}>
+            Cookie settings
+          </button>
         </li>
       </ul>
       <div className="site-footer-status">

@@ -78,7 +78,7 @@ Resources:
         Comment: Serve pre-rendered pages, and /index.html for other extensionless paths
         Runtime: cloudfront-js-2.0
       FunctionCode: |
-        var PAGES = ['/home', '/about', '/contact', '/resume', '/testimonials', '/education', '/charity', '/running', '/metrics'];
+        var PAGES = ['/home', '/about', '/contact', '/resume', '/testimonials', '/education', '/charity', '/running', '/metrics', '/visitors'];
         function handler(event) {
           var request = event.request;
           var path = request.uri.length > 1 ? request.uri.replace(/\/$/, '') : request.uri;
@@ -322,6 +322,11 @@ Resources:
           PolicyDocument:
             Version: '2012-10-17'
             Statement:
+              # The Visitors tab shows the API's response times, read from CloudWatch. Metric
+              # reads can't be limited to one resource, but they are read-only.
+              - Effect: Allow
+                Action: cloudwatch:GetMetricStatistics
+                Resource: '*'
               # The report is sent as raw MIME (the chart is attached), which SES checks as SendRawEmail.
               - Effect: Allow
                 Action:

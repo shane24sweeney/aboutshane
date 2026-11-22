@@ -122,7 +122,7 @@ it can be read without opening any test output:
   turn it and select a bar to list its tests. A table view has the same numbers.
 - Links to the full Playwright, JMeter and coverage reports.
 
-The same numbers are published as `metrics.json` next to the dashboard. The site's **Test Metrics**
+The same numbers are published as `metrics.json` next to the dashboard. The site's **Metrics**
 tab (`/metrics`, `frontend/src/pages/Metrics.tsx`) reads it straight from GitHub Pages, so it shows
 the latest run without a redeploy: the verdict, headline numbers, donuts for development and QA,
 the 3D chart (select a bar, or a cell in its table view, to list the bar's tests), device coverage,

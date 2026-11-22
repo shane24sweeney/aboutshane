@@ -11,7 +11,7 @@
 //   regression/  playwright-report/ and test-results/results.json (desktop and the 5 phones)
 //   smoke/       the same, from the live site
 //   jmeter/      tests/jmeter/results/results.jtl and report/
-// <site> gets index.html, 3d.html, history.json, metrics.json (read by the site's Test Metrics
+// <site> gets index.html, 3d.html, history.json, metrics.json (read by the site's Metrics
 // page) and each full report.
 // <inputs> gets email.html, email-subject.txt and email-chart.png (see send-email.mjs).
 // Missing inputs (a job that didn't finish) show as "no results" and mark the day incomplete.
@@ -646,7 +646,7 @@ if (existsSync(jmeterReport)) cpSync(jmeterReport, join(site, 'jmeter'), { recur
 writeFileSync(join(site, 'index.html'), dashboard);
 writeFileSync(join(site, '3d.html'), gridPage({ rows: gridRows, columns: gridColumns, cells: gridCells, headline, day }));
 writeFileSync(join(site, 'history.json'), JSON.stringify(history, null, 2));
-// The same numbers as data, for the Test Metrics page on selenium-automation.com (GitHub Pages
+// The same numbers as data, for the Metrics page on selenium-automation.com (GitHub Pages
 // lets any site read it). Grid links are relative to this site.
 const playwrightJson = (d) => d && { totals: d.totals, total: d.total, duration: d.duration, devices: d.devices.size };
 const devJson = (d) => d && { totals: d.totals, total: d.total, duration: d.duration, files: d.files.length, coverage: d.coverage };

@@ -112,6 +112,7 @@ tests exercise the same controllers with MockMvc.
 | `GET /api/content/{profile,about,resume,testimonials,education,charity,running}` | Page text as JSON, cacheable for 5 minutes |
 | `GET /api/search?q=…` | Searches every page (2 to 100 characters, every word must match): page, link, title, a snippet and where the words are in it. 400 `invalid_query` otherwise. Cacheable for 5 minutes |
 | `GET /api/resume.pdf` | The résumé as a PDF download, built once at startup from the Resume page's content with PDFBox. Cacheable for an hour |
+| `GET /api/visitors` | The last 30 days of visitors by country, totals, pages, visitors per day and the site's speed (real visitors, the API, the load test), exported daily to GitHub Pages and kept 10 minutes; `{"available": false}` before the first export. Cacheable for 10 minutes |
 | `GET /api/status` | `ok`, version and build time, uptime, Java version, content counts, and the latest daily-report verdict (read from GitHub Pages, kept 10 minutes). Cacheable for a minute |
 
 ### 4. See what was created

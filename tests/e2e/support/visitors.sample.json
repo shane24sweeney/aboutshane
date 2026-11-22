@@ -1,0 +1,275 @@
+{
+ "version": 1,
+ "generatedAt": "2026-11-21T11:40:00Z",
+ "days": 30,
+ "totals": {
+  "users": 619,
+  "newUsers": 513,
+  "sessions": 866,
+  "pageViews": 2228,
+  "avgSessionSeconds": 94
+ },
+ "usShare": 0.6655896607431341,
+ "countries": [
+  {
+   "code": "US",
+   "name": "United States",
+   "users": 412,
+   "sessions": 576
+  },
+  {
+   "code": "IN",
+   "name": "India",
+   "users": 61,
+   "sessions": 85
+  },
+  {
+   "code": "GB",
+   "name": "United Kingdom",
+   "users": 38,
+   "sessions": 53
+  },
+  {
+   "code": "CA",
+   "name": "Canada",
+   "users": 29,
+   "sessions": 40
+  },
+  {
+   "code": "IE",
+   "name": "Ireland",
+   "users": 22,
+   "sessions": 30
+  },
+  {
+   "code": "DE",
+   "name": "Germany",
+   "users": 17,
+   "sessions": 23
+  },
+  {
+   "code": "AU",
+   "name": "Australia",
+   "users": 12,
+   "sessions": 16
+  },
+  {
+   "code": "PH",
+   "name": "Philippines",
+   "users": 9,
+   "sessions": 12
+  },
+  {
+   "code": "BR",
+   "name": "Brazil",
+   "users": 7,
+   "sessions": 9
+  },
+  {
+   "code": "SG",
+   "name": "Singapore",
+   "users": 5,
+   "sessions": 7
+  },
+  {
+   "code": "FR",
+   "name": "France",
+   "users": 4,
+   "sessions": 5
+  },
+  {
+   "code": "NG",
+   "name": "Nigeria",
+   "users": 3,
+   "sessions": 4
+  }
+ ],
+ "pages": [
+  {
+   "path": "/home",
+   "views": 1120
+  },
+  {
+   "path": "/resume",
+   "views": 640
+  },
+  {
+   "path": "/about",
+   "views": 310
+  },
+  {
+   "path": "/running",
+   "views": 220
+  },
+  {
+   "path": "/metrics",
+   "views": 180
+  },
+  {
+   "path": "/testimonials",
+   "views": 150
+  },
+  {
+   "path": "/contact",
+   "views": 95
+  }
+ ],
+ "daily": [
+  {
+   "date": "2026-10-22",
+   "users": 22
+  },
+  {
+   "date": "2026-10-23",
+   "users": 16
+  },
+  {
+   "date": "2026-10-24",
+   "users": 24
+  },
+  {
+   "date": "2026-10-25",
+   "users": 13
+  },
+  {
+   "date": "2026-10-26",
+   "users": 14
+  },
+  {
+   "date": "2026-10-27",
+   "users": 29
+  },
+  {
+   "date": "2026-10-28",
+   "users": 15
+  },
+  {
+   "date": "2026-10-29",
+   "users": 23
+  },
+  {
+   "date": "2026-10-30",
+   "users": 30
+  },
+  {
+   "date": "2026-10-31",
+   "users": 13
+  },
+  {
+   "date": "2026-11-01",
+   "users": 28
+  },
+  {
+   "date": "2026-11-02",
+   "users": 18
+  },
+  {
+   "date": "2026-11-03",
+   "users": 13
+  },
+  {
+   "date": "2026-11-04",
+   "users": 14
+  },
+  {
+   "date": "2026-11-05",
+   "users": 25
+  },
+  {
+   "date": "2026-11-06",
+   "users": 25
+  },
+  {
+   "date": "2026-11-07",
+   "users": 14
+  },
+  {
+   "date": "2026-11-08",
+   "users": 19
+  },
+  {
+   "date": "2026-11-09",
+   "users": 14
+  },
+  {
+   "date": "2026-11-10",
+   "users": 29
+  },
+  {
+   "date": "2026-11-11",
+   "users": 25
+  },
+  {
+   "date": "2026-11-12",
+   "users": 13
+  },
+  {
+   "date": "2026-11-13",
+   "users": 30
+  },
+  {
+   "date": "2026-11-14",
+   "users": 15
+  },
+  {
+   "date": "2026-11-15",
+   "users": 19
+  },
+  {
+   "date": "2026-11-16",
+   "users": 30
+  },
+  {
+   "date": "2026-11-17",
+   "users": 13
+  },
+  {
+   "date": "2026-11-18",
+   "users": 30
+  },
+  {
+   "date": "2026-11-19",
+   "users": 30
+  },
+  {
+   "date": "2026-11-20",
+   "users": 24
+  }
+ ],
+ "speed": {
+  "realUsers": {
+   "LCP": {
+    "average": 1840,
+    "samples": 902
+   },
+   "INP": {
+    "average": 96,
+    "samples": 611
+   },
+   "CLS": {
+    "average": 0.02,
+    "samples": 870
+   },
+   "FCP": {
+    "average": 1210,
+    "samples": 905
+   },
+   "TTFB": {
+    "average": 310,
+    "samples": 905
+   }
+  },
+  "api": {
+   "days": 30,
+   "p50": 24,
+   "p90": 61,
+   "p99": 240,
+   "requests": 18342
+  },
+  "load": {
+   "median": 22,
+   "p95": 188,
+   "requests": 108
+  }
+ }
+}

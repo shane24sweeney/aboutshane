@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url';
 import { defineConfig, type Plugin } from 'vite';
 
 /** Pages pre-rendered to <page>/index.html by scripts/prerender.mjs; keep in step with App.tsx. */
-const PAGES = ['home', 'about', 'contact', 'resume', 'testimonials', 'education', 'charity', 'running', 'metrics'];
+const PAGES = ['home', 'about', 'contact', 'resume', 'testimonials', 'education', 'charity', 'running', 'metrics', 'visitors'];
 
 /** Serves /resume from resume/index.html in `npm run preview`, as CloudFront's SpaRoutingFunction does. */
 function prerenderedPages(): Plugin {
@@ -29,7 +29,7 @@ export default defineConfig({
     // infra/deploy-frontend.sh syncs this folder (frontend/build) to S3.
     outDir: 'build',
     emptyOutDir: true,
-    // three.js (the Test Metrics 3D chart) is one ~550 kB chunk, 137 kB gzipped, loaded only on that page.
+    // three.js (the Metrics 3D chart) is one ~550 kB chunk, 137 kB gzipped, loaded only on that page.
     chunkSizeWarningLimit: 600,
   },
   server: {
