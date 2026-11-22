@@ -3,6 +3,9 @@ import sample from '../support/visitors.sample.json' with { type: 'json' };
 import { hoverABar } from '../support/canvas';
 import { and, given, then, when } from '../support/steps';
 
+/** The globe's bar colours: the US, and abroad. */
+const GLOBE_BARS = ['#f5c86b', '#79d2c0'];
+
 // The fixtures serve ./visitors.sample.json for GET /api/visitors.
 test.describe('analytics page', () => {
   test('shows visitors, the US and abroad, a 3D globe, and how fast the site is', async ({ page }) => {
@@ -48,7 +51,7 @@ test.describe('analytics page', () => {
       await expect(globe.locator('canvas')).toBeVisible();
     });
     await when('they rest the pointer on a bar', async () => {
-      bar = await hoverABar(page, globe, tip);
+      bar = await hoverABar(page, globe, tip, GLOBE_BARS);
     });
     await then('a tooltip names the country and its visitors', async () => {
       expect(bar, 'no bar found under the pointer').not.toBeNull();
@@ -85,7 +88,7 @@ test.describe('analytics page', () => {
     await when('the visitor opens Analytics and rests the pointer on a bar', async () => {
       await page.goto('/analytics');
       await expect(globe.locator('canvas')).toBeVisible();
-      expect(await hoverABar(page, globe, tip), 'no bar found under the pointer').not.toBeNull();
+      expect(await hoverABar(page, globe, tip, GLOBE_BARS), 'no bar found under the pointer').not.toBeNull();
     });
     await then('the tooltip says "1 visitor", not "1 visitors"', () => expect(tip).toContainText(/1 visitor$/));
     await and('the region with no place on the globe is still listed', () =>

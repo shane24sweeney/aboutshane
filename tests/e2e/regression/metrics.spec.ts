@@ -3,6 +3,9 @@ import sample from '../support/metrics.sample.json' with { type: 'json' };
 import { hoverABar } from '../support/canvas';
 import { and, given, then, when } from '../support/steps';
 
+/** The 3D chart's bar colours: passed, failed, flaky, skipped. */
+const GRID_BARS = ['#3fb950', '#ff6b6b', '#d29922', '#7d8590'];
+
 // The fixtures serve ./metrics.sample.json in place of the daily report's metrics.json.
 test.describe('test metrics page', () => {
   test('shows the verdict, headline numbers and a donut for every suite', async ({ page }) => {
@@ -59,7 +62,7 @@ test.describe('test metrics page', () => {
       await expect(chart.locator('canvas')).toBeVisible();
     });
     await when('they rest the pointer on a bar', async () => {
-      bar = await hoverABar(page, chart, tip);
+      bar = await hoverABar(page, chart, tip, GRID_BARS);
     });
     await then('a tooltip names the test area and device and counts its results', async () => {
       expect(bar, 'no bar found under the pointer').not.toBeNull();
