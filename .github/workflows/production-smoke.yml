@@ -1,13 +1,22 @@
 name: Daily tests and report
 
-# Every morning: UI and API tests with code coverage, regression (desktop and 5 phones),
-# read-only smoke checks on the live site, and the JMeter load test. Then a quality report for
-# the whole project goes to GitHub Pages and a summary email goes out.
+# Every morning, after every merge to master, and by hand (run it after each deploy): UI and API
+# tests with code coverage, regression (desktop and 5 phones), read-only smoke checks on the live
+# site, and the JMeter load test. Then the quality report for the whole project goes to GitHub
+# Pages, so the report, its email and the site's Test Metrics tab show the latest run. The
+# summary email goes out only for the morning run and runs started by hand.
 # Never submits the contact form.
 on:
   schedule:
     - cron: '17 11 * * *' # daily, 11:17 UTC
+  push:
+    branches: [master]
   workflow_dispatch:
+
+# A newer run replaces one still in progress, so the published report is always the latest.
+concurrency:
+  group: daily-tests-and-report
+  cancel-in-progress: true
 
 permissions:
   contents: read
@@ -250,7 +259,7 @@ jobs:
   email:
     name: Email report
     needs: [report, pages]
-    if: ${{ !cancelled() && needs.report.result == 'success' && vars.REPORT_ROLE_ARN != '' }}
+    if: ${{ !cancelled() && needs.report.result == 'success' && vars.REPORT_ROLE_ARN != '' && github.event_name != 'push' }}
     runs-on: ubuntu-latest
     permissions:
       contents: read

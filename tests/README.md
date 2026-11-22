@@ -147,7 +147,7 @@ These use the GitHub CLI (`gh`), signed in to the repo.
 | Workflow | Runs automatically | Start it by hand |
 |---|---|---|
 | **CI**: lint, types, unit, API, build, regression, cfn-lint | Every push and pull request | `gh workflow run ci.yml --ref <branch>` |
-| **Daily tests and report**: UI and API tests with coverage, regression, live smoke and JMeter, then a quality report and an email | Daily at 11:17 UTC | `gh workflow run production-smoke.yml --ref master` |
+| **Daily tests and report**: UI and API tests with coverage, regression, live smoke and JMeter, then a quality report and an email | Daily at 11:17 UTC, and after every merge to master (no email) | `gh workflow run production-smoke.yml --ref master` |
 | **BrowserStack mobile**: real devices | Never (switched off) | Skipped until `REAL_DEVICE_TESTS` is on ([details](../docs/browserstack.md)) |
 
 ### The daily report

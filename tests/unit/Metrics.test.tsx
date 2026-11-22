@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { describe, expect, it, vi } from 'vitest';
-import { METRICS_URL } from '../../frontend/src/api/metrics';
+import { METRICS_URL, updatedAt } from '../../frontend/src/api/metrics';
 import Metrics from '../../frontend/src/pages/Metrics';
 import sample from '../e2e/support/metrics.sample.json';
 
@@ -62,5 +62,20 @@ describe('Metrics page', () => {
     serve({ version: 2 });
     renderMetrics();
     expect(await screen.findByRole('alert')).toBeInTheDocument();
+  });
+
+  it('says when the shown results were produced, and how long ago', () => {
+    const now = Date.parse('2026-11-21T17:04:00Z');
+    expect(updatedAt('2026-11-21T15:04:00Z', now)).toMatch(/\(2 h ago\)$/);
+    expect(updatedAt('2026-11-21T17:00:00Z', now)).toMatch(/\(4 min ago\)$/);
+    expect(updatedAt('2026-11-18T17:04:00Z', now)).toMatch(/\(3 days ago\)$/);
+    expect(updatedAt('not a date', now)).toBe('');
+  });
+
+  it('shows when the latest test run happened', async () => {
+    serve(sample);
+    renderMetrics();
+    const time = await screen.findByText((_, el) => el?.tagName === 'TIME');
+    expect(time).toHaveAttribute('dateTime', sample.generatedAt);
   });
 });
