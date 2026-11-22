@@ -103,6 +103,48 @@ describe('Visitors page', () => {
     expect(us).toHaveAttribute('aria-pressed', 'true');
   });
 
+  it('selecting the chosen country again clears it', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(json(sample)));
+    renderVisitors();
+    const list = await screen.findByRole('list', { name: 'Top countries' });
+    const us = within(list).getByRole('button', { name: /United States/ });
+    fireEvent.click(us);
+    fireEvent.click(us);
+    expect(us).toHaveAttribute('aria-pressed', 'false');
+  });
+
+  it('rates slow and unsteady pages, and marks missing API percentiles', async () => {
+    const slow = {
+      ...sample,
+      speed: {
+        realUsers: { LCP: { average: 5200, samples: 10 }, CLS: { average: 0.15, samples: 10 } },
+        api: { days: 30, p50: 30, p90: null, p99: null, requests: 12 },
+        load: { median: 40, p95: null, requests: 9 },
+      },
+    };
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(json(slow)));
+    renderVisitors();
+    await screen.findByRole('heading', { name: 'How fast it is' });
+    expect(screen.getByText('Poor')).toBeInTheDocument();
+    expect(screen.getByText('Needs improvement')).toBeInTheDocument();
+    expect(screen.getByText('0.15')).toBeInTheDocument();
+    // only the vitals that were measured are listed
+    expect(screen.queryByText(/Response to a tap or click/)).not.toBeInTheDocument();
+    expect(screen.getAllByText('0 ms')).toHaveLength(3);
+  });
+
+  it('says which speed numbers are still being collected', { tags: ['negative'] }, async () => {
+    const empty = { ...sample, usShare: null, countries: [], daily: [], pages: [], speed: { realUsers: null, api: null, load: null } };
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(json(empty)));
+    renderVisitors();
+    await screen.findByRole('heading', { name: 'How fast it is' });
+    expect(screen.getByText(/Collecting: real visitors' timings/)).toBeInTheDocument();
+    expect(screen.getByText('No API timings yet.')).toBeInTheDocument();
+    expect(screen.getByText('No load-test results yet.')).toBeInTheDocument();
+    // with no country data, the US share and abroad are dashes rather than 0%
+    expect(screen.getByRole('img', { name: '– in the US, – abroad' })).toBeInTheDocument();
+  });
+
   it('says the numbers are coming before the first export', { tags: ['negative'] }, async () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue(json({ available: false, message: 'Visitor numbers are collected daily.' })));
     renderVisitors();

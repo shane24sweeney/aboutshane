@@ -1,6 +1,7 @@
 import react from '@vitejs/plugin-react';
 import { fileURLToPath } from 'node:url';
 import { defineConfig, type Plugin } from 'vite';
+import istanbul from 'vite-plugin-istanbul';
 import { SECURITY_HEADERS } from './security-headers';
 
 /** Pages pre-rendered to <page>/index.html by scripts/prerender.mjs; keep in step with App.tsx. */
@@ -23,13 +24,26 @@ function prerenderedPages(): Plugin {
 
 // The website. Commands run from the repo root (`npm run dev`, `npm run build`), so the root is
 // set to this folder explicitly. Unit tests have their own config: vitest.config.ts.
+// COVERAGE=1 builds a copy instrumented for code coverage (`npm run build:coverage`): every source
+// file counts what runs into window.__coverage__, which the Playwright tests collect. Only ever used
+// for tests: infra/deploy-frontend.sh refuses to upload an instrumented build.
+const coverage = process.env.COVERAGE === '1';
+
 export default defineConfig({
   root: fileURLToPath(new URL('.', import.meta.url)),
-  plugins: [react(), prerenderedPages()],
+  plugins: [
+    react(),
+    prerenderedPages(),
+    ...(coverage
+      ? [istanbul({ include: 'frontend/src/**/*', exclude: ['**/*.d.ts', 'frontend/src/main.tsx'], extension: ['.ts', '.tsx'], forceBuildInstrument: true })]
+      : []),
+  ],
   build: {
     // infra/deploy-frontend.sh syncs this folder (frontend/build) to S3.
     outDir: 'build',
     emptyOutDir: true,
+    // Coverage maps hits back to the TypeScript source; production builds ship no source maps.
+    sourcemap: coverage,
     // three.js (the Metrics chart and the Visitors globe) is one ~550 kB chunk, 137 kB gzipped,
     // named "three" and loaded only on those pages.
     chunkSizeWarningLimit: 600,

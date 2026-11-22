@@ -82,3 +82,27 @@ jobs:
             playwright-report
             test-results
           retention-days: 14
+
+  # Not a required check (yet): fails when UI coverage, unit and browser tests together, drops below
+  # scripts/coverage/thresholds.json. The API's minimum is enforced by `mvn verify` in the Backend job.
+  coverage:
+    name: UI coverage (unit + browser)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build:coverage
+      - run: npx playwright install --with-deps chromium webkit
+      - run: npm run test:coverage:browser
+      - run: npm run test:coverage
+      - run: npm run coverage:merge
+      - uses: actions/upload-artifact@v7
+        if: ${{ !cancelled() }}
+        with:
+          name: ui-coverage
+          path: coverage-combined
+          retention-days: 14

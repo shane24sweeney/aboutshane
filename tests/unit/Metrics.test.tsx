@@ -72,6 +72,60 @@ describe('Metrics page', () => {
     expect(updatedAt('not a date', now)).toBe('');
   });
 
+  it('shows a fully green report over several days', async () => {
+    const day = (date: string) => ({ date, status: 'healthy', checks: 10 });
+    serve({
+      ...sample,
+      status: 'healthy',
+      statusText: 'All passed',
+      failures: [],
+      runUrl: 'https://github.com/shane24sweeney/aboutshane/actions/runs/1',
+      history: [day('2026-11-20'), day('2026-11-21'), day('2026-11-22')],
+      qa: { ...sample.qa, load: { ...sample.qa.load!, actions: [{ action: 'Open site', samples: 9, failed: 2, median: 100, p95: 200 }] } },
+    });
+    renderMetrics();
+    expect(await screen.findByText(/All passed/, { selector: '.metrics-pill' })).toHaveTextContent('✓');
+    expect(screen.getByRole('heading', { name: 'Last 3 days' })).toBeInTheDocument();
+    expect(screen.getByText(/3 of 3\s+days fully green/)).toBeInTheDocument();
+    expect(screen.getByText('2 failed')).toBeInTheDocument();
+    const run = 'https://github.com/shane24sweeney/aboutshane/actions/runs/1';
+    expect(screen.getByRole('link', { name: "Today's GitHub Actions run" })).toHaveAttribute('href', run);
+    expect(screen.getByRole('link', { name: 'see the run' })).toHaveAttribute('href', run);
+  });
+
+  it('still shows the page, with dashes, when some suites have no results', { tags: ['negative'] }, async () => {
+    serve({
+      ...sample,
+      status: 'incomplete',
+      statusText: 'Incomplete',
+      generatedAt: 'not a date',
+      reportUrl: '',
+      runUrl: '',
+      development: { ui: { ...sample.development.ui!, duration: 125_000, coverage: null }, api: null },
+      qa: { regression: null, smoke: null, load: null },
+      failures: [{ area: 'Build', title: 'UI build', device: 'Build', error: 'tsc failed' }],
+      devices: [{ device: 'Desktop (Chrome)', regression: { passed: 3, failed: 0, flaky: 0 }, smoke: null }],
+      delivery: null,
+      grid: { ...sample.grid, cells: {} },
+    });
+    renderMetrics();
+    expect(await screen.findByText(/Incomplete/, { selector: '.metrics-pill' })).toHaveTextContent('!');
+    // the date it ran falls back to the day, the report link to the public report
+    expect(screen.getByText(sample.day, { selector: 'time' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Open the full quality report' })).toHaveAttribute('href', 'https://shane24sweeney.github.io/aboutshane/');
+    expect(screen.queryByRole('link', { name: "Today's GitHub Actions run" })).not.toBeInTheDocument();
+    // build failures are labelled as such; long durations in minutes; missing coverage as a dash
+    expect(screen.getByText('Development build')).toBeInTheDocument();
+    expect(screen.getByText(/2m 5s/)).toBeInTheDocument();
+    const meters = screen.getAllByText('–', { selector: '.metrics-meters b' });
+    expect(meters).toHaveLength(4);
+    // the device table marks a suite that didn't run, and the grid has nothing to select
+    const regions = screen.getAllByRole('region', { name: 'Coverage by device' });
+    const devices = regions[regions.length - 1]!;
+    expect(within(devices).getByRole('img', { name: 'all passed' })).toBeInTheDocument();
+    expect(within(screen.getByRole('region', { name: 'Test results by area and device' })).queryAllByRole('button')).toHaveLength(0);
+  });
+
   it('shows when the latest test run happened', async () => {
     serve(sample);
     renderMetrics();
