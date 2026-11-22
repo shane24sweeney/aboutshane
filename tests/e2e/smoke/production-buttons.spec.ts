@@ -1,4 +1,5 @@
 import { type Response, expect, test } from '@playwright/test';
+import { openFromNav } from '../support/navigate';
 import { pages } from '../support/pages';
 import { and, given, then, when } from '../support/steps';
 
@@ -20,15 +21,17 @@ const contentApi: Record<string, string> = {
 const RESPONSE_BUDGET_MS = 3000;
 
 test.describe('production buttons', () => {
-  for (const { path, nav: label, heading } of pages.filter(({ path }) => path in contentApi)) {
-    test(`clicking ${label} loads /api/content/${contentApi[path]}`, async ({ page }) => {
+  for (const target of pages.filter(({ path }) => path in contentApi)) {
+    const { path, heading } = target;
+    const label = target.tab ?? target.group;
+    test(`opening ${label} loads /api/content/${contentApi[path]}`, async ({ page }) => {
       let content: Response | null = null;
 
       // Start on Contact, which loads no content, so the click triggers a fresh request.
       await given('the visitor is on the contact page, which loads no content', () => page.goto('/contact'));
-      await when(`they click ${label} in the nav`, async () => {
+      await when(`they open ${label} from the navigation`, async () => {
         const response = page.waitForResponse(`**/api/content/${contentApi[path]}`, { timeout: 10_000 }).catch(() => null);
-        await page.getByRole('navigation', { name: 'Primary navigation' }).getByRole('link', { name: label, exact: true }).click();
+        await openFromNav(page, target);
         content = await response;
       });
       await then(`/api/content/${contentApi[path]} answers with JSON within ${RESPONSE_BUDGET_MS}ms`, () => {

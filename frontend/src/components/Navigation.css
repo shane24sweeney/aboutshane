@@ -1,25 +1,31 @@
+/* Wide screens: a bar along the top. Phones: a fixed bar along the bottom (see the end). */
 .site-nav {
+  position: relative;
   box-sizing: border-box;
   width: 100%;
   padding: 10px clamp(12px, 3vw, 32px);
   border-bottom: 1px solid var(--site-border);
+  background: var(--site-background);
 }
 
 .site-nav-links {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 4px 6px;
-  width: 100%;
+  gap: 6px;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
 }
 
 .site-nav-links .nav-link {
-  min-width: 76px;
+  min-width: 92px;
   padding: 10px 6px 8px !important;
-  border-radius: 8px;
+  border-radius: 10px;
   color: var(--site-text) !important;
   line-height: 1.2;
+  text-decoration: none;
 }
 
 .site-nav-links .nav-button {
@@ -45,6 +51,51 @@
 .site-nav-links .nav-link.active {
   background: rgba(121, 210, 192, 0.14);
   color: var(--site-accent-strong) !important;
+}
+
+/* Contact as a call-to-action button on wide screens; a tile like the others on phones. */
+.nav-cta-label {
+  display: none;
+}
+
+/* Wide screens: pinned to the right edge, so the four group tiles stay centred. (Narrower
+   tablets keep it in the row, after About.) */
+@media (min-width: 860px) {
+  .site-nav-links > li:last-child {
+    position: absolute;
+    top: 50%;
+    right: clamp(12px, 3vw, 32px);
+    transform: translateY(-50%);
+  }
+}
+
+@media (min-width: 601px) {
+  .site-nav-links .nav-cta {
+    flex-direction: row;
+    min-width: 0;
+    padding: 12px 22px !important;
+    border-radius: 999px;
+    background: var(--site-accent);
+    color: #14221f !important;
+    font-weight: 700;
+    box-shadow: 0 8px 18px rgba(121, 210, 192, 0.18);
+  }
+
+  .site-nav-links .nav-cta:hover,
+  .site-nav-links .nav-cta:focus-visible,
+  .site-nav-links .nav-cta.active {
+    background: var(--site-accent-strong);
+    color: #14221f !important;
+  }
+
+  .nav-cta .nav-tile,
+  .nav-cta .nav-label {
+    display: none;
+  }
+
+  .nav-cta .nav-cta-label {
+    display: inline;
+  }
 }
 
 /* Each icon sits on a raised, glossy tile in its page's colour (--tile, set in Navigation.tsx):
@@ -156,57 +207,64 @@
   white-space: nowrap;
 }
 
-/* Phones: two rows of five, each tile with its name underneath, so every tab says where it goes.
-   Five across leaves about 70px per tab on the smallest phones (360px): "Testimonials" fits at
-   11px and two-word names wrap, and every tab stays over the 44px tap-target minimum. */
+/* Phones: a fixed bar along the bottom with the five tiles and their names, within thumb reach,
+   clear of the iPhone home indicator (safe-area inset). The page leaves room for it (base.css). */
 @media (max-width: 600px) {
   .site-nav {
-    padding: 10px 6px 6px;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 40;
+    padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
+    border-top: 1px solid var(--site-border);
+    border-bottom: 0;
+    /* Solid, so page text never shows through (WebKit draws a backdrop blur over a tinted bar). */
+    background: var(--site-background);
+    box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.35);
   }
 
   .site-nav-links {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 4px;
+    gap: 2px;
   }
 
   .site-nav-links .nav-link {
-    gap: 6px;
+    gap: 4px;
     min-width: 0;
-    min-height: 64px;
-    padding: 8px 2px 6px !important;
+    min-height: 56px;
+    padding: 6px 2px 4px !important;
     background: transparent;
-    border-radius: 10px;
+    border-radius: 12px;
     -webkit-tap-highlight-color: rgba(121, 210, 192, 0.24);
   }
 
   .nav-tile {
-    --size: 38px;
+    --size: 32px;
     --depth: 3px;
-    border-radius: 11px;
+    border-radius: 9px;
   }
 
   .nav-tile::before {
-    border-radius: 9px 9px 40% 40% / 9px 9px 11px 11px;
+    border-radius: 7px 7px 40% 40% / 7px 7px 9px 9px;
   }
 
   .site-nav-links .nav-link svg {
     display: block;
     margin: 0 auto;
-    font-size: 1.25rem;
+    font-size: 1.05rem;
   }
 
   .nav-label {
     display: block;
-    white-space: normal;
-    /* Wrap between words only, never mid-word ("Testimonials" fits whole at this size). */
-    overflow-wrap: normal;
-    word-break: normal;
     max-width: 100%;
-    /* Scales with the screen so "Testimonials" fits a fifth of a 360px phone. */
-    font-size: clamp(0.62rem, 2.9vw, 0.72rem);
-    font-weight: 500;
+    overflow: hidden;
+    font-size: 0.7rem;
+    font-weight: 600;
     line-height: 1.15;
     text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }

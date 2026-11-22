@@ -55,7 +55,7 @@ test.describe('site search', () => {
     await then('they see that search is unavailable', () => expect(page.getByText('Search is unavailable right now. Please try again.')).toBeVisible());
     await and('the tabs still work', async () => {
       await page.keyboard.press('Escape');
-      await page.getByRole('link', { name: 'Resume', exact: true }).click();
+      await page.getByRole('navigation', { name: 'Primary navigation' }).getByRole('link', { name: 'Experience', exact: true }).click();
       await expect(page).toHaveURL('/resume');
     });
   });
@@ -78,11 +78,13 @@ test.describe('site search', () => {
 
   test('fits the screen on every device without covering the tabs', async ({ page }) => {
     await given('the visitor opens the site', () => page.goto('/home'));
-    await then('the search box is on screen, under the tabs, and nothing scrolls sideways', async () => {
+    await then('the search box is on screen, clear of the navigation, and nothing scrolls sideways', async () => {
       const nav = (await page.getByRole('navigation', { name: 'Primary navigation' }).boundingBox())!;
       const search = (await box(page).boundingBox())!;
       const width = page.viewportSize()!.width;
-      expect(search.y).toBeGreaterThanOrEqual(nav.y + nav.height - 1);
+      // Under the top bar on wide screens; above the bottom bar on phones.
+      if (width > 600) expect(search.y).toBeGreaterThanOrEqual(nav.y + nav.height - 1);
+      else expect(search.y + search.height).toBeLessThanOrEqual(nav.y);
       expect(search.x).toBeGreaterThanOrEqual(0);
       expect(search.x + search.width).toBeLessThanOrEqual(width);
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);

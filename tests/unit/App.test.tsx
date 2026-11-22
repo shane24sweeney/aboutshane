@@ -37,7 +37,7 @@ describe('routing', () => {
     renderAt('/home');
     const nav = screen.getByRole('navigation', { name: 'Primary navigation' });
     const names = Array.from(nav.querySelectorAll('a')).map((link) => link.getAttribute('aria-label'));
-    expect(names).toEqual(['Home', 'Contact', 'About', 'Resume', 'Testimonials', 'Education', 'Charity Work', 'Running', 'Metrics', 'Analytics']);
+    expect(names).toEqual(['Home', 'Experience', 'Quality', 'About', 'Contact']);
   });
 
   it('gives every image alt text', async () => {

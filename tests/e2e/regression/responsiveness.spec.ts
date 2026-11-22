@@ -1,5 +1,6 @@
 import type { Page } from '@playwright/test';
 import { expect, test } from '../support/fixtures';
+import { groupLink, openFromNav, subTab } from '../support/navigate';
 import { pages } from '../support/pages';
 import { and, given, then, when } from '../support/steps';
 
@@ -55,11 +56,9 @@ test.describe('responsiveness', () => {
     });
     await watchForLoading(page);
 
-    for (const { path, nav, heading } of pages.filter((p) => p.path !== '/home')) {
-      await when(`they tap ${nav}`, () =>
-        page.getByRole('navigation', { name: 'Primary navigation' }).getByRole('link', { name: nav, exact: true }).click(),
-      );
-      await then(`${path} shows its heading`, () => expect(page.getByRole('heading', { level: 1, name: heading })).toBeAttached());
+    for (const target of pages.filter((p) => p.path !== '/home')) {
+      await when(`they open ${target.tab ?? target.group}`, () => openFromNav(page, target));
+      await then(`${target.path} shows its heading`, () => expect(page.getByRole('heading', { level: 1, name: target.heading })).toBeAttached());
     }
     await and('no tab needed a page download or a content request', () => expect(downloads).toEqual([]));
     await and('no loading spinner ever appeared', async () => {
@@ -72,11 +71,13 @@ test.describe('responsiveness', () => {
       await page.goto('/home');
       await prefetched(page);
     });
-    for (const [nav, ready] of [
-      ['Resume', '.accordion'],
-      ['Education', '.education-card'],
-      ['Running', '.running-table'],
-      ['Testimonials', '.carousel'],
+    // A route through the tiles and sub-tabs; each marker exists only on the page being opened.
+    for (const [nav, ready, link] of [
+      ['Experience', '.accordion', () => groupLink(page, 'Experience')],
+      ['Education', '.education-card', () => subTab(page, 'Experience', 'Education')],
+      ['Testimonials', '.carousel', () => subTab(page, 'Experience', 'Testimonials')],
+      ['About', '.about-card', () => groupLink(page, 'About')],
+      ['Running', '.running-table', () => subTab(page, 'About', 'Running')],
     ] as const) {
       const elapsed = await when(`they tap ${nav}`, async () => {
         // Time it in the page: from the click event to the first frame showing the content.
@@ -95,7 +96,7 @@ test.describe('responsiveness', () => {
             }),
           ready,
         );
-        await page.getByRole('navigation', { name: 'Primary navigation' }).getByRole('link', { name: nav, exact: true }).click();
+        await link().click();
         return Math.round(await timing);
       });
       await then(`${nav} is ready within ${TAB_BUDGET_MS} ms (took ${elapsed} ms)`, () => expect(elapsed).toBeLessThan(TAB_BUDGET_MS));
@@ -111,7 +112,7 @@ test.describe('responsiveness', () => {
       await expect(page.getByRole('heading', { level: 1, name: 'Shane James Sweeney' })).toBeVisible();
       page.on('request', (r) => r.url().includes('/api/content/resume') && requests.push(r.url()));
     });
-    await when('they open the resume again', () => page.getByRole('link', { name: 'Resume', exact: true }).click());
+    await when('they open the resume again', () => page.getByRole('navigation', { name: 'Primary navigation' }).getByRole('link', { name: 'Experience', exact: true }).click());
     await then('it shows straight away from what was already loaded', async () => {
       await expect(page.locator('.accordion')).toBeVisible();
       await expect(page.locator('.page-loading')).toHaveCount(0);
@@ -130,12 +131,12 @@ test.describe('responsiveness', () => {
       await page.waitForLoadState('networkidle');
     });
     await then('only the home page’s content has been loaded', () => expect(requested).toEqual(['/api/content/profile']));
-    await when('their pointer reaches the Education tab, before any click', async () => {
-      const tab = page.getByRole('navigation', { name: 'Primary navigation' }).getByRole('link', { name: 'Education', exact: true });
-      await tab.hover().catch(() => tab.focus());
-      await tab.focus();
+    await when('their pointer reaches the About tile, before any click', async () => {
+      const tile = groupLink(page, 'About');
+      await tile.hover().catch(() => tile.focus());
+      await tile.focus();
     });
-    await then('Education’s content is already on its way', () => expect.poll(() => requested).toContain('/api/content/education'));
+    await then('About’s content is already on its way', () => expect.poll(() => requested).toContain('/api/content/about'));
   });
 
   test('a visitor saving data gets no background downloads', { tag: '@negative' }, async ({ page }) => {

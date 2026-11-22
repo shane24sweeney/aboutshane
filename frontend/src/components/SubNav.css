@@ -1,0 +1,55 @@
+/* Sub-tabs: a segmented control under the search box on the current group's pages. */
+.sub-nav {
+  display: flex;
+  justify-content: center;
+  margin: 8px auto 4px;
+  max-width: 100%;
+}
+
+.sub-nav ul {
+  display: inline-flex;
+  gap: 4px;
+  max-width: 100%;
+  margin: 0;
+  padding: 4px;
+  overflow-x: auto;
+  border: 1px solid var(--site-border);
+  border-radius: 999px;
+  background: var(--site-surface);
+  list-style: none;
+  scrollbar-width: none;
+}
+
+.sub-nav-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: 999px;
+  color: var(--site-text-muted);
+  font-size: 0.92rem;
+  font-weight: 600;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background-color 160ms ease, color 160ms ease;
+  touch-action: manipulation;
+}
+
+.sub-nav-link:hover,
+.sub-nav-link:focus-visible {
+  color: var(--site-text);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.sub-nav-link.active {
+  background: var(--site-accent);
+  color: #14221f;
+}
+
+@media (max-width: 600px) {
+  .sub-nav-link {
+    min-height: 44px;
+    padding: 0 14px;
+    font-size: 0.88rem;
+  }
+}

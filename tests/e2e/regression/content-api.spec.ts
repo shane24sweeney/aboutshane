@@ -1,20 +1,23 @@
 import type { Page } from '@playwright/test';
 import { expect, test } from '../support/fixtures';
 import resume from '../../../content/resume.json' with { type: 'json' };
+import { openFromNav } from '../support/navigate';
 import { pages } from '../support/pages';
 import { given, then, when } from '../support/steps';
 
 // Locally the content API is served by the fixture in ../support/fixtures.ts; tests override it with page.route.
 
-const contentPages = [
-  { nav: 'Home', api: 'profile' },
-  { nav: 'About', api: 'about' },
-  { nav: 'Resume', api: 'resume' },
-  { nav: 'Testimonials', api: 'testimonials' },
-  { nav: 'Education', api: 'education' },
-  { nav: 'Charity Work', api: 'charity' },
-  { nav: 'Running', api: 'running' },
-] as const;
+/** The content API behind each page that has one. */
+const contentApi: Record<string, string> = {
+  '/home': 'profile',
+  '/about': 'about',
+  '/resume': 'resume',
+  '/testimonials': 'testimonials',
+  '/education': 'education',
+  '/charity': 'charity',
+  '/running': 'running',
+};
+const contentPages = pages.filter((p) => p.path in contentApi);
 
 async function expectBundledResume(page: Page) {
   await expect(page.getByRole('button', { name: /Fifth Third Bank/i })).toBeVisible();
@@ -22,8 +25,7 @@ async function expectBundledResume(page: Page) {
 }
 
 test.describe('content API', () => {
-  test('each navigation button shows its page from the content API, asked once per visit', async ({ page }) => {
-    const nav = page.getByRole('navigation', { name: 'Primary navigation' });
+  test('each page opened from the navigation shows content from the API, asked once per visit', async ({ page }) => {
     const requested: string[] = [];
 
     await given('the visitor is on the contact page, which loads no content', async () => {
@@ -33,11 +35,11 @@ test.describe('content API', () => {
 
     // Pages are prefetched in the background (frontend/src/prefetch.ts), so the request may come
     // before the click; either way each page's content comes from the API, and only once.
-    for (const { nav: label, api } of contentPages) {
-      await when(`they click ${label}`, () => nav.getByRole('link', { name: label, exact: true }).click());
+    for (const target of contentPages) {
+      const api = contentApi[target.path]!;
+      await when(`they open ${target.tab ?? target.group}`, () => openFromNav(page, target));
       await then(`the page shows content from GET /api/content/${api}`, async () => {
-        const heading = pages.find((entry) => entry.nav === label)?.heading ?? '';
-        await expect(page.getByRole('heading', { level: 1, name: heading })).toBeAttached();
+        await expect(page.getByRole('heading', { level: 1, name: target.heading })).toBeAttached();
         expect(requested.filter((r) => r === `GET /api/content/${api}`)).toHaveLength(1);
       });
     }

@@ -132,6 +132,8 @@ select:focus {
 @media (max-width: 600px) {
   .site-shell {
     padding: 8px;
+    /* Room for the fixed bottom navigation bar (and the iPhone home indicator below it). */
+    padding-bottom: calc(80px + env(safe-area-inset-bottom));
   }
 }
 
