@@ -569,7 +569,7 @@
           "script": {
             "type": "text/javascript",
             "exec": [
-              "pm.test('returns 405', () => pm.response.to.have.status(405));"
+              "pm.test('refuses POST (403 at the CloudFront edge, 405 from the API itself)', () => pm.expect(pm.response.code).to.be.oneOf([403, 405]));"
             ]
           }
         }
