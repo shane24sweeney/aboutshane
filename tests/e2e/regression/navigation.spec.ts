@@ -90,10 +90,14 @@ test.describe('navigation', () => {
 
   test('pages load without console errors', async ({ page }) => {
     const errors: string[] = [];
+    const cancelled = new Set<string>();
 
     await given('console errors and page errors are being recorded', () => {
       page.on('console', (message) => message.type() === 'error' && errors.push(message.text()));
       page.on('pageerror', (error) => errors.push(error.message));
+      // Opening the next page cancels any prefetch still in flight. WebKit reports a cancelled fetch
+      // as "Fetch API cannot load <url> due to access control checks", which isn't an error.
+      page.on('requestfailed', (request) => cancelled.add(request.url()));
     });
     await when('the visitor opens every page', async () => {
       for (const { path } of pages) {
@@ -101,6 +105,9 @@ test.describe('navigation', () => {
         await page.waitForLoadState('networkidle');
       }
     });
-    await then('no errors were logged', () => expect(errors).toEqual([]));
+    await then('no errors were logged', () => {
+      const cancelledFetch = /^Fetch API cannot load (\S+) due to access control checks\.$/;
+      expect(errors.filter((text) => !cancelled.has(cancelledFetch.exec(text)?.[1] ?? ''))).toEqual([]);
+    });
   });
 });

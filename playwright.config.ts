@@ -72,7 +72,14 @@ export default defineConfig({
       name,
       testDir: regressionDir,
       testIgnore: phoneLayoutSpec,
-      use: { ...devices[device], ...(channel ? { channel } : {}), baseURL: localURL },
+      use: {
+        ...devices[device],
+        ...(channel ? { channel } : {}),
+        // Headless Firefox on Linux (CI) has WebGL switched off; turn on its software renderer so
+        // the 3D views are tested for real rather than their "can't draw 3D" fallback.
+        ...(name === 'firefox' ? { launchOptions: { firefoxUserPrefs: { 'webgl.force-enabled': true } } } : {}),
+        baseURL: localURL,
+      },
     })),
     ...(
       [
