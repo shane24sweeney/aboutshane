@@ -29,17 +29,23 @@ const pageContent: Record<string, ContentPage | undefined> = {
 };
 
 const started = new Set<string>();
-let chartStarted = false;
+/** The 3D pages' own code (three.js and the chart or globe), fetched only when a visitor reaches for them. */
+const heavy: Record<string, () => Promise<unknown>> = {
+  '/metrics': () => import('./components/TestGrid3D'),
+  '/visitors': () => import('./components/VisitorGlobe3D'),
+};
+const heavyStarted = new Set<string>();
 
 /**
  * Starts loading a page's code and content; safe to call often (each path loads once). `intent`
- * means the visitor is reaching for the tab: only then does Test Metrics also fetch its 3D chart
+ * means the visitor is reaching for the tab: only then does Metrics also fetch its 3D chart
  * (137 kB), so background prefetching never spends that much of a phone's data.
  */
 export function prefetchPage(path: string, { intent = false } = {}) {
-  if (intent && path === '/metrics' && !chartStarted) {
-    chartStarted = true;
-    import('./components/TestGrid3D').catch(() => (chartStarted = false));
+  const loadHeavy = heavy[path];
+  if (intent && loadHeavy && !heavyStarted.has(path)) {
+    heavyStarted.add(path);
+    loadHeavy().catch(() => heavyStarted.delete(path));
   }
   if (started.has(path)) return;
   started.add(path);
@@ -78,5 +84,5 @@ export function prefetchAllWhenIdle(paths: readonly string[]): () => void {
 /** For tests: forget which pages have been prefetched. */
 export const resetPrefetch = () => {
   started.clear();
-  chartStarted = false;
+  heavyStarted.clear();
 };

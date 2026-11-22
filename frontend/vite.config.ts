@@ -29,8 +29,14 @@ export default defineConfig({
     // infra/deploy-frontend.sh syncs this folder (frontend/build) to S3.
     outDir: 'build',
     emptyOutDir: true,
-    // three.js (the Metrics 3D chart) is one ~550 kB chunk, 137 kB gzipped, loaded only on that page.
+    // three.js (the Metrics chart and the Visitors globe) is one ~550 kB chunk, 137 kB gzipped,
+    // named "three" and loaded only on those pages.
     chunkSizeWarningLimit: 600,
+    rollupOptions: {
+      output: {
+        manualChunks: (id) => (id.includes('/node_modules/three/') ? 'three' : undefined),
+      },
+    },
   },
   server: {
     port: 3000,

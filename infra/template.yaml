@@ -149,8 +149,7 @@ Resources:
               - HEAD
           # Read-only API calls: cached at the edge for as long as the API's Cache-Control says
           # (status 1 minute, search 5 minutes per query, visitors 10 minutes, the résumé PDF an
-          # hour), so repeat calls
-          # don't reach API Gateway or Lambda. Other methods are refused here (403).
+          # hour), so repeat calls don't reach API Gateway or Lambda. Other methods get 403 here.
           - PathPattern: /api/status
             TargetOriginId: BackendApiOrigin
             ViewerProtocolPolicy: https-only
