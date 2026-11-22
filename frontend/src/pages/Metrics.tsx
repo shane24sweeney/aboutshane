@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
-import { fetchMetrics, METRICS_TIMEOUT_MS, REPORT_URL } from '../api/metrics';
+import { fetchMetrics, METRICS_TIMEOUT_MS, REPORT_URL, updatedAt } from '../api/metrics';
 import type { Metrics as MetricsData, Status } from '../api/metrics';
 import Donut from '../components/Donut';
 import PageLoading from '../components/PageLoading';
@@ -97,7 +97,17 @@ function Dashboard({ data }: { data: MetricsData }) {
         </span>
         <h2 id="metrics-headline">{data.headline}</h2>
         <p>{data.summary}</p>
-        <p className="metrics-muted">Updated {data.day}</p>
+        <p className="metrics-muted">
+          Latest test run: <time dateTime={data.generatedAt}>{updatedAt(data.generatedAt) || data.day}</time>
+          {data.runUrl && (
+            <>
+              {' · '}
+              <a href={data.runUrl} target="_blank" rel="noreferrer">
+                see the run
+              </a>
+            </>
+          )}
+        </p>
       </section>
 
       <ul className="metrics-kpis" aria-label="Headline numbers">
