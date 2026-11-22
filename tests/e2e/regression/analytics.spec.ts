@@ -1,6 +1,7 @@
 import { expect, test } from '../support/fixtures';
 import sample from '../support/visitors.sample.json' with { type: 'json' };
 import { and, given, then, when } from '../support/steps';
+import { expect3D } from '../support/webgl';
 
 // The fixtures serve ./visitors.sample.json for GET /api/visitors.
 test.describe('analytics page', () => {
@@ -12,7 +13,7 @@ test.describe('analytics page', () => {
       await expect(numbers.getByText('67%')).toBeVisible();
       await expect(numbers.getByText('33%')).toBeVisible();
     });
-    await and('the globe is drawn in 3D', () => expect(page.getByTestId('visitor-globe').locator('canvas')).toBeVisible());
+    await and('the globe is drawn in 3D', () => expect3D(page, page.getByTestId('visitor-globe')));
     await and('the top countries are listed, the US first', async () => {
       const countries = page.getByRole('list', { name: 'Top countries' }).getByRole('listitem');
       await expect(countries).toHaveCount(Math.min(12, sample.countries.length));
@@ -38,7 +39,7 @@ test.describe('analytics page', () => {
   test('fits every screen without scrolling sideways', async ({ page }) => {
     await given('the visitor opens Analytics', () => page.goto('/analytics'));
     await then('nothing is wider than the screen', async () => {
-      await expect(page.getByTestId('visitor-globe').locator('canvas')).toBeVisible();
+      await expect3D(page, page.getByTestId('visitor-globe'));
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(page.viewportSize()!.width);
     });
   });

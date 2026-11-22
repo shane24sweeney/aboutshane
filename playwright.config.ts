@@ -75,9 +75,9 @@ export default defineConfig({
       use: {
         ...devices[device],
         ...(channel ? { channel } : {}),
-        // Headless Firefox on Linux (CI) has WebGL switched off; turn on its software renderer so
-        // the 3D views are tested for real rather than their "can't draw 3D" fallback.
-        ...(name === 'firefox' ? { launchOptions: { firefoxUserPrefs: { 'webgl.force-enabled': true } } } : {}),
+        // Headless Firefox on the Linux CI runners has no WebGL: there the 3D tests check the
+        // "can't draw 3D" fallback instead (support/webgl.ts). On a desktop it draws them for real.
+        ...(name === 'firefox' && process.env.NO_WEBGL ? { launchOptions: { firefoxUserPrefs: { 'webgl.disabled': true } } } : {}),
         baseURL: localURL,
       },
     })),
