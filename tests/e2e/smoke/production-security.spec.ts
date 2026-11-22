@@ -106,6 +106,35 @@ test.describe('production security', { tag: '@security' }, () => {
     }
   });
 
+  test('Google Analytics works within the policy for a real visitor', async ({ page }) => {
+    const collected: string[] = [];
+    await given('a real (not automated) browser in the US, with policy violations recorded', async () => {
+      // Test browsers never load GA, so present as a normal browser just for this check.
+      await page.addInitScript(() => {
+        Object.defineProperty(navigator, 'webdriver', { get: () => false });
+        const w = window as unknown as { __violations: string[] };
+        w.__violations = [];
+        document.addEventListener('securitypolicyviolation', (e) => w.__violations.push(`${e.violatedDirective} blocked ${e.blockedURI}`));
+      });
+      // Stop GA's hits at the network so this check is never counted as a visit.
+      await page.route(/https:\/\/([^/]+\.google-analytics\.com|[^/]+\.analytics\.google\.com|www\.google\.com\/g\/collect)/, (route) => {
+        collected.push(route.request().url());
+        return route.abort();
+      });
+    });
+    const tag = page.waitForResponse((r) => r.url().startsWith('https://www.googletagmanager.com/gtag/js'));
+    await when('they open the home page and then Analytics', async () => {
+      await page.goto('/home', { waitUntil: 'networkidle' });
+      await page.getByRole('link', { name: 'Analytics', exact: true }).click();
+      await page.waitForLoadState('networkidle');
+    });
+    await then('Google’s tag loads and sends page views, and nothing breaks the policy', async () => {
+      expect((await tag).status()).toBe(200);
+      await expect.poll(() => collected.length, { timeout: 10_000 }).toBeGreaterThan(0);
+      expect(await page.evaluate(() => (window as unknown as { __violations: string[] }).__violations)).toEqual([]);
+    });
+  });
+
   test('pages load nothing over plain HTTP', async ({ page }) => {
     const insecure: string[] = [];
     await given('every request the pages make is recorded', () => {

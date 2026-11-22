@@ -1,14 +1,25 @@
 package com.aboutshane.contactapi;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import com.amazonaws.serverless.exceptions.ContainerInitializationException;
 import com.amazonaws.serverless.proxy.internal.LambdaContainerHandler;
 import com.amazonaws.serverless.proxy.model.AwsProxyResponse;
 import com.amazonaws.serverless.proxy.model.HttpApiV2ProxyRequest;
 import com.amazonaws.serverless.proxy.spring.SpringBootLambdaContainerHandler;
 import com.amazonaws.services.lambda.runtime.Context;
-import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.amazonaws.services.lambda.runtime.RequestStreamHandler;
 
-public class StreamLambdaHandler implements RequestHandler<HttpApiV2ProxyRequest, AwsProxyResponse> {
+/**
+ * The Lambda entry point. It streams: the container reads API Gateway's event and writes the
+ * response with its own JSON mapping, so binary bodies (GET /api/resume.pdf) go out base64-encoded
+ * with {@code isBase64Encoded: true} and API Gateway decodes them. (Returning the response object
+ * instead let Lambda's default serializer name that flag {@code base64Encoded}, which API Gateway
+ * ignores, so the PDF arrived as base64 text.)
+ */
+public class StreamLambdaHandler implements RequestStreamHandler {
     private static final SpringBootLambdaContainerHandler<HttpApiV2ProxyRequest, AwsProxyResponse> handler;
 
     static {
@@ -22,7 +33,7 @@ public class StreamLambdaHandler implements RequestHandler<HttpApiV2ProxyRequest
     }
 
     @Override
-    public AwsProxyResponse handleRequest(HttpApiV2ProxyRequest request, Context context) {
-        return handler.proxy(request, context);
+    public void handleRequest(InputStream input, OutputStream output, Context context) throws IOException {
+        handler.proxyStream(input, output, context);
     }
 }
