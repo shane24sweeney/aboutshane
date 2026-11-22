@@ -242,6 +242,11 @@ message or sends an email.
 - **Playwright covers:** every page is up; HTTPS and security headers; API health; the contact API
   rejecting invalid input; each content API responding with edge caching; the resume rendering
   from the live API; and unknown API paths returning 404.
+  `tests/e2e/smoke/production-methods.spec.ts` checks that nothing can be changed over HTTP: PUT,
+  PATCH and DELETE on every API endpoint and POST on every read-only one are refused (403 at the
+  CloudFront edge or 405 from the API), and the pages themselves can't be overwritten. The same
+  matrix runs in `HttpMethodMatrixTest` (JUnit, also checking the `Allow` header), in Postman and,
+  under load, in JMeter.
   `tests/e2e/smoke/production-api.spec.ts` checks the shape of every content page, the running
   history and stats (compared with stats worked out independently from the live races), the
   personal bests on the live running page, and the contact API's required fields, length limits

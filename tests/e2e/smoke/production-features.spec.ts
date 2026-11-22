@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../support/smoke-fixtures';
 import { and, given, then, when } from '../support/steps';
 
 // Site search, the résumé PDF and the status endpoint on the live site. Read-only.
