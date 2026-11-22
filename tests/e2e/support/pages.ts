@@ -9,5 +9,5 @@ export const pages = [
   { path: '/charity', nav: 'Charity Work', heading: 'Charity Work' },
   { path: '/running', nav: 'Running', heading: 'Running' },
   { path: '/metrics', nav: 'Metrics', heading: 'Metrics' },
-  { path: '/visitors', nav: 'Visitors', heading: 'Visitors' },
+  { path: '/analytics', nav: 'Analytics', heading: 'Analytics' },
 ] as const;

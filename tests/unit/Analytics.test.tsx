@@ -4,14 +4,14 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { analyticsAllowed, isEuropeanTimeZone, setConsent, storedConsent } from '../../frontend/src/analytics/analytics';
 import { vitalRating } from '../../frontend/src/api/visitors';
 import ConsentBanner, { OPEN_COOKIE_SETTINGS } from '../../frontend/src/components/ConsentBanner';
-import Visitors from '../../frontend/src/pages/Visitors';
+import Analytics from '../../frontend/src/pages/Analytics';
 import sample from '../e2e/support/visitors.sample.json';
 
 const json = (body: unknown, status = 200) => new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json' } });
 const renderVisitors = () =>
   render(
     <MemoryRouter>
-      <Visitors />
+      <Analytics />
     </MemoryRouter>,
   );
 

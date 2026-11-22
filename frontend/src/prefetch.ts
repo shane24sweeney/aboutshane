@@ -15,7 +15,7 @@ export const pageModules = {
   '/resume': () => import('./pages/Resume'),
   '/running': () => import('./pages/Running'),
   '/testimonials': () => import('./pages/Testimonials'),
-  '/visitors': () => import('./pages/Visitors'),
+  '/analytics': () => import('./pages/Analytics'),
 } as const;
 
 const pageContent: Record<string, ContentPage | undefined> = {
@@ -32,7 +32,7 @@ const started = new Set<string>();
 /** The 3D pages' own code (three.js and the chart or globe), fetched only when a visitor reaches for them. */
 const heavy: Record<string, () => Promise<unknown>> = {
   '/metrics': () => import('./components/TestGrid3D'),
-  '/visitors': () => import('./components/VisitorGlobe3D'),
+  '/analytics': () => import('./components/VisitorGlobe3D'),
 };
 const heavyStarted = new Set<string>();
 

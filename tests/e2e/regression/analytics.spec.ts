@@ -3,9 +3,9 @@ import sample from '../support/visitors.sample.json' with { type: 'json' };
 import { and, given, then, when } from '../support/steps';
 
 // The fixtures serve ./visitors.sample.json for GET /api/visitors.
-test.describe('visitors page', () => {
+test.describe('analytics page', () => {
   test('shows visitors, the US and abroad, a 3D globe, and how fast the site is', async ({ page }) => {
-    await given('the visitor opens Visitors', () => page.goto('/visitors'));
+    await given('the visitor opens Analytics', () => page.goto('/analytics'));
     await then('the headline numbers are shown', async () => {
       const numbers = page.getByRole('list', { name: 'Visitor numbers' });
       await expect(numbers.getByText(sample.totals.users.toLocaleString('en-US'))).toBeVisible();
@@ -29,14 +29,14 @@ test.describe('visitors page', () => {
   });
 
   test('selecting a country in the list marks it', async ({ page }) => {
-    await given('the visitor is on Visitors', () => page.goto('/visitors'));
+    await given('the visitor is on Analytics', () => page.goto('/analytics'));
     const ireland = page.getByRole('list', { name: 'Top countries' }).getByRole('button', { name: /Ireland/ });
     await when('they choose Ireland', () => ireland.click());
     await then('Ireland is marked as selected', () => expect(ireland).toHaveAttribute('aria-pressed', 'true'));
   });
 
   test('fits every screen without scrolling sideways', async ({ page }) => {
-    await given('the visitor opens Visitors', () => page.goto('/visitors'));
+    await given('the visitor opens Analytics', () => page.goto('/analytics'));
     await then('nothing is wider than the screen', async () => {
       await expect(page.getByTestId('visitor-globe').locator('canvas')).toBeVisible();
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(page.viewportSize()!.width);
@@ -47,13 +47,13 @@ test.describe('visitors page', () => {
     await given('no visitor numbers have been exported yet', () =>
       page.route('**/api/visitors', (route) => route.fulfill({ json: { available: false, message: 'Visitor numbers are collected daily; the first figures appear the morning after analytics starts.' } })),
     );
-    await when('the visitor opens Visitors', () => page.goto('/visitors'));
+    await when('the visitor opens Analytics', () => page.goto('/analytics'));
     await then('they are told the numbers are on their way', () => expect(page.getByText(/first figures appear the morning after/)).toBeVisible());
   });
 
   test('says so when the numbers cannot be loaded', { tag: '@negative' }, async ({ page }) => {
     await given('the visitors API is failing', () => page.route('**/api/visitors', (route) => route.fulfill({ status: 500, json: { error: 'internal_error' } })));
-    await when('the visitor opens Visitors', () => page.goto('/visitors'));
+    await when('the visitor opens Analytics', () => page.goto('/analytics'));
     await then('they see an error, and the tabs still work', async () => {
       await expect(page.getByRole('alert')).toContainText("couldn't be loaded");
       await page.getByRole('link', { name: 'Home', exact: true }).click();
@@ -69,7 +69,7 @@ test.describe('analytics and cookie consent', () => {
       page.on('request', (r) => /googletagmanager|google-analytics|analytics\.google/.test(r.url()) && google.push(r.url())),
     );
     await when('the visitor opens a few pages and waits', async () => {
-      for (const path of ['/home', '/resume', '/visitors']) await page.goto(path, { waitUntil: 'networkidle' });
+      for (const path of ['/home', '/resume', '/analytics']) await page.goto(path, { waitUntil: 'networkidle' });
       await page.waitForTimeout(2000);
     });
     await then('no request went to Google', () => expect(google).toEqual([]));
@@ -115,6 +115,27 @@ test.describe('analytics and cookie consent', () => {
         await page.getByRole('region', { name: 'Cookie consent' }).getByRole('button', { name: 'Decline' }).click();
         expect(await page.evaluate(() => localStorage.getItem('aboutshane.analytics-consent'))).toBe('denied');
       });
+    });
+  });
+});
+
+test.describe('analytics page: cross-site scripting', { tag: ['@security', '@negative'] }, () => {
+  test('shows country names and page paths from Google Analytics as text, never as HTML', async ({ page }) => {
+    // Anyone can visit /<img src=x onerror=…>, so page paths reaching GA are untrusted.
+    const payload = '<img src=x onerror="window.__xss=(window.__xss||0)+1">';
+    await given('visitor numbers whose country names and page paths contain script', async () => {
+      await page.addInitScript(() => ((window as unknown as { __xss: number }).__xss = 0));
+      const hostile = structuredClone(sample);
+      hostile.countries[1]!.name = `xss-probe ${payload}`;
+      hostile.pages[0]!.path = `/xss-probe${payload}`;
+      await page.route('**/api/visitors', (route) => route.fulfill({ json: hostile }));
+    });
+    await when('the visitor opens Analytics', () => page.goto('/analytics'));
+    await then('the payloads are shown literally and never run', async () => {
+      await expect(page.getByText(`xss-probe ${payload}`)).toBeVisible();
+      await expect(page.getByText(`/xss-probe${payload}`)).toBeVisible();
+      expect(await page.evaluate(() => (window as unknown as { __xss: number }).__xss)).toBe(0);
+      await expect(page.locator('img[src="x"]')).toHaveCount(0);
     });
   });
 });

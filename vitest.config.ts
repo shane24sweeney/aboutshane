@@ -10,7 +10,10 @@ export default defineConfig({
     setupFiles: './tests/unit/setup.ts',
     css: false,
     include: ['tests/unit/**/*.test.{ts,tsx}'],
-    tags: [{ name: 'negative', description: 'Error handling, invalid input and failure paths' }],
+    tags: [
+      { name: 'negative', description: 'Error handling, invalid input and failure paths' },
+      { name: 'security', description: 'Security headers, consent and what analytics may do' },
+    ],
     // `npm run test:coverage`: coverage of frontend/src for the daily quality report.
     coverage: {
       provider: 'v8',

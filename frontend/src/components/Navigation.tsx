@@ -2,6 +2,7 @@ import type { CSSProperties } from 'react';
 import type { IconBaseProps, IconType } from 'react-icons';
 import {
   FaBriefcase,
+  FaChartLine,
   FaEnvelope,
   FaGraduationCap,
   FaHandHoldingHeart,
@@ -9,7 +10,6 @@ import {
   FaPersonRunning,
   FaQuoteLeft,
   FaUser,
-  FaUserGroup,
 } from 'react-icons/fa6';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -40,7 +40,7 @@ const navItems: NavItem[] = [
   { to: '/charity', label: 'Charity Work', icon: FaHandHoldingHeart, colour: '#ff8fa3' },
   { to: '/running', label: 'Running', icon: FaPersonRunning, colour: '#8fe388' },
   { to: '/metrics', label: 'Metrics', icon: SpinningEarth, colour: '#4f7bd9' },
-  { to: '/visitors', label: 'Visitors', icon: FaUserGroup, colour: '#e0a85c' },
+  { to: '/analytics', label: 'Analytics', icon: FaChartLine, colour: '#e8a33d' },
 ];
 
 function Navigation() {

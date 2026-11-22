@@ -85,6 +85,23 @@ them:
 
 What they cover is listed in [docs/testing.md](../docs/testing.md#negative-tests).
 
+### Analytics (Google Analytics)
+
+The **Analytics** tab (`/analytics`) shows, from Google Analytics, who visits the site and from
+where (the US or abroad) on a 3D globe, beside how fast the site is: real visitors' Core Web
+Vitals, the API's response times and the load test. Everything is free.
+
+- **Tracking** (`frontend/src/analytics/analytics.ts`): GA4 (`G-6E90ERR71Y`) with Consent Mode.
+  Visitors in the EEA, UK and Switzerland are asked first (`ConsentBanner`), anyone can change their
+  choice from **Cookie settings** in the footer, and advertising features are always off. Nothing
+  loads for automated browsers (tests never count as visits), local copies of the site, or browsers
+  sending Global Privacy Control or Do Not Track. Page views go per route; Core Web Vitals go as events.
+- **Export** (`scripts/analytics/export.mjs`, in the daily workflow): the last 30 days from the GA4
+  Data API (property `565419707`) as the read-only `ga-reader` service account, plus the API's
+  p50/p90/p99 from CloudWatch and the load test, published as `visitors.json`; `GET /api/visitors`
+  serves it. Needs the `GA_SERVICE_ACCOUNT` secret and the `API_ID` variable; until then the page
+  says the numbers are coming.
+
 ### Security tests
 
 Tagged `@security`. They run with the regression and smoke suites, and on their own with:
@@ -101,6 +118,15 @@ npm run test:security:smoke    # only the live checks (read-only)
   nothing loads over plain HTTP; new-tab links can't reach back (`noopener`/`noreferrer`) and none
   use `javascript:`; other websites can't read the API or post to the contact form (CORS); the API
   refuses TRACE and its errors name no framework or stack trace. Nothing is submitted.
+- **Content-Security-Policy** (`frontend/security-headers.ts`, sent by CloudFront's
+  `SiteSecurityHeaders` and by the local preview, so every Playwright test runs under it): scripts
+  only from the site and Google Analytics, no inline code or eval, connections only to the site,
+  the daily report and Google Analytics, no plugins or outside framing, plus a Permissions-Policy
+  turning off camera, microphone, location and payments. `csp.spec.ts` checks every page (and the
+  3D views, map and search) breaks no rule, and that injected inline script, event handlers,
+  outside scripts and data sent to an outside server are all blocked; the live smoke checks the
+  header and runs the same no-violation check; `tests/unit/securityHeaders.test.ts` checks the
+  template and the preview use the identical policy and what Google Analytics may do.
 - **Cross-site scripting** (`tests/e2e/regression/security.spec.ts`, local, APIs mocked): script and
   HTML payloads in content-API text (home, testimonials, resume, charity), race names in the map's
   popups, contact-form fields and the API's error answers, and the address bar are all shown as

@@ -69,11 +69,20 @@ function gtag(...args: unknown[]) {
   window.gtag?.(...args);
 }
 
-/** Sets up Consent Mode and GA, then loads Google's script once the page is idle. */
-export function initAnalytics() {
-  if (started) return;
+type Environment = Parameters<typeof analyticsAllowed>[0];
+
+function browserEnvironment(): Environment {
   const nav = navigator as Navigator & { globalPrivacyControl?: boolean };
-  if (!analyticsAllowed({ webdriver: nav.webdriver, hostname: location.hostname, doNotTrack: nav.doNotTrack, globalPrivacyControl: nav.globalPrivacyControl })) return;
+  return { webdriver: nav.webdriver, hostname: location.hostname, doNotTrack: nav.doNotTrack, globalPrivacyControl: nav.globalPrivacyControl };
+}
+
+/**
+ * Sets up Consent Mode and GA, then loads Google's script once the page is idle. Returns whether
+ * analytics started. `env` is for tests; the site uses the real browser's.
+ */
+export function initAnalytics(env: Environment = browserEnvironment()): boolean {
+  if (started) return true;
+  if (!analyticsAllowed(env)) return false;
   started = true;
 
   window.dataLayer = window.dataLayer ?? [];
@@ -99,6 +108,14 @@ export function initAnalytics() {
   };
   if (typeof window.requestIdleCallback === 'function') window.requestIdleCallback(load, { timeout: 3000 });
   else setTimeout(load, 1500);
+  return true;
+}
+
+/** For tests: forget that analytics started. */
+export function resetAnalytics() {
+  started = false;
+  delete window.gtag;
+  delete window.dataLayer;
 }
 
 /** One page view per route, with the path and title the visitor saw. */

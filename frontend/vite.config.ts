@@ -1,9 +1,10 @@
 import react from '@vitejs/plugin-react';
 import { fileURLToPath } from 'node:url';
 import { defineConfig, type Plugin } from 'vite';
+import { SECURITY_HEADERS } from './security-headers';
 
 /** Pages pre-rendered to <page>/index.html by scripts/prerender.mjs; keep in step with App.tsx. */
-const PAGES = ['home', 'about', 'contact', 'resume', 'testimonials', 'education', 'charity', 'running', 'metrics', 'visitors'];
+const PAGES = ['home', 'about', 'contact', 'resume', 'testimonials', 'education', 'charity', 'running', 'metrics', 'analytics'];
 
 /** Serves /resume from resume/index.html in `npm run preview`, as CloudFront's SpaRoutingFunction does. */
 function prerenderedPages(): Plugin {
@@ -46,6 +47,8 @@ export default defineConfig({
     },
   },
   preview: {
+    // The same security headers as CloudFront, so the Playwright tests run under the real policy.
+    headers: SECURITY_HEADERS,
     // BrowserStack devices reach the preview server through BrowserStack Local as bs-local.com.
     allowedHosts: ['bs-local.com'],
   },

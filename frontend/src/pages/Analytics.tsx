@@ -2,7 +2,7 @@ import { lazy, Suspense, useEffect, useState } from 'react';
 import { fetchVisitors, isAvailable, vitalRating } from '../api/visitors';
 import type { VisitorStats, VisitorsResponse } from '../api/visitors';
 import PageLoading from '../components/PageLoading';
-import './Visitors.css';
+import './Analytics.css';
 
 // three.js and the detailed Earth load only with this page.
 const VisitorGlobe3D = lazy(() => import('../components/VisitorGlobe3D'));
@@ -208,12 +208,14 @@ function Dashboard({ data }: { data: VisitorStats }) {
   );
 }
 
-function Visitors() {
+function Analytics() {
   const state = useVisitors();
   return (
     <section id="visitors" className="visitors-page">
-      <h1>Visitors</h1>
-      <p className="visitors-lede">Who visits this site, from where (the US or abroad), and how fast it is for them.</p>
+      <h1>Analytics</h1>
+      <p className="visitors-lede">
+        From Google Analytics: who visits this site, from where (the US or abroad), and how fast it is for them.
+      </p>
       {state.status === 'loading' && <PageLoading />}
       {state.status === 'error' && (
         <p className="visitors-card" role="alert">
@@ -230,4 +232,4 @@ function Visitors() {
   );
 }
 
-export default Visitors;
+export default Analytics;

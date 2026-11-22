@@ -21,7 +21,7 @@ describe('routing', () => {
     ['/charity', 'Charity Work'],
     ['/running', 'Running'],
     ['/metrics', 'Metrics'],
-    ['/visitors', 'Visitors'],
+    ['/analytics', 'Analytics'],
   ])('%s renders a single page heading "%s"', async (path, heading) => {
     renderAt(path);
     expect(await screen.findByRole('heading', { level: 1, name: heading })).toBeInTheDocument();
@@ -37,11 +37,11 @@ describe('routing', () => {
     renderAt('/home');
     const nav = screen.getByRole('navigation', { name: 'Primary navigation' });
     const names = Array.from(nav.querySelectorAll('a')).map((link) => link.getAttribute('aria-label'));
-    expect(names).toEqual(['Home', 'Contact', 'About', 'Resume', 'Testimonials', 'Education', 'Charity Work', 'Running', 'Metrics', 'Visitors']);
+    expect(names).toEqual(['Home', 'Contact', 'About', 'Resume', 'Testimonials', 'Education', 'Charity Work', 'Running', 'Metrics', 'Analytics']);
   });
 
   it('gives every image alt text', async () => {
-    for (const path of ['/home', '/about', '/resume', '/testimonials', '/education', '/charity', '/running', '/metrics', '/visitors']) {
+    for (const path of ['/home', '/about', '/resume', '/testimonials', '/education', '/charity', '/running', '/metrics', '/analytics']) {
       const { unmount } = renderAt(path);
       await screen.findByRole('heading', { level: 1 });
       for (const image of document.querySelectorAll('img')) {

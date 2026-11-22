@@ -9,7 +9,7 @@ const MIN_TAP_TARGET = 44;
 /** iOS zooms the page when a focused field's text is smaller than this. */
 const MIN_INPUT_FONT_PX = 16;
 const NAV_BUTTONS = 'nav[aria-label="Primary navigation"] .nav-button';
-const PATHS = ['/home', '/contact', '/about', '/resume', '/testimonials', '/education', '/charity', '/running', '/metrics', '/visitors'];
+const PATHS = ['/home', '/contact', '/about', '/resume', '/testimonials', '/education', '/charity', '/running', '/metrics', '/analytics'];
 
 describe('phone layout in the real mobile browser', () => {
   it('nav shows two rows of five labelled buttons large enough to tap', async () => {

@@ -17,15 +17,15 @@ const Metrics = lazy(pageModules['/metrics']);
 const Resume = lazy(pageModules['/resume']);
 const Running = lazy(pageModules['/running']);
 const Testimonials = lazy(pageModules['/testimonials']);
-const Visitors = lazy(pageModules['/visitors']);
+const Analytics = lazy(pageModules['/analytics']);
 
-const PREFETCH = ['/home', '/resume', '/about', '/contact', '/testimonials', '/education', '/charity', '/running', '/metrics', '/visitors'];
+const PREFETCH = ['/home', '/resume', '/about', '/contact', '/testimonials', '/education', '/charity', '/running', '/metrics', '/analytics'];
 
 /** Routes and layout; the router itself is supplied by the caller so tests can use a MemoryRouter. */
 function App() {
   const { pathname } = useLocation();
   useEffect(() => prefetchAllWhenIdle(PREFETCH), []);
-  useEffect(() => initAnalytics(), []);
+  useEffect(() => void initAnalytics(), []);
   useEffect(() => trackPageView(pathname), [pathname]);
 
   return (
@@ -46,7 +46,7 @@ function App() {
               <Route path="/charity" element={<Charity />} />
               <Route path="/running" element={<Running />} />
               <Route path="/metrics" element={<Metrics />} />
-              <Route path="/visitors" element={<Visitors />} />
+              <Route path="/analytics" element={<Analytics />} />
               <Route path="*" element={<Navigate to="/home" replace />} />
             </Routes>
           </Suspense>
