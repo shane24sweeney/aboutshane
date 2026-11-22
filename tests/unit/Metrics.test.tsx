@@ -16,7 +16,7 @@ function renderMetrics() {
 const serve = (body: unknown, ok = true) =>
   vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok, status: ok ? 200 : 500, json: () => Promise.resolve(body) }));
 
-describe('Test Metrics page', () => {
+describe('Metrics page', () => {
   it('loads metrics.json from the daily report', async () => {
     serve(sample);
     renderMetrics();

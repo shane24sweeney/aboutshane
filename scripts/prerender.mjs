@@ -17,7 +17,7 @@ const build = new URL('frontend/build/', root);
 const SITE = 'https://selenium-automation.com';
 
 /** The routes the app serves; keep in step with App.tsx and the routing rules above. */
-export const PAGES = ['home', 'about', 'contact', 'resume', 'testimonials', 'education', 'charity', 'running', 'metrics'];
+export const PAGES = ['home', 'about', 'contact', 'resume', 'testimonials', 'education', 'charity', 'running', 'metrics', 'analytics'];
 
 const content = (name) => JSON.parse(readFileSync(new URL(`content/${name}.json`, root), 'utf8'));
 
@@ -86,9 +86,13 @@ const bodies = {
     )}`,
 
   metrics: () =>
-    `<h1>Test Metrics</h1><p>How this site is built and tested, updated every morning: unit and API tests with code ` +
+    `<h1>Metrics</h1><p>How this site is built and tested, updated every morning: unit and API tests with code ` +
     `coverage, end-to-end tests on desktop and phones, the live site, and a load test.</p>` +
     `<p><a href="https://shane24sweeney.github.io/aboutshane/">The daily quality report</a></p>`,
+
+  analytics: () =>
+    `<h1>Analytics</h1><p>Who visits this site, from where (the US or abroad), and how fast it is for them, from ` +
+    `Google Analytics, AWS CloudWatch and the daily load test.</p>`,
 
   running: () => {
     const { intro: runningIntro, profile: athlinks, races } = content('running');

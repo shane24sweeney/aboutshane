@@ -7,7 +7,7 @@ const TONE = { healthy: 'ok', attention: 'warn', incomplete: 'warn' } as const;
 
 /**
  * A small badge in the footer: whether the API is up, and how the latest daily tests went, linking
- * to Test Metrics. It loads after the page (it's not urgent) and stays hidden if the API is down.
+ * to Metrics. It loads after the page (it's not urgent) and stays hidden if the API is down.
  */
 function StatusBadge() {
   const [status, setStatus] = useState<SiteStatus | null>(null);

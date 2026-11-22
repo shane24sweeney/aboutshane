@@ -5,7 +5,7 @@ import { and, given, then, when } from '../support/steps';
 // The fixtures serve ./metrics.sample.json in place of the daily report's metrics.json.
 test.describe('test metrics page', () => {
   test('shows the verdict, headline numbers and a donut for every suite', async ({ page }) => {
-    await given('the visitor opens Test Metrics', () => page.goto('/metrics'));
+    await given('the visitor opens Metrics', () => page.goto('/metrics'));
     await then('the verdict and summary from the daily report are shown', async () => {
       await expect(page.getByRole('heading', { level: 2, name: sample.headline })).toBeVisible();
       await expect(page.getByText(sample.summary)).toBeVisible();
@@ -26,7 +26,7 @@ test.describe('test metrics page', () => {
     const chart = page.getByTestId('test-grid-3d');
     const panel = page.getByRole('region', { name: 'Selected tests' });
 
-    await given('the visitor opens Test Metrics', () => page.goto('/metrics'));
+    await given('the visitor opens Metrics', () => page.goto('/metrics'));
     await then('the 3D chart is drawn', () => expect(chart.locator('canvas')).toBeVisible());
     await when('they click across the chart until they land on a bar', async () => {
       await chart.locator('canvas').scrollIntoViewIfNeeded();
@@ -72,7 +72,7 @@ test.describe('test metrics page', () => {
     await given('the daily report is unreachable', () =>
       page.route('https://shane24sweeney.github.io/aboutshane/metrics.json', (route) => route.fulfill({ status: 503 })),
     );
-    await when('the visitor opens Test Metrics', () => page.goto('/metrics'));
+    await when('the visitor opens Metrics', () => page.goto('/metrics'));
     await then('they see why, and a link to the full report', async () => {
       await expect(page.getByRole('alert')).toContainText("Today's metrics couldn't be loaded");
       await expect(page.getByRole('alert').getByRole('link')).toHaveAttribute('href', 'https://shane24sweeney.github.io/aboutshane/');
@@ -92,7 +92,7 @@ test.describe('test metrics page: cross-site scripting', { tag: ['@security', '@
       metrics.grid.cells[key as keyof typeof metrics.grid.cells]!.tests = [{ t: `xss-probe test ${payload}`, s: 'failed' }];
       await page.route('https://shane24sweeney.github.io/aboutshane/metrics.json', (route) => route.fulfill({ json: metrics }));
     });
-    await when('the visitor opens Test Metrics and lists the first area’s tests from the table', async () => {
+    await when('the visitor opens Metrics and lists the first area’s tests from the table', async () => {
       await page.goto('/metrics');
       // Keyboard, not clicks: with Bootstrap's smooth scrolling a click can land mid-scroll on CI.
       await page.getByText('Table view').focus();

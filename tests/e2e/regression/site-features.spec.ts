@@ -107,12 +107,12 @@ test.describe('résumé download', () => {
 });
 
 test.describe('status badge', () => {
-  test('shows the API is up and the latest test verdict, linking to Test Metrics', async ({ page }) => {
+  test('shows the API is up and the latest test verdict, linking to Metrics', async ({ page }) => {
     await given('the visitor is on the home page', () => page.goto('/home'));
     const badge = page.getByRole('link', { name: 'All systems normal · Daily tests: Healthy' });
     await then('the footer shows the status badge', () => expect(badge).toBeVisible());
     await when('they click it', () => badge.click());
-    await then('Test Metrics opens', () => expect(page).toHaveURL('/metrics'));
+    await then('Metrics opens', () => expect(page).toHaveURL('/metrics'));
   });
 
   test('is left out when the API is down', { tag: '@negative' }, async ({ page }) => {

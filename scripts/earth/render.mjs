@@ -1,4 +1,4 @@
-// Draws the Test Metrics tab's globe texture (frontend/src/assets/earth.jpg): a flat 2:1 world map
+// Draws the Metrics tab's globe texture (frontend/src/assets/earth.jpg): a flat 2:1 world map
 // from Natural Earth's public-domain land outlines, so it needs no credit. To redraw it:
 //
 //   curl -LO https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_land.geojson

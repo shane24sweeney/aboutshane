@@ -155,6 +155,7 @@ jobs:
       contents: read
       actions: read
       pull-requests: read
+      id-token: write
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -193,6 +194,38 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
       - run: node scripts/test-report/build.mjs reports site
+      # Visitors tab: the API's response times from CloudWatch, then Google Analytics. Both skip
+      # quietly until set up (REPORT_ROLE_ARN and API_ID variables, GA_SERVICE_ACCOUNT secret).
+      - uses: aws-actions/configure-aws-credentials@v6
+        if: ${{ vars.REPORT_ROLE_ARN != '' && vars.API_ID != '' }}
+        continue-on-error: true
+        with:
+          role-to-assume: ${{ vars.REPORT_ROLE_ARN }}
+          aws-region: us-east-1
+      - name: API response times (CloudWatch, last 30 days)
+        if: ${{ vars.REPORT_ROLE_ARN != '' && vars.API_ID != '' }}
+        continue-on-error: true
+        env:
+          API_ID: ${{ vars.API_ID }}
+        run: |
+          start=$(date -u -d '30 days ago' +%FT%TZ); end=$(date -u +%FT%TZ)
+          stats() { aws cloudwatch get-metric-statistics --namespace AWS/ApiGateway --dimensions "Name=ApiId,Value=$API_ID" \
+            --start-time "$start" --end-time "$end" --period 2592000 "$@" --output json; }
+          latency=$(stats --metric-name Latency --extended-statistics p50 p90 p99)
+          count=$(stats --metric-name Count --statistics Sum)
+          jq -n --argjson l "$latency" --argjson c "$count" '{
+            days: 30,
+            p50: ($l.Datapoints[0].ExtendedStatistics.p50 // null | if . then round else . end),
+            p90: ($l.Datapoints[0].ExtendedStatistics.p90 // null | if . then round else . end),
+            p99: ($l.Datapoints[0].ExtendedStatistics.p99 // null | if . then round else . end),
+            requests: ($c.Datapoints[0].Sum // 0 | round)
+          }' > reports/api-latency.json
+          cat reports/api-latency.json
+      - name: Visitors from Google Analytics
+        env:
+          GA_SERVICE_ACCOUNT: ${{ secrets.GA_SERVICE_ACCOUNT }}
+          GA_PROPERTY_ID: '565419707'
+        run: node scripts/analytics/export.mjs site reports/api-latency.json
       - run: echo "Dashboard at https://shane24sweeney.github.io/aboutshane/" >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-pages-artifact@v5
         with:

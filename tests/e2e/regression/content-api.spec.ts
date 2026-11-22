@@ -18,7 +18,7 @@ const contentPages = [
 
 async function expectBundledResume(page: Page) {
   await expect(page.getByRole('button', { name: /Fifth Third Bank/i })).toBeVisible();
-  await expect(page.getByRole('button')).toHaveCount(resume.length);
+  await expect(page.locator('.accordion').getByRole('button')).toHaveCount(resume.length);
 }
 
 test.describe('content API', () => {
@@ -53,7 +53,7 @@ test.describe('content API', () => {
     await when('the visitor opens the resume', () => page.goto('/resume'));
     await then('only that role is shown', async () => {
       await expect(entry).toBeVisible();
-      await expect(page.getByRole('button')).toHaveCount(1);
+      await expect(page.locator('.accordion').getByRole('button')).toHaveCount(1);
     });
     await when('they open it', () => entry.click());
     await then('its highlights come from the API', () => expect(page.getByText('Highlight from the API')).toBeVisible());
@@ -86,7 +86,7 @@ test.describe('content API', () => {
       page.route('**/api/content/resume', (route) => route.abort('connectionreset')),
     );
     await when('the visitor opens the resume', () => page.goto('/resume'));
-    await then('every bundled role is shown', () => expect(page.getByRole('button')).toHaveCount(resume.length));
+    await then('every bundled role is shown', () => expect(page.locator('.accordion').getByRole('button')).toHaveCount(resume.length));
   });
 
   test('shows a loading indicator while a slow response is on its way', async ({ page }) => {

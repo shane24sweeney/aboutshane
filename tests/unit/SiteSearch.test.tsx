@@ -117,7 +117,7 @@ describe('site search', () => {
 });
 
 describe('status badge', () => {
-  it('shows the API is up and how the daily tests went, linking to Test Metrics', async () => {
+  it('shows the API is up and how the daily tests went, linking to Metrics', async () => {
     vi.useFakeTimers();
     vi.stubGlobal(
       'fetch',

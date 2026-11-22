@@ -18,6 +18,7 @@
   },
   "include": [
     "frontend/vite.config.ts",
+    "frontend/security-headers.ts",
     "vitest.config.ts",
     "playwright.config.ts",
     "playwright.browserstack.config.ts",

@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { CONTENT_SECURITY_POLICY, PERMISSIONS_POLICY } from '../../../frontend/security-headers';
 import { pages } from '../support/pages';
 import { and, given, then, when } from '../support/steps';
 
@@ -25,6 +26,11 @@ test.describe('production security', { tag: '@security' }, () => {
         expect(headers['x-content-type-options']).toBe('nosniff');
         expect(headers['x-frame-options']).toMatch(/^(SAMEORIGIN|DENY)$/);
         expect(headers['referrer-policy']).toMatch(/^(strict-origin-when-cross-origin|strict-origin|same-origin|no-referrer)$/);
+      });
+      await and('it sends the site’s Content-Security-Policy and Permissions-Policy', () => {
+        expect(response.headers()['content-security-policy']).toBe(CONTENT_SECURITY_POLICY);
+        expect(response.headers()['permissions-policy']).toBe(PERMISSIONS_POLICY);
+        expect(response.headers()['cross-origin-opener-policy']).toBe('same-origin');
       });
       await and('it sets no cookies and names no server software versions', () => {
         const headers = response.headers();
@@ -80,6 +86,24 @@ test.describe('production security', { tag: '@security' }, () => {
         expect(body, url).not.toMatch(/gh[pousr]_[A-Za-z0-9]{36}/);
       }
     });
+  });
+
+  test('nothing on the live pages breaks the Content-Security-Policy', async ({ page }) => {
+    await given('policy violations are being recorded', () =>
+      page.addInitScript(() => {
+        const w = window as unknown as { __violations: string[] };
+        w.__violations = [];
+        document.addEventListener('securitypolicyviolation', (e) => w.__violations.push(`${e.violatedDirective} blocked ${e.blockedURI || 'inline'}`));
+      }),
+    );
+    for (const { path } of pages) {
+      await when(`the visitor opens ${path}`, async () => {
+        await page.goto(path, { waitUntil: 'networkidle' });
+      });
+      await then(`${path} broke no rule`, async () =>
+        expect(await page.evaluate(() => (window as unknown as { __violations: string[] }).__violations)).toEqual([]),
+      );
+    }
   });
 
   test('pages load nothing over plain HTTP', async ({ page }) => {

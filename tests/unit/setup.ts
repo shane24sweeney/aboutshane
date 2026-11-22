@@ -11,9 +11,13 @@ vi.mock('../../frontend/src/components/RaceMap', () => ({
   default: ({ races }: { races: unknown[] }) => createElement('div', { 'data-testid': 'race-map' }, `${races.length} races on the map`),
 }));
 
-// jsdom has no WebGL, so the Test Metrics page's 3D chart is a stand-in here and real in Playwright.
+// jsdom has no WebGL, so the Metrics page's 3D chart is a stand-in here and real in Playwright.
 vi.mock('../../frontend/src/components/TestGrid3D', () => ({
   default: ({ grid }: { grid: { rows: unknown[] } }) => createElement('div', { 'data-testid': 'test-grid-3d' }, `${grid.rows.length} rows in 3D`),
+}));
+
+vi.mock('../../frontend/src/components/VisitorGlobe3D', () => ({
+  default: ({ countries }: { countries: unknown[] }) => createElement('div', { 'data-testid': 'visitor-globe' }, `${countries.length} countries on the globe`),
 }));
 
 beforeEach(() => {

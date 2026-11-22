@@ -43,9 +43,9 @@ test.describe('responsiveness', () => {
         const url = r.url();
         if (!url.includes('/api/content/') && !url.endsWith('.js')) return;
         // Anything already fetched once is in the browser's cache (WebKit re-links preloaded files).
-        // The 3D chart's code (137 kB) loads only once the visitor reaches for Test Metrics, to spare
+        // The 3D pages' code (three.js, 137 kB) loads only once the visitor reaches for Metrics or Visitors, to spare
         // phone data, so it is the one new download allowed here.
-        if (prefetchDone && !seen.has(url) && !/\/TestGrid3D-[^/]+\.js$/.test(url)) downloads.push(url);
+        if (prefetchDone && !seen.has(url) && !/\/(three|TestGrid3D|VisitorGlobe3D)-[^/]+\.js$/.test(url)) downloads.push(url);
         seen.add(url);
       });
       await page.goto('/home');

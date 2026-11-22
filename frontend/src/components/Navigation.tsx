@@ -2,6 +2,7 @@ import type { CSSProperties } from 'react';
 import type { IconBaseProps, IconType } from 'react-icons';
 import {
   FaBriefcase,
+  FaChartLine,
   FaEnvelope,
   FaGraduationCap,
   FaHandHoldingHeart,
@@ -38,7 +39,8 @@ const navItems: NavItem[] = [
   { to: '/education', label: 'Education', icon: FaGraduationCap, colour: '#b6a1ff' },
   { to: '/charity', label: 'Charity Work', icon: FaHandHoldingHeart, colour: '#ff8fa3' },
   { to: '/running', label: 'Running', icon: FaPersonRunning, colour: '#8fe388' },
-  { to: '/metrics', label: 'Test Metrics', icon: SpinningEarth, colour: '#4f7bd9' },
+  { to: '/metrics', label: 'Metrics', icon: SpinningEarth, colour: '#4f7bd9' },
+  { to: '/analytics', label: 'Analytics', icon: FaChartLine, colour: '#e8a33d' },
 ];
 
 function Navigation() {
