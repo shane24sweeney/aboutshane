@@ -738,6 +738,765 @@
           ]
         }
       }
+    },
+    {
+      "name": "Methods - Contact refuses PUT",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('refuses PUT (403 at the CloudFront edge, 405 from the API itself)', () => pm.expect(pm.response.code).to.be.oneOf([403, 405]));",
+              "pm.test('gives nothing away', () => pm.expect(pm.response.text()).to.not.match(/Exception|springframework/));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"Method check\", \"email\": \"check@example.com\", \"message\": \"Overwrite\", \"website\": \"\"}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/contact",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "contact"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Methods - Contact refuses PATCH",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('refuses PATCH (403 at the CloudFront edge, 405 from the API itself)', () => pm.expect(pm.response.code).to.be.oneOf([403, 405]));",
+              "pm.test('gives nothing away', () => pm.expect(pm.response.text()).to.not.match(/Exception|springframework/));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"Method check\", \"email\": \"check@example.com\", \"message\": \"Overwrite\", \"website\": \"\"}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/contact",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "contact"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Methods - Contact refuses DELETE",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('refuses DELETE (403 at the CloudFront edge, 405 from the API itself)', () => pm.expect(pm.response.code).to.be.oneOf([403, 405]));",
+              "pm.test('gives nothing away', () => pm.expect(pm.response.text()).to.not.match(/Exception|springframework/));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"Method check\", \"email\": \"check@example.com\", \"message\": \"Overwrite\", \"website\": \"\"}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/contact",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "contact"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Methods - Health refuses PUT",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('refuses PUT (403 at the CloudFront edge, 405 from the API itself)', () => pm.expect(pm.response.code).to.be.oneOf([403, 405]));",
+              "pm.test('gives nothing away', () => pm.expect(pm.response.text()).to.not.match(/Exception|springframework/));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"Method check\", \"email\": \"check@example.com\", \"message\": \"Overwrite\", \"website\": \"\"}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/health",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "health"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Methods - Health refuses PATCH",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('refuses PATCH (403 at the CloudFront edge, 405 from the API itself)', () => pm.expect(pm.response.code).to.be.oneOf([403, 405]));",
+              "pm.test('gives nothing away', () => pm.expect(pm.response.text()).to.not.match(/Exception|springframework/));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"Method check\", \"email\": \"check@example.com\", \"message\": \"Overwrite\", \"website\": \"\"}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/health",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "health"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Methods - Health refuses DELETE",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('refuses DELETE (403 at the CloudFront edge, 405 from the API itself)', () => pm.expect(pm.response.code).to.be.oneOf([403, 405]));",
+              "pm.test('gives nothing away', () => pm.expect(pm.response.text()).to.not.match(/Exception|springframework/));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"Method check\", \"email\": \"check@example.com\", \"message\": \"Overwrite\", \"website\": \"\"}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/health",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "health"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Methods - Content refuses PUT",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('refuses PUT (403 at the CloudFront edge, 405 from the API itself)', () => pm.expect(pm.response.code).to.be.oneOf([403, 405]));",
+              "pm.test('gives nothing away', () => pm.expect(pm.response.text()).to.not.match(/Exception|springframework/));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"Method check\", \"email\": \"check@example.com\", \"message\": \"Overwrite\", \"website\": \"\"}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/content/about",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "content",
+            "about"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Methods - Content refuses PATCH",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('refuses PATCH (403 at the CloudFront edge, 405 from the API itself)', () => pm.expect(pm.response.code).to.be.oneOf([403, 405]));",
+              "pm.test('gives nothing away', () => pm.expect(pm.response.text()).to.not.match(/Exception|springframework/));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"Method check\", \"email\": \"check@example.com\", \"message\": \"Overwrite\", \"website\": \"\"}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/content/about",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "content",
+            "about"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Methods - Content refuses DELETE",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('refuses DELETE (403 at the CloudFront edge, 405 from the API itself)', () => pm.expect(pm.response.code).to.be.oneOf([403, 405]));",
+              "pm.test('gives nothing away', () => pm.expect(pm.response.text()).to.not.match(/Exception|springframework/));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"Method check\", \"email\": \"check@example.com\", \"message\": \"Overwrite\", \"website\": \"\"}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/content/about",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "content",
+            "about"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Methods - Status refuses PUT",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('refuses PUT (403 at the CloudFront edge, 405 from the API itself)', () => pm.expect(pm.response.code).to.be.oneOf([403, 405]));",
+              "pm.test('gives nothing away', () => pm.expect(pm.response.text()).to.not.match(/Exception|springframework/));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"Method check\", \"email\": \"check@example.com\", \"message\": \"Overwrite\", \"website\": \"\"}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/status",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "status"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Methods - Status refuses PATCH",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('refuses PATCH (403 at the CloudFront edge, 405 from the API itself)', () => pm.expect(pm.response.code).to.be.oneOf([403, 405]));",
+              "pm.test('gives nothing away', () => pm.expect(pm.response.text()).to.not.match(/Exception|springframework/));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"Method check\", \"email\": \"check@example.com\", \"message\": \"Overwrite\", \"website\": \"\"}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/status",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "status"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Methods - Status refuses DELETE",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('refuses DELETE (403 at the CloudFront edge, 405 from the API itself)', () => pm.expect(pm.response.code).to.be.oneOf([403, 405]));",
+              "pm.test('gives nothing away', () => pm.expect(pm.response.text()).to.not.match(/Exception|springframework/));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"Method check\", \"email\": \"check@example.com\", \"message\": \"Overwrite\", \"website\": \"\"}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/status",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "status"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Methods - Visitors refuses PUT",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('refuses PUT (403 at the CloudFront edge, 405 from the API itself)', () => pm.expect(pm.response.code).to.be.oneOf([403, 405]));",
+              "pm.test('gives nothing away', () => pm.expect(pm.response.text()).to.not.match(/Exception|springframework/));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"Method check\", \"email\": \"check@example.com\", \"message\": \"Overwrite\", \"website\": \"\"}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/visitors",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "visitors"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Methods - Visitors refuses PATCH",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('refuses PATCH (403 at the CloudFront edge, 405 from the API itself)', () => pm.expect(pm.response.code).to.be.oneOf([403, 405]));",
+              "pm.test('gives nothing away', () => pm.expect(pm.response.text()).to.not.match(/Exception|springframework/));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"Method check\", \"email\": \"check@example.com\", \"message\": \"Overwrite\", \"website\": \"\"}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/visitors",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "visitors"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Methods - Visitors refuses DELETE",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('refuses DELETE (403 at the CloudFront edge, 405 from the API itself)', () => pm.expect(pm.response.code).to.be.oneOf([403, 405]));",
+              "pm.test('gives nothing away', () => pm.expect(pm.response.text()).to.not.match(/Exception|springframework/));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"Method check\", \"email\": \"check@example.com\", \"message\": \"Overwrite\", \"website\": \"\"}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/visitors",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "visitors"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Methods - Resume PDF refuses PUT",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('refuses PUT (403 at the CloudFront edge, 405 from the API itself)', () => pm.expect(pm.response.code).to.be.oneOf([403, 405]));",
+              "pm.test('gives nothing away', () => pm.expect(pm.response.text()).to.not.match(/Exception|springframework/));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"Method check\", \"email\": \"check@example.com\", \"message\": \"Overwrite\", \"website\": \"\"}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/resume.pdf",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "resume.pdf"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Methods - Resume PDF refuses PATCH",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('refuses PATCH (403 at the CloudFront edge, 405 from the API itself)', () => pm.expect(pm.response.code).to.be.oneOf([403, 405]));",
+              "pm.test('gives nothing away', () => pm.expect(pm.response.text()).to.not.match(/Exception|springframework/));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"Method check\", \"email\": \"check@example.com\", \"message\": \"Overwrite\", \"website\": \"\"}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/resume.pdf",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "resume.pdf"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Methods - Resume PDF refuses DELETE",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('refuses DELETE (403 at the CloudFront edge, 405 from the API itself)', () => pm.expect(pm.response.code).to.be.oneOf([403, 405]));",
+              "pm.test('gives nothing away', () => pm.expect(pm.response.text()).to.not.match(/Exception|springframework/));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"Method check\", \"email\": \"check@example.com\", \"message\": \"Overwrite\", \"website\": \"\"}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/resume.pdf",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "resume.pdf"
+          ]
+        }
+      }
     }
   ]
 }

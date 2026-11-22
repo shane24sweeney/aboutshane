@@ -33,11 +33,16 @@ public class ApiExceptionHandler {
         return Map.of("error", "malformed_request");
     }
 
-    /** Spring's own client errors (unknown path, wrong method, ...) keep their status code. */
+    /**
+     * Spring's own client errors (unknown path, wrong method, ...) keep their status code and the
+     * headers HTTP requires with it, such as Allow on a 405 (RFC 9110 section 15.5.6).
+     */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, String>> unexpected(Exception exception) {
         if (exception instanceof ErrorResponse errorResponse && errorResponse.getStatusCode().is4xxClientError()) {
-            return ResponseEntity.status(errorResponse.getStatusCode()).body(Map.of("error", "request_rejected"));
+            return ResponseEntity.status(errorResponse.getStatusCode())
+                    .headers(errorResponse.getHeaders())
+                    .body(Map.of("error", "request_rejected"));
         }
         log.error("Unhandled error", exception);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", "internal_error"));
