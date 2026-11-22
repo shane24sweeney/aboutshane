@@ -92,3 +92,14 @@ export async function fetchMetrics(signal?: AbortSignal): Promise<Metrics> {
   if (metrics.version !== 1 || !metrics.grid) throw new Error('metrics.json: unexpected format');
   return metrics;
 }
+
+/** "Sat, Nov 21, 3:04 PM (2 hours ago)" in the visitor's own time zone. */
+export function updatedAt(iso: string, now = Date.now()) {
+  const when = new Date(iso);
+  if (Number.isNaN(when.getTime())) return '';
+  const minutes = Math.max(0, Math.round((now - when.getTime()) / 60_000));
+  const ago =
+    minutes < 1 ? 'just now' : minutes < 60 ? `${minutes} min ago` : minutes < 48 * 60 ? `${Math.round(minutes / 60)} h ago` : `${Math.round(minutes / 1440)} days ago`;
+  const stamp = when.toLocaleString('en-US', { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+  return `${stamp} (${ago})`;
+}
