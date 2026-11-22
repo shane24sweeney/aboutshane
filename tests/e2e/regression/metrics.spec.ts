@@ -2,6 +2,7 @@ import { expect, test } from '../support/fixtures';
 import sample from '../support/metrics.sample.json' with { type: 'json' };
 import { hoverABar } from '../support/canvas';
 import { and, given, then, when } from '../support/steps';
+import { expect3D } from '../support/webgl';
 
 /** The 3D chart's bar colours: passed, failed, flaky, skipped. */
 const GRID_BARS = ['#3fb950', '#ff6b6b', '#d29922', '#7d8590'];
@@ -31,7 +32,9 @@ test.describe('test metrics page', () => {
     const panel = page.getByRole('region', { name: 'Selected tests' });
 
     await given('the visitor opens Metrics', () => page.goto('/metrics'));
-    await then('the 3D chart is drawn', () => expect(chart.locator('canvas')).toBeVisible());
+    await then('the 3D chart is drawn', async () => {
+      test.skip(!(await expect3D(page, chart)), 'no WebGL in this browser: the table view test covers selecting');
+    });
     await when('they click across the chart until they land on a bar', async () => {
       await chart.locator('canvas').scrollIntoViewIfNeeded();
       const box = (await chart.boundingBox())!;
@@ -59,7 +62,7 @@ test.describe('test metrics page', () => {
 
     await given('the visitor opens Metrics', async () => {
       await page.goto('/metrics');
-      await expect(chart.locator('canvas')).toBeVisible();
+      test.skip(!(await expect3D(page, chart)), 'no WebGL in this browser, so nothing to hover');
     });
     await when('they rest the pointer on a bar', async () => {
       bar = await hoverABar(page, chart, tip, GRID_BARS);

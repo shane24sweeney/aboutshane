@@ -2,6 +2,7 @@ import { expect, test } from '../support/fixtures';
 import sample from '../support/visitors.sample.json' with { type: 'json' };
 import { hoverABar } from '../support/canvas';
 import { and, given, then, when } from '../support/steps';
+import { expect3D } from '../support/webgl';
 
 /** The globe's bar colours: the US, and abroad. */
 const GLOBE_BARS = ['#f5c86b', '#79d2c0'];
@@ -16,7 +17,7 @@ test.describe('analytics page', () => {
       await expect(numbers.getByText('67%')).toBeVisible();
       await expect(numbers.getByText('33%')).toBeVisible();
     });
-    await and('the globe is drawn in 3D', () => expect(page.getByTestId('visitor-globe').locator('canvas')).toBeVisible());
+    await and('the globe is drawn in 3D', () => expect3D(page, page.getByTestId('visitor-globe')));
     await and('the top countries are listed, the US first', async () => {
       const countries = page.getByRole('list', { name: 'Top countries' }).getByRole('listitem');
       await expect(countries).toHaveCount(Math.min(12, sample.countries.length));
@@ -48,7 +49,7 @@ test.describe('analytics page', () => {
 
     await given('the visitor opens Analytics', async () => {
       await page.goto('/analytics');
-      await expect(globe.locator('canvas')).toBeVisible();
+      test.skip(!(await expect3D(page, globe)), 'no WebGL in this browser, so nothing to hover');
     });
     await when('they rest the pointer on a bar', async () => {
       bar = await hoverABar(page, globe, tip, GLOBE_BARS);
@@ -87,7 +88,7 @@ test.describe('analytics page', () => {
     );
     await when('the visitor opens Analytics and rests the pointer on a bar', async () => {
       await page.goto('/analytics');
-      await expect(globe.locator('canvas')).toBeVisible();
+      test.skip(!(await expect3D(page, globe)), 'no WebGL in this browser, so nothing to hover');
       expect(await hoverABar(page, globe, tip, GLOBE_BARS), 'no bar found under the pointer').not.toBeNull();
     });
     await then('the tooltip says "1 visitor", not "1 visitors"', () => expect(tip).toContainText(/1 visitor$/));
@@ -99,7 +100,7 @@ test.describe('analytics page', () => {
   test('fits every screen without scrolling sideways', async ({ page }) => {
     await given('the visitor opens Analytics', () => page.goto('/analytics'));
     await then('nothing is wider than the screen', async () => {
-      await expect(page.getByTestId('visitor-globe').locator('canvas')).toBeVisible();
+      await expect3D(page, page.getByTestId('visitor-globe'));
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(page.viewportSize()!.width);
     });
   });

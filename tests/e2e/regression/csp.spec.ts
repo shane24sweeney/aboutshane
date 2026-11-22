@@ -3,6 +3,7 @@ import { CONTENT_SECURITY_POLICY } from '../../../frontend/security-headers';
 import { expect, test } from '../support/fixtures';
 import { pages } from '../support/pages';
 import { given, then, when } from '../support/steps';
+import { expect3D } from '../support/webgl';
 
 // The local preview sends the same Content-Security-Policy as CloudFront (frontend/security-headers.ts),
 // so these check the real policy: every page works within it, and it stops injected code.
@@ -36,7 +37,7 @@ test.describe('content security policy', { tag: '@security' }, () => {
       await when(`the visitor opens ${path}`, async () => {
         await page.goto(path);
         await page.waitForLoadState('networkidle');
-        if (path === '/metrics' || path === '/analytics') await expect(page.locator('canvas').first()).toBeVisible();
+        if (path === '/metrics' || path === '/analytics') await expect3D(page, page.getByTestId(path === '/metrics' ? 'test-grid-3d' : 'visitor-globe'));
       });
       await then(`${path} broke no rule`, async () => expect(await violations(page)).toEqual([]));
     }

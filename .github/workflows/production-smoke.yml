@@ -71,7 +71,7 @@ jobs:
           retention-days: 14
 
   regression:
-    name: Regression (desktop + Android + iPhone)
+    name: Regression (every browser, phone and tablet)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -81,8 +81,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
-      - run: npx playwright install --with-deps chromium webkit
-      - run: npm run test:regression
+      - run: npx playwright install --with-deps chromium webkit firefox chrome msedge
+      - run: npm run test:regression:all
       - uses: actions/upload-artifact@v7
         if: ${{ !cancelled() }}
         with:
