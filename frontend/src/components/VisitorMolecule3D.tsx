@@ -150,7 +150,16 @@ function VisitorMolecule3D({ stats }: VisitorMolecule3DProps) {
 
     const v = new THREE.Vector3();
     let frame = 0;
+    // Draw only while the molecule is on screen, to spare the visitor's battery.
+    let onScreen = true;
+    const visibility = new IntersectionObserver((entries) => {
+      const wasOnScreen = onScreen;
+      onScreen = entries.some((entry) => entry.isIntersecting);
+      if (onScreen && !wasOnScreen) tick();
+    });
+    visibility.observe(host);
     const tick = () => {
+      if (!onScreen) return;
       controls.update();
       renderer.render(scene, camera);
       const { clientWidth: w, clientHeight: h } = host;
@@ -204,6 +213,7 @@ function VisitorMolecule3D({ stats }: VisitorMolecule3DProps) {
     return () => {
       cancelAnimationFrame(frame);
       observer.disconnect();
+      visibility.disconnect();
       controls.dispose();
       canvas.removeEventListener('pointermove', onMove);
       canvas.removeEventListener('pointerleave', onLeave);

@@ -100,6 +100,8 @@ test.describe('analytics page', () => {
   });
 
   test('shows the site as a rotating 3D molecule of pages, countries and speed', async ({ page }) => {
+    // Two full canvas screenshots take about 10 s each on a big tablet screen with CI's software WebGL.
+    test.slow();
     const molecule = page.getByTestId('visitor-molecule');
     await given('the visitor opens Analytics', () => page.goto('/analytics'));
     await then('the molecule describes what it shows', () =>
@@ -119,6 +121,8 @@ test.describe('analytics page', () => {
   });
 
   test('holds the molecule still for visitors who ask for reduced motion', async ({ page }) => {
+    // Two full canvas screenshots take about 10 s each on a big tablet screen with CI's software WebGL.
+    test.slow();
     await page.emulateMedia({ reducedMotion: 'reduce' });
     const molecule = page.getByTestId('visitor-molecule');
     await given('the visitor prefers reduced motion and opens Analytics', () => page.goto('/analytics'));
