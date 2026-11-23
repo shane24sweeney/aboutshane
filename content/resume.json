@@ -1,13 +1,30 @@
 [
   {
+    "role": "Full Stack Developer & QA Engineer",
+    "company": "Side Projects",
+    "dates": "2023 – Present",
+    "logo": "SideProjects",
+    "summary": "Independent projects that show I develop as well as test: UI, REST APIs, and cloud back ends, each with the automation and CI/CD around it. Code at github.com/shane24sweeney.",
+    "highlights": [
+      "UI: built this site's front end in React 18 and TypeScript, with typed API clients that time out and fall back to bundled content, accessible carousels, responsive phone layouts, site search, and pre-rendered pages for crawlers and résumé parsers.",
+      "API and back end: built the Java 25 / Spring Boot 3 REST APIs behind this site (contact, content, search, running stats, quality status, and the generated résumé PDF) on AWS Lambda, with DynamoDB, SES, S3, CloudFront, and Route 53 defined in CloudFormation.",
+      "Back-end design: business logic depends on repository and notifier interfaces with DynamoDB and SES adapters injected through constructors; Bean Validation returns field-level 400 errors; messages are saved before email so a mail failure never loses one.",
+      "Spring Boot services on GitHub: sb-ecom (layered REST API with Spring Data JPA, DTOs, pagination, and global error handling), app-crud (CRUD customer API), and apishane (CORS-restricted JSON API with a bundled React page), each with MockMvc tests in CI.",
+      "Test automation: 179 Playwright + TypeScript tests run on desktop and 5 Android and iPhone configurations (1,000+ runs per pull request), plus cross-browser, accessibility (axe), security, and negative tests, and a 74-test daily production suite.",
+      "API and backend testing: 176 JUnit/MockMvc backend tests, 118 Vitest unit tests, Playwright API contract tests against production, a Postman/Newman collection, and JMeter load tests.",
+      "More frameworks: Playwright for .NET with NUnit in C# (PlaywrightTests), an Appium + Java framework running Android and iOS devices in parallel locally or on BrowserStack, and Playwright + TypeScript with Cucumber and BrowserStack (automationPlaywrightTS).",
+      "DevSecOps: every change ships through pull requests with required GitHub Actions checks on a protected branch, CloudFront security headers, a 2 requests/second API throttle, and Claude Code as an AI pair programmer with every change reviewed."
+    ]
+  },
+  {
     "role": "Senior QE Consultant",
     "company": "Fifth Third Bank",
     "contractVia": "TEKsystems",
     "dates": "2026",
-    "summary": "Supported application modernization for a commercial banking client following the Comerica Bank acquisition, partnering with Agile squads across mobile and backend servicing domains.",
+    "summary": "Drove quality engineering and test automation architecture for an application modernization program following the Comerica Bank acquisition, partnering with Agile squads across mobile and backend servicing domains.",
     "highlights": [
       "Built scalable integration, regression, and end-to-end testing frameworks, increasing automated test coverage from 45% to 80% across mobile and backend services.",
-      "Built a TypeScript mobile automation framework with WebdriverIO and Appium using the Page Object pattern, achieving 100% automated login coverage on iOS and Android smoke tests and cutting manual mobile regression from 2 days to 4 hours.",
+      "Architected a TypeScript mobile automation framework with WebdriverIO and Appium using the Page Object pattern, achieving 100% automated login coverage on iOS and Android smoke tests and cutting manual mobile regression from 2 days to 4 hours.",
       "Built XPath and element selectors using Perfecto's object inspection tools, running suites in parallel across Perfecto real devices and simulators/emulators.",
       "Integrated WebdriverIO/Appium suites into Jenkins and GitHub Actions pipelines executing on Perfecto cloud devices, managing SIT and UAT environments through CSV-driven configuration files.",
       "Managed execution and reporting of 300+ test cases per release in qTest and Perfecto, verifying APIs with Postman.",
@@ -18,12 +35,16 @@
     "logo": "FifthThirdBank"
   },
   {
-    "role": "Tech QA Manager",
+    "role": "Tech QA Manager (Senior Automation Test Lead)",
     "company": "Ameritas",
     "dates": "2022 – 2025",
-    "summary": "Senior Automation Consultant on contract via TEKsystems (2022 – 2023), then Tech QA Manager (2023 – 2025), leading QA automation and testing strategy across all product lines.",
+    "summary": "Senior Automation Consultant on contract via TEKsystems (2022 – 2023), then Tech QA Manager (2023 – 2025), owning enterprise-wide QA automation strategy and test architecture across the Dental, Vision, Life, and Disability product lines.",
     "highlights": [
-      "Designed object-oriented automation frameworks in JavaScript with Playwright and Cucumber, plus Groovy-based Selenium, Geb, and Spock suites for API, mobile, and web testing, embedding BDD practices to enhance test reliability and long-term maintainability.",
+      "Built and demoed multiple Playwright proofs of concept, then architected the first end-to-end Playwright and TypeScript framework (Page Object Model), adopted across multiple product lines to replace the legacy Geb/Spock Groovy stack and eliminate flaky tests.",
+      "Designed object-oriented automation frameworks in JavaScript with Playwright and Cucumber, plus Groovy-based Selenium, Geb, and Spock suites for API, mobile, and web testing, standardizing on industry design patterns and BDD practices and cutting new-framework onboarding time by 60%.",
+      "Architected scalable Java and REST Assured API automation repositories for the Dental, Vision, Life, and Disability lines, plus 75+ Postman collections with JavaScript validation run through Newman.",
+      "Drove API contract validation and test design from Swagger/OpenAPI specifications (JSON and YAML) using Swagger Editor, Swagger UI, and Swagger Codegen.",
+      "Shifted quality left by writing Gherkin acceptance criteria and automation user stories in backlog refinement, growing smoke and regression coverage to 95% of the product portfolio.",
       "Used Appium in JavaScript on BrowserStack's real-device cloud to inspect mobile locators and automate cross-device iOS and Android tests.",
       "Integrated automation suites into Jenkins and migrated pipelines to GitHub Actions, cutting regression cycle duration from 3 days to 6 hours.",
       "Spearheaded automation initiatives across all counties in all 50 U.S. states, including automated PDF validations, improving nationwide test coverage by 35%.",
@@ -42,14 +63,17 @@
     "contractVia": "Eliassen Group",
     "dates": "2020 – 2022",
     "highlights": [
-      "Built scalable, reusable C# automation frameworks with Dapper and Entity Framework for API and UI testing, including Xamarin mobile apps.",
-      "Implemented test parallelization and mentored junior engineers, cutting suite execution time by 50%.",
+      "Architected scalable, reusable C# automation frameworks with SpecFlow, Dapper, and Entity Framework for API, UI, and database testing, including Xamarin mobile apps and Adobe Experience Manager content workflows.",
+      "Validated backend data with SQL Server and T-SQL queries, and applied BDD and TDD so automation mapped directly to business acceptance criteria.",
+      "Implemented test parallelization and published reusable NuGet packages shared across teams, cutting suite execution time by 50%; mentored junior engineers through one-on-one sessions and wiki documentation.",
       "Built frameworks supporting multiple Azure DevOps CI/CD pipelines, cutting manual deployment intervention by 55%.",
+      "Executed performance validation with Postman, Newman, JMeter, NeoLoad, and LoadRunner, using Dynatrace monitoring to pinpoint bottlenecks and improve scalability.",
       "Blended API and UI automation suites into end-to-end testing processes, expanding regression coverage and improving overall system validation.",
       "Organized automation backlogs, defining priorities and aligning automation initiatives with sprint and release objectives.",
       "Showcased automation progress in scrum ceremonies and QA demos, strengthening transparency with senior leadership."
     ],
-    "logo": "FIS"
+    "logo": "FIS",
+    "summary": "Delivered end-to-end automation solutions and framework architecture for an enterprise banking technology client across UI, API, database, and performance testing."
   },
   {
     "role": "Software Engineer (Senior Automation Engineer)",
@@ -60,9 +84,11 @@
       "Configured Appium capabilities (XCUITest/UiAutomator2) for iOS and Android real devices and simulators/emulators.",
       "Applied Page Object and Page Factory design patterns to automation architecture, improving reusability and reducing maintenance overhead.",
       "Enhanced the GPS Trackit product line by developing features with Redux and Saga, using VS Code and Chrome DevTools.",
-      "Integrated RESTful APIs into core product modules, improving system interoperability across applications."
+      "Integrated RESTful APIs into core product modules, improving system interoperability across applications.",
+      "Automated the Xamarin GPS Trackit mobile apps with Selenium WebDriver, validating backend data through JDBC, T-SQL, and SQL Server, plus Postman collections with JavaScript validation."
     ],
-    "logo": "GPSTrackit"
+    "logo": "GPSTrackit",
+    "summary": "Software engineer and quality lead for a GPS fleet-tracking platform: developed product features in React and Java and established the quality engineering standards and test architecture."
   },
   {
     "role": "Senior QA Automation Engineer",
@@ -73,21 +99,27 @@
       "Built iOS and Android Appium Page Object automation in Java (XCUITest/UiAutomator2) on real devices and simulators/emulators.",
       "Implemented Fluent Interface and Dependency Injection design patterns in Java for iOS and Android automation frameworks.",
       "Performed API and UI automation on Business Mobile using Python Robot Framework and Java.",
-      "Formulated a tiered test automation strategy (smoke/critical/regression), cutting release validation time by 45%."
+      "Formulated a tiered test automation strategy (smoke/critical/regression), cutting release validation time by 45%.",
+      "Embedded TDD/BDD and “definition of done” criteria into two-week sprints, and mentored engineers on the Page Object Model and Red-Green-Refactor.",
+      "Resolved critical nightly build failures in the Jenkins CI/CD pipeline, stabilizing automated testing for production deployments."
     ],
-    "logo": "Deluxe"
+    "logo": "Deluxe",
+    "summary": "Re-engineered automation frameworks and test architecture for enterprise banking product lines (R360 and Business Mobile), introducing design patterns and best practices across mobile and web."
   },
   {
     "role": "Senior Automation Test Engineer",
     "company": "Bottomline",
     "dates": "2015 – 2016",
-    "summary": "Senior Test Automation Engineer for all Bottomline Healthcare product lines.",
+    "summary": "Senior Test Automation Engineer for all Bottomline Healthcare product lines across web, mobile, and desktop, introducing industry-standard design patterns and testing strategies.",
     "highlights": [
       "Architected the company's first scalable, maintainable Java Selenium WebDriver TDD framework, using design patterns and best practices.",
+      "Tested HL7 healthcare data exchange and HIPAA privacy and security requirements for the Bottomline Healthcare mobile apps on Android and iOS.",
+      "Built automated testing infrastructure for the Bottomline Healthcare suite, reducing delivery timelines by 30%.",
       "Developed Appium suites in Java (UIAutomation driver) to validate iPad and iPhone healthcare apps on real devices and simulators.",
       "Developed Windows automation using Java Selenium for the .NET Logical Ink Designer application.",
       "Developed JMeter scripts for scalability testing of the Logical Ink Web REST API.",
-      "Set up, ran, and debugged overnight automation runs in Jenkins."
+      "Set up, ran, and debugged overnight automation runs in Jenkins.",
+      "Built Cucumber-integrated UI validation for Adobe Experience Manager content."
     ],
     "logo": "Bottomline"
   },
@@ -98,7 +130,10 @@
     "summary": "Lead Java Automation Engineer for all PeopleNet product lines.",
     "highlights": [
       "Architected and designed the first Java Selenium automation framework at PeopleNet.",
+      "Built the initial Cucumber-Gherkin BDD setup with Given/When/Then scenarios for time-entry and timecard login flows.",
+      "Wrote SQL queries across multiple time-entry tables in SQL Server 2014, executed through JDBC in the Selenium framework, to validate backend data.",
       "Automated PeopleNet time entry with Appium (UIAutomation/UiAutomator) on iOS and Android devices and emulators.",
+      "Performed performance and stress testing with the framework, converted Java scripts to Ruby with Selenium WebDriver, and tracked defects in Rally.",
       "Demonstrated the framework to company leadership, driving organization-wide adoption of automated testing."
     ],
     "logo": "Bullhorn"
@@ -107,11 +142,13 @@
     "role": "Lead Engineer Technologist",
     "company": "GE",
     "dates": "2009 – 2014",
-    "summary": "Lead Engineer for all AMI meter products in both IEC and ANSI meter products.",
+    "summary": "Lead Engineer for all Advanced Metering Infrastructure products (IEC and ANSI), directing system test strategy across international markets and WiMAX, Mesh, GPRS, Zigbee, and 2.4 GHz networks.",
     "highlights": [
-      "Responsible for managing and mentoring other employees within Digital meters.",
-      "Developed the first automation framework for meters.",
-      "Developed and executed software test plans, test designs, test objectives, and test cases."
+      "Developed the first automation framework for meters, and engineered a Java Selenium WebDriver framework for OnRamp Wireless backhaul systems.",
+      "Saved 1,000+ hours of touch time through automation with Selenium, DLMS Explorer, HP Quality Center, and PERL.",
+      "Co-authored the Smart Meter Security Design Practice with the Chief Engineer of Digital Meters.",
+      "Established a centralized System Test knowledge repository used by distributed teams across the USA, UK, and India.",
+      "Managed and mentored engineers within Digital Meters, and developed and executed software test plans, test designs, test objectives, and test cases."
     ],
     "logo": "GE"
   }

@@ -33,7 +33,7 @@ test.describe('navigation', () => {
 
   test('each group opens on its first page, with sub-tabs for the rest', async ({ page }) => {
     await given('the visitor is on the home page', () => page.goto('/home'));
-    for (const group of ['Experience', 'Quality', 'About']) {
+    for (const group of ['Experience', 'Projects', 'About']) {
       const inGroup = pages.filter((p) => p.group === group);
       await when(`they click ${group}`, () => groupLink(page, group).click());
       await then(`${groupHome(group)} opens, with a sub-tab for each of its ${inGroup.length} pages`, async () => {
@@ -43,7 +43,7 @@ test.describe('navigation', () => {
     }
     await when('they go to a page without sub-tabs', () => groupLink(page, 'Home').click());
     await then('no sub-tabs are shown', async () => {
-      for (const group of ['Experience', 'Quality', 'About']) await expect(page.getByRole('navigation', { name: `${group} pages` })).toHaveCount(0);
+      for (const group of ['Experience', 'Projects', 'About']) await expect(page.getByRole('navigation', { name: `${group} pages` })).toHaveCount(0);
     });
   });
 

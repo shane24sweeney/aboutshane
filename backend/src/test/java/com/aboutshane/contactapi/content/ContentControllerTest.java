@@ -42,7 +42,7 @@ class ContentControllerTest {
         mvc.perform(get("/api/content/profile"))
                 // then it has the name, headline, strengths and highlights
                 .andExpect(jsonPath("$.name").value("Shane James Sweeney"))
-                .andExpect(jsonPath("$.headline").value("Senior QE & Mobile Automation Consultant"))
+                .andExpect(jsonPath("$.headline").value("Test Automation Architect · QA / Test Manager · Senior QE & Mobile Automation Consultant"))
                 .andExpect(jsonPath("$.strengths", hasSize(15)))
                 .andExpect(jsonPath("$.highlights", hasSize(5)));
     }
@@ -52,17 +52,19 @@ class ContentControllerTest {
         // given the content API
         // when the resume is requested
         mvc.perform(get("/api/content/resume"))
-                // then it lists all 8 roles, the most recent first, with Ameritas as one role
-                .andExpect(jsonPath("$", hasSize(8)))
-                .andExpect(jsonPath("$[1].company").value("Ameritas"))
-                .andExpect(jsonPath("$[1].dates").value("2022 – 2025"))
-                .andExpect(jsonPath("$[2].company").value("FIS"))
-                .andExpect(jsonPath("$[7].company").value("GE"))
-                .andExpect(jsonPath("$[0].company").value("Fifth Third Bank"))
-                .andExpect(jsonPath("$[0].contractVia").value("TEKsystems"))
-                .andExpect(jsonPath("$[0].dates").value("2026"))
-                .andExpect(jsonPath("$[0].highlights", hasSize(8)))
-                .andExpect(jsonPath("$[1].contractVia").doesNotExist());
+                // then it lists the side projects first, then all 8 roles with the most recent first
+                .andExpect(jsonPath("$", hasSize(9)))
+                .andExpect(jsonPath("$[0].company").value("Side Projects"))
+                .andExpect(jsonPath("$[0].dates").value("2023 – Present"))
+                .andExpect(jsonPath("$[1].company").value("Fifth Third Bank"))
+                .andExpect(jsonPath("$[1].contractVia").value("TEKsystems"))
+                .andExpect(jsonPath("$[1].dates").value("2026"))
+                .andExpect(jsonPath("$[1].highlights", hasSize(8)))
+                .andExpect(jsonPath("$[2].company").value("Ameritas"))
+                .andExpect(jsonPath("$[2].dates").value("2022 – 2025"))
+                .andExpect(jsonPath("$[2].contractVia").doesNotExist())
+                .andExpect(jsonPath("$[3].company").value("FIS"))
+                .andExpect(jsonPath("$[8].company").value("GE"));
     }
 
     @Test

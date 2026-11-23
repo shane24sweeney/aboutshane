@@ -9,7 +9,7 @@ function Charity() {
 
   return (
     <section id="charity" className="carousel-page">
-      <h1 className="grid-page-title">Charity Work</h1>
+      <h1 className="grid-page-title">Giving back</h1>
       {content.status === 'loading' ? (
         <PageLoading />
       ) : (
