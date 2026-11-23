@@ -6,6 +6,8 @@ import { expect3D } from '../support/webgl';
 
 /** The globe's bar colours: the US, and abroad. */
 const GLOBE_BARS = ['#f5c86b', '#79d2c0'];
+/** The molecule's atom colours: pages, countries, speed. */
+const MOLECULE_ATOMS = ['#b48cff', '#ff7eb6', '#6fa8ff'];
 
 // The fixtures serve ./visitors.sample.json for GET /api/visitors.
 test.describe('analytics page', () => {
@@ -95,6 +97,60 @@ test.describe('analytics page', () => {
     await and('the region with no place on the globe is still listed', () =>
       expect(page.getByRole('list', { name: 'Top countries' }).getByRole('button', { name: /Unknown region/ })).toBeVisible(),
     );
+  });
+
+  test('shows the site as a rotating 3D molecule of pages, countries and speed', async ({ page }) => {
+    const molecule = page.getByTestId('visitor-molecule');
+    await given('the visitor opens Analytics', () => page.goto('/analytics'));
+    await then('the molecule describes what it shows', () =>
+      expect(page.getByRole('img', { name: /^The site as a molecule: 7 pages, 12 countries and 7 speed measures/ })).toBeVisible(),
+    );
+    const drawn = await expect3D(page, molecule);
+    test.skip(!drawn, 'no WebGL in this browser: the fallback was checked');
+    await and('its three clusters are named', async () => {
+      for (const cluster of ['Pages', 'Countries', 'Speed']) await expect(molecule.locator('.molecule3d-label', { hasText: cluster })).toBeVisible();
+    });
+    await and('it turns on its own', async () => {
+      await molecule.scrollIntoViewIfNeeded();
+      const before = await molecule.locator('canvas').screenshot();
+      await page.waitForTimeout(1200);
+      expect((await molecule.locator('canvas').screenshot()).equals(before)).toBe(false);
+    });
+  });
+
+  test('holds the molecule still for visitors who ask for reduced motion', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    const molecule = page.getByTestId('visitor-molecule');
+    await given('the visitor prefers reduced motion and opens Analytics', () => page.goto('/analytics'));
+    test.skip(!(await expect3D(page, molecule)), 'no WebGL in this browser');
+    await then('the molecule stays where it is', async () => {
+      await molecule.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(600);
+      const before = await molecule.locator('canvas').screenshot();
+      await page.waitForTimeout(1200);
+      expect((await molecule.locator('canvas').screenshot()).equals(before)).toBe(true);
+    });
+  });
+
+  test('hovering an atom shows what it stands for and its numbers', async ({ page, isMobile }) => {
+    test.skip(isMobile, 'touch screens have no hover');
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    const molecule = page.getByTestId('visitor-molecule');
+    const tip = molecule.locator('.molecule3d-tip');
+    let atom: { x: number; y: number } | null = null;
+
+    await given('the visitor opens Analytics', () => page.goto('/analytics'));
+    test.skip(!(await expect3D(page, molecule)), 'no WebGL in this browser, so nothing to hover');
+    await when('they rest the pointer on an atom', async () => {
+      atom = await hoverABar(page, molecule, tip, MOLECULE_ATOMS);
+    });
+    await then('a tooltip names it and gives its numbers', async () => {
+      expect(atom, 'no atom found under the pointer').not.toBeNull();
+      await expect(tip.locator('strong')).not.toBeEmpty();
+      await expect(tip).toContainText(/\d/);
+    });
+    await when('they move the pointer off the molecule', () => page.mouse.move(1, 1));
+    await then('no tooltip is left behind', () => expect(tip).toBeHidden());
   });
 
   test('fits every screen without scrolling sideways', async ({ page }) => {

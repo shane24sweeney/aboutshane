@@ -16,6 +16,10 @@ vi.mock('../../frontend/src/components/TestGrid3D', () => ({
   default: ({ grid }: { grid: { rows: unknown[] } }) => createElement('div', { 'data-testid': 'test-grid-3d' }, `${grid.rows.length} rows in 3D`),
 }));
 
+vi.mock('../../frontend/src/components/VisitorMolecule3D', () => ({
+  default: ({ stats }: { stats: { pages: unknown[] } }) => createElement('div', { 'data-testid': 'visitor-molecule' }, `${stats.pages.length} pages in the molecule`),
+}));
+
 vi.mock('../../frontend/src/components/VisitorGlobe3D', () => ({
   default: ({ countries }: { countries: unknown[] }) => createElement('div', { 'data-testid': 'visitor-globe' }, `${countries.length} countries on the globe`),
 }));
