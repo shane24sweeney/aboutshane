@@ -5,10 +5,12 @@ import PageLoading from '../components/PageLoading';
 // The globe's stylesheet ships with the page (only the three.js code is lazy), so the Suspense
 // placeholder below already has the stage's size and nothing shifts when the 3D view arrives.
 import '../components/VisitorGlobe3D.css';
+import '../components/VisitorMolecule3D.css';
 import './Analytics.css';
 
 // three.js and the detailed Earth load only with this page.
 const VisitorGlobe3D = lazy(() => import('../components/VisitorGlobe3D'));
+const VisitorMolecule3D = lazy(() => import('../components/VisitorMolecule3D'));
 
 type State = { status: 'loading' } | { status: 'ready'; data: VisitorsResponse } | { status: 'error' };
 
@@ -133,6 +135,17 @@ function Dashboard({ data }: { data: VisitorStats }) {
           </li>
         ))}
       </ul>
+
+      <section className="visitors-card" aria-labelledby="visitors-molecule">
+        <h2 id="visitors-molecule">The site at a glance</h2>
+        <p className="visitors-muted">
+          The site at the centre, bonded to its most viewed pages, where visitors come from, and how fast it is. Bigger atoms mean
+          more views or visitors.
+        </p>
+        <Suspense fallback={<div className="molecule3d" />}>
+          <VisitorMolecule3D stats={data} />
+        </Suspense>
+      </section>
 
       <section className="visitors-card visitors-world" aria-labelledby="visitors-where">
         <h2 id="visitors-where">Where visitors come from</h2>

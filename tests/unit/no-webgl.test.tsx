@@ -7,8 +7,10 @@ import visitors from '../e2e/support/visitors.sample.json';
 // like an old browser or one with WebGL switched off: they must say so rather than break the page.
 vi.unmock('../../frontend/src/components/TestGrid3D');
 vi.unmock('../../frontend/src/components/VisitorGlobe3D');
+vi.unmock('../../frontend/src/components/VisitorMolecule3D');
 const { default: TestGrid3D } = await import('../../frontend/src/components/TestGrid3D');
 const { default: VisitorGlobe3D } = await import('../../frontend/src/components/VisitorGlobe3D');
+const { default: VisitorMolecule3D } = await import('../../frontend/src/components/VisitorMolecule3D');
 
 describe('3D views in a browser without WebGL', { tags: ['negative'] }, () => {
   // What a browser without WebGL answers when asked for a WebGL context.
@@ -28,6 +30,15 @@ describe('3D views in a browser without WebGL', { tags: ['negative'] }, () => {
     expect(stage).toHaveTextContent("This browser can't draw 3D. The list beside it has the same numbers.");
     expect(stage).not.toHaveTextContent('Drag to turn');
     expect(stage.querySelector('canvas')).toBeNull();
+  });
+
+  it('the molecule says it cannot draw 3D, points to the lists, and still describes itself', () => {
+    render(<VisitorMolecule3D stats={visitors as Parameters<typeof VisitorMolecule3D>[0]['stats']} />);
+    const stage = screen.getByTestId('visitor-molecule');
+    expect(stage).toHaveTextContent("This browser can't draw 3D. The lists below have the same numbers.");
+    expect(stage).not.toHaveTextContent('Drag to turn');
+    expect(stage.querySelector('canvas')).toBeNull();
+    expect(screen.getByRole('img', { name: /^The site as a molecule: 7 pages, 12 countries and 7 speed measures/ })).toBe(stage);
   });
 
   it('a browser that throws when asked for WebGL gets the same fallback', () => {

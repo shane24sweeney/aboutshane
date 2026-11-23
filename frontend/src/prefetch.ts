@@ -29,10 +29,10 @@ const pageContent: Record<string, ContentPage | undefined> = {
 };
 
 const started = new Set<string>();
-/** The 3D pages' own code (three.js and the chart or globe), fetched only when a visitor reaches for them. */
+/** The 3D pages' own code (three.js and the chart, globe or molecule), fetched only when a visitor reaches for them. */
 const heavy: Record<string, () => Promise<unknown>> = {
   '/metrics': () => import('./components/TestGrid3D'),
-  '/analytics': () => import('./components/VisitorGlobe3D'),
+  '/analytics': () => Promise.all([import('./components/VisitorGlobe3D'), import('./components/VisitorMolecule3D')]),
 };
 const heavyStarted = new Set<string>();
 
