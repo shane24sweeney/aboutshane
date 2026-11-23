@@ -69,4 +69,20 @@ class QualityReportTest {
         answer(200, "{\"something\":\"else\"}");
         assertThat(report.latest()).isEmpty();
     }
+
+    @Test
+    void sharesTheWholeReportFromTheSameRead() throws Exception {
+        answer(200, "{\"status\":\"healthy\",\"development\":{\"ui\":{\"total\":124}}}");
+        assertThat(report.metrics()).hasValueSatisfying(m -> assertThat(m.at("/development/ui/total").asInt()).isEqualTo(124));
+        assertThat(report.latest()).hasValueSatisfying(v -> assertThat(v.status()).isEqualTo("healthy"));
+        verify(http, times(1)).send(any(), any(HttpResponse.BodyHandler.class));
+    }
+
+    @Tag("negative")
+    @Test
+    void ignoresAReportThatIsNotAnObject() throws Exception {
+        answer(200, "[1, 2, 3]");
+        assertThat(report.metrics()).isEmpty();
+        assertThat(report.latest()).isEmpty();
+    }
 }
