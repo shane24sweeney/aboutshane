@@ -46,7 +46,7 @@ class ResumeControllerTest {
         try (PDDocument pdf = Loader.loadPDF(body)) {
             String text = new PDFTextStripper().getText(pdf).replaceAll("\\s+", " ");
             assertThat(pdf.getDocumentInformation().getTitle()).startsWith(content.profile().name());
-            assertThat(text).contains(content.profile().name(), content.profile().headline(), "Professional Experience");
+            assertThat(text).contains(content.profile().name(), content.profile().headline(), content.profile().openTo(), "Professional Experience");
             for (var entry : content.resume()) {
                 assertThat(text).contains(entry.company());
                 assertThat(text).contains(entry.highlights().getFirst().split(" ")[0]);

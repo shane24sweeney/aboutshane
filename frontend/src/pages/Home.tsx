@@ -87,6 +87,7 @@ function Home() {
             </Fragment>
           ))}
         </p>
+        <p className="home-hero-open">{profile.openTo}</p>
         <p className="home-hero-meta">{profile.meta}</p>
         <div className="home-hero-actions">
           <Link className="home-hero-button home-hero-button-primary" to="/contact">

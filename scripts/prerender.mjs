@@ -35,6 +35,7 @@ const bodies = {
     [
       `<h1>${escape(profile.name)}</h1>`,
       `<p>${escape(profile.headline)} · ${escape(profile.meta)}</p>`,
+      `<p>${escape(profile.openTo)}</p>`,
       `<h2>${escape(profile.summaryTitle)}</h2>`,
       ...profile.summary.map((paragraph) => `<p>${rich(paragraph)}</p>`),
       `<h2>${escape(profile.strengthsTitle)}</h2>`,

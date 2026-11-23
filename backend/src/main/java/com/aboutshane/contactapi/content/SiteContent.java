@@ -13,6 +13,8 @@ public final class SiteContent {
     public record Profile(
             String name,
             String headline,
+            /** The kinds of development work Shane is open to, shown under the headline. */
+            String openTo,
             String meta,
             String summaryTitle,
             /** Paragraphs; **double asterisks** mark bold phrases. */

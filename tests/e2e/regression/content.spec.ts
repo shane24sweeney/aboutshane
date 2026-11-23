@@ -10,6 +10,7 @@ test.describe('home page', () => {
     await given('the visitor opens the home page', () => page.goto('/home'));
     await then('the headline and profile links are shown', async () => {
       await expect(page.getByText('Test Automation Architect · QA / Test Manager · Senior QE & Mobile Automation Consultant')).toBeVisible();
+      await expect(page.getByText('Open to front end development in React, HTML and CSS, and back end development in Java Spring Boot MVC: REST APIs with GET, PUT, POST and DELETE.')).toBeVisible();
       await expect(linkedIn).toHaveAttribute('href', 'https://linkedin.com/in/shane-sweeney-37a934135');
       await expect(linkedIn).toHaveAttribute('target', '_blank');
       await expect(main.getByRole('link', { name: 'GitHub', exact: true })).toHaveAttribute('href', 'https://github.com/shane24sweeney');

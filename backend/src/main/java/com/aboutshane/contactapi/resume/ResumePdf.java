@@ -52,6 +52,7 @@ public class ResumePdf {
             try (Writer writer = new Writer(document)) {
                 writer.line(profile.name(), BOLD, 22, INK, 6);
                 writer.line(profile.headline(), BOLD, 12, TEAL, 2);
+                writer.paragraph(profile.openTo(), REGULAR, 10, INK, 2);
                 writer.line(profile.meta() + "  ·  selenium-automation.com", REGULAR, 10, GREY, 14);
                 writer.rule();
 
