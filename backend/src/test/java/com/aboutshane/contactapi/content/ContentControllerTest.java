@@ -66,6 +66,7 @@ class ContentControllerTest {
                 // then it has the name, headline, strengths and highlights
                 .andExpect(jsonPath("$.name").value("Shane James Sweeney"))
                 .andExpect(jsonPath("$.headline").value("Test Automation Architect · QA / Test Manager · Senior QE & Mobile Automation Consultant"))
+                .andExpect(jsonPath("$.openTo").value("Open to front end development in React, HTML and CSS, and back end development in Java Spring Boot MVC: REST APIs with GET, PUT, POST and DELETE."))
                 .andExpect(jsonPath("$.strengths", hasSize(15)))
                 .andExpect(jsonPath("$.highlights", hasSize(5)));
     }

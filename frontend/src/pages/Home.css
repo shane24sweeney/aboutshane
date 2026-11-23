@@ -45,6 +45,14 @@
   }
 }
 
+.home-hero-open {
+  max-width: 62ch;
+  margin: 8px auto 0;
+  color: var(--site-text);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
 .home-hero-meta {
   margin: 6px 0 0;
   color: var(--site-text-muted);

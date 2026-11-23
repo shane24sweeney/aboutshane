@@ -4,6 +4,8 @@
 export interface Profile {
   name: string;
   headline: string;
+  /** The kinds of development work Shane is open to, shown under the headline. */
+  openTo: string;
   meta: string;
   summaryTitle: string;
   /** Paragraphs; **double asterisks** mark bold phrases. */
