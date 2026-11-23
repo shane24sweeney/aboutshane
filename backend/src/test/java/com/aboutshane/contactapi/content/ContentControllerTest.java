@@ -42,7 +42,7 @@ class ContentControllerTest {
         mvc.perform(get("/api/content/profile"))
                 // then it has the name, headline, strengths and highlights
                 .andExpect(jsonPath("$.name").value("Shane James Sweeney"))
-                .andExpect(jsonPath("$.headline").value("Senior QE & Mobile Automation Consultant"))
+                .andExpect(jsonPath("$.headline").value("Test Automation Architect · QA / Test Manager · Senior QE & Mobile Automation Consultant"))
                 .andExpect(jsonPath("$.strengths", hasSize(15)))
                 .andExpect(jsonPath("$.highlights", hasSize(5)));
     }

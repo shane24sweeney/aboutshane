@@ -79,19 +79,19 @@ const bodies = {
     `<h1>Education</h1>${list(content('education').map(({ degree, school }) => `${escape(degree)}, ${escape(school)}`))}`,
 
   charity: () =>
-    `<h1>Charity Work</h1>${list(
+    `<h1>Giving back</h1>${list(
       content('charity').map(({ title, link }) =>
         link ? `${escape(title)} (<a href="${escape(link.href)}">${escape(link.label)}</a>)` : escape(title),
       ),
     )}`,
 
   metrics: () =>
-    `<h1>Metrics</h1><p>How this site is built and tested, updated every morning: unit and API tests with code ` +
+    `<h1>Quality dashboard</h1><p>How this site is built and tested, updated every morning: unit and API tests with code ` +
     `coverage, end-to-end tests on desktop and phones, the live site, and a load test.</p>` +
     `<p><a href="https://shane24sweeney.github.io/aboutshane/">The daily quality report</a></p>`,
 
   analytics: () =>
-    `<h1>Analytics</h1><p>Who visits this site, from where (the US or abroad), and how fast it is for them, from ` +
+    `<h1>Site analytics</h1><p>Who visits this site, from where (the US or abroad), and how fast it is for them, from ` +
     `Google Analytics, AWS CloudWatch and the daily load test.</p>`,
 
   running: () => {

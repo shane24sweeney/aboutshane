@@ -18,10 +18,10 @@ describe('routing', () => {
     ['/resume', 'Professional Experience'],
     ['/testimonials', 'Testimonials'],
     ['/education', 'Education'],
-    ['/charity', 'Charity Work'],
+    ['/charity', 'Giving back'],
     ['/running', 'Running'],
-    ['/metrics', 'Metrics'],
-    ['/analytics', 'Analytics'],
+    ['/metrics', 'Quality dashboard'],
+    ['/analytics', 'Site analytics'],
   ])('%s renders a single page heading "%s"', async (path, heading) => {
     renderAt(path);
     expect(await screen.findByRole('heading', { level: 1, name: heading })).toBeInTheDocument();
@@ -37,7 +37,7 @@ describe('routing', () => {
     renderAt('/home');
     const nav = screen.getByRole('navigation', { name: 'Primary navigation' });
     const names = Array.from(nav.querySelectorAll('a')).map((link) => link.getAttribute('aria-label'));
-    expect(names).toEqual(['Home', 'Experience', 'Quality', 'About', 'Contact']);
+    expect(names).toEqual(['Home', 'Experience', 'Projects', 'About', 'Contact']);
   });
 
   it('gives every image alt text', async () => {
