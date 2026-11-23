@@ -5,6 +5,10 @@
   min-height: 100vh;
   margin: 0 auto;
   padding: 24px 12px;
+  /* Repository links in the side projects are long single words; let them break on a phone.
+     Safari needs word-break as well as overflow-wrap. */
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .resume-card {
