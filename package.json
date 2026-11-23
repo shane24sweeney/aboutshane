@@ -70,7 +70,7 @@
     "@types/three": "^0.187.0",
     "@vitejs/plugin-react": "^4.3.3",
     "@vitest/coverage-istanbul": "^4.1.11",
-    "browserstack-node-sdk": "^1.71.0",
+    "browserstack-node-sdk": "^1.80.3",
     "eslint": "^9.14.0",
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.14",
