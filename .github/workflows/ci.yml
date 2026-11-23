@@ -57,10 +57,17 @@ jobs:
       - run: pip install cfn-lint
       - run: cfn-lint infra/template.yaml
 
-  e2e:
-    name: End-to-end (Playwright, desktop + Android + iPhone)
+  # Split 6 ways on separate runners so the suite takes about a sixth of the time.
+  e2e-shard:
+    name: End-to-end shard ${{ matrix.shard }}/6
     needs: frontend
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4, 5, 6]
+    env:
+      PW_SHARD: ${{ matrix.shard }}
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -73,22 +80,59 @@ jobs:
           name: frontend-build
           path: frontend/build
       - run: npx playwright install --with-deps chromium webkit
-      - run: npm run test:regression
+      - run: npm run test:regression -- --shard=${{ matrix.shard }}/6
+      - uses: actions/upload-artifact@v7
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report-shard-${{ matrix.shard }}
+          path: |
+            blob-report
+            test-results
+          retention-days: 14
+
+  # Keeps the original job name (branch protection and the report look for it). Runs even when a
+  # shard fails, merges the shards' reports into one, then passes only if every shard passed: a
+  # skipped job would count as passing, so it must never be skipped.
+  e2e:
+    name: End-to-end (Playwright, desktop + Android + iPhone)
+    needs: e2e-shard
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: playwright-report-shard-*
+          path: shards
+          merge-multiple: true
+      - name: Merge the shards' reports
+        run: npx playwright merge-reports --reporter=html,./tests/e2e/support/reporters/github-summary.ts shards/blob-report
       - uses: actions/upload-artifact@v7
         if: ${{ !cancelled() }}
         with:
           name: playwright-report
-          path: |
-            playwright-report
-            test-results
+          path: playwright-report
           retention-days: 14
+      - name: Every shard passed
+        run: test "${{ needs.e2e-shard.result }}" = success
 
   # Not a required check: it runs on every push and PR so a browser-specific break is visible,
   # but a flaky third-party browser download can't block a merge.
-  cross-browser:
-    name: Cross-browser (Chrome, Edge, Firefox, Safari, tablets, newer phones)
+  cross-browser-shard:
+    name: Cross-browser shard ${{ matrix.shard }}/6
     needs: frontend
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4, 5, 6]
+    env:
+      PW_SHARD: ${{ matrix.shard }}
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -101,21 +145,56 @@ jobs:
           name: frontend-build
           path: frontend/build
       - run: npx playwright install --with-deps chromium webkit firefox chrome msedge
-      - run: npm run test:browsers
+      - run: npm run test:browsers -- --shard=${{ matrix.shard }}/6
+      - uses: actions/upload-artifact@v7
+        if: ${{ !cancelled() }}
+        with:
+          name: cross-browser-report-shard-${{ matrix.shard }}
+          path: |
+            blob-report
+            test-results
+          retention-days: 14
+
+  # Keeps the original job name (branch protection and the report look for it). Runs even when a
+  # shard fails, merges the shards' reports into one, then passes only if every shard passed: a
+  # skipped job would count as passing, so it must never be skipped.
+  cross-browser:
+    name: Cross-browser (Chrome, Edge, Firefox, Safari, tablets, newer phones)
+    needs: cross-browser-shard
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: cross-browser-report-shard-*
+          path: shards
+          merge-multiple: true
+      - name: Merge the shards' reports
+        run: npx playwright merge-reports --reporter=html,./tests/e2e/support/reporters/github-summary.ts shards/blob-report
       - uses: actions/upload-artifact@v7
         if: ${{ !cancelled() }}
         with:
           name: cross-browser-report
-          path: |
-            playwright-report
-            test-results
+          path: playwright-report
           retention-days: 14
+      - name: Every shard passed
+        run: test "${{ needs.cross-browser-shard.result }}" = success
 
   # Not a required check (yet): fails when UI coverage, unit and browser tests together, drops below
   # scripts/coverage/thresholds.json. The API's minimum is enforced by `mvn verify` in the Backend job.
-  coverage:
-    name: UI coverage (unit + browser)
+  coverage-shard:
+    name: UI browser coverage shard ${{ matrix.shard }}/4
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -125,7 +204,33 @@ jobs:
       - run: npm ci
       - run: npm run build:coverage
       - run: npx playwright install --with-deps chromium webkit
-      - run: npm run test:coverage:browser
+      - run: npm run test:coverage:browser -- --shard=${{ matrix.shard }}/4
+      - uses: actions/upload-artifact@v7
+        if: ${{ !cancelled() }}
+        with:
+          name: ui-coverage-browser-shard-${{ matrix.shard }}
+          path: coverage-browser
+          retention-days: 3
+
+  # The browser coverage from every shard, plus the unit tests, added together and checked against
+  # scripts/coverage/thresholds.json. Passes only if every shard passed.
+  coverage:
+    name: UI coverage (unit + browser)
+    needs: coverage-shard
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: ui-coverage-browser-shard-*
+          path: coverage-browser
+          merge-multiple: true
       - run: npm run test:coverage
       - run: npm run coverage:merge
       - uses: actions/upload-artifact@v7
@@ -134,3 +239,5 @@ jobs:
           name: ui-coverage
           path: coverage-combined
           retention-days: 14
+      - name: Every shard passed
+        run: test "${{ needs.coverage-shard.result }}" = success

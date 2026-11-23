@@ -29,6 +29,8 @@ export default defineConfig({
         // Read by scripts/test-report/build.mjs for the daily report and email.
         ['json', { outputFile: 'test-results/results.json' }],
         ['./tests/e2e/support/reporters/github-summary.ts'],
+        // CI shards (PW_SHARD=1..n) also write a blob, merged into one report by the job that waits for them.
+        ...(process.env.PW_SHARD ? ([['blob', { fileName: `report-${process.env.PW_SHARD}.zip` }]] as const) : []),
       ]
     : [['html', { open: 'never' }], ['list']],
   use: {
