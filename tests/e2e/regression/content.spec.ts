@@ -73,8 +73,9 @@ test.describe('resume page', () => {
       await expect(fifthThird).toContainText('2026');
       await expect(fifthThird).not.toContainText('Present');
       await expect(ameritas).toContainText('2022 – 2025');
-      await expect(highlights).toHaveCount(8);
-      await expect(highlights.first()).toContainText('React 18 and TypeScript');
+      await expect(highlights).toHaveCount(12);
+      await expect(highlights.first()).toContainText('selenium-automation.com');
+      await expect(highlights.first()).toContainText('React 18 + TypeScript');
     });
     await when('they open the most recent role', () => fifthThird.click());
     await then('it opens with its highlights and the side projects close', async () => {
