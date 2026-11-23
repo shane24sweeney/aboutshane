@@ -40,7 +40,7 @@ describe('Resume page', () => {
     if (!item) throw new Error('accordion item not found');
     const list = within(item).getByRole('list');
     expect(within(list).getAllByRole('listitem')).toHaveLength(resume[0]?.highlights.length ?? 0);
-    expect(list).toHaveTextContent('React 18 and TypeScript');
+    expect(list).toHaveTextContent('React 18 + TypeScript front end and a Java 25 / Spring Boot 3.5 API');
     expect(screen.getByRole('button', { name: /Fifth Third Bank/i })).toHaveAttribute('aria-expanded', 'false');
   });
 });
