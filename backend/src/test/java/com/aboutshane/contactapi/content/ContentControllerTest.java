@@ -1,6 +1,8 @@
 package com.aboutshane.contactapi.content;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -8,6 +10,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.Optional;
+
+import com.aboutshane.contactapi.resume.LiveResume;
+import com.aboutshane.contactapi.resume.LiveResumeTest;
+import com.aboutshane.contactapi.status.QualityReport;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,13 +22,29 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(ContentController.class)
-@Import(ContentRepository.class)
+@Import({ContentRepository.class, LiveResume.class})
 class ContentControllerTest {
     @Autowired
     private MockMvc mvc;
+
+    @MockitoBean
+    private QualityReport report;
+
+    @Test
+    void resumeSideProjectsCarryTheLatestQualityReportNumbers() throws Exception {
+        // given the latest daily quality report
+        when(report.metrics()).thenReturn(Optional.of(LiveResumeTest.sample()));
+        // when the resume is requested
+        mvc.perform(get("/api/content/resume"))
+                // then the side projects quote its numbers
+                .andExpect(jsonPath("$[0].highlights[5]").value(containsString("124 Vitest unit tests")))
+                .andExpect(jsonPath("$[0].highlights[6]").value(containsString("the latest daily run made 3,151 checks with 99.9% passing")))
+                .andExpect(jsonPath("$[0].highlights[6]").value(containsString("typical response under load is 93 ms")));
+    }
 
     @ParameterizedTest
     @ValueSource(strings = {"profile", "about", "resume", "testimonials", "education", "charity", "running", "running/stats"})

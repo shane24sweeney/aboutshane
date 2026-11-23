@@ -18,8 +18,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
- * The latest daily quality report's verdict, read from its metrics.json on GitHub Pages. Kept for
- * ten minutes so the status endpoint answers quickly; a slow or failed read just leaves it out.
+ * The latest daily quality report, read from its metrics.json on GitHub Pages: its verdict for the
+ * status endpoint, and its numbers for the résumé. Kept for ten minutes so both answer quickly; a
+ * slow or failed read just leaves it out.
  */
 @Component
 public class QualityReport {
@@ -34,7 +35,7 @@ public class QualityReport {
     private final HttpClient http;
     private final ObjectMapper json;
     private final Clock clock;
-    private Optional<Verdict> cached = Optional.empty();
+    private Optional<JsonNode> cached = Optional.empty();
     private Instant fetchedAt = Instant.MIN;
 
     @Autowired
@@ -50,7 +51,20 @@ public class QualityReport {
         this.clock = clock;
     }
 
-    public synchronized Optional<Verdict> latest() {
+    /** The verdict of the latest daily run, or nothing if the report can't be read. */
+    public Optional<Verdict> latest() {
+        return metrics()
+                .map(report -> new Verdict(
+                        report.path("status").asText(null),
+                        report.path("statusText").asText(null),
+                        report.path("headline").asText(null),
+                        report.path("day").asText(null),
+                        report.path("reportUrl").asText(null)))
+                .filter(v -> v.status() != null);
+    }
+
+    /** The whole metrics.json of the latest daily run, or nothing if it can't be read. */
+    public synchronized Optional<JsonNode> metrics() {
         Instant now = clock.instant();
         if (Duration.between(fetchedAt, now).compareTo(KEEP) < 0) return cached;
         fetchedAt = now;
@@ -59,14 +73,7 @@ public class QualityReport {
                     HttpRequest.newBuilder(source).timeout(TIMEOUT).header("Accept", "application/json").GET().build(),
                     HttpResponse.BodyHandlers.ofString());
             if (response.statusCode() != 200) throw new IllegalStateException("HTTP " + response.statusCode());
-            JsonNode report = json.readTree(response.body());
-            cached = Optional.of(new Verdict(
-                    report.path("status").asText(null),
-                    report.path("statusText").asText(null),
-                    report.path("headline").asText(null),
-                    report.path("day").asText(null),
-                    report.path("reportUrl").asText(null)))
-                    .filter(v -> v.status() != null);
+            cached = Optional.of(json.readTree(response.body())).filter(JsonNode::isObject);
         } catch (Exception failure) {
             if (failure instanceof InterruptedException) Thread.currentThread().interrupt();
             log.warn("Quality report unavailable: {}", failure.toString());
