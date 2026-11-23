@@ -10,6 +10,7 @@ import com.aboutshane.contactapi.content.SiteContent.Profile;
 import com.aboutshane.contactapi.content.SiteContent.ResumeEntry;
 import com.aboutshane.contactapi.content.SiteContent.Running;
 import com.aboutshane.contactapi.content.SiteContent.Testimonial;
+import com.aboutshane.contactapi.resume.LiveResume;
 import org.springframework.http.CacheControl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,9 +24,11 @@ public class ContentController {
     static final CacheControl CACHE = CacheControl.maxAge(Duration.ofMinutes(5)).cachePublic();
 
     private final ContentRepository content;
+    private final LiveResume resume;
 
-    public ContentController(ContentRepository content) {
+    public ContentController(ContentRepository content, LiveResume resume) {
         this.content = content;
+        this.resume = resume;
     }
 
     @GetMapping("/profile")
@@ -38,9 +41,10 @@ public class ContentController {
         return cached(content.about());
     }
 
+    /** The résumé, with the Side Projects numbers from the latest daily quality report. */
     @GetMapping("/resume")
     public ResponseEntity<List<ResumeEntry>> resume() {
-        return cached(content.resume());
+        return cached(resume.entries());
     }
 
     @GetMapping("/testimonials")

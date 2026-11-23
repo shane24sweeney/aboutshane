@@ -20,8 +20,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * The résumé as a PDF, built from the same content as the Resume page, so the two never disagree.
- * It's built once, at startup (the content can't change while the Lambda runs), with PDF's
- * built-in Helvetica, so no font files are bundled.
+ * It's built at startup and again only when the Side Projects numbers from the daily quality report
+ * change, with PDF's built-in Helvetica, so no font files are bundled.
  */
 @Component
 public class ResumePdf {
@@ -33,13 +33,24 @@ public class ResumePdf {
     private static final float[] GREY = {0.35f, 0.35f, 0.38f};
     private static final float[] INK = {0.10f, 0.10f, 0.12f};
 
-    private final byte[] bytes;
+    private final Profile profile;
+    private final LiveResume live;
+    private List<ResumeEntry> renderedFrom;
+    private byte[] bytes;
 
-    public ResumePdf(ContentRepository content) {
-        this.bytes = render(content.profile(), content.resume());
+    public ResumePdf(ContentRepository content, LiveResume live) {
+        this.profile = content.profile();
+        this.live = live;
+        this.renderedFrom = content.resume();
+        this.bytes = render(profile, renderedFrom);
     }
 
-    public byte[] bytes() {
+    public synchronized byte[] bytes() {
+        List<ResumeEntry> resume = live.entries();
+        if (!resume.equals(renderedFrom)) {
+            bytes = render(profile, resume);
+            renderedFrom = resume;
+        }
         return bytes.clone();
     }
 

@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "status": "attention",
+  "statusText": "Needs attention",
+  "headline": "1 test failed",
+  "day": "Monday, November 23, 2026",
+  "reportUrl": "https://shane24sweeney.github.io/aboutshane/",
+  "development": {
+    "ui": {
+      "totals": { "passed": 124, "failed": 0, "skipped": 0 },
+      "total": 124,
+      "coverage": { "lines": 98.34, "branches": 91.05, "functions": 95.87, "linesCovered": 1129, "linesTotal": 1148 }
+    },
+    "api": {
+      "totals": { "passed": 176, "failed": 0, "skipped": 0 },
+      "total": 176,
+      "coverage": { "lines": 98.4, "branches": 90, "functions": 99.3, "linesCovered": 483, "linesTotal": 491 }
+    }
+  },
+  "qa": {
+    "regression": { "totals": { "passed": 2313, "failed": 0, "flaky": 3, "skipped": 147 }, "total": 2463, "devices": 14 },
+    "smoke": { "totals": { "passed": 129, "failed": 1, "flaky": 0, "skipped": 0 }, "total": 130, "devices": 3 },
+    "load": { "samples": 405, "failed": 0, "median": 93, "p95": 253 }
+  }
+}
