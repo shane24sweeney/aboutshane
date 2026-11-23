@@ -143,7 +143,7 @@ test.describe('phone layout', () => {
   });
 
   test('resume roles expand with a tap and stay on screen', async ({ page }) => {
-    const role = page.getByRole('button', { name: /Tech QA Manager - Ameritas/i });
+    const role = page.getByRole('button', { name: /Ameritas/i });
     const highlights = page.locator('.accordion-collapse.show');
 
     await given('the visitor is on the resume', () => page.goto('/resume'));
