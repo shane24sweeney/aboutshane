@@ -31,7 +31,7 @@ describe('Metrics page', () => {
     const kpis = screen.getByRole('list', { name: 'Headline numbers' });
     expect(within(kpis).getAllByRole('listitem')).toHaveLength(sample.kpis.length);
     for (const name of ['UI unit tests', 'API tests', 'Regression', 'Live site', 'Load (JMeter)']) {
-      expect(screen.getByRole('img', { name: new RegExp(`^${name.replace(/[()]/g, '\\$&')}:`) })).toBeInTheDocument();
+      expect(screen.getByRole('img', { name: new RegExp(`^${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}:`) })).toBeInTheDocument();
     }
     expect(screen.getByTestId('test-grid-3d')).toHaveTextContent(`${sample.grid.rows.length} rows in 3D`);
   });

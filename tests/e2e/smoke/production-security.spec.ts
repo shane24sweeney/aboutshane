@@ -1,3 +1,4 @@
+import { resolveCaa, resolveTxt } from 'node:dns/promises';
 import { expect, test } from '../support/smoke-fixtures';
 import { CONTENT_SECURITY_POLICY, PERMISSIONS_POLICY } from '../../../frontend/security-headers';
 import { pages } from '../support/pages';
@@ -23,6 +24,7 @@ test.describe('production security', { tag: '@security' }, () => {
         expect(response.status()).toBe(200);
         const maxAge = Number(/max-age=(\d+)/.exec(headers['strict-transport-security'] ?? '')?.[1]);
         expect(maxAge, 'HSTS max-age').toBeGreaterThanOrEqual(ONE_YEAR);
+        expect(headers['strict-transport-security']).toContain('includeSubDomains');
         expect(headers['x-content-type-options']).toBe('nosniff');
         expect(headers['x-frame-options']).toMatch(/^(SAMEORIGIN|DENY)$/);
         expect(headers['referrer-policy']).toMatch(/^(strict-origin-when-cross-origin|strict-origin|same-origin|no-referrer)$/);
@@ -49,7 +51,9 @@ test.describe('production security', { tag: '@security' }, () => {
       );
       await then('it is permanently redirected to the HTTPS address', () => {
         expect(response.status()).toBe(301);
-        expect(response.headers()['location']).toMatch(new RegExp(`^https://${host.replace(/\./g, '\\.')}/`));
+        const location = new URL(response.headers()['location'] ?? '', 'http://invalid.example');
+        expect(location.protocol).toBe('https:');
+        expect(location.host).toBe(host);
       });
     });
   }
@@ -67,7 +71,8 @@ test.describe('production security', { tag: '@security' }, () => {
   test('the JavaScript has no source maps or credentials', async ({ page, request }) => {
     const scripts = new Set<string>();
     await given('the visitor loads every page', async () => {
-      page.on('response', (r) => r.url().endsWith('.js') && new URL(r.url()).hostname.endsWith('selenium-automation.com') && scripts.add(r.url()));
+      const siteHosts = new Set(['selenium-automation.com', 'www.selenium-automation.com']);
+      page.on('response', (r) => r.url().endsWith('.js') && siteHosts.has(new URL(r.url()).hostname) && scripts.add(r.url()));
       for (const { path } of pages) await page.goto(path, { waitUntil: 'networkidle' });
     });
     await then('none of the scripts points to a source map, and none of the maps is served', async () => {
@@ -117,12 +122,20 @@ test.describe('production security', { tag: '@security' }, () => {
         document.addEventListener('securitypolicyviolation', (e) => w.__violations.push(`${e.violatedDirective} blocked ${e.blockedURI}`));
       });
       // Stop GA's hits at the network so this check is never counted as a visit.
-      await page.route(/https:\/\/([^/]+\.google-analytics\.com|[^/]+\.analytics\.google\.com|www\.google\.com\/g\/collect)/, (route) => {
+      const isAnalyticsHit = (url: URL) =>
+        url.protocol === 'https:' &&
+        (url.hostname.endsWith('.google-analytics.com') ||
+          url.hostname.endsWith('.analytics.google.com') ||
+          (url.hostname === 'www.google.com' && url.pathname.startsWith('/g/collect')));
+      await page.route(isAnalyticsHit, (route) => {
         collected.push(route.request().url());
         return route.abort();
       });
     });
-    const tag = page.waitForResponse((r) => r.url().startsWith('https://www.googletagmanager.com/gtag/js'));
+    const tag = page.waitForResponse((r) => {
+      const url = new URL(r.url());
+      return url.protocol === 'https:' && url.hostname === 'www.googletagmanager.com' && url.pathname === '/gtag/js';
+    });
     await when('they open the home page and then Analytics', async () => {
       await page.goto('/home', { waitUntil: 'networkidle' });
       await page.getByRole('link', { name: 'Site analytics', exact: true }).click();
@@ -196,6 +209,23 @@ test.describe('production security', { tag: '@security' }, () => {
       const body = await broken.text();
       expect(body).not.toMatch(/Exception|at com\.|at org\.|springframework|jackson|<script>/i);
       expect(broken.headers()['content-type']).toContain('application/json');
+    });
+  });
+
+  test('nobody else can send email as the domain or get a certificate for it', async () => {
+    const domain = 'selenium-automation.com';
+    const txt = async (name: string) => (await resolveTxt(name)).map((parts) => parts.join(''));
+    await given(`the DNS records of ${domain}`, () => {});
+    await then('SPF allows no other mail server to send as it', async () => expect(await txt(domain)).toContain('v=spf1 -all'));
+    await and('DMARC tells mail servers to reject mail that only claims to be from it', async () =>
+      expect((await txt(`_dmarc.${domain}`)).find((r) => r.startsWith('v=DMARC1'))).toMatch(/;\s*p=reject/),
+    );
+    await and('only Amazon may issue its certificates, and nobody a wildcard', async () => {
+      const caa = await resolveCaa(domain);
+      const issuers = caa.filter((r) => r.issue).map((r) => r.issue);
+      expect(issuers.length).toBeGreaterThan(0);
+      expect(issuers.every((issuer) => /^(amazon\.com|amazontrust\.com|awstrust\.com|amazonaws\.com)$/.test(issuer!))).toBe(true);
+      expect(caa.find((r) => r.issuewild !== undefined)?.issuewild).toBe(';');
     });
   });
 });

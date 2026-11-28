@@ -20,7 +20,7 @@ test.describe('test metrics page', () => {
     );
     await and('development and QA each have their donuts', async () => {
       for (const name of ['UI unit tests', 'API tests', 'Regression', 'Live site', 'Load (JMeter)']) {
-        await expect(page.getByRole('img', { name: new RegExp(`^${name.replace(/[()]/g, '\\$&')}:`) })).toBeVisible();
+        await expect(page.getByRole('img', { name: new RegExp(`^${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}:`) })).toBeVisible();
       }
     });
   });
