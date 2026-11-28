@@ -289,3 +289,20 @@
   margin: 4px 0 0;
   text-align: center;
 }
+
+/* When people visit: shorter columns, a name under each (or every 6th hour) */
+.visitors-slots {
+  height: 110px;
+}
+
+.visitors-slot-names {
+  justify-content: stretch;
+}
+
+.visitors-slot-names span {
+  display: flex;
+  flex: 1 1 0;
+  justify-content: center;
+  min-width: 0;
+  white-space: nowrap;
+}
