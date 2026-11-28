@@ -157,6 +157,23 @@ test.describe('analytics page', () => {
     await then('no tooltip is left behind', () => expect(tip).toBeHidden());
   });
 
+  test('shows how people arrive, their devices, and when they visit', async ({ page }) => {
+    await given('the visitor opens Analytics', () => page.goto('/analytics'));
+    await then('it lists where visits come from, most first', () =>
+      expect(page.getByRole('list', { name: 'Visits by source' }).getByRole('listitem').first()).toContainText('Direct'),
+    );
+    await and('how engaged visitors are', () => expect(page.getByText('Visits with real engagement')).toBeVisible());
+    await and('their devices, browsers and systems', async () => {
+      await expect(page.getByRole('list', { name: 'Visitors by device' })).toContainText('Phone');
+      await expect(page.getByRole('list', { name: 'Visitors by browser' })).toContainText('Safari');
+      await expect(page.getByRole('list', { name: 'Visitors by operating system' })).toContainText('Windows');
+    });
+    await and('when they visit, by day and by hour', async () => {
+      await expect(page.getByRole('list', { name: 'Visits by day of the week' }).getByRole('listitem')).toHaveCount(7);
+      await expect(page.getByRole('list', { name: 'Visits by hour of the day' }).getByRole('listitem')).toHaveCount(24);
+    });
+  });
+
   test('fits every screen without scrolling sideways', async ({ page }) => {
     await given('the visitor opens Analytics', () => page.goto('/analytics'));
     await then('nothing is wider than the screen', async () => {

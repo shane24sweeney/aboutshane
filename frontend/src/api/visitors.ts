@@ -7,6 +7,21 @@ export interface Vital {
   samples: number;
 }
 
+/** Who visits and how, from Google Analytics. Missing until the first export that includes it. */
+export interface Audience {
+  /** desktop, mobile, tablet. */
+  devices: { name: string; users: number }[];
+  browsers: { name: string; users: number }[];
+  systems: { name: string; users: number }[];
+  /** GA's default channels: Direct, Organic Search, Referral, Organic Social… */
+  channels: { name: string; sessions: number }[];
+  engagement: { newUsers: number; returningUsers: number; engagementRate: number; avgEngagedSeconds: number };
+  /** Visits on each day of the week, Sunday first. */
+  weekdays: number[];
+  /** Visits in each hour of the day, 0 to 23, in the Analytics property's time zone. */
+  hours: number[];
+}
+
 export interface VisitorStats {
   version: 1;
   generatedAt: string;
@@ -16,6 +31,7 @@ export interface VisitorStats {
   usShare: number | null;
   countries: { code: string; name: string; users: number; sessions: number }[];
   pages: { path: string; views: number }[];
+  audience?: Audience;
   daily: { date: string; users: number }[];
   speed: {
     realUsers: Partial<Record<'LCP' | 'INP' | 'CLS' | 'FCP' | 'TTFB', Vital>> | null;
