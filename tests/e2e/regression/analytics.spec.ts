@@ -7,7 +7,7 @@ import { expect3D } from '../support/webgl';
 /** The globe's bar colours: the US, and abroad. */
 const GLOBE_BARS = ['#f5c86b', '#79d2c0'];
 /** The molecule's atom colours: pages, countries, speed. */
-const MOLECULE_ATOMS = ['#b48cff', '#ff7eb6', '#6fa8ff'];
+const MOLECULE_ATOMS = ['#b48cff', '#ff7eb6', '#6fa8ff', '#5fd38d', '#ffb454'];
 
 // The fixtures serve ./visitors.sample.json for GET /api/visitors.
 test.describe('analytics page', () => {
@@ -105,12 +105,12 @@ test.describe('analytics page', () => {
     const molecule = page.getByTestId('visitor-molecule');
     await given('the visitor opens Analytics', () => page.goto('/analytics'));
     await then('the molecule describes what it shows', () =>
-      expect(page.getByRole('img', { name: /^The site as a molecule: 7 pages, 12 countries and 7 speed measures/ })).toBeVisible(),
+      expect(page.getByRole('img', { name: /^The site as a molecule: 7 pages, 12 countries, 7 speed measures, 4 sources and 6 devices and browsers, listed below/ })).toBeVisible(),
     );
     const drawn = await expect3D(page, molecule);
     test.skip(!drawn, 'no WebGL in this browser: the fallback was checked');
     await and('its three clusters are named', async () => {
-      for (const cluster of ['Pages', 'Countries', 'Speed']) await expect(molecule.locator('.molecule3d-label', { hasText: cluster })).toBeVisible();
+      for (const cluster of ['Pages', 'Countries', 'Speed', 'Sources', 'Devices']) await expect(molecule.locator('.molecule3d-label', { hasText: cluster })).toBeVisible();
     });
     await and('it turns on its own', async () => {
       await molecule.scrollIntoViewIfNeeded();
