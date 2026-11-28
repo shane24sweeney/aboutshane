@@ -6,6 +6,18 @@
   },
   "races": [
     {
+      "date": "2026-11-26",
+      "event": "Blue Ridge Turkey Trot",
+      "location": "Blue Ridge, GA",
+      "lat": 34.864,
+      "lng": -84.3241,
+      "distance": "5K",
+      "time": "30:24",
+      "pace": "9:49",
+      "place": 305,
+      "finishers": 875
+    },
+    {
       "date": "2025-11-27",
       "event": "Blue Ridge Turkey Trot",
       "location": "Blue Ridge, GA",

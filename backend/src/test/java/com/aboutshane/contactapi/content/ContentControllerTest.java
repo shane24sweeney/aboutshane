@@ -109,11 +109,11 @@ class ContentControllerTest {
         mvc.perform(get("/api/content/running"))
                 // then it links the Athlinks profile and lists every race, the most recent first
                 .andExpect(jsonPath("$.profile.href").value("https://www.athlinks.com/athletes/593706339"))
-                .andExpect(jsonPath("$.races", hasSize(24)))
+                .andExpect(jsonPath("$.races", hasSize(25)))
                 .andExpect(jsonPath("$.races[0].event").value("Blue Ridge Turkey Trot"))
-                .andExpect(jsonPath("$.races[0].date").value("2025-11-27"))
-                .andExpect(jsonPath("$.races[0].place").value(645))
-                .andExpect(jsonPath("$.races[0].finishers").value(1326));
+                .andExpect(jsonPath("$.races[0].date").value("2026-11-26"))
+                .andExpect(jsonPath("$.races[0].place").value(305))
+                .andExpect(jsonPath("$.races[0].finishers").value(875));
     }
 
     @Test
@@ -121,12 +121,12 @@ class ContentControllerTest {
         // given the content API
         // when the running stats are requested
         mvc.perform(get("/api/content/running/stats"))
-                // then they total all 24 races from 2009 to 2025
-                .andExpect(jsonPath("$.races").value(24))
+                // then they total all 25 races from 2009 to 2026
+                .andExpect(jsonPath("$.races").value(25))
                 .andExpect(jsonPath("$.firstYear").value(2009))
-                .andExpect(jsonPath("$.lastYear").value(2025))
-                .andExpect(jsonPath("$.totalMiles").value(214.6))
-                .andExpect(jsonPath("$.totalTime").value("39:58:12"))
+                .andExpect(jsonPath("$.lastYear").value(2026))
+                .andExpect(jsonPath("$.totalMiles").value(217.7))
+                .andExpect(jsonPath("$.totalTime").value("40:28:36"))
                 // and list the fastest race at each of the 8 distances, shortest first
                 .andExpect(jsonPath("$.personalBests", hasSize(8)))
                 .andExpect(jsonPath("$.personalBests[0].distance").value("5K"))
