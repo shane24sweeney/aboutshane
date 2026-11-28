@@ -52,5 +52,5 @@ function firstLine(message = '') {
 }
 
 function cell(text: string) {
-  return text.replace(/\|/g, '\\|').slice(0, 200);
+  return text.replace(/\\/g, '\\\\').replace(/\|/g, '\\|').slice(0, 200);
 }

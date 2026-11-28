@@ -300,6 +300,36 @@ Resources:
           ResourceRecords:
             - !GetAtt SesDomainIdentity.DkimDNSTokenValue3
 
+  # Stops anyone else sending email as @selenium-automation.com or getting a certificate for it.
+  # SPF: no server may send mail with this domain as its envelope sender (SES uses its own).
+  # DMARC: mail claiming to be from this domain is rejected unless it is DKIM-signed for it, as
+  # SES signs the site's own email (the DKIM records above). CAA: only Amazon may issue its
+  # certificates (CloudFront's, through ACM), and nobody may issue a wildcard. All free.
+  DomainSecurityRecords:
+    Type: AWS::Route53::RecordSetGroup
+    Properties:
+      HostedZoneId: !Ref HostedZoneId
+      RecordSets:
+        - Name: !Ref FrontendDomainName
+          Type: TXT
+          TTL: '3600'
+          ResourceRecords:
+            - '"v=spf1 -all"'
+        - Name: !Sub '_dmarc.${FrontendDomainName}'
+          Type: TXT
+          TTL: '3600'
+          ResourceRecords:
+            - '"v=DMARC1; p=reject; sp=reject"'
+        - Name: !Ref FrontendDomainName
+          Type: CAA
+          TTL: '3600'
+          ResourceRecords:
+            - '0 issue "amazon.com"'
+            - '0 issue "amazontrust.com"'
+            - '0 issue "awstrust.com"'
+            - '0 issue "amazonaws.com"'
+            - '0 issuewild ";"'
+
   # While the account is in the SES sandbox, the recipient must be verified too.
   # Creating this sends a verification link to the address.
   SesRecipientIdentity:
@@ -415,7 +445,7 @@ Resources:
             Override: true
           StrictTransportSecurity:
             AccessControlMaxAgeSec: 31536000
-            IncludeSubdomains: false
+            IncludeSubdomains: true
             Override: true
           XSSProtection:
             Protection: true

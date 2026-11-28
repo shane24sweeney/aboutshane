@@ -76,7 +76,7 @@ export const config: WebdriverIO.Config = {
         user: process.env.BROWSERSTACK_USERNAME,
         key: process.env.BROWSERSTACK_ACCESS_KEY,
         hostname: 'hub.browserstack.com',
-        services: [['browserstack', { browserstackLocal: baseUrl.includes('bs-local.com') }]],
+        services: [['browserstack', { browserstackLocal: new URL(baseUrl).hostname === 'bs-local.com' }]],
       }
     : {
         // Lets UiAutomator2 fetch the Chromedriver that matches the emulator's Chrome.

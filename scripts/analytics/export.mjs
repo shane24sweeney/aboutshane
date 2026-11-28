@@ -9,10 +9,13 @@
 //   times from CloudWatch (api-latency.json, written by the workflow), and the load test's from
 //   the quality report's metrics.json.
 // Without GA_SERVICE_ACCOUNT it skips the export (and says so), so the workflow never fails on it.
+// Only visits recorded on the site's own hosts count, and every value is checked before it is
+// published (./clean.mjs), so made-up hits sent to the public GA ID can't put anything on the page.
 
 import { createSign } from 'node:crypto';
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { amount, count, countryCode, pagePath, text, withSiteFilter } from './clean.mjs';
 
 const [site = 'site', latencyFile] = process.argv.slice(2);
 const property = process.env.GA_PROPERTY_ID ?? '565419707';
@@ -46,7 +49,7 @@ async function report(token, body) {
   const response = await fetch(`https://analyticsdata.googleapis.com/v1beta/properties/${property}:runReport`, {
     method: 'POST',
     headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ dateRanges: [{ startDate: `${days}daysAgo`, endDate: 'yesterday' }], ...body }),
+    body: JSON.stringify({ dateRanges: [{ startDate: `${days}daysAgo`, endDate: 'yesterday' }], ...body, dimensionFilter: withSiteFilter(body.dimensionFilter) }),
     signal: AbortSignal.timeout(30_000),
   });
   if (!response.ok) throw new Error(`GA report failed: ${response.status} ${await response.text()}`);
@@ -83,18 +86,18 @@ try {
     }),
   ]);
 
-  const [users = 0, newUsers = 0, sessions = 0, pageViews = 0, avgSessionSeconds = 0] = totalsRows[0]?.mets ?? [];
+  const [users = 0, newUsers = 0, sessions = 0, pageViews = 0, avgSessionSeconds = 0] = (totalsRows[0]?.mets ?? []).map((n) => amount(n));
   const countries = countryRows
-    .filter(({ dims: [code] }) => code && code !== '(not set)')
-    .map(({ dims: [code, name], mets: [countryUsers, countrySessions] }) => ({ code, name, users: countryUsers, sessions: countrySessions }));
+    .map(({ dims: [code, name], mets: [countryUsers, countrySessions] }) => ({ code: countryCode(code), name: text(name), users: count(countryUsers), sessions: count(countrySessions) }))
+    .filter((c) => c.code && c.name);
   const countryUsers = countries.reduce((n, c) => n + c.users, 0);
   const us = countries.find((c) => c.code === 'US')?.users ?? 0;
 
   // Web vitals: GA sums each event's value (ms; CLS × 1000), so the average is sum ÷ count.
   const vitals = Object.fromEntries(
-    vitalRows.map(({ dims: [name], mets: [count, sum] }) => {
-      const average = count ? sum / count : 0;
-      return [name, { average: name === 'CLS' ? Math.round(average) / 1000 : Math.round(average), samples: count }];
+    vitalRows.map(({ dims: [name], mets: [events, sum] }) => {
+      const average = events ? sum / events : 0;
+      return [name, { average: name === 'CLS' ? Math.round(average) / 1000 : Math.round(average), samples: count(events) }];
     }),
   );
 
@@ -106,8 +109,10 @@ try {
     totals: { users, newUsers, sessions, pageViews, avgSessionSeconds: Math.round(avgSessionSeconds) },
     usShare: countryUsers ? us / countryUsers : null,
     countries,
-    pages: pageRows.map(({ dims: [path], mets: [views] }) => ({ path, views })),
-    daily: dailyRows.map(({ dims: [date], mets: [dayUsers] }) => ({ date: `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6)}`, users: dayUsers })),
+    pages: pageRows.map(({ dims: [path], mets: [views] }) => ({ path: pagePath(path), views: count(views) })).filter((p) => p.path),
+    daily: dailyRows
+      .filter(({ dims: [date] }) => /^\d{8}$/.test(date))
+      .map(({ dims: [date], mets: [dayUsers] }) => ({ date: `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6)}`, users: count(dayUsers) })),
     speed: {
       realUsers: Object.keys(vitals).length ? vitals : null,
       api: readJson(latencyFile),
