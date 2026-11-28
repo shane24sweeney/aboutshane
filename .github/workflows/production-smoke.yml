@@ -22,8 +22,38 @@ permissions:
   contents: read
 
 jobs:
+  # Browser coverage split 4 ways (the regression tests on an instrumented build), then the unit
+  # tests, and the two added together.
+  ui-shard:
+    name: UI browser coverage shard ${{ matrix.shard }}/4
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build:coverage
+      - run: npx playwright install --with-deps chromium webkit
+      - run: npm run test:coverage:browser -- --shard=${{ matrix.shard }}/4
+      - uses: actions/upload-artifact@v7
+        if: ${{ !cancelled() }}
+        with:
+          name: ui-report-browser-shard-${{ matrix.shard }}
+          path: coverage-browser
+          retention-days: 3
+
+  # The browser coverage from every shard, plus the unit tests, added together and checked against
+  # scripts/coverage/thresholds.json. Passes only if every shard passed.
   ui:
     name: UI unit tests and coverage
+    needs: ui-shard
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -32,11 +62,11 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      # Browser coverage first (Playwright empties test-results/ when it starts): the regression
-      # tests on an instrumented build. Then the unit tests, and the two added together.
-      - run: npm run build:coverage
-      - run: npx playwright install --with-deps chromium webkit
-      - run: npm run test:coverage:browser
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: ui-report-browser-shard-*
+          path: coverage-browser
+          merge-multiple: true
       - run: npm run test:coverage
       - run: npm run coverage:merge
       - uses: actions/upload-artifact@v7
@@ -48,6 +78,8 @@ jobs:
             coverage
             coverage-combined
           retention-days: 14
+      - name: Every shard passed
+        run: test "${{ needs.ui-shard.result }}" = success
 
   api:
     name: API tests and coverage
@@ -70,9 +102,17 @@ jobs:
             backend/target/site/jacoco
           retention-days: 14
 
-  regression:
-    name: Regression (every browser, phone and tablet)
+  # Every browser, phone and tablet, split 8 ways. The merge job writes the one results.json the
+  # report reads.
+  regression-shard:
+    name: Regression shard ${{ matrix.shard }}/8
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4, 5, 6, 7, 8]
+    env:
+      PW_SHARD: ${{ matrix.shard }}
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -82,15 +122,50 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npx playwright install --with-deps chromium webkit firefox chrome msedge
-      - run: npm run test:regression:all
+      - run: npm run test:regression:all -- --shard=${{ matrix.shard }}/8
+      - uses: actions/upload-artifact@v7
+        if: ${{ !cancelled() }}
+        with:
+          name: regression-report-shard-${{ matrix.shard }}
+          path: |
+            blob-report
+            test-results
+          retention-days: 14
+
+  # Keeps the original job name (branch protection and the report look for it). Runs even when a
+  # shard fails, merges the shards' reports into one, then passes only if every shard passed: a
+  # skipped job would count as passing, so it must never be skipped.
+  regression:
+    name: Regression (every browser, phone and tablet)
+    needs: regression-shard
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: regression-report-shard-*
+          path: shards
+          merge-multiple: true
+      - name: Merge the shards' reports
+        run: npx playwright merge-reports --reporter=html,json,./tests/e2e/support/reporters/github-summary.ts shards/blob-report
+        env:
+          PLAYWRIGHT_JSON_OUTPUT_NAME: test-results/results.json
       - uses: actions/upload-artifact@v7
         if: ${{ !cancelled() }}
         with:
           name: regression-report
           path: |
             playwright-report
-            test-results
+            test-results/results.json
           retention-days: 14
+      - name: Every shard passed
+        run: test "${{ needs.regression-shard.result }}" = success
 
   smoke:
     runs-on: ubuntu-latest
