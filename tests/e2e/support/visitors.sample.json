@@ -114,6 +114,15 @@
    "views": 95
   }
  ],
+ "audience": {
+  "devices": [{ "name": "desktop", "users": 20 }, { "name": "mobile", "users": 9 }, { "name": "smart tv", "users": 1 }],
+  "browsers": [{ "name": "Chrome", "users": 17 }, { "name": "Safari", "users": 8 }, { "name": "Edge", "users": 3 }],
+  "systems": [{ "name": "Windows", "users": 12 }, { "name": "iOS", "users": 7 }, { "name": "Macintosh", "users": 6 }],
+  "channels": [{ "name": "Direct", "sessions": 41 }, { "name": "Organic Search", "sessions": 18 }, { "name": "Organic Social", "sessions": 9 }, { "name": "Referral", "sessions": 4 }],
+  "engagement": { "newUsers": 24, "returningUsers": 6, "engagementRate": 0.62, "avgEngagedSeconds": 95 },
+  "weekdays": [3, 14, 12, 10, 11, 9, 2],
+  "hours": [0, 0, 0, 0, 0, 0, 1, 2, 5, 9, 8, 6, 4, 6, 7, 8, 5, 3, 2, 1, 1, 0, 0, 0]
+ },
  "daily": [
   {
    "date": "2026-10-22",

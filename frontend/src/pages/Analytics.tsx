@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
 import { fetchVisitors, isAvailable, vitalRating } from '../api/visitors';
-import type { VisitorStats, VisitorsResponse } from '../api/visitors';
+import type { Audience, VisitorStats, VisitorsResponse } from '../api/visitors';
 import PageLoading from '../components/PageLoading';
 // The globe's stylesheet ships with the page (only the three.js code is lazy), so the Suspense
 // placeholder below already has the stage's size and nothing shifts when the 3D view arrives.
@@ -107,6 +107,94 @@ function Speed({ speed, days }: { speed: VisitorStats['speed']; days: number }) 
   );
 }
 
+const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const DEVICES: Record<string, string> = { desktop: 'Desktop', mobile: 'Phone', tablet: 'Tablet' };
+
+/** A list of names with their counts and a bar each, most first. */
+function Ranked({ label, items }: { label: string; items: { name: string; value: number }[] }) {
+  const most = Math.max(1, ...items.map((i) => i.value));
+  if (items.length === 0) return <p className="visitors-muted">None recorded yet.</p>;
+  return (
+    <ol className="visitors-pages" aria-label={label}>
+      {items.map((i) => (
+        <li key={i.name}>
+          <span>{i.name}</span>
+          <b>{number(i.value)}</b>
+          <span className="visitors-bar" aria-hidden="true">
+            <i className="bar-abroad" style={{ width: `${(i.value / most) * 100}%` }} />
+          </span>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
+/** Visits in each time slot as columns, with a label under every `every`-th one. */
+function Columns({ label, values, names, every = 1 }: { label: string; values: number[]; names: string[]; every?: number }) {
+  const most = Math.max(1, ...values);
+  return (
+    <>
+      <ol className="visitors-days visitors-slots" aria-label={label}>
+        {values.map((visits, i) => (
+          <li key={names[i]} title={`${names[i]}: ${visits}`} aria-label={`${names[i]}: ${visits} ${visits === 1 ? 'visit' : 'visits'}`}>
+            <span style={{ height: `${(visits / most) * 100}%` }} />
+          </li>
+        ))}
+      </ol>
+      <p className="visitors-axis visitors-slot-names" aria-hidden="true">
+        {names.map((name, i) => (
+          <span key={name}>{i % every === 0 ? name : ''}</span>
+        ))}
+      </p>
+    </>
+  );
+}
+
+/** Devices and browsers, how people arrive and engage, and when they visit. */
+function AudienceSection({ audience, days }: { audience: Audience; days: number }) {
+  const { engagement } = audience;
+  const visitors = engagement.newUsers + engagement.returningUsers;
+  return (
+    <>
+      <div className="visitors-pair">
+        <section className="visitors-card" aria-labelledby="visitors-arrive">
+          <h2 id="visitors-arrive">How people arrive</h2>
+          <Ranked label="Visits by source" items={audience.channels.map((c) => ({ name: c.name, value: c.sessions }))} />
+          <h3>How engaged they are</h3>
+          <ul className="visitors-stats">
+            <li><span>New visitors</span><b>{number(engagement.newUsers)}</b></li>
+            <li><span>Returning visitors</span><b>{number(engagement.returningUsers)}{visitors > 0 ? ` (${percent(engagement.returningUsers / visitors)})` : ''}</b></li>
+            <li><span>Visits with real engagement</span><b>{percent(engagement.engagementRate)}</b></li>
+            <li><span>Time engaged per visit</span><b>{minutes(engagement.avgEngagedSeconds)}</b></li>
+          </ul>
+        </section>
+        <section className="visitors-card" aria-labelledby="visitors-devices">
+          <h2 id="visitors-devices">Devices and browsers</h2>
+          <Ranked label="Visitors by device" items={audience.devices.map((d) => ({ name: DEVICES[d.name] ?? d.name, value: d.users }))} />
+          <h3>Browsers</h3>
+          <Ranked label="Visitors by browser" items={audience.browsers.map((b) => ({ name: b.name, value: b.users }))} />
+          <h3>Operating systems</h3>
+          <Ranked label="Visitors by operating system" items={audience.systems.map((s) => ({ name: s.name, value: s.users }))} />
+        </section>
+      </div>
+      <section className="visitors-card" aria-labelledby="visitors-when">
+        <h2 id="visitors-when">When people visit</h2>
+        <p className="visitors-muted">Visits over the last {days} days, by day of the week and by hour (in the Analytics property's time zone).</p>
+        <div className="visitors-pair">
+          <div>
+            <h3>Day of the week</h3>
+            <Columns label="Visits by day of the week" values={audience.weekdays} names={WEEKDAYS} />
+          </div>
+          <div>
+            <h3>Hour of the day</h3>
+            <Columns label="Visits by hour of the day" values={audience.hours} names={audience.hours.map((_, h) => `${h}:00`)} every={6} />
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}
+
 function Dashboard({ data }: { data: VisitorStats }) {
   const [selected, setSelected] = useState<string | null>(null);
   const countryTotal = data.countries.reduce((n, c) => n + c.users, 0);
@@ -181,6 +269,8 @@ function Dashboard({ data }: { data: VisitorStats }) {
       </section>
 
       <Speed speed={data.speed} days={data.days} />
+
+      {data.audience && <AudienceSection audience={data.audience} days={data.days} />}
 
       <div className="visitors-pair">
         <section className="visitors-card" aria-labelledby="visitors-daily">

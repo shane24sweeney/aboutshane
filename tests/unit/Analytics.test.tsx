@@ -94,6 +94,39 @@ describe('Visitors page', () => {
     expect(screen.getAllByText('Good').length).toBeGreaterThan(0);
   });
 
+  it('shows how people arrive, their devices and browsers, and when they visit', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(json(sample)));
+    renderVisitors();
+    const sources = await screen.findByRole('list', { name: 'Visits by source' });
+    expect(within(sources).getAllByRole('listitem').map((li) => li.textContent)).toEqual(['Direct41', 'Organic Search18', 'Organic Social9', 'Referral4']);
+    expect(screen.getByText('Returning visitors').nextSibling).toHaveTextContent('6 (20%)');
+    expect(screen.getByText('Visits with real engagement').nextSibling).toHaveTextContent('62%');
+    expect(screen.getByText('Time engaged per visit').nextSibling).toHaveTextContent('1:35');
+    // GA's device names read as people say them; one it doesn't know stays as it is.
+    expect(within(screen.getByRole('list', { name: 'Visitors by device' })).getAllByRole('listitem').map((li) => li.firstChild?.textContent)).toEqual(['Desktop', 'Phone', 'smart tv']);
+    expect(within(screen.getByRole('list', { name: 'Visitors by browser' })).getByText('Chrome')).toBeInTheDocument();
+    expect(within(screen.getByRole('list', { name: 'Visitors by operating system' })).getByText('iOS')).toBeInTheDocument();
+    const days = screen.getByRole('list', { name: 'Visits by day of the week' });
+    expect(within(days).getByLabelText('Mon: 14 visits')).toBeInTheDocument();
+    expect(within(screen.getByRole('list', { name: 'Visits by hour of the day' })).getByLabelText('6:00: 1 visit')).toBeInTheDocument();
+  });
+
+  it('leaves the audience out until the export has it, and says when a list is empty', { tags: ['negative'] }, async () => {
+    const { audience, ...older } = sample;
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(json(older)));
+    const { unmount } = renderVisitors();
+    await screen.findByRole('list', { name: 'Visitor numbers' });
+    expect(screen.queryByRole('heading', { name: 'How people arrive' })).not.toBeInTheDocument();
+    unmount();
+
+    const quiet = { ...audience, browsers: [], engagement: { newUsers: 0, returningUsers: 0, engagementRate: 0, avgEngagedSeconds: 0 } };
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(json({ ...sample, audience: quiet })));
+    renderVisitors();
+    await screen.findByRole('heading', { name: 'Devices and browsers' });
+    expect(screen.getByText('None recorded yet.')).toBeInTheDocument();
+    expect(screen.getByText('Returning visitors').nextSibling).toHaveTextContent(/^0$/);
+  });
+
   it('lists the top countries, and selecting one marks it', async () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue(json(sample)));
     renderVisitors();

@@ -5,6 +5,9 @@
 //
 // - Visitors: by country (US and abroad), totals, most-viewed pages and visitors per day, from the
 //   GA4 Data API as a read-only service account (free; no client library, just a signed token).
+// - Audience: devices, browsers and operating systems; how visitors arrive (GA's own channel
+//   names, never raw referrers, so spam domains can't appear); new vs returning visitors and
+//   engagement; and visits by day of the week and hour.
 // - Speed: real visitors' Core Web Vitals (sent by the site as GA events), the API's own response
 //   times from CloudWatch (api-latency.json, written by the workflow), and the load test's from
 //   the quality report's metrics.json.
@@ -64,7 +67,9 @@ const readJson = (file) => (file && existsSync(file) ? JSON.parse(readFileSync(f
 
 try {
   const token = await accessToken(JSON.parse(key));
-  const [totalsRows, countryRows, pageRows, dailyRows, vitalRows] = await Promise.all([
+  const ranked = (dimension, metric, limit) =>
+    report(token, { dimensions: [{ name: dimension }], metrics: [{ name: metric }], orderBys: [{ metric: { metricName: metric }, desc: true }], limit });
+  const [totalsRows, countryRows, pageRows, dailyRows, vitalRows, deviceRows, browserRows, osRows, channelRows, returningRows, engagementRows, weekdayRows, hourRows] = await Promise.all([
     report(token, { metrics: ['activeUsers', 'newUsers', 'sessions', 'screenPageViews', 'averageSessionDuration'].map((name) => ({ name })) }),
     report(token, {
       dimensions: [{ name: 'countryId' }, { name: 'country' }],
@@ -84,6 +89,14 @@ try {
       metrics: [{ name: 'eventCount' }, { name: 'eventValue' }],
       dimensionFilter: { filter: { fieldName: 'eventName', inListFilter: { values: ['LCP', 'INP', 'CLS', 'FCP', 'TTFB'] } } },
     }),
+    ranked('deviceCategory', 'activeUsers', 5),
+    ranked('browser', 'activeUsers', 6),
+    ranked('operatingSystem', 'activeUsers', 6),
+    ranked('sessionDefaultChannelGroup', 'sessions', 8),
+    ranked('newVsReturning', 'activeUsers', 3),
+    report(token, { metrics: ['engagementRate', 'userEngagementDuration', 'sessions'].map((name) => ({ name })) }),
+    report(token, { dimensions: [{ name: 'dayOfWeek' }], metrics: [{ name: 'sessions' }] }),
+    report(token, { dimensions: [{ name: 'hour' }], metrics: [{ name: 'sessions' }] }),
   ]);
 
   const [users = 0, newUsers = 0, sessions = 0, pageViews = 0, avgSessionSeconds = 0] = (totalsRows[0]?.mets ?? []).map((n) => amount(n));
@@ -101,6 +114,32 @@ try {
     }),
   );
 
+  // Named counts, most first; GA's "(not set)" and anything that isn't plain text are left out.
+  const named = (rows, key) =>
+    rows.map(({ dims: [name], mets: [value] }) => ({ name: text(name, 40), [key]: count(value) })).filter((r) => r.name && r.name !== '(not set)' && r[key] > 0);
+  // Sessions in each slot of a fixed range (7 days from Sunday, 24 hours); missing slots are 0.
+  const slots = (rows, size) => {
+    const out = Array(size).fill(0);
+    for (const { dims: [slot], mets: [value] } of rows) if (/^\d{1,2}$/.test(slot) && Number(slot) < size) out[Number(slot)] = count(value);
+    return out;
+  };
+  const visitorType = (type) => count(returningRows.find(({ dims: [t] }) => t === type)?.mets[0]);
+  const [engagementRate = 0, engagedSeconds = 0, engagementSessions = 0] = engagementRows[0]?.mets ?? [];
+  const audience = {
+    devices: named(deviceRows, 'users'),
+    browsers: named(browserRows, 'users'),
+    systems: named(osRows, 'users'),
+    channels: named(channelRows, 'sessions'),
+    engagement: {
+      newUsers: visitorType('new'),
+      returningUsers: visitorType('returning'),
+      engagementRate: Math.min(1, amount(engagementRate, 3)),
+      avgEngagedSeconds: engagementSessions > 0 ? count(amount(engagedSeconds) / engagementSessions) : 0,
+    },
+    weekdays: slots(weekdayRows, 7),
+    hours: slots(hourRows, 24),
+  };
+
   const metrics = readJson(join(site, 'metrics.json'));
   const visitors = {
     version: 1,
@@ -110,6 +149,7 @@ try {
     usShare: countryUsers ? us / countryUsers : null,
     countries,
     pages: pageRows.map(({ dims: [path], mets: [views] }) => ({ path: pagePath(path), views: count(views) })).filter((p) => p.path),
+    audience,
     daily: dailyRows
       .filter(({ dims: [date] }) => /^\d{8}$/.test(date))
       .map(({ dims: [date], mets: [dayUsers] }) => ({ date: `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6)}`, users: count(dayUsers) })),
