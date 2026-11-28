@@ -1,7 +1,10 @@
 name: CI
 
+# Once per pull request (its pushes run as pull_request), and on every merge to master. Branches
+# without a pull request can run it by hand.
 on:
   push:
+    branches: [master]
   pull_request:
   workflow_dispatch:
 
