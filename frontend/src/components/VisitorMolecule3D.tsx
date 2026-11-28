@@ -3,6 +3,9 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import type { VisitorStats } from '../api/visitors';
 import { type Atom, atomsFor, BOND, CLUSTERS, NUCLEUS, number } from './molecule';
+
+/** Pages, countries and speed always; sources and devices once the export has them. */
+const shownClusters = (atoms: ReturnType<typeof atomsFor>) => CLUSTERS.filter((c, i) => i < 3 || atoms[c.key].length > 0);
 import './VisitorMolecule3D.css';
 
 interface VisitorMolecule3DProps {
@@ -103,11 +106,13 @@ function VisitorMolecule3D({ stats }: VisitorMolecule3DProps) {
       size: 1,
     });
 
-    // The clusters sit around the nucleus like a trigonal molecule, tilted so all three show.
+    // The clusters sit evenly around the nucleus, each a little higher than the last so all show.
     const labels: { el: HTMLDivElement; atom: THREE.Mesh }[] = [];
-    CLUSTERS.forEach((cluster, c) => {
-      const angle = (c / CLUSTERS.length) * Math.PI * 2 + Math.PI / 2;
-      const hubPos = new THREE.Vector3(Math.cos(angle) * 3, (c - 1) * 0.6, Math.sin(angle) * 3);
+    const shown = shownClusters(clusters);
+    const rise = shown.length > 3 ? 0.85 : 0.6;
+    shown.forEach((cluster, c) => {
+      const angle = (c / shown.length) * Math.PI * 2 + Math.PI / 2;
+      const hubPos = new THREE.Vector3(Math.cos(angle) * 3, (c - (shown.length - 1) / 2) * rise, Math.sin(angle) * 3);
       const mat = material(cluster.colour);
       const items = clusters[cluster.key];
       const hub = addAtom(hubPos, 0.42, mat, { name: cluster.label, detail: `${items.length} shown`, size: 1 });
@@ -138,9 +143,11 @@ function VisitorMolecule3D({ stats }: VisitorMolecule3DProps) {
       renderer.setSize(w, h, false);
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
-      // Far enough back for the molecule (about 10 units across) to fit the width as well as the height.
-      const halfWidth = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.aspect;
-      if (!fitted) camera.position.setLength(Math.max(11, 5.2 / halfWidth));
+      // Far enough back for the molecule (about 10 units across, and taller with five clusters) to
+      // fit the width as well as the height.
+      const halfHeight = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+      const halfWidth = halfHeight * camera.aspect;
+      if (!fitted) camera.position.setLength(Math.max((shown.length > 3 ? 4.7 : 4) / halfHeight, 5.2 / halfWidth));
       fitted = w > 0;
     };
     let fitted = false;
@@ -226,11 +233,19 @@ function VisitorMolecule3D({ stats }: VisitorMolecule3DProps) {
     };
   }, [stats, supported]);
 
-  const counts = `${atoms.pages.length} pages, ${atoms.countries.length} countries and ${atoms.speed.length} speed measures`;
+  const shown = shownClusters(atoms);
+  const parts = [
+    `${atoms.pages.length} pages`,
+    `${atoms.countries.length} countries`,
+    `${atoms.speed.length} speed measures`,
+    ...(atoms.sources.length ? [`${atoms.sources.length} sources`] : []),
+    ...(atoms.devices.length ? [`${atoms.devices.length} devices and browsers`] : []),
+  ];
+  const counts = `${parts.slice(0, -1).join(', ')} and ${parts[parts.length - 1]}`;
   return (
     <div className="molecule3d" ref={stage} data-testid="visitor-molecule" role="img" aria-label={`The site as a molecule: ${counts}, listed below.`}>
       <div className="molecule3d-legend" aria-hidden="true">
-        {CLUSTERS.map((c) => (
+        {shown.map((c) => (
           <span key={c.key}>
             <i style={{ background: c.colour }} />
             {c.label}

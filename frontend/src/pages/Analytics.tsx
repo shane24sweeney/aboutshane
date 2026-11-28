@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
 import { fetchVisitors, isAvailable, vitalRating } from '../api/visitors';
 import type { Audience, VisitorStats, VisitorsResponse } from '../api/visitors';
+import { DEVICE_NAMES } from '../components/molecule';
 import PageLoading from '../components/PageLoading';
 // The globe's stylesheet ships with the page (only the three.js code is lazy), so the Suspense
 // placeholder below already has the stage's size and nothing shifts when the 3D view arrives.
@@ -108,7 +109,6 @@ function Speed({ speed, days }: { speed: VisitorStats['speed']; days: number }) 
 }
 
 const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-const DEVICES: Record<string, string> = { desktop: 'Desktop', mobile: 'Phone', tablet: 'Tablet' };
 
 /** A list of names with their counts and a bar each, most first. */
 function Ranked({ label, items }: { label: string; items: { name: string; value: number }[] }) {
@@ -170,7 +170,7 @@ function AudienceSection({ audience, days }: { audience: Audience; days: number 
         </section>
         <section className="visitors-card" aria-labelledby="visitors-devices">
           <h2 id="visitors-devices">Devices and browsers</h2>
-          <Ranked label="Visitors by device" items={audience.devices.map((d) => ({ name: DEVICES[d.name] ?? d.name, value: d.users }))} />
+          <Ranked label="Visitors by device" items={audience.devices.map((d) => ({ name: DEVICE_NAMES[d.name] ?? d.name, value: d.users }))} />
           <h3>Browsers</h3>
           <Ranked label="Visitors by browser" items={audience.browsers.map((b) => ({ name: b.name, value: b.users }))} />
           <h3>Operating systems</h3>

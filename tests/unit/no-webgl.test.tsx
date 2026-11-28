@@ -38,7 +38,7 @@ describe('3D views in a browser without WebGL', { tags: ['negative'] }, () => {
     expect(stage).toHaveTextContent("This browser can't draw 3D. The lists below have the same numbers.");
     expect(stage).not.toHaveTextContent('Drag to turn');
     expect(stage.querySelector('canvas')).toBeNull();
-    expect(screen.getByRole('img', { name: /^The site as a molecule: 7 pages, 12 countries and 7 speed measures/ })).toBe(stage);
+    expect(screen.getByRole('img', { name: /^The site as a molecule: 7 pages, 12 countries, 7 speed measures, 4 sources and 6 devices and browsers, listed below/ })).toBe(stage);
   });
 
   it('a browser that throws when asked for WebGL gets the same fallback', () => {

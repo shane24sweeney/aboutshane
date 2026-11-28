@@ -6,9 +6,19 @@ import sample from '../e2e/support/visitors.sample.json';
 const stats = sample as VisitorStats;
 
 describe('the Site analytics molecule', () => {
-  it('has a pages, a countries and a speed cluster, each its own colour', () => {
-    expect(CLUSTERS.map((c) => c.label)).toEqual(['Pages', 'Countries', 'Speed']);
-    expect(new Set(CLUSTERS.map((c) => c.colour)).size).toBe(3);
+  it('has pages, countries, speed, sources and devices clusters, each its own colour', () => {
+    expect(CLUSTERS.map((c) => c.label)).toEqual(['Pages', 'Countries', 'Speed', 'Sources', 'Devices']);
+    expect(new Set(CLUSTERS.map((c) => c.colour)).size).toBe(5);
+  });
+
+  it('shows how people arrive, and their devices then top browsers, sized by their numbers', () => {
+    const { sources, devices } = atomsFor(stats);
+    expect(sources.map((s) => s.name)).toEqual(['Direct', 'Organic Search', 'Organic Social', 'Referral']);
+    expect(sources[0]).toMatchObject({ detail: '41 visits', size: 1 });
+    expect(devices.map((d) => d.name)).toEqual(['Desktop', 'Phone', 'smart tv', 'Chrome', 'Safari', 'Edge']);
+    expect(devices[0]!.detail).toBe('20 visitors on this device');
+    expect(devices[2]!.detail).toBe('1 visitor on this device');
+    expect(devices[3]!.detail).toBe('17 visitors on this browser');
   });
 
   it('sizes atoms by their numbers, the biggest full size, largest first', () => {
@@ -53,5 +63,7 @@ describe('the Site analytics molecule', () => {
     expect(atoms.countries[0]!.detail).toBe('1 visitor');
     expect(atoms.speed).toEqual([]);
     expect(atomsFor({ ...quiet, pages: [], countries: [] }).pages).toEqual([]);
+    expect(atomsFor({ ...quiet, audience: undefined })).toMatchObject({ sources: [], devices: [] });
+    expect(atomsFor({ ...quiet, audience: { ...quiet.audience!, channels: [{ name: 'Referral', sessions: 1 }] } }).sources[0]!.detail).toBe('1 visit');
   });
 });
